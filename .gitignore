@@ -1,6 +1,21 @@
+target/
 *.class
+
+.classpath
+.project
+.settings/
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+# MAC OSX #
+.DS_Store
+
+# WINDOWS #
+Thumbs.db
+
+# IDEA #
+.idea/
+*.iml
