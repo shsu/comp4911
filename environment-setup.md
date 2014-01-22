@@ -13,28 +13,27 @@
 
 1. [Download VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 2. [Download Vagrant](http://www.vagrantup.com/downloads.html)
+3. Clone the [comp4911 project code](https://github.com/shsu/comp4911) if you haven't done so.
+4. CD To that directory and execute the following command to start the VM:
+  
+        vagrant up
 
 For Mac Users with Homebrew Cask:
 
-  brew cask install virtualbox
-  brew cask install vagrant
-  
-4. Clone the [comp4911 project code](github.com/shsu/comp4911) if you haven't done so.
-5. CD To that directory and execute the following command to start the VM:
-  
-  vagrant up
+    brew cask install virtualbox
+    brew cask install vagrant
   
 ## Vagrant Quickstart Guide
 
 To Start the VM
 
-  vagrant up
+    vagrant up
 
 To SSH into the VM
   
-  vagrant ssh
+    vagrant ssh
   
 To Shutdown the VM
   
-  vagrant halt
+    vagrant halt
  
