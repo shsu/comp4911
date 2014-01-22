@@ -19,3 +19,6 @@ Thumbs.db
 # IDEA #
 .idea/
 *.iml
+
+# VAGRANT #
+.vagrant/
