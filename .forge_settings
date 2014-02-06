@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
-<org>
-<jboss>
+<activatorChoice>WEB_XML</activatorChoice>
+<rootpath>/</rootpath>
 <forge>
-<scaffold>
-<faces>
-<FacesScaffold_targetDir>/</FacesScaffold_targetDir>
-</faces>
-</scaffold>
 </forge>
-</jboss>
-</org>
 </configuration>
