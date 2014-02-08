@@ -3,8 +3,9 @@ package ca.bcit.infosys.comp4911.services;
 import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.User;
+import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import org.json.JSONObject;
-import org.mindrot.jbcrypt.BCrypt;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -37,24 +38,28 @@ public class UserResource implements Serializable {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveToken(
       @HeaderParam("Authorization") final String authorization) {
-        if (authorization != null && authorization.contains(":")) {
-            String[] credentials = authorization.split(":");
-
-            for (User user : userDao.getAll()) {
-                if ((user.getUsername().equals(credentials[0]))
-                  && BCrypt.checkpw(credentials[1], user.getPassword())) {
-
-                    // Create a response with userId and token
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("user_id", user.getId());
-                    jsonObject.put("token", userTokens.generateToken(user.getId()));
-                    return Response.ok().entity(jsonObject.toString()).
-                      header(cors, "*").build();
-                }
-            }
+        if(Strings.isNullOrEmpty(authorization)){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        String[] credentials = authorization.split(":");
+
+        if(credentials.length !=2){
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        Optional<User> authenticatedUser = userDao.authenticate(credentials[0],credentials[1]);
+
+        if(!authenticatedUser.isPresent()){
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
+
+        // Create a response with userId and token
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("user_id", authenticatedUser.get().getId());
+        jsonObject.put("token", userTokens.generateToken(authenticatedUser.get().getId()));
+
+        return Response.ok().entity(jsonObject.toString()).header(cors, "*").build();
     }
 
     @Path("/token")
