@@ -34,7 +34,8 @@ public class UserTokens implements Serializable {
         return token;
     }
 
-    public Integer verifyTokenAndReturnUserID(String tokenToBeVerified) throws WebApplicationException {
+    public int verifyTokenAndReturnUserID(final String tokenToBeVerified)
+      throws WebApplicationException {
         if (tokenToBeVerified != null) {
             Integer userID = tokensForAuthenticatedUserID.get(tokenToBeVerified);
 

@@ -10,7 +10,7 @@ import javax.persistence.Version;
 import java.lang.Override;
 
 @Entity
-public class Users implements Serializable
+public class User implements Serializable
 {
 
    @Id
@@ -22,13 +22,16 @@ public class Users implements Serializable
    private int version = 0;
 
    @Column
+   private String username;
+
+   @Column
+   private String password;
+
+   @Column
    private String firstName;
 
    @Column
    private String lastName;
-
-   @Column
-   private String hashedPassword;
 
    public Long getId()
    {
@@ -67,7 +70,7 @@ public class Users implements Serializable
       }
       if (id != null)
       {
-         return id.equals(((Users) that).id);
+         return id.equals(((User) that).id);
       }
       return super.equals(that);
    }
@@ -80,6 +83,26 @@ public class Users implements Serializable
          return id.hashCode();
       }
       return super.hashCode();
+   }
+
+   public String getUsername()
+   {
+      return this.username;
+   }
+
+   public void setUsername(final String username)
+   {
+      this.username = username;
+   }
+
+   public String getPassword()
+   {
+      return this.password;
+   }
+
+   public void setPassword(final String password)
+   {
+      this.password = password;
    }
 
    public String getFirstName()
@@ -102,28 +125,28 @@ public class Users implements Serializable
       this.lastName = lastName;
    }
 
-   public String getHashedPassword()
-   {
-      return this.hashedPassword;
-   }
-
-   public void setHashedPassword(final String hashedPassword)
-   {
-      this.hashedPassword = hashedPassword;
-   }
-
    @Override
    public String toString()
    {
       String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
+      if (username != null && !username.trim().isEmpty())
+         result += "username: " + username;
+      if (password != null && !password.trim().isEmpty())
+         result += ", password: " + password;
       if (firstName != null && !firstName.trim().isEmpty())
          result += ", firstName: " + firstName;
       if (lastName != null && !lastName.trim().isEmpty())
          result += ", lastName: " + lastName;
-      if (hashedPassword != null && !hashedPassword.trim().isEmpty())
-         result += ", hashedPassword: " + hashedPassword;
       return result;
    }
+
+    public User(){
+    }
+
+    public User(String username, String password, String firstName, String lastName) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

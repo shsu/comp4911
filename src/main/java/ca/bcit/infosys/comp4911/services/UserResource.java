@@ -1,7 +1,10 @@
 package ca.bcit.infosys.comp4911.services;
 
+import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
+import ca.bcit.infosys.comp4911.domain.User;
 import org.json.JSONObject;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -19,11 +22,16 @@ public class UserResource implements Serializable {
     @Inject
     private UserTokens userTokens;
 
+    @Inject
+    private UserDao userDao;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAuthenticatedUserInfo() {
+    public Response retrieveAuthenticatedUserInfo(
+      @HeaderParam("Authorization") final String token) {
+        int userId = userTokens.verifyTokenAndReturnUserID(token);
 
-        return Response.ok().build();
+        return Response.ok().entity(userDao.read(userId)).header(cors, "*").build();
     }
 
     @Path("/token")
@@ -34,13 +42,17 @@ public class UserResource implements Serializable {
         if (authorization != null && authorization.contains(":")) {
             String[] credentials = authorization.split(":");
 
-            if (credentials[0].equals(credentials[1])) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("token", userTokens.generateToken(1));
-                jsonObject.put("user_id", 1);
+            for (User user : userDao.getAll()) {
+                if ((user.getUsername().equals(credentials[0]))
+                  && BCrypt.checkpw(credentials[1], user.getPassword())) {
 
-                return Response.ok().entity(jsonObject.toString()).
-                  header(cors, "*").build();
+                    // Create a response with userId and token
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("user_id", user.getId());
+                    jsonObject.put("token", userTokens.generateToken(user.getId().intValue()));
+                    return Response.ok().entity(jsonObject.toString()).
+                      header(cors, "*").build();
+                }
             }
         }
 
