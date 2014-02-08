@@ -1,5 +1,7 @@
 package ca.bcit.infosys.comp4911.application;
 
+import com.google.common.base.Strings;
+
 import javax.ejb.Singleton;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -17,16 +19,6 @@ public class UserTokens implements Serializable {
         tokensForAuthenticatedUserID = new HashMap<String, Integer>();
     }
 
-    public boolean clearToken(String tokenToBeClearerd) {
-        Integer userID = tokensForAuthenticatedUserID.remove(tokenToBeClearerd);
-
-        if (userID != null) {
-            return true;
-        }
-
-        return false;
-    }
-
     public String generateToken(final int userID) {
         String token = UUID.randomUUID().toString().replaceAll("-", "");
         tokensForAuthenticatedUserID.put(token, userID);
@@ -36,14 +28,25 @@ public class UserTokens implements Serializable {
 
     public int verifyTokenAndReturnUserID(final String tokenToBeVerified)
       throws WebApplicationException {
-        if (tokenToBeVerified != null) {
-            Integer userID = tokensForAuthenticatedUserID.get(tokenToBeVerified);
-
-            if (userID != null) {
-                return userID;
-            }
+        if (Strings.isNullOrEmpty(tokenToBeVerified)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        Integer userID = tokensForAuthenticatedUserID.get(tokenToBeVerified);
+
+        if (userID == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
+
+        return userID;
+    }
+
+
+    public boolean clearToken(String tokenToBeCleared) throws WebApplicationException {
+        if (Strings.isNullOrEmpty(tokenToBeCleared)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
+        return tokensForAuthenticatedUserID.remove(tokenToBeCleared) != null;
     }
 }
