@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.application;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 
 import javax.ejb.Singleton;
 import javax.ws.rs.WebApplicationException;
@@ -16,7 +17,7 @@ public class UserTokens implements Serializable {
     private Map<String, Integer> tokensForAuthenticatedUserID;
 
     public UserTokens() {
-        tokensForAuthenticatedUserID = new HashMap<String, Integer>();
+        tokensForAuthenticatedUserID = Maps.newHashMap();
     }
 
     public String generateToken(final int userID) {
@@ -29,7 +30,7 @@ public class UserTokens implements Serializable {
     public int verifyTokenAndReturnUserID(final String tokenToBeVerified)
       throws WebApplicationException {
         if (Strings.isNullOrEmpty(tokenToBeVerified)) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         Integer userID = tokensForAuthenticatedUserID.get(tokenToBeVerified);
@@ -44,7 +45,7 @@ public class UserTokens implements Serializable {
 
     public boolean clearToken(String tokenToBeCleared) throws WebApplicationException {
         if (Strings.isNullOrEmpty(tokenToBeCleared)) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         return tokensForAuthenticatedUserID.remove(tokenToBeCleared) != null;

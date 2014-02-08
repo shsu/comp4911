@@ -39,7 +39,7 @@ public class UserResource implements Serializable {
     public Response retrieveToken(
       @HeaderParam("Authorization") final String authorization) {
         if(Strings.isNullOrEmpty(authorization)){
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         String[] credentials = authorization.split(":");
