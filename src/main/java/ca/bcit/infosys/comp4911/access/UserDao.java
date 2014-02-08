@@ -1,7 +1,6 @@
 package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.User;
-import org.mindrot.jbcrypt.BCrypt;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
