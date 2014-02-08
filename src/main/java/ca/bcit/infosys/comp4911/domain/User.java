@@ -16,7 +16,7 @@ public class User implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", updatable = false, nullable = false)
-   private Long id = null;
+   private Integer id = null;
    @Version
    @Column(name = "version")
    private int version = 0;
@@ -33,12 +33,12 @@ public class User implements Serializable
    @Column
    private String lastName;
 
-   public Long getId()
+   public Integer getId()
    {
       return this.id;
    }
 
-   public void setId(final Long id)
+   public void setId(final Integer id)
    {
       this.id = id;
    }

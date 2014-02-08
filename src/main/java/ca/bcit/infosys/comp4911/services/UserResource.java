@@ -47,7 +47,7 @@ public class UserResource implements Serializable {
                     // Create a response with userId and token
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("user_id", user.getId());
-                    jsonObject.put("token", userTokens.generateToken(user.getId().intValue()));
+                    jsonObject.put("token", userTokens.generateToken(user.getId()));
                     return Response.ok().entity(jsonObject.toString()).
                       header(cors, "*").build();
                 }
