@@ -7,13 +7,11 @@ import com.google.common.collect.Maps;
 import javax.ejb.Singleton;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 @Singleton
-public class UserTokens implements Serializable {
+public class UserTokens {
 
     private Map<String, Integer> tokensForAuthenticatedUserID;
 
@@ -32,14 +30,14 @@ public class UserTokens implements Serializable {
       throws WebApplicationException {
         if (Strings.isNullOrEmpty(tokenToBeVerified)) {
             throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors,"*").build());
+              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
         }
 
         Integer userID = tokensForAuthenticatedUserID.get(tokenToBeVerified);
 
         if (userID == null) {
             throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors,"*").build());
+              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
         }
 
         return userID;
@@ -49,7 +47,7 @@ public class UserTokens implements Serializable {
     public boolean clearToken(String tokenToBeCleared) throws WebApplicationException {
         if (Strings.isNullOrEmpty(tokenToBeCleared)) {
             throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors,"*").build());
+              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
         }
 
         return tokensForAuthenticatedUserID.remove(tokenToBeCleared) != null;

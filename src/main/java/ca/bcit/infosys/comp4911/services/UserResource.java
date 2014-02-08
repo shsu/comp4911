@@ -11,11 +11,9 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.Serializable;
 
 @Path("/user")
-public class UserResource implements Serializable {
-
+public class UserResource {
 
 
     @EJB
@@ -38,23 +36,23 @@ public class UserResource implements Serializable {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveToken(
       @HeaderParam("Authorization") final String authorization) {
-        if(Strings.isNullOrEmpty(authorization)){
+        if (Strings.isNullOrEmpty(authorization)) {
             throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors,"*").build());
+              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
         }
 
         String[] credentials = authorization.split(":");
 
-        if(credentials.length !=2){
+        if (credentials.length != 2) {
             throw new WebApplicationException(
-              Response.status(Response.Status.BAD_REQUEST).header(SH.cors,"*").build());
+              Response.status(Response.Status.BAD_REQUEST).header(SH.cors, "*").build());
         }
 
-        Optional<User> authenticatedUser = userDao.authenticate(credentials[0],credentials[1]);
+        Optional<User> authenticatedUser = userDao.authenticate(credentials[0], credentials[1]);
 
-        if(!authenticatedUser.isPresent()){
+        if (!authenticatedUser.isPresent()) {
             throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors,"*").build());
+              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
         }
 
         // Create a response with userId and token
