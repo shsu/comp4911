@@ -3,5 +3,14 @@
 <activatorChoice>WEB_XML</activatorChoice>
 <rootpath>/</rootpath>
 <forge>
+<analytics>
+<enabled>true</enabled>
+</analytics>
 </forge>
+<rest>
+<applicationclass>
+<package>ca.bcit.infosys.comp4911.services</package>
+<name>JaxRsActivator</name>
+</applicationclass>
+</rest>
 </configuration>
