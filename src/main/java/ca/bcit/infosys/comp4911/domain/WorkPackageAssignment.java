@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Version;
 import java.lang.Override;
+import ca.bcit.infosys.comp4911.domain.WorkPackage;
+import javax.persistence.ManyToOne;
+import ca.bcit.infosys.comp4911.domain.User;
 
 @Entity
 public class WorkPackageAssignment implements Serializable
@@ -20,6 +23,15 @@ public class WorkPackageAssignment implements Serializable
    @Version
    @Column(name = "version")
    private int version = 0;
+
+   @ManyToOne
+   private WorkPackage workPackage;
+
+   @ManyToOne
+   private User user;
+
+   @Column
+   private boolean isResponsibleEngineer;
 
    public Integer getId()
    {
@@ -39,15 +51,6 @@ public class WorkPackageAssignment implements Serializable
    public void setVersion(final int version)
    {
       this.version = version;
-   }
-
-   @Override
-   public String toString()
-   {
-      String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
-      return result;
    }
 
    @Override
@@ -80,5 +83,43 @@ public class WorkPackageAssignment implements Serializable
          return id.hashCode();
       }
       return super.hashCode();
+   }
+
+   public WorkPackage getWorkPackage()
+   {
+      return this.workPackage;
+   }
+
+   public void setWorkPackage(final WorkPackage workPackage)
+   {
+      this.workPackage = workPackage;
+   }
+
+   public User getUser()
+   {
+      return this.user;
+   }
+
+   public void setUser(final User user)
+   {
+      this.user = user;
+   }
+
+   public boolean getIsResponsibleEngineer()
+   {
+      return this.isResponsibleEngineer;
+   }
+
+   public void setIsResponsibleEngineer(final boolean isResponsibleEngineer)
+   {
+      this.isResponsibleEngineer = isResponsibleEngineer;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      result += "isResponsibleEngineer: " + isResponsibleEngineer;
+      return result;
    }
 }

@@ -26,7 +26,7 @@ public class WorkPackage implements Serializable
    private int version = 0;
 
    @ManyToOne
-   private Project projectID;
+   private Project project;
 
    @Column
    private int workPackageNumber;
@@ -92,14 +92,14 @@ public class WorkPackage implements Serializable
       return super.hashCode();
    }
 
-   public Project getProjectID()
+   public Project getProject()
    {
-      return this.projectID;
+      return this.project;
    }
 
-   public void setProjectID(final Project projectID)
+   public void setProject(final Project projectID)
    {
-      this.projectID = projectID;
+      this.project = projectID;
    }
 
    public int getWorkPackageNumber()

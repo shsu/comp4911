@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Version;
 import java.lang.Override;
+import ca.bcit.infosys.comp4911.domain.Project;
+import javax.persistence.ManyToOne;
+import ca.bcit.infosys.comp4911.domain.User;
 
 @Entity
 public class ProjectManagerAssignment implements Serializable
@@ -20,6 +23,12 @@ public class ProjectManagerAssignment implements Serializable
    @Version
    @Column(name = "version")
    private int version = 0;
+
+   @ManyToOne
+   private Project project;
+
+   @ManyToOne
+   private User user;
 
    public Integer getId()
    {
@@ -80,5 +89,25 @@ public class ProjectManagerAssignment implements Serializable
          return id.hashCode();
       }
       return super.hashCode();
+   }
+
+   public Project getProject()
+   {
+      return this.project;
+   }
+
+   public void setProject(final Project project)
+   {
+      this.project = project;
+   }
+
+   public User getUser()
+   {
+      return this.user;
+   }
+
+   public void setUser(final User user)
+   {
+      this.user = user;
    }
 }
