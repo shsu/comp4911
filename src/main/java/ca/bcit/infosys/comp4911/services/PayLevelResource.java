@@ -1,8 +1,8 @@
 package ca.bcit.infosys.comp4911.services;
 
-import ca.bcit.infosys.comp4911.access.TimesheetDao;
+import ca.bcit.infosys.comp4911.access.PayLevelDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
-import ca.bcit.infosys.comp4911.domain.Timesheet;
+import ca.bcit.infosys.comp4911.domain.PayLevel;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -12,55 +12,55 @@ import javax.ws.rs.core.Response;
 /**
  * Created by Graeme on 2/8/14.
  */
-@Path("/timesheets")
-public class TimesheetResource {
+@Path("/pay_rates")
+public class PayLevelResource {
 
     @EJB
-    TimesheetDao timesheetDao;
+    PayLevelDao payLevelDao;
 
     @EJB
     UserTokens userTokens;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAllTimesheets(
+    public Response retrieveAllPayLevels(
             @HeaderParam("Authorization") final String token)
     {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        return Response.ok().entity(timesheetDao.getAll()).header(SH.cors, "*")
+        return Response.ok().entity(payLevelDao.getAll()).header(SH.cors, "*")
                 .header(SH.auth, token).build();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveTimesheet(
+    public Response retrievePayLevel(
             @HeaderParam("Authorization") final String token,
             @PathParam("id") Integer id)
     {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        Timesheet timesheet = timesheetDao.read(id);
-        if(timesheet == null)
+        PayLevel payLevel = payLevelDao.read(id);
+        if(payLevel == null)
         {
             return Response.status(404).header(SH.cors, "*")
                     .header(SH.auth, token).build();
         }
-        return Response.ok().entity(timesheet).header(SH.cors, "*")
+
+        return Response.ok().entity(payLevel).header(SH.cors, "*")
                 .header(SH.auth, token).build();
     }
 
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPayRate(
+    public Response createPayLevel(
             @HeaderParam("Authorization") final String token,
-            Timesheet timesheet)
+            PayLevel payLevel)
     {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        timesheetDao.create(timesheet);
+        payLevelDao.create(payLevel);
         return Response.status(201).header(SH.cors, "*")
                 .header(SH.auth, token).build();
     }
@@ -68,42 +68,43 @@ public class TimesheetResource {
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateTimesheet(
+    public Response updatePayLevel(
             @HeaderParam("Authorization") final String token,
-            @PathParam("id") Integer id, Timesheet timesheet)
+            @PathParam("id") Integer id,
+            PayLevel payLevel)
     {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        Timesheet update = timesheetDao.read(id);
+        PayLevel update = payLevelDao.read(id);
         if(update == null)
         {
             return Response.status(404).header(SH.cors, "*")
                     .header(SH.auth, token).build();
         }
-        timesheetDao.update(timesheet);
+
+        payLevelDao.update(payLevel);
         return Response.ok().header(SH.cors, "*")
                 .header(SH.auth, token).build();
     }
 
     @DELETE
     @Path("{id}")
-    public Response deleteTimesheet(
+    public Response deletePayLevel(
             @HeaderParam("Authorization") final String token,
             @PathParam("id") Integer id)
     {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        Timesheet timesheet = timesheetDao.read(id);
-        if(timesheet == null)
+        PayLevel payLevel = payLevelDao.read(id);
+        if(payLevel == null)
         {
             return Response.status(404).header(SH.cors, "*")
                     .header(SH.auth, token).build();
         }
 
-        timesheetDao.delete(timesheet);
-        return Response.status(404).header(SH.cors, "*")
+        payLevelDao.delete(payLevel);
+        return Response.ok().header(SH.cors, "*")
                 .header(SH.auth, token).build();
     }
-
 
 }

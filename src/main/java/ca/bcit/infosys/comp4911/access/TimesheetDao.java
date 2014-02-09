@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.Timesheet;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -49,7 +50,7 @@ public class TimesheetDao {
         TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.isApproved = :approved" +
                 " and t.userID = :id",
                 Timesheet.class);
-        query.setParameter("isApproved", false);
+        query.setParameter("approved", false);
         query.setParameter("id", userID);
         return query.getResultList();
     }

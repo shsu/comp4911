@@ -4,6 +4,7 @@ import ca.bcit.infosys.comp4911.services.SH;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -15,7 +16,8 @@ public class UserTokens {
 
     private Map<String, Integer> tokensForAuthenticatedUserID;
 
-    public UserTokens() {
+    @PostConstruct
+    public void init()  {
         tokensForAuthenticatedUserID = Maps.newHashMap();
     }
 
