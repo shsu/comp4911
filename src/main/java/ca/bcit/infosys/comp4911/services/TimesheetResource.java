@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.services;
 
 import ca.bcit.infosys.comp4911.access.TimesheetDao;
+import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.Timesheet;
 import org.json.JSONObject;
 
@@ -18,9 +19,14 @@ public class TimesheetResource {
     @EJB
     TimesheetDao timesheetDao;
 
+    @EJB
+    UserTokens userTokens;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAllTimesheets() {
+    public Response retrieveAllTimesheets(@HeaderParam("Authorization") final String token) {
+        int userId = userTokens.verifyTokenAndReturnUserID(token);
+
         return Response.ok().entity(timesheetDao.getAll()).header(SH.cors, "*").build();
     }
 

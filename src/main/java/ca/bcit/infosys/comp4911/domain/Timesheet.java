@@ -53,7 +53,7 @@ public class Timesheet implements Serializable
    private int note;
 
    @Column
-   private int isApproved;
+   private boolean isApproved;
 
    @ManyToOne
    private User userID;
@@ -210,12 +210,12 @@ public class Timesheet implements Serializable
       this.note = note;
    }
 
-   public int getIsApproved()
+   public boolean getIsApproved()
    {
       return this.isApproved;
    }
 
-   public void setIsApproved(final int isApproved)
+   public void setIsApproved(final boolean isApproved)
    {
       this.isApproved = isApproved;
    }
@@ -247,4 +247,21 @@ public class Timesheet implements Serializable
    {
       this.userID = UserID;
    }
+
+    public Timesheet() {
+    }
+
+    public Timesheet(int weekNumber, int year, int hour, boolean isApproved, User userID) {
+        this.weekNumber = weekNumber;
+        this.year = year;
+        this.monday = hour;
+        this.tuesday = hour;
+        this.wednesday = hour;
+        this.thursday = hour;
+        this.friday = hour;
+        this.saturday = 0;
+        this.sunday = 0;
+        this.isApproved = isApproved;
+        this.userID = userID;
+    }
 }
