@@ -5,12 +5,15 @@ import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.User;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
+import com.google.common.io.BaseEncoding;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Path("/user")
 public class UserResource {
@@ -41,7 +44,9 @@ public class UserResource {
               Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
         }
 
-        String[] credentials = authorization.split(":");
+        String decodedCredentials = new String(
+          BaseEncoding.base64().decode(authorization.substring("Basic ".length())), UTF_8);
+        String[] credentials = decodedCredentials.split(":");
 
         if (credentials.length != 2) {
             throw new WebApplicationException(
