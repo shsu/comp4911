@@ -3,6 +3,15 @@ package ca.bcit.infosys.comp4911.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Version;
+import java.lang.Override;
+import ca.bcit.infosys.comp4911.domain.WorkPackage;
+import javax.persistence.ManyToOne;
+
 @Entity
 public class WorkPackageStatusReport implements Serializable
 {
@@ -20,6 +29,9 @@ public class WorkPackageStatusReport implements Serializable
 
    @Column
    private int year;
+
+   @ManyToOne
+   private WorkPackage workPackage;
 
    public Integer getId()
    {
@@ -100,5 +112,15 @@ public class WorkPackageStatusReport implements Serializable
       result += "weekNumber: " + weekNumber;
       result += ", year: " + year;
       return result;
+   }
+
+   public WorkPackage getWorkPackage()
+   {
+      return this.workPackage;
+   }
+
+   public void setWorkPackage(final WorkPackage workPackage)
+   {
+      this.workPackage = workPackage;
    }
 }

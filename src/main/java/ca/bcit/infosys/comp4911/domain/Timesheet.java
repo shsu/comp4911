@@ -2,6 +2,7 @@ package ca.bcit.infosys.comp4911.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import ca.bcit.infosys.comp4911.domain.WorkPackage;
 
 @Entity
 public class Timesheet implements Serializable
@@ -46,10 +47,13 @@ public class Timesheet implements Serializable
    private int note;
 
    @Column
-   private int isApproved;
+   private boolean isApproved;
 
    @ManyToOne
-   private User userID;
+   private User user;
+
+   @ManyToOne
+   private WorkPackage workPackage;
 
    public Integer getId()
    {
@@ -203,12 +207,12 @@ public class Timesheet implements Serializable
       this.note = note;
    }
 
-   public int getIsApproved()
+   public boolean getIsApproved()
    {
       return this.isApproved;
    }
 
-   public void setIsApproved(final int isApproved)
+   public void setIsApproved(final boolean isApproved)
    {
       this.isApproved = isApproved;
    }
@@ -231,13 +235,42 @@ public class Timesheet implements Serializable
       return result;
    }
 
-   public User getUserID()
+   public User getUser()
    {
-      return this.userID;
+      return this.user;
    }
 
-   public void setUserID(final User UserID)
+   public void setUser(final User UserID)
    {
-      this.userID = UserID;
+      this.user = UserID;
+   }
+
+   public Timesheet()
+   {
+   }
+
+   public Timesheet(int weekNumber, int year, int hour, boolean isApproved, User user)
+   {
+      this.weekNumber = weekNumber;
+      this.year = year;
+      this.monday = hour;
+      this.tuesday = hour;
+      this.wednesday = hour;
+      this.thursday = hour;
+      this.friday = hour;
+      this.saturday = 0;
+      this.sunday = 0;
+      this.isApproved = isApproved;
+      this.user = user;
+   }
+
+   public WorkPackage getWorkPackage()
+   {
+      return this.workPackage;
+   }
+
+   public void setWorkPackage(final WorkPackage workPackage)
+   {
+      this.workPackage = workPackage;
    }
 }

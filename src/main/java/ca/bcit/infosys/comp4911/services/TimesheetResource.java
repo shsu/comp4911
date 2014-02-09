@@ -30,6 +30,7 @@ public class TimesheetResource {
 
         return Response.ok().entity(timesheetDao.getAll()).header(SH.cors, "*")
                 .header(SH.auth, token).build();
+
     }
 
     @GET

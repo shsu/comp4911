@@ -2,6 +2,16 @@ package ca.bcit.infosys.comp4911.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Version;
+import java.lang.Override;
+import javax.persistence.ManyToOne;
+import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class User implements Serializable
@@ -26,6 +36,15 @@ public class User implements Serializable
 
    @Column
    private String lastName;
+
+   @ManyToOne
+   private UserRoleGroup userRoleGroup;
+
+   @ManyToOne
+   private PayLevel payLevel;
+
+   @Temporal(TemporalType.DATE)
+   private Date startDate;
 
    public Integer getId()
    {
@@ -119,6 +138,48 @@ public class User implements Serializable
       this.lastName = lastName;
    }
 
+   public User()
+   {
+   }
+
+   public User(String username, String password, String firstName, String lastName)
+   {
+      this.username = username;
+      this.password = password;
+      this.firstName = firstName;
+      this.lastName = lastName;
+   }
+
+   public UserRoleGroup getUserRoleGroup()
+   {
+      return this.userRoleGroup;
+   }
+
+   public void setUserRoleGroup(final UserRoleGroup UserRoleGroup)
+   {
+      this.userRoleGroup = UserRoleGroup;
+   }
+
+   public PayLevel getPayLevel()
+   {
+      return this.payLevel;
+   }
+
+   public void setPayLevel(final PayLevel PayLevel)
+   {
+      this.payLevel = PayLevel;
+   }
+
+   public Date getStartDate()
+   {
+      return this.startDate;
+   }
+
+   public void setStartDate(final Date startDate)
+   {
+      this.startDate = startDate;
+   }
+
    @Override
    public String toString()
    {
@@ -133,14 +194,4 @@ public class User implements Serializable
          result += ", lastName: " + lastName;
       return result;
    }
-
-    public User(){
-    }
-
-    public User(String username, String password, String firstName, String lastName) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
 }
