@@ -3,6 +3,7 @@ package ca.bcit.infosys.comp4911.services;
 import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.User;
+import ca.bcit.infosys.comp4911.helper.SH;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.io.BaseEncoding;
@@ -18,7 +19,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Path("/user")
 public class UserResource {
 
-
     @EJB
     private UserTokens userTokens;
 
@@ -28,8 +28,8 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAuthenticatedUserInfo(
-      @HeaderParam("Authorization") final String token) {
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+      @HeaderParam(SH.auth) final String authorization) {
+        int userId = userTokens.verifyTokenAndReturnUserID(authorization);
 
         return Response.ok().entity(userDao.read(userId)).header(SH.cors, "*").build();
     }
@@ -38,7 +38,7 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveToken(
-      @HeaderParam("Authorization") final String authorization) {
+      @HeaderParam(SH.auth) final String authorization) {
         if (Strings.isNullOrEmpty(authorization)) {
             throw new WebApplicationException(
               Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
@@ -71,7 +71,7 @@ public class UserResource {
     @Path("/token")
     @DELETE
     public Response invalidateToken(
-      @HeaderParam("Authorization") final String authorization) {
+      @HeaderParam(SH.auth) final String authorization) {
         userTokens.clearToken(authorization);
 
         return Response.status(Response.Status.NO_CONTENT).header(SH.cors, "*").build();

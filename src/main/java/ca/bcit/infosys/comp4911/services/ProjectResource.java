@@ -6,7 +6,7 @@ import ca.bcit.infosys.comp4911.access.ProjectDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.Project;
 import ca.bcit.infosys.comp4911.domain.User;
-import ca.bcit.infosys.comp4911.domain.WorkPackageAssignment;
+import ca.bcit.infosys.comp4911.helper.SH;
 import org.json.JSONObject;
 import javax.ejb.EJB;
 import javax.ws.rs.*;

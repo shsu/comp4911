@@ -1,4 +1,4 @@
-package ca.bcit.infosys.comp4911.services;
+package ca.bcit.infosys.comp4911.helper;
 
 /**
  * Services Helper
