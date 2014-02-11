@@ -1,276 +1,240 @@
 package ca.bcit.infosys.comp4911.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 import java.io.Serializable;
-import ca.bcit.infosys.comp4911.domain.WorkPackage;
 
 @Entity
-public class Timesheet implements Serializable
-{
+public class Timesheet implements Serializable {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id", updatable = false, nullable = false)
-   private Integer id = null;
-   @Version
-   @Column(name = "version")
-   private int version = 0;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id = null;
+    @Version
+    @Column(name = "version")
+    private int version = 0;
 
-   @Column
-   private int weekNumber;
+    @Column
+    private int weekNumber;
 
-   @Column
-   private int year;
+    @Column
+    private int year;
 
-   @Column
-   private int monday;
+    @Column
+    private int monday;
 
-   @Column
-   private int tuesday;
+    @Column
+    private int tuesday;
 
-   @Column
-   private int wednesday;
+    @Column
+    private int wednesday;
 
-   @Column
-   private int thursday;
+    @Column
+    private int thursday;
 
-   @Column
-   private int friday;
+    @Column
+    private int friday;
 
-   @Column
-   private int saturday;
+    @Column
+    private int saturday;
 
-   @Column
-   private int sunday;
+    @Column
+    private int sunday;
 
-   @Column
-   private int note;
+    @Column
+    private int note;
 
-   @Column
-   private boolean isApproved;
+    @Column
+    private boolean isApproved;
 
-   @ManyToOne
-   private User user;
+    @ManyToOne
+    private User user;
 
-   @ManyToOne
-   private WorkPackage workPackage;
+    @ManyToOne
+    private WorkPackage workPackage;
 
-   public Integer getId()
-   {
-      return this.id;
-   }
+    public Integer getId() {
+        return this.id;
+    }
 
-   public void setId(final Integer id)
-   {
-      this.id = id;
-   }
+    public void setId(final Integer id) {
+        this.id = id;
+    }
 
-   public int getVersion()
-   {
-      return this.version;
-   }
+    public int getVersion() {
+        return this.version;
+    }
 
-   public void setVersion(final int version)
-   {
-      this.version = version;
-   }
+    public void setVersion(final int version) {
+        this.version = version;
+    }
 
-   @Override
-   public boolean equals(Object that)
-   {
-      if (this == that)
-      {
-         return true;
-      }
-      if (that == null)
-      {
-         return false;
-      }
-      if (getClass() != that.getClass())
-      {
-         return false;
-      }
-      if (id != null)
-      {
-         return id.equals(((Timesheet) that).id);
-      }
-      return super.equals(that);
-   }
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        if (id != null) {
+            return id.equals(((Timesheet) that).id);
+        }
+        return super.equals(that);
+    }
 
-   @Override
-   public int hashCode()
-   {
-      if (id != null)
-      {
-         return id.hashCode();
-      }
-      return super.hashCode();
-   }
+    @Override
+    public int hashCode() {
+        if (id != null) {
+            return id.hashCode();
+        }
+        return super.hashCode();
+    }
 
-   public int getWeekNumber()
-   {
-      return this.weekNumber;
-   }
+    public int getWeekNumber() {
+        return this.weekNumber;
+    }
 
-   public void setWeekNumber(final int weekNumber)
-   {
-      this.weekNumber = weekNumber;
-   }
+    public void setWeekNumber(final int weekNumber) {
+        this.weekNumber = weekNumber;
+    }
 
-   public int getYear()
-   {
-      return this.year;
-   }
+    public int getYear() {
+        return this.year;
+    }
 
-   public void setYear(final int year)
-   {
-      this.year = year;
-   }
+    public void setYear(final int year) {
+        this.year = year;
+    }
 
-   public int getMonday()
-   {
-      return this.monday;
-   }
+    public int getMonday() {
+        return this.monday;
+    }
 
-   public void setMonday(final int monday)
-   {
-      this.monday = monday;
-   }
+    public void setMonday(final int monday) {
+        this.monday = monday;
+    }
 
-   public int getTuesday()
-   {
-      return this.tuesday;
-   }
+    public int getTuesday() {
+        return this.tuesday;
+    }
 
-   public void setTuesday(final int tuesday)
-   {
-      this.tuesday = tuesday;
-   }
+    public void setTuesday(final int tuesday) {
+        this.tuesday = tuesday;
+    }
 
-   public int getWednesday()
-   {
-      return this.wednesday;
-   }
+    public int getWednesday() {
+        return this.wednesday;
+    }
 
-   public void setWednesday(final int wednesday)
-   {
-      this.wednesday = wednesday;
-   }
+    public void setWednesday(final int wednesday) {
+        this.wednesday = wednesday;
+    }
 
-   public int getThursday()
-   {
-      return this.thursday;
-   }
+    public int getThursday() {
+        return this.thursday;
+    }
 
-   public void setThursday(final int thursday)
-   {
-      this.thursday = thursday;
-   }
+    public void setThursday(final int thursday) {
+        this.thursday = thursday;
+    }
 
-   public int getFriday()
-   {
-      return this.friday;
-   }
+    public int getFriday() {
+        return this.friday;
+    }
 
-   public void setFriday(final int friday)
-   {
-      this.friday = friday;
-   }
+    public void setFriday(final int friday) {
+        this.friday = friday;
+    }
 
-   public int getSaturday()
-   {
-      return this.saturday;
-   }
+    public int getSaturday() {
+        return this.saturday;
+    }
 
-   public void setSaturday(final int saturday)
-   {
-      this.saturday = saturday;
-   }
+    public void setSaturday(final int saturday) {
+        this.saturday = saturday;
+    }
 
-   public int getSunday()
-   {
-      return this.sunday;
-   }
+    public int getSunday() {
+        return this.sunday;
+    }
 
-   public void setSunday(final int sunday)
-   {
-      this.sunday = sunday;
-   }
+    public void setSunday(final int sunday) {
+        this.sunday = sunday;
+    }
 
-   public int getNote()
-   {
-      return this.note;
-   }
+    public int getNote() {
+        return this.note;
+    }
 
-   public void setNote(final int note)
-   {
-      this.note = note;
-   }
+    public void setNote(final int note) {
+        this.note = note;
+    }
 
-   public boolean getIsApproved()
-   {
-      return this.isApproved;
-   }
+    public boolean getIsApproved() {
+        return this.isApproved;
+    }
 
-   public void setIsApproved(final boolean isApproved)
-   {
-      this.isApproved = isApproved;
-   }
+    public void setIsApproved(final boolean isApproved) {
+        this.isApproved = isApproved;
+    }
 
-   @Override
-   public String toString()
-   {
-      String result = getClass().getSimpleName() + " ";
-      result += "weekNumber: " + weekNumber;
-      result += ", year: " + year;
-      result += ", monday: " + monday;
-      result += ", tuesday: " + tuesday;
-      result += ", wednesday: " + wednesday;
-      result += ", thursday: " + thursday;
-      result += ", friday: " + friday;
-      result += ", saturday: " + saturday;
-      result += ", sunday: " + sunday;
-      result += ", note: " + note;
-      result += ", isApproved: " + isApproved;
-      return result;
-   }
+    @Override
+    public String toString() {
+        String result = getClass().getSimpleName() + " ";
+        result += "weekNumber: " + weekNumber;
+        result += ", year: " + year;
+        result += ", monday: " + monday;
+        result += ", tuesday: " + tuesday;
+        result += ", wednesday: " + wednesday;
+        result += ", thursday: " + thursday;
+        result += ", friday: " + friday;
+        result += ", saturday: " + saturday;
+        result += ", sunday: " + sunday;
+        result += ", note: " + note;
+        result += ", isApproved: " + isApproved;
+        return result;
+    }
 
-   public User getUser()
-   {
-      return this.user;
-   }
+    public User getUser() {
+        return this.user;
+    }
 
-   public void setUser(final User UserID)
-   {
-      this.user = UserID;
-   }
+    public void setUser(final User UserID) {
+        this.user = UserID;
+    }
 
-   public Timesheet()
-   {
-   }
+    public Timesheet() {
+    }
 
-   public Timesheet(int weekNumber, int year, int hour, boolean isApproved, User user)
-   {
-      this.weekNumber = weekNumber;
-      this.year = year;
-      this.monday = hour;
-      this.tuesday = hour;
-      this.wednesday = hour;
-      this.thursday = hour;
-      this.friday = hour;
-      this.saturday = 0;
-      this.sunday = 0;
-      this.isApproved = isApproved;
-      this.user = user;
-   }
+    public Timesheet(int weekNumber, int year, int hour, boolean isApproved, User user) {
+        this.weekNumber = weekNumber;
+        this.year = year;
+        this.monday = hour;
+        this.tuesday = hour;
+        this.wednesday = hour;
+        this.thursday = hour;
+        this.friday = hour;
+        this.saturday = 0;
+        this.sunday = 0;
+        this.isApproved = isApproved;
+        this.user = user;
+    }
 
-   public WorkPackage getWorkPackage()
-   {
-      return this.workPackage;
-   }
+    public WorkPackage getWorkPackage() {
+        return this.workPackage;
+    }
 
-   public void setWorkPackage(final WorkPackage workPackage)
-   {
-      this.workPackage = workPackage;
-   }
+    public void setWorkPackage(final WorkPackage workPackage) {
+        this.workPackage = workPackage;
+    }
 }
