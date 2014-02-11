@@ -37,7 +37,7 @@ public class WorkPackageAssignmentDao {
     }
 
     public List<WorkPackageAssignment> getAll() {
-        TypedQuery<WorkPackageAssignment> query = em.createQuery("",
+        TypedQuery<WorkPackageAssignment> query = em.createQuery("select wpa from WorkPackageAssignment wpa",
                 WorkPackageAssignment.class);
         return query.getResultList();
     }

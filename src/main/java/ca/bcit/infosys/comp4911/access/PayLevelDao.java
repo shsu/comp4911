@@ -38,7 +38,7 @@ public class PayLevelDao {
     }
 
     public List<PayLevel> getAll() {
-        TypedQuery<PayLevel> query = em.createQuery("",
+        TypedQuery<PayLevel> query = em.createQuery("select p from PayLevel p",
                 PayLevel.class);
         return query.getResultList();
     }

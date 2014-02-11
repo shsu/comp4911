@@ -38,7 +38,7 @@ public class ProjectDao {
     }
 
     public List<Project> getAll() {
-        TypedQuery<Project> query = em.createQuery("",
+        TypedQuery<Project> query = em.createQuery("select p from Project p",
                 Project.class);
         return query.getResultList();
     }

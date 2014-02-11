@@ -38,7 +38,7 @@ public class WorkPackageDao {
     }
 
     public List<WorkPackage> getAll() {
-        TypedQuery<WorkPackage> query = em.createQuery("",
+        TypedQuery<WorkPackage> query = em.createQuery("select wp from WorkPackage wp",
                 WorkPackage.class);
         return query.getResultList();
     }

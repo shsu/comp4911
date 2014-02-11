@@ -38,7 +38,7 @@ public class WorkPackageStatusReportDao {
     }
 
     public List<WorkPackageStatusReport> getAll() {
-        TypedQuery<WorkPackageStatusReport> query = em.createQuery("",
+        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r",
                 WorkPackageStatusReport.class);
         return query.getResultList();
     }
