@@ -28,8 +28,8 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAuthenticatedUserInfo(
-      @HeaderParam(SH.auth) final String authorization) {
-        int userId = userTokens.verifyTokenAndReturnUserID(authorization);
+      @HeaderParam(SH.auth) final String token) {
+        int userId = userTokens.verifyTokenAndReturnUserID(token);
 
         return Response.ok().entity(userDao.read(userId)).header(SH.cors, "*").build();
     }
@@ -38,14 +38,14 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveToken(
-      @HeaderParam(SH.auth) final String authorization) {
-        if (Strings.isNullOrEmpty(authorization)) {
+      @HeaderParam(SH.auth) final String token) {
+        if (Strings.isNullOrEmpty(token)) {
             throw new WebApplicationException(
               Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
         }
 
         String decodedCredentials = new String(
-          BaseEncoding.base64().decode(authorization.substring("Basic ".length())), UTF_8);
+          BaseEncoding.base64().decode(token.substring("Basic ".length())), UTF_8);
         String[] credentials = decodedCredentials.split(":");
 
         if (credentials.length != 2) {
@@ -71,8 +71,8 @@ public class UserResource {
     @Path("/token")
     @DELETE
     public Response invalidateToken(
-      @HeaderParam(SH.auth) final String authorization) {
-        userTokens.clearToken(authorization);
+      @HeaderParam(SH.auth) final String token) {
+        userTokens.clearToken(token);
 
         return Response.status(Response.Status.NO_CONTENT).header(SH.cors, "*").build();
     }

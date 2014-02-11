@@ -25,87 +25,77 @@ public class PayLevelResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllPayLevels(
-            @HeaderParam("Authorization") final String token)
-    {
+      @HeaderParam(SH.auth) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         return Response.ok().entity(payLevelDao.getAll()).header(SH.cors, "*")
-                .build();
+          .build();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrievePayLevel(
-            @HeaderParam("Authorization") final String token,
-            @PathParam("id") Integer id)
-    {
+      @HeaderParam(SH.auth) final String token,
+      @PathParam("id") Integer id) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         PayLevel payLevel = payLevelDao.read(id);
-        if(payLevel == null)
-        {
+        if (payLevel == null) {
             return Response.status(404).header(SH.cors, "*")
-                    .build();
+              .build();
         }
 
         return Response.ok().entity(payLevel).header(SH.cors, "*")
-                .build();
+          .build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createPayLevel(
-            @HeaderParam("Authorization") final String token,
-            PayLevel payLevel)
-    {
+      @HeaderParam(SH.auth) final String token, PayLevel payLevel) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         payLevelDao.create(payLevel);
         return Response.status(201).header(SH.cors, "*")
-                .build();
+          .build();
     }
 
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePayLevel(
-            @HeaderParam("Authorization") final String token,
-            @PathParam("id") Integer id,
-            PayLevel payLevel)
-    {
+      @HeaderParam(SH.auth) final String token,
+      @PathParam("id") Integer id, PayLevel payLevel) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         PayLevel update = payLevelDao.read(id);
-        if(update == null)
-        {
+        if (update == null) {
             return Response.status(404).header(SH.cors, "*")
-                    .build();
+              .build();
         }
 
         payLevelDao.update(payLevel);
         return Response.ok().header(SH.cors, "*")
-                .build();
+          .build();
     }
 
     @DELETE
     @Path("{id}")
     public Response deletePayLevel(
-            @HeaderParam("Authorization") final String token,
-            @PathParam("id") Integer id)
-    {
+      @HeaderParam(SH.auth) final String token,
+      @PathParam("id") Integer id) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         PayLevel payLevel = payLevelDao.read(id);
-        if(payLevel == null)
-        {
+        if (payLevel == null) {
             return Response.status(404).header(SH.cors, "*")
-                    .build();
+              .build();
         }
 
         payLevelDao.delete(payLevel);
         return Response.ok().header(SH.cors, "*")
-                .build();
+          .build();
     }
 
 }

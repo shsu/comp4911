@@ -22,18 +22,18 @@ public class UsersResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAll(
-            @HeaderParam("Authorization") final String token) {
+      @HeaderParam(SH.auth) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
         return Response.ok().entity(userDao.getAll()).header(SH.cors, "*")
-                .build();
+          .build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(
-            @HeaderParam("Authorization") final String token,
-            final User user) {
+      @HeaderParam(SH.auth) final String token,
+      final User user) {
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
         // Need to do some Role Checks right here
@@ -41,48 +41,45 @@ public class UsersResource {
 
         userDao.create(user);
         return Response.status(201).header(SH.cors, "*")
-                .build();
+          .build();
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveUser(
-            @HeaderParam("Authorization") final String token,
-            @PathParam("id") final Integer id) {
+      @HeaderParam(SH.auth) final String token,
+      @PathParam("id") final Integer id) {
 
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
         User user = userDao.read(id);
-        if(user == null)
-        {
+        if (user == null) {
             return Response.status(404).header(SH.cors, "*")
-                    .build();
+              .build();
         }
 
         return Response.ok().entity(user).header(SH.cors, "*")
-                .build();
+          .build();
     }
 
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUser(
-            @HeaderParam("Authorization") final String token,
-            @PathParam("id") final Integer id,
-            final User user)
-    {
+      @HeaderParam(SH.auth) final String token,
+      @PathParam("id") final Integer id,
+      final User user) {
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
         User userUpdate = userDao.read(id);
-        if(userUpdate == null)
-        {
+        if (userUpdate == null) {
             return Response.status(404).header(SH.cors, "*")
-                    .build();
+              .build();
         }
 
         userDao.update(user);
         return Response.ok().header(SH.cors, "*")
-                .build();
+          .build();
     }
 }
