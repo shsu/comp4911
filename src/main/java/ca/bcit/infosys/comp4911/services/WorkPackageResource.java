@@ -35,7 +35,7 @@ public class WorkPackageResource {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         return Response.ok().entity(workPackageDao.getAll()).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @GET
@@ -51,10 +51,10 @@ public class WorkPackageResource {
         if(workPackage == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
         return Response.ok().entity(workPackage).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @POST
@@ -67,7 +67,7 @@ public class WorkPackageResource {
 
         workPackageDao.create(workPackage);
         return Response.status(201).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @PUT
@@ -84,12 +84,12 @@ public class WorkPackageResource {
         if(workPackageUpdate == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         workPackageDao.update(workPackage);
         return Response.ok().header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @DELETE
@@ -104,12 +104,12 @@ public class WorkPackageResource {
         if(workPackage == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         workPackageDao.delete(workPackage);
         return Response.status(204).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @GET
@@ -124,11 +124,11 @@ public class WorkPackageResource {
         if(workPackage == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         return Response.ok().entity(workPackageStatusReportDao.getAll()).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @POST
@@ -145,13 +145,13 @@ public class WorkPackageResource {
         if(workPackage == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         workPackageStatusReportDao.create(workPackageStatusReport);
 
         return Response.status(201).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @PUT
@@ -169,19 +169,19 @@ public class WorkPackageResource {
         if(wpUpdate == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         WorkPackageStatusReport reportUpdate = workPackageStatusReportDao.read(reportId);
         if(reportUpdate == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         workPackageStatusReportDao.update(workPackageStatusReport);
         return Response.ok().header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @DELETE
@@ -197,19 +197,19 @@ public class WorkPackageResource {
         if(workPackage == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         WorkPackageStatusReport workPackageStatusReport = workPackageStatusReportDao.read(reportId);
         if(workPackageStatusReport == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         workPackageStatusReportDao.delete(workPackageStatusReport);
         return Response.status(204).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
 }
