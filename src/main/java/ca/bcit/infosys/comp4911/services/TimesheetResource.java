@@ -30,7 +30,7 @@ public class TimesheetResource {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         return Response.ok().entity(timesheetDao.getAll()).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
 
     }
 
@@ -47,10 +47,10 @@ public class TimesheetResource {
         if(timesheet == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
         return Response.ok().entity(timesheet).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
 
@@ -64,7 +64,7 @@ public class TimesheetResource {
 
         timesheetDao.create(timesheet);
         return Response.status(201).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @PUT
@@ -80,11 +80,11 @@ public class TimesheetResource {
         if(update == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
         timesheetDao.update(timesheet);
         return Response.ok().header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @DELETE
@@ -99,12 +99,12 @@ public class TimesheetResource {
         if(timesheet == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         timesheetDao.delete(timesheet);
         return Response.status(404).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
 

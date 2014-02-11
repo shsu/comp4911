@@ -26,7 +26,7 @@ public class UsersResource {
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
         return Response.ok().entity(userDao.getAll()).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @POST
@@ -41,7 +41,7 @@ public class UsersResource {
 
         userDao.create(user);
         return Response.status(201).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @GET
@@ -57,11 +57,11 @@ public class UsersResource {
         if(user == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         return Response.ok().entity(user).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @PUT
@@ -78,11 +78,11 @@ public class UsersResource {
         if(userUpdate == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         userDao.update(user);
         return Response.ok().header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 }

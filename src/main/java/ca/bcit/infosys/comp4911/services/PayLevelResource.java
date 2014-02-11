@@ -30,7 +30,7 @@ public class PayLevelResource {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         return Response.ok().entity(payLevelDao.getAll()).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @GET
@@ -46,11 +46,11 @@ public class PayLevelResource {
         if(payLevel == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         return Response.ok().entity(payLevel).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @POST
@@ -63,7 +63,7 @@ public class PayLevelResource {
 
         payLevelDao.create(payLevel);
         return Response.status(201).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @PUT
@@ -80,12 +80,12 @@ public class PayLevelResource {
         if(update == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         payLevelDao.update(payLevel);
         return Response.ok().header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @DELETE
@@ -100,12 +100,12 @@ public class PayLevelResource {
         if(payLevel == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         payLevelDao.delete(payLevel);
         return Response.ok().header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
 }

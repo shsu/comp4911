@@ -39,7 +39,7 @@ public class ProjectResource {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         return Response.ok().entity(projectDao.getAll()).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @GET
@@ -55,11 +55,11 @@ public class ProjectResource {
         if(project == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         return Response.ok().entity(project).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @POST
@@ -73,7 +73,7 @@ public class ProjectResource {
         projectDao.create(project);
 
         return Response.status(201).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @PUT
@@ -90,11 +90,11 @@ public class ProjectResource {
         if(update == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
         projectDao.update(Project);
         return Response.ok().header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @DELETE
@@ -109,12 +109,12 @@ public class ProjectResource {
         if(project == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         projectDao.delete(project);
         return Response.ok().header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @POST
@@ -130,14 +130,14 @@ public class ProjectResource {
         if(project == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         // At the moment only taking in a userid, but going to need more info than this.
         // workPackageAssignmentDao.create();
 
         return Response.status(201).header(SH.cors, "*")
-                .header(SH.auth, token).build();
+                .build();
     }
 
     @DELETE
@@ -153,20 +153,20 @@ public class ProjectResource {
         if(project == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         User user = userDao.read(userId);
         if(user == null)
         {
             return Response.status(404).header(SH.cors, "*")
-                    .header(SH.auth, token).build();
+                    .build();
         }
 
         // remove user from workPackageAssigment
         // workPackageDao.delete(workPackageAssignment)
 
         return Response.status(204).header(SH.cors, "*")
-                .header(SH.auth,token).build();
+                .build();
     }
 }
