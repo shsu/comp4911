@@ -40,6 +40,7 @@ public class UserTokens {
 
         String decodedToken = new String(
           BaseEncoding.base64().decode(authHeader.substring("Basic ".length())), UTF_8);
+        decodedToken = decodedToken.substring(0, decodedToken.length() - 1);
 
         Integer userID = tokensForAuthenticatedUserID.get(decodedToken);
 
