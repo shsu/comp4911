@@ -32,10 +32,7 @@ public class SampleData {
 
     private void generateUsers() {
         String hashedPassword = BCrypt.hashpw("password", BCrypt.gensalt());
-        for (int i = 1; i < 100; i++) {
-            userDao.create(new User("test" + i, hashedPassword,
-              "test-firstName " + i, "test-lastName " + i));
-        }
+        userDao.create(new User("admin@example.com",hashedPassword,"FirstName","LastName"));
     }
 
     private void generateTimesheets() {
