@@ -10,7 +10,7 @@ import javax.persistence.Version;
 import java.lang.Override;
 
 @Entity
-public class Timesheet implements Serializable
+public class TimesheetRow implements Serializable
 {
 
    @Id
@@ -20,18 +20,6 @@ public class Timesheet implements Serializable
    @Version
    @Column(name = "version")
    private int version = 0;
-
-   @Column
-   private int userID;
-
-   @Column
-   private int weekNumber;
-
-   @Column
-   private int year;
-
-   @Column
-   private boolean isApproved;
 
    public Integer getId()
    {
@@ -54,6 +42,15 @@ public class Timesheet implements Serializable
    }
 
    @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      if (id != null)
+         result += "id: " + id;
+      return result;
+   }
+
+   @Override
    public boolean equals(Object that)
    {
       if (this == that)
@@ -70,7 +67,7 @@ public class Timesheet implements Serializable
       }
       if (id != null)
       {
-         return id.equals(((Timesheet) that).id);
+         return id.equals(((TimesheetRow) that).id);
       }
       return super.equals(that);
    }
@@ -83,56 +80,5 @@ public class Timesheet implements Serializable
          return id.hashCode();
       }
       return super.hashCode();
-   }
-
-   public int getUserID()
-   {
-      return this.userID;
-   }
-
-   public void setUserID(final int userID)
-   {
-      this.userID = userID;
-   }
-
-   public int getWeekNumber()
-   {
-      return this.weekNumber;
-   }
-
-   public void setWeekNumber(final int weekNumber)
-   {
-      this.weekNumber = weekNumber;
-   }
-
-   public int getYear()
-   {
-      return this.year;
-   }
-
-   public void setYear(final int year)
-   {
-      this.year = year;
-   }
-
-   public boolean getIsApproved()
-   {
-      return this.isApproved;
-   }
-
-   public void setIsApproved(final boolean isApproved)
-   {
-      this.isApproved = isApproved;
-   }
-
-   @Override
-   public String toString()
-   {
-      String result = getClass().getSimpleName() + " ";
-      result += "userID: " + userID;
-      result += ", weekNumber: " + weekNumber;
-      result += ", year: " + year;
-      result += ", isApproved: " + isApproved;
-      return result;
    }
 }

@@ -39,13 +39,6 @@ public class SampleData {
     }
 
     private void generateTimesheets() {
-        User user = userDao.read(1);
 
-        for (int i = 4; i < 20; i++) {
-            timesheetDao.create(new Timesheet(i, 2014, 2, true, user));
-            timesheetDao.create(new Timesheet(i, 2014, 3, true, user));
-            timesheetDao.create(new Timesheet(i, 2014, 1, false, user));
-            timesheetDao.create(new Timesheet(i, 2014, 4, false, user));
-        }
     }
 }

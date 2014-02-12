@@ -10,7 +10,7 @@ import javax.persistence.Version;
 import java.io.Serializable;
 
 @Entity
-public class ProjectManagerAssignment implements Serializable {
+public class ProjectAssignment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,7 +62,7 @@ public class ProjectManagerAssignment implements Serializable {
             return false;
         }
         if (id != null) {
-            return id.equals(((ProjectManagerAssignment) that).id);
+            return id.equals(((ProjectAssignment) that).id);
         }
         return super.equals(that);
     }

@@ -8,8 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-
-
 /**
  * Created by Graeme on 2/8/14.
  */
@@ -48,7 +46,7 @@ public class TimesheetDao {
 
     public List<Timesheet> getRejected(final Integer userID) {
         TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.isApproved = :approved" +
-                " and t.user = :id",
+                " and t.userID = :id",
                 Timesheet.class);
         query.setParameter("approved", false);
         query.setParameter("id", userID);

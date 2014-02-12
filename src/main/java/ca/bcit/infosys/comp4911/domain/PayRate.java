@@ -99,8 +99,7 @@ public class PayRate implements Serializable {
         if (payLevelName != null && !payLevelName.trim().isEmpty())
             result += "payLevelName: " + payLevelName;
         result += ", year: " + year;
-        if (rate != null)
-            result += ", rate: " + rate;
+        result += ", rate: " + rate;
         return result;
     }
 }

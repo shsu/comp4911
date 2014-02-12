@@ -39,7 +39,7 @@ public class User implements Serializable {
     private UserRoleGroup userRoleGroup;
 
     @ManyToOne
-    private PayLevel payLevel;
+    private PayRate payLevel;
 
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -135,11 +135,11 @@ public class User implements Serializable {
         this.userRoleGroup = UserRoleGroup;
     }
 
-    public PayLevel getPayLevel() {
+    public PayRate getPayLevel() {
         return this.payLevel;
     }
 
-    public void setPayLevel(final PayLevel PayLevel) {
+    public void setPayLevel(final PayRate PayLevel) {
         this.payLevel = PayLevel;
     }
 
