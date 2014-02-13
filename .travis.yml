@@ -5,3 +5,6 @@ branches:
   only:
     - master
     - develop
+notifications:
+  email:
+    - team@comp4911.com
