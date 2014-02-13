@@ -6,8 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 public class WorkPackageAssignment implements Serializable {
@@ -28,6 +31,36 @@ public class WorkPackageAssignment implements Serializable {
 
     @Column
     private boolean isResponsibleEngineer;
+
+    public boolean isResponsibleEngineer() {
+        return isResponsibleEngineer;
+    }
+
+    public void setResponsibleEngineer(boolean isResponsibleEngineer) {
+        this.isResponsibleEngineer = isResponsibleEngineer;
+    }
+
+    public Date getActivateDate() {
+        return activateDate;
+    }
+
+    public void setActivateDate(Date activateDate) {
+        this.activateDate = activateDate;
+    }
+
+    public Date getDeactivateDate() {
+        return deactivateDate;
+    }
+
+    public void setDeactivateDate(Date deactivateDate) {
+        this.deactivateDate = deactivateDate;
+    }
+
+    @Temporal(TemporalType.DATE)
+    private Date activateDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date deactivateDate;
 
     public Integer getId() {
         return this.id;

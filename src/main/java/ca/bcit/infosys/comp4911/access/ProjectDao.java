@@ -17,6 +17,8 @@ public class ProjectDao {
     @PersistenceContext(unitName = "comp4911")
     EntityManager em;
 
+    public static final String PROJECT = Project.class.getSimpleName();
+
     public void create (final Project project)
     {
         em.persist(project);
@@ -38,7 +40,7 @@ public class ProjectDao {
     }
 
     public List<Project> getAll() {
-        TypedQuery<Project> query = em.createQuery("select p from Project p",
+        TypedQuery<Project> query = em.createQuery("select p from " + PROJECT + " p",
                 Project.class);
         return query.getResultList();
     }

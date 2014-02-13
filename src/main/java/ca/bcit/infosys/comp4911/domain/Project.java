@@ -31,6 +31,9 @@ public class Project implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date completeDate;
 
+    @Column
+    private double budget;
+
     public Integer getId() {
         return this.id;
     }
@@ -47,6 +50,9 @@ public class Project implements Serializable {
         this.version = version;
     }
 
+    public double getBudget() { return this.budget; }
+
+    public void setBudget(final double budget) {this.budget = budget; }
     @Override
     public boolean equals(Object that) {
         if (this == that) {

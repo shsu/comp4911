@@ -21,12 +21,11 @@ public class UsersResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAll(
+    public Response retrieveAllUsers(
       @HeaderParam(SH.auth) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
-        return Response.ok().entity(userDao.getAll()).header(SH.cors, "*")
-          .build();
+        return SH.Response(200, userDao.getAll());
     }
 
     @POST
@@ -40,8 +39,7 @@ public class UsersResource {
         // Throw a 401 or/and 403 otherwise
 
         userDao.create(user);
-        return Response.status(201).header(SH.cors, "*")
-          .build();
+        return SH.Response(201);
     }
 
     @GET
@@ -55,12 +53,10 @@ public class UsersResource {
 
         User user = userDao.read(id);
         if (user == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
+            return SH.Response(404);
         }
 
-        return Response.ok().entity(user).header(SH.cors, "*")
-          .build();
+        return SH.Response(200, user);
     }
 
     @PUT
@@ -72,14 +68,12 @@ public class UsersResource {
       final User user) {
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
-        User userUpdate = userDao.read(id);
-        if (userUpdate == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
+        User check = userDao.read(id);
+        if (check == null) {
+            return SH.Response(404);
         }
 
         userDao.update(user);
-        return Response.ok().header(SH.cors, "*")
-          .build();
+        return SH.Response(200);
     }
 }

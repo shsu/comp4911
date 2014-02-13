@@ -6,8 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.lang.Override;
+import java.util.List;
 
 @Entity
 public class Timesheet implements Serializable
@@ -21,6 +24,9 @@ public class Timesheet implements Serializable
    @Column(name = "version")
    private int version = 0;
 
+   @OneToMany(mappedBy = "id")
+   private List<TimesheetRow> timesheetRows;
+
    @Column
    private int userID;
 
@@ -31,9 +37,58 @@ public class Timesheet implements Serializable
    private int year;
 
    @Column
+   private double flexTime;
+
+   @Column
+   private double overTime;
+
+   @Column
    private boolean isApproved;
 
-   public Integer getId()
+   @Column
+   private boolean isSigned;
+
+    public List<TimesheetRow> getTimesheetRows() {
+        return timesheetRows;
+    }
+
+    public void setTimesheetRows(List<TimesheetRow> timesheetRows) {
+        this.timesheetRows = timesheetRows;
+    }
+
+    public double getFlexTime() {
+        return flexTime;
+    }
+
+    public void setFlexTime(double flexTime) {
+        this.flexTime = flexTime;
+    }
+
+    public double getOverTime() {
+        return overTime;
+    }
+
+    public void setOverTime(double overTime) {
+        this.overTime = overTime;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean isApproved) {
+        this.isApproved = isApproved;
+    }
+
+    public boolean isSigned() {
+        return isSigned;
+    }
+
+    public void setSigned(boolean isSigned) {
+        this.isSigned = isSigned;
+    }
+
+    public Integer getId()
    {
       return this.id;
    }

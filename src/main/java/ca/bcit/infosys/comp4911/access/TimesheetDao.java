@@ -17,6 +17,8 @@ public class TimesheetDao {
     @PersistenceContext (unitName = "comp4911")
     EntityManager em;
 
+    public static final String TIMESHEET = Timesheet.class.getSimpleName();
+
     public void create (final Timesheet ts)
     {
         em.persist(ts);
@@ -39,13 +41,13 @@ public class TimesheetDao {
 
 
     public List<Timesheet> getAll() {
-        TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t",
+        TypedQuery<Timesheet> query = em.createQuery("select t from " + TIMESHEET + " t",
                 Timesheet.class);
         return query.getResultList();
     }
 
     public List<Timesheet> getRejected(final Integer userID) {
-        TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.isApproved = :approved" +
+        TypedQuery<Timesheet> query = em.createQuery("select t from " + TIMESHEET + " t where t.isApproved = :approved" +
                 " and t.userID = :id",
                 Timesheet.class);
         query.setParameter("approved", false);

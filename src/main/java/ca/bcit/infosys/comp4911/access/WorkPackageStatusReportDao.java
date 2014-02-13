@@ -1,5 +1,6 @@
 package ca.bcit.infosys.comp4911.access;
 
+import ca.bcit.infosys.comp4911.domain.WorkPackage;
 import ca.bcit.infosys.comp4911.domain.WorkPackageStatusReport;
 
 import javax.ejb.Stateless;
@@ -16,6 +17,8 @@ public class WorkPackageStatusReportDao {
 
     @PersistenceContext
     EntityManager em;
+
+    public static final String STATUS_REPORT = WorkPackageStatusReport.class.getSimpleName();
 
     public void create (final WorkPackageStatusReport workPackageStatusReport)
     {
@@ -38,8 +41,15 @@ public class WorkPackageStatusReportDao {
     }
 
     public List<WorkPackageStatusReport> getAll() {
-        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r",
+        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from " + STATUS_REPORT + " r",
                 WorkPackageStatusReport.class);
+        return query.getResultList();
+    }
+
+    public List<WorkPackageStatusReport> getAllByWorkPackage(final WorkPackage workPackage) {
+        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from " + STATUS_REPORT + " r where r.workPackage = :workPackage",
+                WorkPackageStatusReport.class);
+        query.setParameter("workPackage", workPackage);
         return query.getResultList();
     }
 }

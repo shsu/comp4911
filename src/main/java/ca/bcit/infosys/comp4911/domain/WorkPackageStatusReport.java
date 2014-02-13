@@ -6,8 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 public class WorkPackageStatusReport implements Serializable {
@@ -28,6 +31,73 @@ public class WorkPackageStatusReport implements Serializable {
 
     @ManyToOne
     private WorkPackage workPackage;
+
+    @Temporal(TemporalType.DATE)
+    private Date reportDate;
+
+    @Column
+    private String comment;
+
+    @Column
+    private String workAccomplished;
+
+    @Column
+    private String problemEncountered;
+
+    @Column
+    private String workPlanned;
+
+    public Date getReportDate() {
+        return reportDate;
+    }
+
+    public void setReportDate(Date reportDate) {
+        this.reportDate = reportDate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getWorkAccomplished() {
+        return workAccomplished;
+    }
+
+    public void setWorkAccomplished(String workAccomplished) {
+        this.workAccomplished = workAccomplished;
+    }
+
+    public String getProblemEncountered() {
+        return problemEncountered;
+    }
+
+    public void setProblemEncountered(String problemEncountered) {
+        this.problemEncountered = problemEncountered;
+    }
+
+    public String getWorkPlanned() {
+        return workPlanned;
+    }
+
+    public void setWorkPlanned(String workPlanned) {
+        this.workPlanned = workPlanned;
+    }
+
+    public String getProblemAnticipated() {
+        return problemAnticipated;
+    }
+
+    public void setProblemAnticipated(String problemAnticipated) {
+        this.problemAnticipated = problemAnticipated;
+    }
+
+    @Column
+
+    private String problemAnticipated;
 
     public Integer getId() {
         return this.id;

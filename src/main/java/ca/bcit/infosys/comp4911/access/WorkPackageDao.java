@@ -17,6 +17,8 @@ public class WorkPackageDao {
     @PersistenceContext(unitName = "comp4911")
     EntityManager em;
 
+    public static final String WORKPACKAGE = WorkPackage.class.getSimpleName();
+
     public void create (final WorkPackage workPackage)
     {
         em.persist(workPackage);
@@ -38,7 +40,7 @@ public class WorkPackageDao {
     }
 
     public List<WorkPackage> getAll() {
-        TypedQuery<WorkPackage> query = em.createQuery("select wp from WorkPackage wp",
+        TypedQuery<WorkPackage> query = em.createQuery("select wp from " + WORKPACKAGE + " wp",
                 WorkPackage.class);
         return query.getResultList();
     }

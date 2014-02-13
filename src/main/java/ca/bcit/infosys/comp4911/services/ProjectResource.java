@@ -38,123 +38,51 @@ public class ProjectResource {
       @HeaderParam(SH.auth) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        return Response.ok().entity(projectDao.getAll()).header(SH.cors, "*")
-          .build();
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveProject(
-      @HeaderParam(SH.auth) final String token,
-      @PathParam("id") Integer id) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
-
-        Project project = projectDao.read(id);
-        if (project == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
-        }
-
-        return Response.ok().entity(project).header(SH.cors, "*")
-          .build();
+        return SH.Response(200, projectDao.getAll());
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPayRate(
+    public Response createProject(
       @HeaderParam(SH.auth) final String token,
-      Project project) {
+      final Project project) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         projectDao.create(project);
+        return SH.Response(201);
+    }
 
-        return Response.status(201).header(SH.cors, "*")
-          .build();
+    @GET
+    @Path("{project_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveProject(
+            @HeaderParam(SH.auth) final String token,
+            @PathParam("project_id") Integer id) {
+        int userId = userTokens.verifyTokenAndReturnUserID((token));
+
+        Project project = projectDao.read(id);
+        if (project == null) {
+            return SH.Response(404);
+        }
+
+        return SH.Response(200, project);
     }
 
     @PUT
-    @Path("{id}")
+    @Path("{project_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProject(
       @HeaderParam(SH.auth) final String token,
-      @PathParam("id") Integer id,
-      Project Project) {
+      @PathParam("project_id") Integer projectId,
+      final Project Project) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        Project update = projectDao.read(id);
-        if (update == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
+        Project check = projectDao.read(projectId);
+        if (check == null) {
+            return SH.Response(404);
         }
+
         projectDao.update(Project);
-        return Response.ok().header(SH.cors, "*")
-          .build();
-    }
-
-    @DELETE
-    @Path("{id}")
-    public Response deleteProject(
-      @HeaderParam(SH.auth) final String token,
-      @PathParam("id") Integer id) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
-
-        Project project = projectDao.read(id);
-        if (project == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
-        }
-
-        projectDao.delete(project);
-        return Response.ok().header(SH.cors, "*")
-          .build();
-    }
-
-    @POST
-    @Path("{id}/assignments")
-    public Response retrieveProjectAssignments(
-      @HeaderParam(SH.auth) final String token,
-      @PathParam("id") Integer id,
-      JSONObject obj) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
-
-        Project project = projectDao.read(id);
-        if (project == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
-        }
-
-        // At the moment only taking in a userid, but going to need more info than this.
-        // workPackageAssignmentDao.create();
-
-        return Response.status(201).header(SH.cors, "*")
-          .build();
-    }
-
-    @DELETE
-    @Path("{id}/assignments/{user_id}")
-    public Response deleteAssignment(
-      @HeaderParam(SH.auth) final String token,
-      @PathParam("id") Integer id,
-      @PathParam("user_id") Integer userId) {
-        int authId = userTokens.verifyTokenAndReturnUserID((token));
-
-        Project project = projectDao.read(id);
-        if (project == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
-        }
-
-        User user = userDao.read(userId);
-        if (user == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
-        }
-
-        // remove user from workPackageAssigment
-        // workPackageDao.delete(workPackageAssignment)
-
-        return Response.status(204).header(SH.cors, "*")
-          .build();
+        return SH.Response(200);
     }
 }

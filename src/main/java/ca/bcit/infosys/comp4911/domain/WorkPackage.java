@@ -38,6 +38,66 @@ public class WorkPackage implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date completeDate;
 
+    private String progressStatus;
+
+    private double budget;
+
+    private String purpose;
+
+    private String inputs;
+
+    private String activities;
+
+    private String outputs;
+
+    public String getProgressStatus() {
+        return progressStatus;
+    }
+
+    public void setProgressStatus(String progressStatus) {
+        this.progressStatus = progressStatus;
+    }
+
+    public double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public String getInputs() {
+        return inputs;
+    }
+
+    public void setInputs(String inputs) {
+        this.inputs = inputs;
+    }
+
+    public String getActivities() {
+        return activities;
+    }
+
+    public void setActivities(String activities) {
+        this.activities = activities;
+    }
+
+    public String getOutputs() {
+        return outputs;
+    }
+
+    public void setOutputs(String outputs) {
+        this.outputs = outputs;
+    }
+
     public Integer getId() {
         return this.id;
     }

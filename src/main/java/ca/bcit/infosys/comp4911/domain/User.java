@@ -36,13 +36,78 @@ public class User implements Serializable {
     private String lastName;
 
     @ManyToOne
-    private UserRoleGroup userRoleGroup;
-
-    @ManyToOne
     private PayRate payLevel;
 
     @Temporal(TemporalType.DATE)
     private Date startDate;
+
+    @Column
+    private Integer supervisorId;
+
+    @Column
+    private Integer payLevelId;
+
+    @Column
+    private boolean isHR;
+
+    @Column
+    private String status;
+
+    // Just wondering if this should be a 1 to 1 maybe?
+    @ManyToOne
+    private Timesheet defaulTimesheet;
+
+    public Integer getSupervisorId() {
+        return supervisorId;
+    }
+
+    public void setSupervisorId(Integer supervisorId) {
+        this.supervisorId = supervisorId;
+    }
+
+    public Integer getPayLevelId() {
+        return payLevelId;
+    }
+
+    public void setPayLevelId(Integer payLevelId) {
+        this.payLevelId = payLevelId;
+    }
+
+    public boolean isHR() {
+        return isHR;
+    }
+
+    public void setHR(boolean isHR) {
+        this.isHR = isHR;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Timesheet getDefaulTimesheet() {
+        return defaulTimesheet;
+    }
+
+    public void setDefaulTimesheet(Timesheet defaulTimesheet) {
+        this.defaulTimesheet = defaulTimesheet;
+    }
+
+    public Integer getTimesheetApproverId() {
+        return timesheetApproverId;
+    }
+
+    public void setTimesheetApproverId(Integer timesheetApproverId) {
+        this.timesheetApproverId = timesheetApproverId;
+    }
+
+    @Column
+
+    private Integer timesheetApproverId;
 
     public Integer getId() {
         return this.id;
@@ -125,14 +190,6 @@ public class User implements Serializable {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public UserRoleGroup getUserRoleGroup() {
-        return this.userRoleGroup;
-    }
-
-    public void setUserRoleGroup(final UserRoleGroup UserRoleGroup) {
-        this.userRoleGroup = UserRoleGroup;
     }
 
     public PayRate getPayLevel() {

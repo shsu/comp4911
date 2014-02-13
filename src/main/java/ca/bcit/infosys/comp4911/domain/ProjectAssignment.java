@@ -26,6 +26,9 @@ public class ProjectAssignment implements Serializable {
     @ManyToOne
     private User user;
 
+    @Column
+    private boolean isProjectManager;
+
     public Integer getId() {
         return this.id;
     }
@@ -40,6 +43,14 @@ public class ProjectAssignment implements Serializable {
 
     public void setVersion(final int version) {
         this.version = version;
+    }
+
+    public boolean isProjectManager() {
+        return this.isProjectManager;
+    }
+
+    public void setProjectManager(boolean isProjectManager) {
+        this.isProjectManager = isProjectManager;
     }
 
     @Override

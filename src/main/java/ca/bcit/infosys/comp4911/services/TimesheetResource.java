@@ -22,17 +22,17 @@ public class TimesheetResource {
     @EJB
     UserTokens userTokens;
 
+    // we're going to have to mix this in with the timesheetRowDao as well
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllTimesheets(
       @HeaderParam(SH.auth) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        return Response.ok().entity(timesheetDao.getAll()).header(SH.cors, "*")
-          .build();
-
+        return SH.Response(200, timesheetDao.getAll());
     }
 
+    /** Going to need to grab all the Timesheet Rows as well */
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,24 +43,9 @@ public class TimesheetResource {
 
         Timesheet timesheet = timesheetDao.read(id);
         if (timesheet == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
+            return SH.Response(404);
         }
-        return Response.ok().entity(timesheet).header(SH.cors, "*")
-          .build();
-    }
-
-
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPayRate(
-      @HeaderParam(SH.auth) final String token,
-      Timesheet timesheet) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
-
-        timesheetDao.create(timesheet);
-        return Response.status(201).header(SH.cors, "*")
-          .build();
+        return SH.Response(200, timesheet);
     }
 
     @PUT
@@ -73,31 +58,10 @@ public class TimesheetResource {
 
         Timesheet update = timesheetDao.read(id);
         if (update == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
+            return SH.Response(404);
         }
+
         timesheetDao.update(timesheet);
-        return Response.ok().header(SH.cors, "*")
-          .build();
+        return SH.Response(200);
     }
-
-    @DELETE
-    @Path("{id}")
-    public Response deleteTimesheet(
-      @HeaderParam(SH.auth) final String token,
-      @PathParam("id") Integer id) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
-
-        Timesheet timesheet = timesheetDao.read(id);
-        if (timesheet == null) {
-            return Response.status(404).header(SH.cors, "*")
-              .build();
-        }
-
-        timesheetDao.delete(timesheet);
-        return Response.status(404).header(SH.cors, "*")
-          .build();
-    }
-
-
 }
