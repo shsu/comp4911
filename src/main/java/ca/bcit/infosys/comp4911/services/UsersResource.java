@@ -23,7 +23,7 @@ public class UsersResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllUsers(
       @HeaderParam(SH.auth) final String token) {
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+        int userId = 1;
 
         return SH.Response(200, userDao.getAll());
     }

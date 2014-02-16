@@ -1,7 +1,11 @@
 package ca.bcit.infosys.comp4911.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import java.io.Serializable;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,13 +15,12 @@ import javax.persistence.Version;
 import java.lang.Override;
 
 @Entity
-public class TimesheetRow implements Serializable
-{
+public class TimesheetRow implements Serializable {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id", updatable = false, nullable = false)
-   private Integer id = null;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id = null;
 
     public Timesheet getTimesheet() {
         return timesheet;
@@ -108,17 +111,18 @@ public class TimesheetRow implements Serializable
     }
 
     @Version
-   @Column(name = "version")
-   private int version = 0;
+    @Column(name = "version")
+    private int version = 0;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     private Timesheet timesheet;
 
     @Column
-   private Integer projectId;
+    private Integer projectId;
 
-  @Column
-   private Integer workPackageId;
+    @Column
+    private Integer workPackageId;
 
     @Column
     private double monday;
@@ -144,64 +148,68 @@ public class TimesheetRow implements Serializable
     @Column
     private String note;
 
-   public Integer getId()
-   {
-      return this.id;
-   }
+    public Integer getId() {
+        return this.id;
+    }
 
-   public void setId(final Integer id)
-   {
-      this.id = id;
-   }
+    public void setId(final Integer id) {
+        this.id = id;
+    }
 
-   public int getVersion()
-   {
-      return this.version;
-   }
+    public int getVersion() {
+        return this.version;
+    }
 
-   public void setVersion(final int version)
-   {
-      this.version = version;
-   }
+    public void setVersion(final int version) {
+        this.version = version;
+    }
 
-   @Override
-   public String toString()
-   {
-      String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
-      return result;
-   }
+    @Override
+    public String toString() {
+        String result = getClass().getSimpleName() + " ";
+        if (id != null)
+            result += "id: " + id;
+        return result;
+    }
 
-   @Override
-   public boolean equals(Object that)
-   {
-      if (this == that)
-      {
-         return true;
-      }
-      if (that == null)
-      {
-         return false;
-      }
-      if (getClass() != that.getClass())
-      {
-         return false;
-      }
-      if (id != null)
-      {
-         return id.equals(((TimesheetRow) that).id);
-      }
-      return super.equals(that);
-   }
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        if (id != null) {
+            return id.equals(((TimesheetRow) that).id);
+        }
+        return super.equals(that);
+    }
 
-   @Override
-   public int hashCode()
-   {
-      if (id != null)
-      {
-         return id.hashCode();
-      }
-      return super.hashCode();
-   }
+    @Override
+    public int hashCode() {
+        if (id != null) {
+            return id.hashCode();
+        }
+        return super.hashCode();
+    }
+
+    public TimesheetRow(Integer projectId, Integer workPackageId, double monday, double tuesday, double wednesday, double thursday, double friday, double saturday, double sunday, String note) {
+        this.projectId = projectId;
+        this.workPackageId = workPackageId;
+        this.monday = monday;
+        this.tuesday = tuesday;
+        this.wednesday = wednesday;
+        this.thursday = thursday;
+        this.friday = friday;
+        this.saturday = saturday;
+        this.sunday = sunday;
+        this.note = note;
+    }
+
+    public TimesheetRow() {
+    }
 }

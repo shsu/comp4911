@@ -27,7 +27,7 @@ public class TimesheetResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllTimesheets(
       @HeaderParam(SH.auth) final String token) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = 1; //userTokens.verifyTokenAndReturnUserID((token));
 
         return SH.Response(200, timesheetDao.getAll());
     }

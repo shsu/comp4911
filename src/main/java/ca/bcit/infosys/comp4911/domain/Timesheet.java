@@ -1,7 +1,12 @@
 package ca.bcit.infosys.comp4911.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.Hibernate;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import java.io.Serializable;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.lang.Override;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +30,7 @@ public class Timesheet implements Serializable
    @Column(name = "version")
    private int version = 0;
 
-   @OneToMany(mappedBy = "id")
+   @OneToMany(mappedBy = "timesheet", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
    private List<TimesheetRow> timesheetRows;
 
    @Column
@@ -49,6 +55,7 @@ public class Timesheet implements Serializable
    private boolean isSigned;
 
     public List<TimesheetRow> getTimesheetRows() {
+       // Hibernate.initialize(timesheetRows);
         return timesheetRows;
     }
 
@@ -190,4 +197,21 @@ public class Timesheet implements Serializable
       result += ", isApproved: " + isApproved;
       return result;
    }
+
+    public Timesheet(int userID, int weekNumber, int year, double flexTime, double overTime, boolean isApproved, boolean isSigned) {
+        this.userID = userID;
+        this.weekNumber = weekNumber;
+        this.year = year;
+        this.flexTime = flexTime;
+        this.overTime = overTime;
+        this.isApproved = isApproved;
+        this.isSigned = isSigned;
+        timesheetRows = new ArrayList<TimesheetRow>();
+    }
+
+    public Timesheet()
+    {
+        timesheetRows = new ArrayList<TimesheetRow>();
+    }
+
 }
