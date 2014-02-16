@@ -4,6 +4,7 @@ import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
+import com.google.common.base.Charsets;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.io.BaseEncoding;
@@ -13,8 +14,6 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Path("/user")
 public class UserResource {
@@ -45,7 +44,7 @@ public class UserResource {
         }
 
         String decodedCredentials = new String(
-          BaseEncoding.base64().decode(token.substring("Basic ".length())), UTF_8);
+          BaseEncoding.base64().decode(token.substring("Basic ".length())), Charsets.UTF_8);
         String[] credentials = decodedCredentials.split(":");
 
         if (credentials.length != 2) {
