@@ -1,0 +1,677 @@
+FORMAT: 1A
+HOST: https://comp4911-stevenhsu.rhcloud.com
+
+# COMP4911 API
+
+# Group Generate Summary Reports
+## Reports [/reports/:project_id]
+### Retrieve report for project [GET]
++ Response 200 (application/json)
+
+    + Body
+        
+            {
+            }
+            
+
+# Group Pay Rates Management
+## Pay Rates [/pay_rates]
+### Retrieve all pay rates [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
++ Response 403
+
+### Create a pay rate [POST]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+    + Body
+        
+            {}
+            
++ Response 201 (application/json)
+
+    + Body
+    
+            {}
+            
++ Response 400
++ Response 401
++ Response 403
++ Response 409
+
+## Pay Rates [/pay_rates/:pay_level]
+### Retrieve all pay rate for a specific pay level [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {}
+            
++ Response 401
++ Response 403
++ Response 404
+
+## Pay Rates [/pay_rates/:pay_level/:year]
+### Retrieve a pay rate for a specific pay level and year [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {}
+            
++ Response 401
++ Response 403
++ Response 404
+
+### Update a pay rate [PUT]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+    + Body
+        
+            {}
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {}
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
+
+# Group Projects Management
+
+## Projects [/projects]
+### Retrieve all projects [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
++ Response 403
+
+### Create a project [POST]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+    + Body
+        
+            {}
+            
++ Response 201 (application/json)
+
+    + Body
+    
+            {}
+            
++ Response 400
++ Response 401
++ Response 403
++ Response 409
+
+## Projects [/projects/:project_id]
+### Retrieve a project [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {}
+            
++ Response 401
++ Response 403
++ Response 404
+
+### Update a project [PUT]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+    + Body
+        
+            {}
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {}
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
+## Project Assignments [/projects/:project_id/assignments]
+### Create a project assignment [POST]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+    + Body
+            
+            {
+                "user_id":1
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {}
+            
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 409
+
+## Project Assignments [/projects/:project_id/assignments/:user_id]
+### Update a project assignment [PUT]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {}
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
+### Delete a project assignment [DELETE]
+Use HTTP Basic Auth username field for the token.
+
++ Response 204
++ Response 401
++ Response 403
++ Response 404
+
+# Group Timesheets Management
+## Timesheets [/timesheets]
+### Retrieve all timesheets [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+    + Body
+        
+            [
+                {
+                }
+            ]
+
++ Response 401
++ Response 403
+
+## Timesheets [/timesheets/:timesheet_id]
+### Retrieve a timesheet [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+            }
+            
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
+### Update a timesheet [PUT]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+    
+    + Body
+            
+            {
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+            }
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
+# Group User Operations
+
+## User [/user]
+### Retrieve authenticated user profile [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200
+    + Body
+    
+            {
+            }
+
++ Response 401
+
+### Update authenticated user profile [PUT]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200
+    + Body
+    
+            {
+            }
+
++ Response 400
++ Response 401
+
+## User Token [/user/token]
+### Retrieve token [GET]
+Use HTTP Basic Auth for username/password
+
++ Response 200
+    + Body
+    
+            {
+                "user_id":"user_id",
+                "token":"token"
+            }
+
++ Response 400
++ Response 401
+
+### Invalidate token [DELETE]
++ Response 204
++ Response 401
+
+## User Projects [/user/projects]
+### Retrieve all projects assigned to authenticated user [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
+
+## User Timesheets [/user/timesheets]
+### Retrieve all timesheets of authenticated user [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
+
+### Create a timesheet for authenticated user [POST]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+    + Body
+            
+            {
+            }
+
++ Response 201 (application/json)
+    + Body
+
+            {
+            }
+
++ Response 400
++ Response 401
++ Response 409
+
+## User Timesheets Approve [/user/timesheets/to_be_approved]
+### Retrieve all timesheets that required to be approved for authenticated user [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
+
+## User Timesheets Rejected [/user/timesheets/rejected]
+### Retrieve all timesheets that got rejected and need revision for authenticated user [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
+
+## User Work Packages [/user/work_packages]
+### Retrieve all work packages assigned to authenticated user [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
+
+# Group Users Management
+## Users [/users]
+### Retrieve all users [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
++ Response 403
+
+### Create a user [POST]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+        {
+        }
+
++ Response 201
+    + Body
+    
+            {
+            }
+
++ Response 400
++ Response 401
++ Response 403
++ Response 409
+
+## Users [/users/:user_id]
+### Retrieve a user profile [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200
+    + Body
+    
+            {
+            }
+
++ Response 401
++ Response 403
++ Response 404
+
+### Update a user profile [PUT]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+        {
+        }
+
++ Response 200 (application/json)
+    + Body
+    
+            {
+            }
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
+# Group Work Packages Management
+## Work Packages [/work_packages]
+### Retrieve all work packages [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            [
+                {
+                }
+            ]
+            
++ Response 401
++ Response 403
+
+### Create a work package [POST]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+    + Body
+        
+            {
+            }
+            
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+            }
+            
++ Response 400
++ Response 401
++ Response 403
++ Response 409
+
+## Work Packages [/work_packages/:wp_id]
+
+### Retrieve a work package [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+            }
+            
++ Response 401
++ Response 403
++ Response 404
+
+### Update a work package [PUT]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+    + Body
+        
+            {
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+            }
+            
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
+### Delete a work package [DELETE]
+Use HTTP Basic Auth username field for the token.
+
++ Response 204
++ Response 401
++ Response 403
++ Response 404
+
+## Work Package Assignments [/work_packages/:wp_id/assignments]
+### Create a work package assignment [POST]
+Use HTTP Basic Auth username field for the token.
+
++ Request (application/json)
+
+    + Body
+            
+            {
+                "user_id":1
+            }
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {
+            }
+            
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 409
+
+## Work Package Assignments [/work_packages/:wp_id/assignments/:user_id]
+### Update a work package assignment [PUT]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {}
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
+### Delete a work package assignment [DELETE]
+Use HTTP Basic Auth username field for the token.
+
++ Response 204
++ Response 401
++ Response 403
++ Response 404
+
+# Group Work Package Status Reports
+## Status Reports [/work_packages/:wp_id/status_reports]
+### Retrieve all reports [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            [
+                {
+                }
+            ]
+            
++ Response 401
++ Response 403
++ Response 404
++ Response 409
+
+### Create a report [POST]
+Use HTTP Basic Auth username field for the token.
+
++ Response 201 (application/json)
+
+    + Body
+    
+            {}
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
++ Response 409
+
+## Status Reports [/work_packages/:wp_id/status_reports/:report_id]
+### Retrieve report [GET]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            [
+                {
+                }
+            ]
+            
++ Response 401
++ Response 403
++ Response 404
++ Response 409
+
+
+### Update a report [PUT]
+Use HTTP Basic Auth username field for the token.
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {}
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
