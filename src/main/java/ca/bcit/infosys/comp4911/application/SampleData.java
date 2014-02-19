@@ -47,7 +47,7 @@ public class SampleData {
     private void generateTimesheets() {
 
         Timesheet timesheet;
-
+    /**
         for(int j = 0; j < 10; j++)
         {
             timesheet = new Timesheet(j, j, j, j, j, false, false);
@@ -62,5 +62,6 @@ public class SampleData {
                 rows.add(temp);
             }
         }
+     */
     }
 }

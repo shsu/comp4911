@@ -205,10 +205,10 @@ public class TimesheetRow implements Serializable
       return super.hashCode();
    }
 
-   public TimesheetRow(Integer projectId, Integer workPackageId, double monday, double tuesday, double wednesday, double thursday, double friday, double saturday, double sunday, String note)
+   public TimesheetRow(Project project, WorkPackage workPackage, double monday, double tuesday, double wednesday, double thursday, double friday, double saturday, double sunday, String note)
    {
-      this.projectId = projectId;
-      this.workPackageId = workPackageId;
+      this.project = project;
+       this.workPackage = workPackage;
       this.monday = monday;
       this.tuesday = tuesday;
       this.wednesday = wednesday;

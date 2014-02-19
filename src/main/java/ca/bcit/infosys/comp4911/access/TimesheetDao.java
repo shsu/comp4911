@@ -39,6 +39,14 @@ public class TimesheetDao {
         em.remove(read(ts.getId()));
     }
 
+    public Timesheet getByDate(final Integer weekNumber, final Integer year, final Integer userID) {
+        TypedQuery<Timesheet> query = em.createQuery("select t from " + TIMESHEET + " t" +
+            " where t.weekNumber = :week and t.userID = :id and t.year = :year", Timesheet.class);
+        query.setParameter("week", weekNumber);
+        query.setParameter("id", userID);
+        query.setParameter("year", year);
+        return query.getSingleResult();
+    }
 
     public List<Timesheet> getAll() {
         TypedQuery<Timesheet> query = em.createQuery("select t from " + TIMESHEET + " t",

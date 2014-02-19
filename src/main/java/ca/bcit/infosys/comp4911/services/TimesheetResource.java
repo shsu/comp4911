@@ -6,6 +6,7 @@ import ca.bcit.infosys.comp4911.domain.Timesheet;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
+import javax.persistence.Entity;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,13 +27,23 @@ public class TimesheetResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllTimesheets(
-      @HeaderParam(SH.auth) final String token) {
+      @HeaderParam(SH.auth) final String token,
+      @QueryParam("filter") final String filter) {
         int userId = 1; //userTokens.verifyTokenAndReturnUserID((token));
 
+        if(filter.equals("current")) {
+            Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(),userId);
+            return SH.Response(200, timesheet);
+        }
+        if(filter.equals("default")) {
+            //Timesheet timesheet = timesheetDao.getByDate(54, userId);  Not sure where we'll store the default sheet
+        }
+
+        // if no filter return all the timesheets
         return SH.Response(200, timesheetDao.getAll());
     }
 
-    /** Going to need to grab all the Timesheet Rows as well */
+    /** Should we just use this method for retrieving the default */
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)

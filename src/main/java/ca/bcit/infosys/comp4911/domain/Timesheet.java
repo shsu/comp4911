@@ -188,9 +188,9 @@ public class Timesheet implements Serializable
       this.isApproved = isApproved;
    }
 
-   public Timesheet(int userID, int weekNumber, int year, double flexTime, double overTime, boolean isApproved, boolean isSigned)
+   public Timesheet(User user, int weekNumber, int year, double flexTime, double overTime, boolean isApproved, boolean isSigned)
    {
-      this.userID = userID;
+      this.user = user;
       this.weekNumber = weekNumber;
       this.year = year;
       this.flexTime = flexTime;
