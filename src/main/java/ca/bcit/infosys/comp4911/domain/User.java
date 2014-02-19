@@ -16,6 +16,7 @@ import ca.bcit.infosys.comp4911.domain.PayLevel;
 import java.util.Set;
 import java.util.HashSet;
 import javax.persistence.OneToMany;
+import ca.bcit.infosys.comp4911.domain.Effort;
 
 @Entity
 public class User implements Serializable
@@ -60,13 +61,13 @@ public class User implements Serializable
    @ManyToOne
    private User supervisor;
 
-   @OneToMany(mappedBy="supervisor")
+   @OneToMany(mappedBy = "supervisor")
    private Set<User> peon = new HashSet<User>();
 
    @ManyToOne
    private User timesheetApprover;
 
-   @OneToMany(mappedBy="timesheetApprover")
+   @OneToMany(mappedBy = "timesheetApprover")
    private Set<User> peonsToApprove = new HashSet<User>();
 
    public boolean isHR()
