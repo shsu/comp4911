@@ -1,18 +1,16 @@
 package ca.bcit.infosys.comp4911.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.io.Serializable;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Column;
 import javax.persistence.Version;
-import java.io.Serializable;
-import ca.bcit.infosys.comp4911.domain.PayLevel;
-import javax.persistence.ManyToOne;
 import java.lang.Override;
 
 @Entity
-public class PayRate implements Serializable
+public class PayLevel implements Serializable
 {
 
    @Id
@@ -24,13 +22,7 @@ public class PayRate implements Serializable
    private int version = 0;
 
    @Column
-   private int year;
-
-   @Column
-   private double rate;
-
-   @ManyToOne
-   private PayLevel payLevel;
+   private String payLevelName;
 
    public Integer getId()
    {
@@ -69,7 +61,7 @@ public class PayRate implements Serializable
       }
       if (id != null)
       {
-         return id.equals(((PayRate) that).id);
+         return id.equals(((PayLevel) that).id);
       }
       return super.equals(that);
    }
@@ -84,44 +76,22 @@ public class PayRate implements Serializable
       return super.hashCode();
    }
 
-   public int getYear()
+   public String getPayLevelName()
    {
-      return this.year;
+      return this.payLevelName;
    }
 
-   public void setYear(final int year)
+   public void setPayLevelName(final String payLevelName)
    {
-      this.year = year;
-   }
-
-   public double getRate()
-   {
-      return this.rate;
-   }
-
-   public void setRate(final double rate)
-   {
-      this.rate = rate;
-   }
-
-   public PayLevel getPayLevel()
-   {
-      return this.payLevel;
-   }
-
-   public void setPayLevel(final PayLevel payLevel)
-   {
-      this.payLevel = payLevel;
+      this.payLevelName = payLevelName;
    }
 
    @Override
    public String toString()
    {
       String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
-      result += ", year: " + year;
-      result += ", rate: " + rate;
+      if (payLevelName != null && !payLevelName.trim().isEmpty())
+         result += "payLevelName: " + payLevelName;
       return result;
    }
 }

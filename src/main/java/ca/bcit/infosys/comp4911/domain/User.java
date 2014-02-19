@@ -11,214 +11,275 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
+import java.lang.Override;
+import ca.bcit.infosys.comp4911.domain.PayLevel;
+import java.util.Set;
+import java.util.HashSet;
+import javax.persistence.OneToMany;
 
 @Entity
-public class User implements Serializable {
+public class User implements Serializable
+{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Integer id = null;
-    @Version
-    @Column(name = "version")
-    private int version = 0;
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id", updatable = false, nullable = false)
+   private Integer id = null;
+   @Version
+   @Column(name = "version")
+   private int version = 0;
 
-    @Column
-    private String username;
+   @Column
+   private String username;
 
-    @Column
-    private String password;
+   @Column
+   private String password;
 
-    @Column
-    private String firstName;
+   @Column
+   private String firstName;
 
-    @Column
-    private String lastName;
+   @Column
+   private String lastName;
 
-    @ManyToOne
-    private PayRate payLevel;
+   @Temporal(TemporalType.DATE)
+   private Date startDate;
 
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+   @Column
+   private boolean isHR;
 
-    @Column
-    private Integer supervisorId;
+   @Column
+   private String status;
 
-    @Column
-    private Integer payLevelId;
+   // Just wondering if this should be a 1 to 1 maybe?
+   @ManyToOne
+   private Timesheet defaulTimesheet;
 
-    @Column
-    private boolean isHR;
+   @ManyToOne
+   private PayLevel payLevel;
 
-    @Column
-    private String status;
+   @ManyToOne
+   private User supervisor;
 
-    // Just wondering if this should be a 1 to 1 maybe?
-    @ManyToOne
-    private Timesheet defaulTimesheet;
+   @OneToMany(mappedBy="supervisor")
+   private Set<User> peon = new HashSet<User>();
 
-    public Integer getSupervisorId() {
-        return supervisorId;
-    }
+   @ManyToOne
+   private User timesheetApprover;
 
-    public void setSupervisorId(Integer supervisorId) {
-        this.supervisorId = supervisorId;
-    }
+   @OneToMany(mappedBy="timesheetApprover")
+   private Set<User> peonsToApprove = new HashSet<User>();
 
-    public Integer getPayLevelId() {
-        return payLevelId;
-    }
+   public boolean isHR()
+   {
+      return isHR;
+   }
 
-    public void setPayLevelId(Integer payLevelId) {
-        this.payLevelId = payLevelId;
-    }
+   public void setHR(boolean isHR)
+   {
+      this.isHR = isHR;
+   }
 
-    public boolean isHR() {
-        return isHR;
-    }
+   public String getStatus()
+   {
+      return status;
+   }
 
-    public void setHR(boolean isHR) {
-        this.isHR = isHR;
-    }
+   public void setStatus(String status)
+   {
+      this.status = status;
+   }
 
-    public String getStatus() {
-        return status;
-    }
+   public Timesheet getDefaulTimesheet()
+   {
+      return defaulTimesheet;
+   }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+   public void setDefaulTimesheet(Timesheet defaulTimesheet)
+   {
+      this.defaulTimesheet = defaulTimesheet;
+   }
 
-    public Timesheet getDefaulTimesheet() {
-        return defaulTimesheet;
-    }
+   public Integer getId()
+   {
+      return this.id;
+   }
 
-    public void setDefaulTimesheet(Timesheet defaulTimesheet) {
-        this.defaulTimesheet = defaulTimesheet;
-    }
+   public void setId(final Integer id)
+   {
+      this.id = id;
+   }
 
-    public Integer getTimesheetApproverId() {
-        return timesheetApproverId;
-    }
+   public int getVersion()
+   {
+      return this.version;
+   }
 
-    public void setTimesheetApproverId(Integer timesheetApproverId) {
-        this.timesheetApproverId = timesheetApproverId;
-    }
+   public void setVersion(final int version)
+   {
+      this.version = version;
+   }
 
-    @Column
+   @Override
+   public boolean equals(Object that)
+   {
+      if (this == that)
+      {
+         return true;
+      }
+      if (that == null)
+      {
+         return false;
+      }
+      if (getClass() != that.getClass())
+      {
+         return false;
+      }
+      if (id != null)
+      {
+         return id.equals(((User) that).id);
+      }
+      return super.equals(that);
+   }
 
-    private Integer timesheetApproverId;
+   @Override
+   public int hashCode()
+   {
+      if (id != null)
+      {
+         return id.hashCode();
+      }
+      return super.hashCode();
+   }
 
-    public Integer getId() {
-        return this.id;
-    }
+   public String getUsername()
+   {
+      return this.username;
+   }
 
-    public void setId(final Integer id) {
-        this.id = id;
-    }
+   public void setUsername(final String username)
+   {
+      this.username = username;
+   }
 
-    public int getVersion() {
-        return this.version;
-    }
+   public String getPassword()
+   {
+      return this.password;
+   }
 
-    public void setVersion(final int version) {
-        this.version = version;
-    }
+   public void setPassword(final String password)
+   {
+      this.password = password;
+   }
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        if (id != null) {
-            return id.equals(((User) that).id);
-        }
-        return super.equals(that);
-    }
+   public String getFirstName()
+   {
+      return this.firstName;
+   }
 
-    @Override
-    public int hashCode() {
-        if (id != null) {
-            return id.hashCode();
-        }
-        return super.hashCode();
-    }
+   public void setFirstName(final String firstName)
+   {
+      this.firstName = firstName;
+   }
 
-    public String getUsername() {
-        return this.username;
-    }
+   public String getLastName()
+   {
+      return this.lastName;
+   }
 
-    public void setUsername(final String username) {
-        this.username = username;
-    }
+   public void setLastName(final String lastName)
+   {
+      this.lastName = lastName;
+   }
 
-    public String getPassword() {
-        return this.password;
-    }
+   public User()
+   {
+   }
 
-    public void setPassword(final String password) {
-        this.password = password;
-    }
+   public User(String username, String password, String firstName, String lastName)
+   {
+      this.username = username;
+      this.password = password;
+      this.firstName = firstName;
+      this.lastName = lastName;
+   }
 
-    public String getFirstName() {
-        return this.firstName;
-    }
+   public Date getStartDate()
+   {
+      return this.startDate;
+   }
 
-    public void setFirstName(final String firstName) {
-        this.firstName = firstName;
-    }
+   public void setStartDate(final Date startDate)
+   {
+      this.startDate = startDate;
+   }
 
-    public String getLastName() {
-        return this.lastName;
-    }
+   public PayLevel getPayLevel()
+   {
+      return this.payLevel;
+   }
 
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
-    }
+   public void setPayLevel(final PayLevel payLevel)
+   {
+      this.payLevel = payLevel;
+   }
 
-    public User() {
-    }
+   public User getSupervisor()
+   {
+      return this.supervisor;
+   }
 
-    public User(String username, String password, String firstName, String lastName) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+   public void setSupervisor(final User supervisor)
+   {
+      this.supervisor = supervisor;
+   }
 
-    public PayRate getPayLevel() {
-        return this.payLevel;
-    }
+   public Set<User> getPeon()
+   {
+      return this.peon;
+   }
 
-    public void setPayLevel(final PayRate PayLevel) {
-        this.payLevel = PayLevel;
-    }
+   public void setPeon(final Set<User> peon)
+   {
+      this.peon = peon;
+   }
 
-    public Date getStartDate() {
-        return this.startDate;
-    }
+   public User getTimesheetApprover()
+   {
+      return this.timesheetApprover;
+   }
 
-    public void setStartDate(final Date startDate) {
-        this.startDate = startDate;
-    }
+   public void setTimesheetApprover(final User timesheetApprover)
+   {
+      this.timesheetApprover = timesheetApprover;
+   }
 
-    @Override
-    public String toString() {
-        String result = getClass().getSimpleName() + " ";
-        if (username != null && !username.trim().isEmpty())
-            result += "username: " + username;
-        if (password != null && !password.trim().isEmpty())
-            result += ", password: " + password;
-        if (firstName != null && !firstName.trim().isEmpty())
-            result += ", firstName: " + firstName;
-        if (lastName != null && !lastName.trim().isEmpty())
-            result += ", lastName: " + lastName;
-        return result;
-    }
+   public Set<User> getPeonsToApprove()
+   {
+      return this.peonsToApprove;
+   }
+
+   public void setPeonsToApprove(final Set<User> peonsToApprove)
+   {
+      this.peonsToApprove = peonsToApprove;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      if (id != null)
+         result += "id: " + id;
+      if (username != null && !username.trim().isEmpty())
+         result += ", username: " + username;
+      if (password != null && !password.trim().isEmpty())
+         result += ", password: " + password;
+      if (firstName != null && !firstName.trim().isEmpty())
+         result += ", firstName: " + firstName;
+      if (lastName != null && !lastName.trim().isEmpty())
+         result += ", lastName: " + lastName;
+      result += ", isHR: " + isHR;
+      if (status != null && !status.trim().isEmpty())
+         result += ", status: " + status;
+      return result;
+   }
 }
