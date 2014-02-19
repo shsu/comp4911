@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Created by steven on 2/14/14.
@@ -26,9 +27,15 @@ public class UserResourceTest {
     @Test
     public void testRetrieveAuthenticatedUserInfo() throws Exception {
 
-        //valid username + valid password expecting HTTP code 200
         given().auth().preemptive().basic("admin@example.com", "password").when().
-                get(url + "/user/token").then().statusCode(200);
+                get(url + "/user/token").then().assertThat().body("user_id", equalTo(1));
+
+        //given().auth().preemptive().basic("admin@example.com", "passwo").when().
+                //get(url + "/user/token").then().assertThat().body("user_id", equalTo(null));
+        }
+
+    @Test
+    public void testRetrieveToken() throws Exception {
 
         //invalid username + invalid password expecting HTTP code 401
         given().auth().preemptive().basic("noneExists@example.com", "password").when().
@@ -73,15 +80,12 @@ public class UserResourceTest {
         //invalid username + valid password expecting HTTP code 401
         given().auth().preemptive().basic("aadmin@example.com", "password").when().
                 get(url + "/user/token").then().statusCode(401);
-        }
-
-    @Test
-    public void testRetrieveToken() throws Exception {
 
     }
 
     @Test
     public void testInvalidateToken() throws Exception {
-
+        given().auth().preemptive().basic("noneExists@example.com", "password").when().
+                delete(url + "/user/token").then().statusCode(204);
     }
 }
