@@ -70,6 +70,24 @@ public class User implements Serializable
    @OneToMany(mappedBy = "timesheetApprover")
    private Set<User> peonsToApprove = new HashSet<User>();
 
+   @Column
+   private Double paidHoursPerWeek;
+
+   @Column
+   private Double sickDaysTaken;
+
+   @Column
+   private Double totalFlexTime;
+
+   @Column
+   private Double totalOvertime;
+
+   @Column
+   private Double vacationDays;
+
+   @Column
+   private Double vacationDaysTaken;
+
    public boolean isHR()
    {
       return isHR;
@@ -264,14 +282,72 @@ public class User implements Serializable
       this.peonsToApprove = peonsToApprove;
    }
 
+   public Double getPaidHoursPerWeek()
+   {
+      return this.paidHoursPerWeek;
+   }
+
+   public void setPaidHoursPerWeek(final Double paidHoursPerWeek)
+   {
+      this.paidHoursPerWeek = paidHoursPerWeek;
+   }
+
+   public Double getSickDaysTaken()
+   {
+      return this.sickDaysTaken;
+   }
+
+   public void setSickDaysTaken(final Double sickDaysTaken)
+   {
+      this.sickDaysTaken = sickDaysTaken;
+   }
+
+   public Double getTotalFlexTime()
+   {
+      return this.totalFlexTime;
+   }
+
+   public void setTotalFlexTime(final Double totalFlexTime)
+   {
+      this.totalFlexTime = totalFlexTime;
+   }
+
+   public Double getTotalOvertime()
+   {
+      return this.totalOvertime;
+   }
+
+   public void setTotalOvertime(final Double totalOvertime)
+   {
+      this.totalOvertime = totalOvertime;
+   }
+
+   public Double getVacationDays()
+   {
+      return this.vacationDays;
+   }
+
+   public void setVacationDays(final Double vacationDays)
+   {
+      this.vacationDays = vacationDays;
+   }
+
+   public Double getVacationDaysTaken()
+   {
+      return this.vacationDaysTaken;
+   }
+
+   public void setVacationDaysTaken(final Double vacationDaysTaken)
+   {
+      this.vacationDaysTaken = vacationDaysTaken;
+   }
+
    @Override
    public String toString()
    {
       String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
       if (username != null && !username.trim().isEmpty())
-         result += ", username: " + username;
+         result += "username: " + username;
       if (password != null && !password.trim().isEmpty())
          result += ", password: " + password;
       if (firstName != null && !firstName.trim().isEmpty())
@@ -281,6 +357,18 @@ public class User implements Serializable
       result += ", isHR: " + isHR;
       if (status != null && !status.trim().isEmpty())
          result += ", status: " + status;
+      if (paidHoursPerWeek != null)
+         result += ", paidHoursPerWeek: " + paidHoursPerWeek;
+      if (sickDaysTaken != null)
+         result += ", sickDaysTaken: " + sickDaysTaken;
+      if (totalFlexTime != null)
+         result += ", totalFlexTime: " + totalFlexTime;
+      if (totalOvertime != null)
+         result += ", totalOvertime: " + totalOvertime;
+      if (vacationDays != null)
+         result += ", vacationDays: " + vacationDays;
+      if (vacationDaysTaken != null)
+         result += ", vacationDaysTaken: " + vacationDaysTaken;
       return result;
    }
 }

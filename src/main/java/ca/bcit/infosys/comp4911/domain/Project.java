@@ -72,6 +72,9 @@ public class Project implements Serializable
    @OneToMany(mappedBy = "project")
    private Set<WorkPackage> workPackages = new HashSet<WorkPackage>();
 
+   @OneToMany
+   private Set<Effort> BudgetCostWorkScheduledInPD = new HashSet<Effort>();
+
    public Integer getId()
    {
       return this.id;
@@ -285,5 +288,16 @@ public class Project implements Serializable
       result += ", estimateAtCompletionInPD: " + estimateAtCompletionInPD;
       result += ", estimateToCompletionInPD: " + estimateToCompletionInPD;
       return result;
+   }
+
+   public Set<Effort> getBudgetCostWorkScheduledInPD()
+   {
+      return this.BudgetCostWorkScheduledInPD;
+   }
+
+   public void setBudgetCostWorkScheduledInPD(
+         final Set<Effort> BudgetCostWorkScheduledInPD)
+   {
+      this.BudgetCostWorkScheduledInPD = BudgetCostWorkScheduledInPD;
    }
 }

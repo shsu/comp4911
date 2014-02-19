@@ -17,6 +17,7 @@ import javax.persistence.Version;
 import java.lang.Override;
 import java.util.ArrayList;
 import java.util.List;
+import ca.bcit.infosys.comp4911.domain.User;
 
 @Entity
 public class Timesheet implements Serializable
@@ -30,11 +31,8 @@ public class Timesheet implements Serializable
    @Column(name = "version")
    private int version = 0;
 
-   @OneToMany(mappedBy = "timesheet", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "timesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
    private List<TimesheetRow> timesheetRows;
-
-   @Column
-   private int userID;
 
    @Column
    private int weekNumber;
@@ -54,48 +52,61 @@ public class Timesheet implements Serializable
    @Column
    private boolean isSigned;
 
-    public List<TimesheetRow> getTimesheetRows() {
-       // Hibernate.initialize(timesheetRows);
-        return timesheetRows;
-    }
+   @ManyToOne
+   private User user;
 
-    public void setTimesheetRows(List<TimesheetRow> timesheetRows) {
-        this.timesheetRows = timesheetRows;
-    }
+   public List<TimesheetRow> getTimesheetRows()
+   {
+      // Hibernate.initialize(timesheetRows);
+      return timesheetRows;
+   }
 
-    public double getFlexTime() {
-        return flexTime;
-    }
+   public void setTimesheetRows(List<TimesheetRow> timesheetRows)
+   {
+      this.timesheetRows = timesheetRows;
+   }
 
-    public void setFlexTime(double flexTime) {
-        this.flexTime = flexTime;
-    }
+   public double getFlexTime()
+   {
+      return flexTime;
+   }
 
-    public double getOverTime() {
-        return overTime;
-    }
+   public void setFlexTime(double flexTime)
+   {
+      this.flexTime = flexTime;
+   }
 
-    public void setOverTime(double overTime) {
-        this.overTime = overTime;
-    }
+   public double getOverTime()
+   {
+      return overTime;
+   }
 
-    public boolean isApproved() {
-        return isApproved;
-    }
+   public void setOverTime(double overTime)
+   {
+      this.overTime = overTime;
+   }
 
-    public void setApproved(boolean isApproved) {
-        this.isApproved = isApproved;
-    }
+   public boolean isApproved()
+   {
+      return isApproved;
+   }
 
-    public boolean isSigned() {
-        return isSigned;
-    }
+   public void setApproved(boolean isApproved)
+   {
+      this.isApproved = isApproved;
+   }
 
-    public void setSigned(boolean isSigned) {
-        this.isSigned = isSigned;
-    }
+   public boolean isSigned()
+   {
+      return isSigned;
+   }
 
-    public Integer getId()
+   public void setSigned(boolean isSigned)
+   {
+      this.isSigned = isSigned;
+   }
+
+   public Integer getId()
    {
       return this.id;
    }
@@ -147,16 +158,6 @@ public class Timesheet implements Serializable
       return super.hashCode();
    }
 
-   public int getUserID()
-   {
-      return this.userID;
-   }
-
-   public void setUserID(final int userID)
-   {
-      this.userID = userID;
-   }
-
    public int getWeekNumber()
    {
       return this.weekNumber;
@@ -187,31 +188,46 @@ public class Timesheet implements Serializable
       this.isApproved = isApproved;
    }
 
+   public Timesheet(int userID, int weekNumber, int year, double flexTime, double overTime, boolean isApproved, boolean isSigned)
+   {
+      this.userID = userID;
+      this.weekNumber = weekNumber;
+      this.year = year;
+      this.flexTime = flexTime;
+      this.overTime = overTime;
+      this.isApproved = isApproved;
+      this.isSigned = isSigned;
+      timesheetRows = new ArrayList<TimesheetRow>();
+   }
+
+   public Timesheet()
+   {
+      timesheetRows = new ArrayList<TimesheetRow>();
+   }
+
    @Override
    public String toString()
    {
       String result = getClass().getSimpleName() + " ";
-      result += "userID: " + userID;
+      if (id != null)
+         result += "id: " + id;
       result += ", weekNumber: " + weekNumber;
       result += ", year: " + year;
+      result += ", flexTime: " + flexTime;
+      result += ", overTime: " + overTime;
       result += ", isApproved: " + isApproved;
+      result += ", isSigned: " + isSigned;
       return result;
    }
 
-    public Timesheet(int userID, int weekNumber, int year, double flexTime, double overTime, boolean isApproved, boolean isSigned) {
-        this.userID = userID;
-        this.weekNumber = weekNumber;
-        this.year = year;
-        this.flexTime = flexTime;
-        this.overTime = overTime;
-        this.isApproved = isApproved;
-        this.isSigned = isSigned;
-        timesheetRows = new ArrayList<TimesheetRow>();
-    }
+   public User getUser()
+   {
+      return this.user;
+   }
 
-    public Timesheet()
-    {
-        timesheetRows = new ArrayList<TimesheetRow>();
-    }
+   public void setUser(final User user)
+   {
+      this.user = user;
+   }
 
 }
