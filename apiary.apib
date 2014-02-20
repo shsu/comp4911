@@ -172,6 +172,21 @@ Use HTTP Basic Auth username field for the token.
 + Response 403
 + Response 404
 
+## Projects [/projects/:project_id/users]
+### Retrieve all users assigned to project [GET]
+Use HTTP Basic Auth username field for the token
+
++ Response 200 (application/json)
+
+    + Body
+        
+            {}
+            
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
 ## Project Assignments [/projects/:project_id/assignments]
 ### Create a project assignment [POST]
 Use HTTP Basic Auth username field for the token.
