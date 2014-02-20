@@ -55,6 +55,10 @@ public class User implements Serializable
    @ManyToOne
    private Timesheet defaulTimesheet;
 
+   // The system must track the status of the employees current Timesheet -Craig.
+   @Column
+   private int currentTimesheetId;
+
    @ManyToOne
    private PayLevel payLevel;
 
@@ -117,6 +121,10 @@ public class User implements Serializable
    {
       this.defaulTimesheet = defaulTimesheet;
    }
+
+   public int getCurrentTimesheetId() { return this.currentTimesheetId;}
+
+   public void setCurrentTimesheetId(int currentTimesheetId) {this.currentTimesheetId = currentTimesheetId;}
 
    public Integer getId()
    {
