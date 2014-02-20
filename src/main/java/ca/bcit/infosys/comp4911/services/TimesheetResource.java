@@ -31,16 +31,30 @@ public class TimesheetResource {
       @QueryParam("filter") final String filter) {
         int userId = 1; //userTokens.verifyTokenAndReturnUserID((token));
 
-        if(filter.equals("current")) {
-            Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(),userId);
-            return SH.Response(200, timesheet);
-        }
-        if(filter.equals("default")) {
-            //Timesheet timesheet = timesheetDao.getByDate(54, userId);  Not sure where we'll store the default sheet
+        if(filter != null)
+        {
+            if(filter.equals("current")) {
+                Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(),userId);
+                return SH.Response(200, timesheet);
+            }
+            if(filter.equals("default")) {
+                //Timesheet timesheet = timesheetDao.getByDate(54, userId);  Not sure where we'll store the default sheet
+            }
         }
 
         // if no filter return all the timesheets
         return SH.Response(200, timesheetDao.getAll());
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createTimesheet(
+            //@HeaderParam(SH.auth) final String token
+            Timesheet timesheet
+            ) {
+        int userId = 1; //userTokens.verifyTokenAndReturnUserID((token))
+        timesheetDao.create(timesheet);
+        return SH.Response(201);
     }
 
     /** Should we just use this method for retrieving the default */

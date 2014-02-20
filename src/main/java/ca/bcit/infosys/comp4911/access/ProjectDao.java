@@ -24,7 +24,7 @@ public class ProjectDao {
         em.persist(project);
     }
 
-    public Project read ( final int projectID)
+    public Project read ( final Integer projectID)
     {
         return em.find(Project.class, projectID);
     }

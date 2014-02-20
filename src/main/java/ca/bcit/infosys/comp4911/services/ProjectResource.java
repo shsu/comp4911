@@ -1,10 +1,12 @@
 package ca.bcit.infosys.comp4911.services;
 
+import ca.bcit.infosys.comp4911.access.ProjectAssignmentDao;
 import ca.bcit.infosys.comp4911.access.ProjectDao;
 import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.Project;
+import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
 import org.json.JSONObject;
@@ -25,6 +27,9 @@ public class ProjectResource {
 
     @EJB
     WorkPackageAssignmentDao workPackageAssignmentDao;
+
+    @EJB
+    ProjectAssignmentDao projectAssignmentDao;
 
     @EJB
     UserDao userDao;
@@ -73,16 +78,33 @@ public class ProjectResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProject(
       @HeaderParam(SH.auth) final String token,
-      @PathParam("project_id") Integer projectId,
+      @PathParam("project_id") Integer id,
       final Project Project) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        Project check = projectDao.read(projectId);
+        Project check = projectDao.read(id);
         if (check == null) {
             return SH.Response(404);
         }
 
         projectDao.update(Project);
         return SH.Response(200);
+    }
+
+    @GET
+    @Path("{project_id}/users")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsersForProject(
+            @HeaderParam(SH.auth) final String token,
+            @PathParam("project_id") final Integer id)
+    {
+        int userId = userTokens.verifyTokenAndReturnUserID((token));
+
+        Project check = projectDao.read(id);
+        if(check == null) {
+            return SH.Response(404);
+        }
+
+        return SH.Response(200, projectAssignmentDao.getAllUsers(id));
     }
 }

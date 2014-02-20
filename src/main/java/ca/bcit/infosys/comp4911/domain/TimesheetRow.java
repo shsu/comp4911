@@ -13,251 +13,216 @@ import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 import java.lang.Override;
+
 import ca.bcit.infosys.comp4911.domain.Project;
 import ca.bcit.infosys.comp4911.domain.WorkPackage;
 
 @Entity
-public class TimesheetRow implements Serializable
-{
+public class TimesheetRow implements Serializable {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id", updatable = false, nullable = false)
-   private Integer id = null;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id = null;
 
-   @ManyToOne
-   private Project project;
+    @Column
+    private int projectId;
 
-   @ManyToOne
-   private WorkPackage workPackage;
+    @Column
+    private int workPackageId;
 
-   public Timesheet getTimesheet()
-   {
-      return timesheet;
-   }
+    @Version
+    @Column(name = "version")
+    private int version = 0;
 
-   public void setTimesheet(Timesheet timesheet)
-   {
-      this.timesheet = timesheet;
-   }
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Timesheet timesheet;
 
-   public double getMonday()
-   {
-      return monday;
-   }
+    // All these values are now in tenths
+    @Column
+    private int monday;
 
-   public void setMonday(double monday)
-   {
-      this.monday = monday;
-   }
+    @Column
+    private int tuesday;
 
-   public double getTuesday()
-   {
-      return tuesday;
-   }
+    @Column
+    private int wednesday;
 
-   public void setTuesday(double tuesday)
-   {
-      this.tuesday = tuesday;
-   }
+    @Column
+    private int thursday;
 
-   public double getWednesday()
-   {
-      return wednesday;
-   }
+    @Column
+    private int friday;
 
-   public void setWednesday(double wednesday)
-   {
-      this.wednesday = wednesday;
-   }
+    @Column
+    private int saturday;
 
-   public double getThursday()
-   {
-      return thursday;
-   }
+    @Column
+    private int sunday;
 
-   public void setThursday(double thursday)
-   {
-      this.thursday = thursday;
-   }
+    @Column
+    private String note;
 
-   public double getFriday()
-   {
-      return friday;
-   }
+    public Integer getId() {
+        return this.id;
+    }
 
-   public void setFriday(double friday)
-   {
-      this.friday = friday;
-   }
+    public void setId(final Integer id) {
+        this.id = id;
+    }
 
-   public double getSaturday()
-   {
-      return saturday;
-   }
+    public int getVersion() {
+        return this.version;
+    }
 
-   public void setSaturday(double saturday)
-   {
-      this.saturday = saturday;
-   }
+    public void setVersion(final int version) {
+        this.version = version;
+    }
 
-   public double getSunday()
-   {
-      return sunday;
-   }
+    public int getMonday() {
+        return monday;
+    }
 
-   public void setSunday(double sunday)
-   {
-      this.sunday = sunday;
-   }
+    public void setMonday(int monday) {
+        this.monday = monday;
+    }
 
-   public String getNote()
-   {
-      return note;
-   }
+    public int getTuesday() {
+        return tuesday;
+    }
 
-   public void setNote(String note)
-   {
-      this.note = note;
-   }
+    public void setTuesday(int tuesday) {
+        this.tuesday = tuesday;
+    }
 
-   @Version
-   @Column(name = "version")
-   private int version = 0;
+    public int getWednesday() {
+        return wednesday;
+    }
 
-   @JsonIgnore
-   @ManyToOne(cascade = CascadeType.ALL)
-   private Timesheet timesheet;
+    public void setWednesday(int wednesday) {
+        this.wednesday = wednesday;
+    }
 
-   @Column
-   private double monday;
+    public int getThursday() {
+        return thursday;
+    }
 
-   @Column
-   private double tuesday;
+    public void setThursday(int thursday) {
+        this.thursday = thursday;
+    }
 
-   @Column
-   private double wednesday;
+    public int getFriday() {
+        return friday;
+    }
 
-   @Column
-   private double thursday;
+    public void setFriday(int friday) {
+        this.friday = friday;
+    }
 
-   @Column
-   private double friday;
+    public int getSaturday() {
+        return saturday;
+    }
 
-   @Column
-   private double saturday;
+    public void setSaturday(int saturday) {
+        this.saturday = saturday;
+    }
 
-   @Column
-   private double sunday;
+    public int getSunday() {
+        return sunday;
+    }
 
-   @Column
-   private String note;
+    public void setSunday(int sunday) {
+        this.sunday = sunday;
+    }
 
-   public Integer getId()
-   {
-      return this.id;
-   }
+    public Timesheet getTimesheet() {
+        return timesheet;
+    }
 
-   public void setId(final Integer id)
-   {
-      this.id = id;
-   }
+    public void setTimesheet(Timesheet timesheet) {
+        this.timesheet = timesheet;
+    }
 
-   public int getVersion()
-   {
-      return this.version;
-   }
+    public String getNote() {
+        return note;
+    }
 
-   public void setVersion(final int version)
-   {
-      this.version = version;
-   }
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-   @Override
-   public boolean equals(Object that)
-   {
-      if (this == that)
-      {
-         return true;
-      }
-      if (that == null)
-      {
-         return false;
-      }
-      if (getClass() != that.getClass())
-      {
-         return false;
-      }
-      if (id != null)
-      {
-         return id.equals(((TimesheetRow) that).id);
-      }
-      return super.equals(that);
-   }
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        if (id != null) {
+            return id.equals(((TimesheetRow) that).id);
+        }
+        return super.equals(that);
+    }
 
-   @Override
-   public int hashCode()
-   {
-      if (id != null)
-      {
-         return id.hashCode();
-      }
-      return super.hashCode();
-   }
+    @Override
+    public int hashCode() {
+        if (id != null) {
+            return id.hashCode();
+        }
+        return super.hashCode();
+    }
 
-   public TimesheetRow(Project project, WorkPackage workPackage, double monday, double tuesday, double wednesday, double thursday, double friday, double saturday, double sunday, String note)
-   {
-      this.project = project;
-       this.workPackage = workPackage;
-      this.monday = monday;
-      this.tuesday = tuesday;
-      this.wednesday = wednesday;
-      this.thursday = thursday;
-      this.friday = friday;
-      this.saturday = saturday;
-      this.sunday = sunday;
-      this.note = note;
-   }
+    public TimesheetRow(int projectId, int workPackageId, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note) {
+        this.projectId = projectId;
+        this.workPackageId = workPackageId;
+        this.monday = monday;
+        this.tuesday = tuesday;
+        this.wednesday = wednesday;
+        this.thursday = thursday;
+        this.friday = friday;
+        this.saturday = saturday;
+        this.sunday = sunday;
+        this.note = note;
+    }
 
-   public TimesheetRow()
-   {
-   }
+    public TimesheetRow() {
+    }
 
-   @Override
-   public String toString()
-   {
-      String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
-      result += ", monday: " + monday;
-      result += ", tuesday: " + tuesday;
-      result += ", wednesday: " + wednesday;
-      result += ", thursday: " + thursday;
-      result += ", friday: " + friday;
-      result += ", saturday: " + saturday;
-      result += ", sunday: " + sunday;
-      if (note != null && !note.trim().isEmpty())
-         result += ", note: " + note;
-      return result;
-   }
+    @Override
+    public String toString() {
+        String result = getClass().getSimpleName() + " ";
+        if (id != null)
+            result += "id: " + id;
+        result += ", monday: " + monday;
+        result += ", tuesday: " + tuesday;
+        result += ", wednesday: " + wednesday;
+        result += ", thursday: " + thursday;
+        result += ", friday: " + friday;
+        result += ", saturday: " + saturday;
+        result += ", sunday: " + sunday;
+        if (note != null && !note.trim().isEmpty())
+            result += ", note: " + note;
+        return result;
+    }
 
-   public Project getProject()
-   {
-      return this.project;
-   }
+    public int getProjectId() {
+        return projectId;
+    }
 
-   public void setProject(final Project project)
-   {
-      this.project = project;
-   }
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
 
-   public WorkPackage getWorkPackage()
-   {
-      return this.workPackage;
-   }
+    public int getWorkPackageId() {
+        return workPackageId;
+    }
 
-   public void setWorkPackage(final WorkPackage workPackage)
-   {
-      this.workPackage = workPackage;
-   }
+    public void setWorkPackageId(int workPackageId) {
+        this.workPackageId = workPackageId;
+    }
 }

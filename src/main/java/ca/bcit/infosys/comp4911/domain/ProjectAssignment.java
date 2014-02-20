@@ -19,9 +19,8 @@ public class ProjectAssignment implements Serializable {
     @Version
     @Column(name = "version")
     private int version = 0;
-
-    @ManyToOne
-    private Project project;
+    @Column
+    private String projectId;
 
     @ManyToOne
     private User user;
@@ -86,19 +85,19 @@ public class ProjectAssignment implements Serializable {
         return super.hashCode();
     }
 
-    public Project getProject() {
-        return this.project;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setProject(final Project project) {
-        this.project = project;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     public User getUser() {
-        return this.user;
+        return user;
     }
 
-    public void setUser(final User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

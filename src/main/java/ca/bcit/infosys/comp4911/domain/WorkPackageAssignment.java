@@ -23,11 +23,11 @@ public class WorkPackageAssignment implements Serializable {
     @Column(name = "version")
     private int version = 0;
 
-    @ManyToOne
-    private WorkPackage workPackage;
+    @Column
+    private String workPackageId;
 
-    @ManyToOne
-    private User user;
+    @Column
+    private int userId;
 
     @Column
     private boolean isResponsibleEngineer;
@@ -103,20 +103,20 @@ public class WorkPackageAssignment implements Serializable {
         return super.hashCode();
     }
 
-    public WorkPackage getWorkPackage() {
-        return this.workPackage;
+    public String getWorkPackageId() {
+        return workPackageId;
     }
 
-    public void setWorkPackage(final WorkPackage workPackage) {
-        this.workPackage = workPackage;
+    public void setWorkPackageId(String workPackageId) {
+        this.workPackageId = workPackageId;
     }
 
-    public User getUser() {
-        return this.user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(final User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public boolean getIsResponsibleEngineer() {

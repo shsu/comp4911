@@ -9,295 +9,200 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.lang.Override;
 import java.util.Currency;
+
 import ca.bcit.infosys.comp4911.domain.WorkPackage;
+
 import java.util.Set;
 import java.util.HashSet;
 import javax.persistence.OneToMany;
+
 import ca.bcit.infosys.comp4911.domain.Effort;
 
 @Entity
-public class Project implements Serializable
-{
+public class Project implements Serializable {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id", updatable = false, nullable = false)
-   private Integer id = null;
-   @Version
-   @Column(name = "version")
-   private int version = 0;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id = null;
 
-   @Column
-   private String projectName;
+    public String getProjectId() {
+        return projectId;
+    }
 
-   @Temporal(TemporalType.DATE)
-   private Date issueDate;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
 
-   @Temporal(TemporalType.DATE)
-   private Date completeDate;
+    @Version
 
-   @Column
-   private Currency ActualCostWorkPerformedInDollars;
+    @Column(name = "version")
+    private int version = 0;
 
-   @Column
-   private int ActualCostWorkPerformedInPD;
+    /** Actual id given to it by the HR who creates it */
+    @Column
+    private String projectId;
 
-   @Column
-   private Currency BudgetedCostWorkPerformedInDollars;
+    @Column
+    private String projectName;
 
-   @Column
-   private int string;
+    @Temporal(TemporalType.DATE)
+    private Date issueDate;
 
-   @Column
-   private int BudgetedCostWorkPerformedInPD;
+    @Temporal(TemporalType.DATE)
+    private Date completeDate;
 
-   @Column
-   private Currency BudgetedCostWorkScheduledInDollars;
+    @Column
+    private int string;
 
-   @Column
-   private Currency estimateAtCompletionInDollars;
+    @OneToMany(mappedBy = "project")
+    private Set<WorkPackage> workPackages = new HashSet<WorkPackage>();
 
-   @Column
-   private int estimateAtCompletionInPD;
+    @Column
+    private BigDecimal clientRate;
+    @OneToMany
+    private Set<Effort> BudgetCostWorkScheduledInPD = new HashSet<Effort>();
 
-   @Column
-   private Currency estimateToCompletionInDollars;
+    @Column
+    private BigDecimal UnAllocatedBudget;
 
-   @Column
-   private int estimateToCompletionInPD;
+    @Column
+    private BigDecimal AllocatedBudget;
 
-   @OneToMany(mappedBy = "project")
-   private Set<WorkPackage> workPackages = new HashSet<WorkPackage>();
+    public Integer getId() {
+        return this.id;
+    }
 
-   @OneToMany
-   private Set<Effort> BudgetCostWorkScheduledInPD = new HashSet<Effort>();
+    public void setId(final Integer id) {
+        this.id = id;
+    }
 
-   public Integer getId()
-   {
-      return this.id;
-   }
+    public int getVersion() {
+        return this.version;
+    }
 
-   public void setId(final Integer id)
-   {
-      this.id = id;
-   }
+    public void setVersion(final int version) {
+        this.version = version;
+    }
 
-   public int getVersion()
-   {
-      return this.version;
-   }
+    public BigDecimal getClientRate() {
+        return clientRate;
+    }
 
-   public void setVersion(final int version)
-   {
-      this.version = version;
-   }
+    public void setClientRate(BigDecimal clientRate) {
+        this.clientRate = clientRate;
+    }
 
-   @Override
-   public boolean equals(Object that)
-   {
-      if (this == that)
-      {
-         return true;
-      }
-      if (that == null)
-      {
-         return false;
-      }
-      if (getClass() != that.getClass())
-      {
-         return false;
-      }
-      if (id != null)
-      {
-         return id.equals(((Project) that).id);
-      }
-      return super.equals(that);
-   }
 
-   @Override
-   public int hashCode()
-   {
-      if (id != null)
-      {
-         return id.hashCode();
-      }
-      return super.hashCode();
-   }
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        if (id != null) {
+            return id.equals(((Project) that).id);
+        }
+        return super.equals(that);
+    }
 
-   public String getProjectName()
-   {
-      return this.projectName;
-   }
+    @Override
+    public int hashCode() {
+        if (id != null) {
+            return id.hashCode();
+        }
+        return super.hashCode();
+    }
 
-   public void setProjectName(final String projectName)
-   {
-      this.projectName = projectName;
-   }
+    public String getProjectName() {
+        return this.projectName;
+    }
 
-   public Date getIssueDate()
-   {
-      return this.issueDate;
-   }
+    public void setProjectName(final String projectName) {
+        this.projectName = projectName;
+    }
 
-   public void setIssueDate(final Date issueDate)
-   {
-      this.issueDate = issueDate;
-   }
+    public Date getIssueDate() {
+        return this.issueDate;
+    }
 
-   public Date getCompleteDate()
-   {
-      return this.completeDate;
-   }
+    public void setIssueDate(final Date issueDate) {
+        this.issueDate = issueDate;
+    }
 
-   public void setCompleteDate(final Date completeDate)
-   {
-      this.completeDate = completeDate;
-   }
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", version=" + version +
+                ", projectName='" + projectName + '\'' +
+                ", issueDate=" + issueDate +
+                ", completeDate=" + completeDate +
+                ", string=" + string +
+                ", workPackages=" + workPackages +
+                ", clientRate=" + clientRate +
+                ", BudgetCostWorkScheduledInPD=" + BudgetCostWorkScheduledInPD +
+                ", UnAllocatedBudget=" + UnAllocatedBudget +
+                ", AllocatedBudget=" + AllocatedBudget +
+                '}';
+    }
 
-   public Currency getActualCostWorkPerformedInDollars()
-   {
-      return this.ActualCostWorkPerformedInDollars;
-   }
+    public BigDecimal getUnAllocatedBudget() {
+        return UnAllocatedBudget;
+    }
 
-   public void setActualCostWorkPerformedInDollars(
-         final Currency ActualCostWorkPerformedInDollars)
-   {
-      this.ActualCostWorkPerformedInDollars = ActualCostWorkPerformedInDollars;
-   }
+    public void setUnAllocatedBudget(BigDecimal unAllocatedBudget) {
+        UnAllocatedBudget = unAllocatedBudget;
+    }
 
-   public int getActualCostWorkPerformedInPD()
-   {
-      return this.ActualCostWorkPerformedInPD;
-   }
+    public BigDecimal getAllocatedBudget() {
+        return AllocatedBudget;
+    }
 
-   public void setActualCostWorkPerformedInPD(final int ActualCostWorkPerformedInPD)
-   {
-      this.ActualCostWorkPerformedInPD = ActualCostWorkPerformedInPD;
-   }
+    public void setAllocatedBudget(BigDecimal allocatedBudget) {
+        AllocatedBudget = allocatedBudget;
+    }
 
-   public Currency getBudgetedCostWorkPerformedInDollars()
-   {
-      return this.BudgetedCostWorkPerformedInDollars;
-   }
+    public Date getCompleteDate() {
+        return this.completeDate;
+    }
 
-   public void setBudgetedCostWorkPerformedInDollars(
-         final Currency BudgetedCostWorkPerformedInDollars)
-   {
-      this.BudgetedCostWorkPerformedInDollars = BudgetedCostWorkPerformedInDollars;
-   }
+    public void setCompleteDate(final Date completeDate) {
+        this.completeDate = completeDate;
+    }
 
-   public int getString()
-   {
-      return this.string;
-   }
+    public int getString() {
+        return this.string;
+    }
 
-   public void setString(final int string)
-   {
-      this.string = string;
-   }
+    public void setString(final int string) {
+        this.string = string;
+    }
 
-   public int getBudgetedCostWorkPerformedInPD()
-   {
-      return this.BudgetedCostWorkPerformedInPD;
-   }
 
-   public void setBudgetedCostWorkPerformedInPD(
-         final int BudgetedCostWorkPerformedInPD)
-   {
-      this.BudgetedCostWorkPerformedInPD = BudgetedCostWorkPerformedInPD;
-   }
+    public Set<WorkPackage> getWorkPackages() {
+        return this.workPackages;
+    }
 
-   public Currency getBudgetedCostWorkScheduledInDollars()
-   {
-      return this.BudgetedCostWorkScheduledInDollars;
-   }
+    public void setWorkPackages(final Set<WorkPackage> workPackages) {
+        this.workPackages = workPackages;
+    }
 
-   public void setBudgetedCostWorkScheduledInDollars(
-         final Currency BudgetedCostWorkScheduledInDollars)
-   {
-      this.BudgetedCostWorkScheduledInDollars = BudgetedCostWorkScheduledInDollars;
-   }
+    public Set<Effort> getBudgetCostWorkScheduledInPD() {
+        return this.BudgetCostWorkScheduledInPD;
+    }
 
-   public Currency getEstimateAtCompletionInDollars()
-   {
-      return this.estimateAtCompletionInDollars;
-   }
-
-   public void setEstimateAtCompletionInDollars(
-         final Currency estimateAtCompletionInDollars)
-   {
-      this.estimateAtCompletionInDollars = estimateAtCompletionInDollars;
-   }
-
-   public int getEstimateAtCompletionInPD()
-   {
-      return this.estimateAtCompletionInPD;
-   }
-
-   public void setEstimateAtCompletionInPD(final int estimateAtCompletionInPD)
-   {
-      this.estimateAtCompletionInPD = estimateAtCompletionInPD;
-   }
-
-   public Currency getEstimateToCompletionInDollars()
-   {
-      return this.estimateToCompletionInDollars;
-   }
-
-   public void setEstimateToCompletionInDollars(
-         final Currency estimateToCompletionInDollars)
-   {
-      this.estimateToCompletionInDollars = estimateToCompletionInDollars;
-   }
-
-   public int getEstimateToCompletionInPD()
-   {
-      return this.estimateToCompletionInPD;
-   }
-
-   public void setEstimateToCompletionInPD(final int estimateToCompletionInPD)
-   {
-      this.estimateToCompletionInPD = estimateToCompletionInPD;
-   }
-
-   public Set<WorkPackage> getWorkPackages()
-   {
-      return this.workPackages;
-   }
-
-   public void setWorkPackages(final Set<WorkPackage> workPackages)
-   {
-      this.workPackages = workPackages;
-   }
-
-   @Override
-   public String toString()
-   {
-      String result = getClass().getSimpleName() + " ";
-      if (id != null)
-         result += "id: " + id;
-      if (projectName != null && !projectName.trim().isEmpty())
-         result += ", projectName: " + projectName;
-      result += ", ActualCostWorkPerformedInPD: " + ActualCostWorkPerformedInPD;
-      result += ", string: " + string;
-      result += ", BudgetedCostWorkPerformedInPD: "
-            + BudgetedCostWorkPerformedInPD;
-      result += ", estimateAtCompletionInPD: " + estimateAtCompletionInPD;
-      result += ", estimateToCompletionInPD: " + estimateToCompletionInPD;
-      return result;
-   }
-
-   public Set<Effort> getBudgetCostWorkScheduledInPD()
-   {
-      return this.BudgetCostWorkScheduledInPD;
-   }
-
-   public void setBudgetCostWorkScheduledInPD(
-         final Set<Effort> BudgetCostWorkScheduledInPD)
-   {
-      this.BudgetCostWorkScheduledInPD = BudgetCostWorkScheduledInPD;
-   }
+    public void setBudgetCostWorkScheduledInPD(
+            final Set<Effort> BudgetCostWorkScheduledInPD) {
+        this.BudgetCostWorkScheduledInPD = BudgetCostWorkScheduledInPD;
+    }
 }

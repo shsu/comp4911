@@ -22,9 +22,14 @@ public class UsersResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllUsers(
-      @HeaderParam(SH.auth) final String token) {
+      @HeaderParam(SH.auth) final String token,
+      @QueryParam("filter") final String filter) {
         int userId = 1;
-
+        if(filter.equals("manager"))
+        {
+            // get managers
+            // return
+        }
         return SH.Response(200, userDao.getAll());
     }
 

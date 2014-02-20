@@ -46,10 +46,13 @@ public class ProjectAssignmentDao {
         return query.getResultList();
     }
 
-    public List<ProjectAssignment> getAllByUser(final User user) {
-        TypedQuery<ProjectAssignment> query = em.createQuery("select p from " + PROJECT_ASSIGNMENT + " p where p.user = :user",
-                ProjectAssignment.class);
-        query.setParameter("user", user);
+    /** Get all Users by Project Id
+    /** This doesn't feel right with being in this class, but makes most logical sense I think */
+    public List<User> getAllUsers(final Integer id) {
+        TypedQuery<User> query = em.createQuery("select DISTINCT p.user from " + PROJECT_ASSIGNMENT
+                + " p where p.id == :id",
+                User.class);
+        query.setParameter("id", id);
         return query.getResultList();
     }
 }

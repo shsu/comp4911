@@ -37,14 +37,8 @@ public class ProjectAssignmentResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProjectAssignments(
             @HeaderParam(SH.auth) final String token,
-            @PathParam("id") Integer id,
             final ProjectAssignment projectAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
-
-        Project project = projectDao.read(id);
-        if (project == null) {
-            return SH.Response(404);
-        }
 
         projectAssignmentDao.create(projectAssignment);
         return SH.Response(201);
@@ -55,7 +49,7 @@ public class ProjectAssignmentResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProjectAssignment(
             @HeaderParam(SH.auth) final String token,
-            @PathParam("id") Integer id,
+            @PathParam("user_id") Integer id,
             ProjectAssignment projectAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
