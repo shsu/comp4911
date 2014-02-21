@@ -30,7 +30,7 @@ public class UserResource {
       @HeaderParam(SH.auth) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
-        return Response.ok().entity(userDao.read(userId)).header(SH.cors, "*").build();
+        return SH.corsResponseWithEntity(200, userDao.read(userId));
     }
 
     @Path("/token")
@@ -39,8 +39,7 @@ public class UserResource {
     public Response retrieveToken(
       @HeaderParam(SH.auth) final String token) {
         if (Strings.isNullOrEmpty(token)) {
-            throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
+            throw new WebApplicationException(SH.corsResponse(401));
         }
 
         String decodedCredentials = new String(
@@ -48,15 +47,13 @@ public class UserResource {
         String[] credentials = decodedCredentials.split(":");
 
         if (credentials.length != 2) {
-            throw new WebApplicationException(
-              Response.status(Response.Status.BAD_REQUEST).header(SH.cors, "*").build());
+            throw new WebApplicationException(SH.corsResponse(400));
         }
 
         Optional<User> authenticatedUser = userDao.authenticate(credentials[0], credentials[1]);
 
         if (!authenticatedUser.isPresent()) {
-            throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
+            throw new WebApplicationException(SH.corsResponse(401));
         }
 
         // Create a response with userId and token
@@ -64,7 +61,7 @@ public class UserResource {
         jsonObject.put("user_id", authenticatedUser.get().getId());
         jsonObject.put("token", userTokens.generateToken(authenticatedUser.get().getId()));
 
-        return Response.ok().entity(jsonObject.toString()).header(SH.cors, "*").build();
+        return SH.corsResponseWithEntity(200, jsonObject.toString());
     }
 
     @Path("/token")
@@ -73,6 +70,6 @@ public class UserResource {
       @HeaderParam(SH.auth) final String token) {
         userTokens.clearToken(token);
 
-        return Response.status(Response.Status.NO_CONTENT).header(SH.cors, "*").build();
+        return SH.corsResponse(204);
     }
 }

@@ -36,10 +36,10 @@ public class StatusReportResource {
 
         WorkPackage check = workPackageDao.read(id);
         if (check == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
-        return SH.Response(200, workPackageStatusReportDao.getAll());
+        return SH.corsResponseWithEntity(200, workPackageStatusReportDao.getAll());
     }
 
     @POST
@@ -52,11 +52,11 @@ public class StatusReportResource {
 
         WorkPackage check = workPackageDao.read(id);
         if (check == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
         workPackageStatusReportDao.create(workPackageStatusReport);
-        return SH.Response(201);
+        return SH.corsResponse(201);
     }
 
     @GET
@@ -70,15 +70,15 @@ public class StatusReportResource {
 
         WorkPackage check = workPackageDao.read(workPackageId);
         if (check == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
         WorkPackageStatusReport workPackageStatusReport = workPackageStatusReportDao.read(reportId);
         if (workPackageStatusReport == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
-        return SH.Response(200, workPackageStatusReport);
+        return SH.corsResponseWithEntity(200, workPackageStatusReport);
     }
 
     @PUT
@@ -93,16 +93,16 @@ public class StatusReportResource {
 
         WorkPackage check = workPackageDao.read(workPackageId);
         if (check == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
         WorkPackageStatusReport checkReport = workPackageStatusReportDao.read(reportId);
         if (checkReport == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
         workPackageStatusReportDao.update(workPackageStatusReport);
-        return SH.Response(200);
+        return SH.corsResponse(200);
     }
 }
 

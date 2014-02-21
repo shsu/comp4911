@@ -30,7 +30,7 @@ public class StatusResource {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("test","success");
 
-        return SH.Response(200,jsonObject.toString());
+        return SH.corsResponseWithEntity(200, jsonObject.toString());
     }
 
 }

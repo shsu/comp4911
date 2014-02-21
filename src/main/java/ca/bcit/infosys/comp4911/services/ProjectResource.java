@@ -6,10 +6,7 @@ import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.Project;
-import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
-import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
-import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -43,7 +40,7 @@ public class ProjectResource {
       @HeaderParam(SH.auth) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        return SH.Response(200, projectDao.getAll());
+        return SH.corsResponseWithEntity(200, projectDao.getAll());
     }
 
     @POST
@@ -54,7 +51,7 @@ public class ProjectResource {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         projectDao.create(project);
-        return SH.Response(201);
+        return SH.corsResponse(201);
     }
 
     @GET
@@ -67,10 +64,10 @@ public class ProjectResource {
 
         Project project = projectDao.read(id);
         if (project == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
-        return SH.Response(200, project);
+        return SH.corsResponseWithEntity(200, project);
     }
 
     @PUT
@@ -84,11 +81,11 @@ public class ProjectResource {
 
         Project check = projectDao.read(id);
         if (check == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
         projectDao.update(Project);
-        return SH.Response(200);
+        return SH.corsResponse(200);
     }
 
     @GET
@@ -102,9 +99,9 @@ public class ProjectResource {
 
         Project check = projectDao.read(id);
         if(check == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
-        return SH.Response(200, projectAssignmentDao.getAllUsers(id));
+        return SH.corsResponseWithEntity(200, projectAssignmentDao.getAllUsers(id));
     }
 }

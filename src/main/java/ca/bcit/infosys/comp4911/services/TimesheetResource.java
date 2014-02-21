@@ -6,7 +6,6 @@ import ca.bcit.infosys.comp4911.domain.Timesheet;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
-import javax.persistence.Entity;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -35,7 +34,7 @@ public class TimesheetResource {
         {
             if(filter.equals("current")) {
                 Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(),userId);
-                return SH.Response(200, timesheet);
+                return SH.corsResponseWithEntity(200, timesheet);
             }
             if(filter.equals("default")) {
                 //Timesheet timesheet = timesheetDao.getByDate(54, userId);  Not sure where we'll store the default sheet
@@ -43,7 +42,7 @@ public class TimesheetResource {
         }
 
         // if no filter return all the timesheets
-        return SH.Response(200, timesheetDao.getAll());
+        return SH.corsResponseWithEntity(200, timesheetDao.getAll());
     }
 
     @POST
@@ -54,7 +53,7 @@ public class TimesheetResource {
             ) {
         int userId = 1; //userTokens.verifyTokenAndReturnUserID((token))
         timesheetDao.create(timesheet);
-        return SH.Response(201);
+        return SH.corsResponse(201);
     }
 
     /** Should we just use this method for retrieving the default */
@@ -68,9 +67,9 @@ public class TimesheetResource {
 
         Timesheet timesheet = timesheetDao.read(id);
         if (timesheet == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
-        return SH.Response(200, timesheet);
+        return SH.corsResponseWithEntity(200, timesheet);
     }
 
     @PUT
@@ -83,10 +82,10 @@ public class TimesheetResource {
 
         Timesheet update = timesheetDao.read(id);
         if (update == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
         timesheetDao.update(timesheet);
-        return SH.Response(200);
+        return SH.corsResponse(200);
     }
 }

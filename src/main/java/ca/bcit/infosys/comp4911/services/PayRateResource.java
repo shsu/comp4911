@@ -30,7 +30,7 @@ public class PayRateResource {
       @HeaderParam(SH.auth) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        return SH.Response(200, payRateDao.getAllPayRates());
+        return SH.corsResponseWithEntity(200, payRateDao.getAllPayRates());
     }
 
     @POST
@@ -41,7 +41,7 @@ public class PayRateResource {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         payRateDao.create(payRate);
-        return SH.Response(201);
+        return SH.corsResponse(201);
     }
 
     @GET
@@ -54,10 +54,10 @@ public class PayRateResource {
 
         List<PayRate> payRates = payRateDao.getAllPayRatesByLevel(payLevelName);
         if(payRates == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
-        return SH.Response(200, payRates);
+        return SH.corsResponseWithEntity(200, payRates);
     }
 
     /** Not sure if we need this endpoint actually */
@@ -83,9 +83,9 @@ public class PayRateResource {
 
         PayRate payRate = payRateDao.getPayRateByLevelAndYear(payLevel, year);
         if(payRate == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
-        return SH.Response(200, payRate);
+        return SH.corsResponseWithEntity(200, payRate);
     }
 }

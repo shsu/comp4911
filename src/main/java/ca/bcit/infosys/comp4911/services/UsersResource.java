@@ -30,7 +30,7 @@ public class UsersResource {
             // get managers
             // return
         }
-        return SH.Response(200, userDao.getAll());
+        return SH.corsResponseWithEntity(200, userDao.getAll());
     }
 
     @POST
@@ -44,7 +44,7 @@ public class UsersResource {
         // Throw a 401 or/and 403 otherwise
 
         userDao.create(user);
-        return SH.Response(201);
+        return SH.corsResponse(201);
     }
 
     @GET
@@ -58,10 +58,10 @@ public class UsersResource {
 
         User user = userDao.read(id);
         if (user == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
-        return SH.Response(200, user);
+        return SH.corsResponseWithEntity(200, user);
     }
 
     @PUT
@@ -75,10 +75,10 @@ public class UsersResource {
 
         User check = userDao.read(id);
         if (check == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
         userDao.update(user);
-        return SH.Response(200);
+        return SH.corsResponse(200);
     }
 }

@@ -6,9 +6,7 @@ import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.Project;
 import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
-import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
-import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -41,7 +39,7 @@ public class ProjectAssignmentResource {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         projectAssignmentDao.create(projectAssignment);
-        return SH.Response(201);
+        return SH.corsResponse(201);
     }
 
     @PUT
@@ -55,9 +53,9 @@ public class ProjectAssignmentResource {
 
         Project update = projectDao.read(id);
         if (update == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
         projectAssignmentDao.update(projectAssignment);
-        return SH.Response(200);
+        return SH.corsResponse(200);
     }
 }

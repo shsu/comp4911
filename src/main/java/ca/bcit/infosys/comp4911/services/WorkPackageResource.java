@@ -2,15 +2,12 @@ package ca.bcit.infosys.comp4911.services;
 
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageStatusReportDao;
-import ca.bcit.infosys.comp4911.access.WorkPackageStatusReportDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.WorkPackage;
-import ca.bcit.infosys.comp4911.domain.WorkPackageStatusReport;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -35,7 +32,7 @@ public class WorkPackageResource {
       @HeaderParam(SH.auth) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        return SH.Response(200, workPackageDao.getAll());
+        return SH.corsResponseWithEntity(200, workPackageDao.getAll());
     }
 
     @GET
@@ -48,9 +45,9 @@ public class WorkPackageResource {
 
         WorkPackage workPackage = workPackageDao.read(id);
         if (workPackage == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
-        return SH.Response(200, workPackage);
+        return SH.corsResponseWithEntity(200, workPackage);
     }
 
     @POST
@@ -61,7 +58,7 @@ public class WorkPackageResource {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         workPackageDao.create(workPackage);
-        return SH.Response(201);
+        return SH.corsResponse(201);
     }
 
     @PUT
@@ -75,11 +72,11 @@ public class WorkPackageResource {
 
         WorkPackage workPackageUpdate = workPackageDao.read(id);
         if (workPackageUpdate == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
         workPackageDao.update(workPackage);
-        return SH.Response(200);
+        return SH.corsResponse(200);
     }
 
     @DELETE
@@ -91,10 +88,10 @@ public class WorkPackageResource {
 
         WorkPackage workPackage = workPackageDao.read(id);
         if (workPackage == null) {
-            return SH.Response(404);
+            return SH.corsResponse(404);
         }
 
         workPackageDao.delete(workPackage);
-        return SH.Response(204);
+        return SH.corsResponse(204);
     }
 }
