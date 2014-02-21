@@ -21,18 +21,23 @@ public class UserResourceTest {
     }
 
     @Test
-    public void testRetrieveAuthenticatedUserInfo() throws Exception {
-        authorizationJSONObject.put("username", "admin@example.com");
-        authorizationJSONObject.put("password", "password");
-
-        final Response response = given().contentType(ContentType.JSON).body(authorizationJSONObject.toString()).when().
-          post(url + "/user/token");
-        // Token is placed inside the header
+    public void testRetrieveAuthenticatedUserInfoHeader() throws Exception {
+        final Response response = given().auth().preemptive().basic("admin@example.com", "password").when().get(url + "/user/token");
         response.then().statusCode(200);
-        JSONObject jsonObject = new JSONObject(response.toString());
+        String token = (String) new JSONObject(response.asString()).get("token");
 
-        when().post(url + "/user?token=" + jsonObject.get("token")).then().assertThat().body("id", equalTo(1));
+        // Token is placed inside the header
+        given().auth().preemptive().basic(token, "").when().get(url + "/user").then().assertThat().body("id", equalTo(1));
+    }
+
+    @Test
+    public void testRetrieveAuthenticatedUserInfoQuery() throws Exception {
+        final Response response = given().auth().preemptive().basic("admin@example.com", "password").when().get(url + "/user/token");
+        response.then().statusCode(200);
+        String token = (String) new JSONObject(response.asString()).get("token");
+
         // Token is placed inside the query
+        when().get(url + "/user?token=" + token).then().assertThat().body("id", equalTo(1));
     }
 
     @Test
@@ -105,6 +110,15 @@ public class UserResourceTest {
 
     @Test
     public void testInvalidateToken() throws Exception {
-        when().delete(url + "/user/token").then().statusCode(204);
+        final Response response = given().auth().preemptive().basic("admin@example.com", "password").when().get(url + "/user/token");
+        response.then().statusCode(200);
+        String token = (String) new JSONObject(response.asString()).get("token");
+
+        when().delete(url + "/user/token?token=" + token).then().statusCode(204);
+    }
+
+    @Test
+    public void testInvalidateTokenFailure() throws Exception {
+        when().delete(url + "/user/token").then().statusCode(401);
     }
 }
