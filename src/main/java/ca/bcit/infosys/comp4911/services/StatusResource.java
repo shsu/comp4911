@@ -26,9 +26,9 @@ public class StatusResource {
     @GET
     @Path("json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response jsonTest(){
+    public Response jsonTest() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("test","success");
+        jsonObject.put("test", "success");
 
         return SH.corsResponseWithEntity(200, jsonObject.toString());
     }

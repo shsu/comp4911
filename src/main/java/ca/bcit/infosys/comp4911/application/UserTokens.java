@@ -31,32 +31,23 @@ public class UserTokens {
         return token;
     }
 
-    public int verifyTokenAndReturnUserID(final String authHeader)
-      throws WebApplicationException {
-        if (Strings.isNullOrEmpty(authHeader)) {
-            throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
+    public int verifyTokenAndReturnUserID(final String token) throws WebApplicationException {
+        if (Strings.isNullOrEmpty(token)) {
+            throw new WebApplicationException(SH.corsResponse(401));
         }
 
-        String decodedToken = new String(
-          BaseEncoding.base64().decode(authHeader.substring("Basic ".length())), UTF_8);
-        decodedToken = decodedToken.substring(0, decodedToken.length() - 1);
-
-        Integer userID = tokensForAuthenticatedUserID.get(decodedToken);
+        Integer userID = tokensForAuthenticatedUserID.get(token);
 
         if (userID == null) {
-            throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
+            throw new WebApplicationException(SH.corsResponse(401));
         }
 
         return userID;
     }
 
-
     public boolean clearToken(String tokenToBeCleared) throws WebApplicationException {
         if (Strings.isNullOrEmpty(tokenToBeCleared)) {
-            throw new WebApplicationException(
-              Response.status(Response.Status.UNAUTHORIZED).header(SH.cors, "*").build());
+            throw new WebApplicationException(SH.corsResponse(401));
         }
 
         return tokensForAuthenticatedUserID.remove(tokenToBeCleared) != null;

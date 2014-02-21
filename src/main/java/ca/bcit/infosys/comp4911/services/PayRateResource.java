@@ -6,7 +6,14 @@ import ca.bcit.infosys.comp4911.domain.PayRate;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
@@ -27,7 +34,7 @@ public class PayRateResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllPayRates(
-      @HeaderParam(SH.auth) final String token) {
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         return SH.corsResponseWithEntity(200, payRateDao.getAllPayRates());
@@ -36,8 +43,8 @@ public class PayRateResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createPayRate(
-            @HeaderParam(SH.auth) final String token,
-            final PayRate payRate) {
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      final PayRate payRate) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         payRateDao.create(payRate);
@@ -48,24 +55,26 @@ public class PayRateResource {
     @Path("{pay_level}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllPayLevelRates(
-      @HeaderParam(SH.auth) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
       @PathParam("pay_level") String payLevelName) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         List<PayRate> payRates = payRateDao.getAllPayRatesByLevel(payLevelName);
-        if(payRates == null) {
+        if (payRates == null) {
             return SH.corsResponse(404);
         }
 
         return SH.corsResponseWithEntity(200, payRates);
     }
 
-    /** Not sure if we need this endpoint actually */
+    /**
+     * Not sure if we need this endpoint actually
+     */
     @PUT
     @Path("{pay_level}/{year}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePayRate(
-      @HeaderParam(SH.auth) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
       @PathParam("id") Integer id,
       final String payLevel,
       final Date year) {
@@ -76,13 +85,13 @@ public class PayRateResource {
     @Path("{pay_level}/{year}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrievePayRate(
-            @HeaderParam(SH.auth) final String token,
-            @PathParam("pay_level") final String payLevel,
-            @PathParam("year") final String year) {
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @PathParam("pay_level") final String payLevel,
+      @PathParam("year") final String year) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         PayRate payRate = payRateDao.getPayRateByLevelAndYear(payLevel, year);
-        if(payRate == null) {
+        if (payRate == null) {
             return SH.corsResponse(404);
         }
 

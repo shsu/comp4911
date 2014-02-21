@@ -6,7 +6,15 @@ import ca.bcit.infosys.comp4911.domain.Timesheet;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -26,17 +34,16 @@ public class TimesheetResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllTimesheets(
-      @HeaderParam(SH.auth) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
       @QueryParam("filter") final String filter) {
         int userId = 1; //userTokens.verifyTokenAndReturnUserID((token));
 
-        if(filter != null)
-        {
-            if(filter.equals("current")) {
-                Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(),userId);
+        if (filter != null) {
+            if (filter.equals("current")) {
+                Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(), userId);
                 return SH.corsResponseWithEntity(200, timesheet);
             }
-            if(filter.equals("default")) {
+            if (filter.equals("default")) {
                 //Timesheet timesheet = timesheetDao.getByDate(54, userId);  Not sure where we'll store the default sheet
             }
         }
@@ -48,20 +55,22 @@ public class TimesheetResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createTimesheet(
-            //@HeaderParam(SH.auth) final String token
-            Timesheet timesheet
-            ) {
+      //@HeaderParam(SH.AUTHORIZATION_STRING) final String token
+      Timesheet timesheet
+    ) {
         int userId = 1; //userTokens.verifyTokenAndReturnUserID((token))
         timesheetDao.create(timesheet);
         return SH.corsResponse(201);
     }
 
-    /** Should we just use this method for retrieving the default */
+    /**
+     * Should we just use this method for retrieving the default
+     */
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveTimesheet(
-      @HeaderParam(SH.auth) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
       @PathParam("id") Integer id) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
@@ -76,7 +85,7 @@ public class TimesheetResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTimesheet(
-      @HeaderParam(SH.auth) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
       @PathParam("id") Integer id, Timesheet timesheet) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 

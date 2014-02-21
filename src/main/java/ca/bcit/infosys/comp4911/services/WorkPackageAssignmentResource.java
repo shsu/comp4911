@@ -1,12 +1,12 @@
 package ca.bcit.infosys.comp4911.services;
 
+import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
-import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
+import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.domain.WorkPackage;
 import ca.bcit.infosys.comp4911.domain.WorkPackageAssignment;
-import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
@@ -40,9 +40,9 @@ public class WorkPackageAssignmentResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createWorkPackageAssignment(
-            @HeaderParam(SH.auth) final String token,
-            @PathParam("id") Integer id,
-            WorkPackageAssignment workPackageAssignment) {
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @PathParam("id") Integer id,
+      WorkPackageAssignment workPackageAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         WorkPackageAssignment update = workPackageAssignmentDao.read(id);
@@ -58,10 +58,10 @@ public class WorkPackageAssignmentResource {
     @Path("{user_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateWorkPackageAssignment(
-            @HeaderParam(SH.auth) final String token,
-            @PathParam("user_id") Integer id,
-            @PathParam("id") Integer wpId,
-            WorkPackageAssignment workPackageAssignment) {
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @PathParam("user_id") Integer id,
+      @PathParam("id") Integer wpId,
+      WorkPackageAssignment workPackageAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         WorkPackage workPackage = workPackageDao.read(wpId);
@@ -76,7 +76,7 @@ public class WorkPackageAssignmentResource {
 
         // See WorkPackageAssignmentDao for explanation
         List<WorkPackageAssignment> wpAssignmentList =
-                workPackageAssignmentDao.getByUserAndWorkPackage(workPackage, user);
+          workPackageAssignmentDao.getByUserAndWorkPackage(workPackage, user);
         if (wpAssignmentList == null) {
             return SH.corsResponse(404);
         }

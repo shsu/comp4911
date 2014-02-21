@@ -9,7 +9,12 @@ import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -34,8 +39,8 @@ public class ProjectAssignmentResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProjectAssignments(
-            @HeaderParam(SH.auth) final String token,
-            final ProjectAssignment projectAssignment) {
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      final ProjectAssignment projectAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         projectAssignmentDao.create(projectAssignment);
@@ -46,9 +51,9 @@ public class ProjectAssignmentResource {
     @Path("{user_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProjectAssignment(
-            @HeaderParam(SH.auth) final String token,
-            @PathParam("user_id") Integer id,
-            ProjectAssignment projectAssignment) {
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @PathParam("user_id") Integer id,
+      ProjectAssignment projectAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         Project update = projectDao.read(id);
