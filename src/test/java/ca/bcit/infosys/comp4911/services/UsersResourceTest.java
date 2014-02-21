@@ -3,10 +3,12 @@ package ca.bcit.infosys.comp4911.services;
 import com.google.common.base.Strings;
 import com.jayway.restassured.response.Response;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.when;
 import static org.junit.Assert.assertFalse;
 
 public class UsersResourceTest {
@@ -40,5 +42,10 @@ public class UsersResourceTest {
     @Test
     public void testUpdateUser() throws Exception {
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        when().delete(url + "/user/token?token=" + token).then().statusCode(204);
     }
 }
