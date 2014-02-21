@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.services;
 
 import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,9 +22,16 @@ public class UserResourceTest {
 
     @Test
     public void testRetrieveAuthenticatedUserInfo() throws Exception {
-        given().auth().preemptive().basic("admin@example.com", "password").when().
-                get(url + "/user/token").then().assertThat().body("user_id", equalTo(1));
-        }
+        authorizationJSONObject.put("username", "admin@example.com");
+        authorizationJSONObject.put("password", "password");
+
+        final Response response = given().contentType(ContentType.JSON).body(authorizationJSONObject.toString()).when().
+          post(url + "/user/token");
+        response.then().statusCode(200);
+        JSONObject jsonObject = new JSONObject(response.toString());
+
+        when().post(url + "/user?token=" + jsonObject.get("token")).then().assertThat().body("id", equalTo(1));
+    }
 
     @Test
     public void testRetrieveTokenGET() throws Exception {
