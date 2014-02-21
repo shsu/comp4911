@@ -79,6 +79,9 @@ public class UserResource {
     public Response invalidateToken(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token) {
         userTokens.clearToken(token);
+        if (!userTokens.clearToken(token)) {
+            throw new WebApplicationException(SH.corsResponse(401));
+        }
 
         return SH.corsResponse(204);
     }

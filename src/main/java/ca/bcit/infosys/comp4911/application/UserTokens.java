@@ -45,9 +45,9 @@ public class UserTokens {
         return userID;
     }
 
-    public boolean clearToken(String tokenToBeCleared) throws WebApplicationException {
+    public boolean clearToken(String tokenToBeCleared) {
         if (Strings.isNullOrEmpty(tokenToBeCleared)) {
-            throw new WebApplicationException(SH.corsResponse(401));
+            return false;
         }
 
         return tokensForAuthenticatedUserID.remove(tokenToBeCleared) != null;
