@@ -60,6 +60,12 @@ public class UserResource {
             throw new WebApplicationException(SH.corsResponse(400));
         }
 
+        for(String credential:credentials){
+            if(Strings.isNullOrEmpty(credential)){
+                throw new WebApplicationException(SH.corsResponse(400));
+            }
+        }
+
         return SH.corsResponseWithEntity(200, performLoginAndGenerateTokenInJSON(credentials[0], credentials[1]));
     }
 
