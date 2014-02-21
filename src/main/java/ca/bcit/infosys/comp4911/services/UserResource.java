@@ -35,8 +35,10 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAuthenticatedUserInfo(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken, @QueryParam("token") final String queryToken) {
-        int userId = userTokens.verifyTokenAndReturnUserID(SH.processHeaderQueryToken(headerToken, queryToken));
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam("token") final String queryToken) {
+        String token = SH.processHeaderQueryToken(headerToken, queryToken);
+        int userId = userTokens.verifyTokenAndReturnUserID(token);
 
         return SH.corsResponseWithEntity(200, userDao.read(userId));
     }
@@ -58,7 +60,7 @@ public class UserResource {
             throw new WebApplicationException(SH.corsResponse(400));
         }
 
-        return SH.corsResponseWithEntity(200, performLoginAndGenerateToken(credentials[0], credentials[1]));
+        return SH.corsResponseWithEntity(200, performLoginAndGenerateTokenInJSON(credentials[0], credentials[1]));
     }
 
     @Path("/token")
@@ -71,14 +73,15 @@ public class UserResource {
             throw new WebApplicationException(SH.corsResponse(400));
         }
 
-        return SH.corsResponseWithEntity(200, performLoginAndGenerateToken(user.getUsername(), user.getPassword()));
+        return SH.corsResponseWithEntity(200, performLoginAndGenerateTokenInJSON(user.getUsername(), user.getPassword()));
     }
 
     @Path("/token")
     @DELETE
     public Response invalidateToken(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token) {
-        userTokens.clearToken(token);
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam("token") final String queryToken) {
+        String token = SH.processHeaderQueryToken(headerToken, queryToken);
         if (!userTokens.clearToken(token)) {
             throw new WebApplicationException(SH.corsResponse(401));
         }
@@ -86,7 +89,7 @@ public class UserResource {
         return SH.corsResponse(204);
     }
 
-    private String performLoginAndGenerateToken(final String username, final String password) {
+    private String performLoginAndGenerateTokenInJSON(final String username, final String password) {
         Optional<User> authenticatedUser = userDao.authenticate(username, password);
 
         if (!authenticatedUser.isPresent()) {
