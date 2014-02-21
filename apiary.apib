@@ -17,7 +17,7 @@ HOST: https://comp4911-stevenhsu.rhcloud.com
 # Group Pay Rates Management
 ## Pay Rates [/pay_rates]
 ### Retrieve all pay rates [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -32,7 +32,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 403
 
 ### Create a pay rate [POST]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -53,7 +53,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Pay Rates [/pay_rates/:pay_level]
 ### Retrieve all pay rate for a specific pay level [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -67,7 +67,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Pay Rates [/pay_rates/:pay_level/:year]
 ### Retrieve a pay rate for a specific pay level and year [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -80,7 +80,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 404
 
 ### Update a pay rate [PUT]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -104,7 +104,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Projects [/projects]
 ### Retrieve all projects [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -119,7 +119,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 403
 
 ### Create a project [POST]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -140,7 +140,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Projects [/projects/:project_id]
 ### Retrieve a project [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -153,7 +153,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 404
 
 ### Update a project [PUT]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -189,7 +189,7 @@ Use HTTP Basic Auth username field for the token
 
 ## Project Assignments [/projects/:project_id/assignments]
 ### Create a project assignment [POST]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -213,7 +213,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Project Assignments [/projects/:project_id/assignments/:user_id]
 ### Update a project assignment [PUT]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -227,7 +227,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 404
 
 ### Delete a project assignment [DELETE]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 204
 + Response 401
@@ -237,7 +237,7 @@ Use HTTP Basic Auth username field for the token.
 # Group Timesheets Management
 ## Timesheets [/timesheets]
 ### Retrieve all timesheets [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
     + Body
@@ -252,7 +252,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Timesheets [/timesheets/:timesheet_id]
 ### Retrieve a timesheet [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -267,7 +267,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 404
 
 ### Update a timesheet [PUT]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
     
@@ -292,7 +292,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## User [/user]
 ### Retrieve authenticated user profile [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200
     + Body
@@ -303,7 +303,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 401
 
 ### Update authenticated user profile [PUT]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200
     + Body
@@ -322,8 +322,29 @@ Use HTTP Basic Auth for username/password
     + Body
     
             {
+                "user_id":"<user_id>",
+                "token":"<token>"
+            }
+
++ Response 400
++ Response 401
+
+### Retrieve token [POST]
+
++ Request (application/json)
+    + Body
+            
+            {
+                "username":"<username>",
+                "password":"<password>"
+            }
+
++ Response 200
+    + Body
+    
+            {
                 "user_id":"user_id",
-                "token":"token"
+                "token":"<token>"
             }
 
 + Response 400
@@ -335,7 +356,7 @@ Use HTTP Basic Auth for username/password
 
 ## User Projects [/user/projects]
 ### Retrieve all projects assigned to authenticated user [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200
     + Body
@@ -349,7 +370,9 @@ Use HTTP Basic Auth username field for the token.
 
 ## User Timesheets [/user/timesheets]
 ### Retrieve all timesheets of authenticated user [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
+
+Use query parameter of: filter=current to limit the results to only the current week.
 
 + Response 200
     + Body
@@ -362,7 +385,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 401
 
 ### Create a timesheet for authenticated user [POST]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
     + Body
@@ -382,7 +405,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## User Timesheets Approve [/user/timesheets/to_be_approved]
 ### Retrieve all timesheets that required to be approved for authenticated user [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200
     + Body
@@ -396,7 +419,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## User Timesheets Rejected [/user/timesheets/rejected]
 ### Retrieve all timesheets that got rejected and need revision for authenticated user [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200
     + Body
@@ -410,7 +433,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## User Work Packages [/user/work_packages]
 ### Retrieve all work packages assigned to authenticated user [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200
     + Body
@@ -425,7 +448,7 @@ Use HTTP Basic Auth username field for the token.
 # Group Users Management
 ## Users [/users]
 ### Retrieve all users [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200
     + Body
@@ -439,7 +462,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 403
 
 ### Create a user [POST]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -459,7 +482,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Users [/users/:user_id]
 ### Retrieve a user profile [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200
     + Body
@@ -472,7 +495,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 404
 
 ### Update a user profile [PUT]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -493,7 +516,7 @@ Use HTTP Basic Auth username field for the token.
 # Group Work Packages Management
 ## Work Packages [/work_packages]
 ### Retrieve all work packages [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -508,7 +531,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 403
 
 ### Create a work package [POST]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -532,7 +555,7 @@ Use HTTP Basic Auth username field for the token.
 ## Work Packages [/work_packages/:wp_id]
 
 ### Retrieve a work package [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -546,7 +569,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 404
 
 ### Update a work package [PUT]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -568,7 +591,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 404
 
 ### Delete a work package [DELETE]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 204
 + Response 401
@@ -577,7 +600,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Work Package Assignments [/work_packages/:wp_id/assignments]
 ### Create a work package assignment [POST]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Request (application/json)
 
@@ -602,7 +625,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Work Package Assignments [/work_packages/:wp_id/assignments/:user_id]
 ### Update a work package assignment [PUT]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -616,7 +639,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 404
 
 ### Delete a work package assignment [DELETE]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 204
 + Response 401
@@ -626,7 +649,7 @@ Use HTTP Basic Auth username field for the token.
 # Group Work Package Status Reports
 ## Status Reports [/work_packages/:wp_id/status_reports]
 ### Retrieve all reports [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -643,7 +666,7 @@ Use HTTP Basic Auth username field for the token.
 + Response 409
 
 ### Create a report [POST]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 201 (application/json)
 
@@ -659,7 +682,7 @@ Use HTTP Basic Auth username field for the token.
 
 ## Status Reports [/work_packages/:wp_id/status_reports/:report_id]
 ### Retrieve report [GET]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
@@ -677,7 +700,7 @@ Use HTTP Basic Auth username field for the token.
 
 
 ### Update a report [PUT]
-Use HTTP Basic Auth username field for the token.
+Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
 
