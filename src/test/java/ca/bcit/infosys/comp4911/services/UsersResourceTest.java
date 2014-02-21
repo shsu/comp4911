@@ -24,6 +24,7 @@ public class UsersResourceTest {
 
     @Test
     public void testRetrieveAll() throws Exception {
+        //when().get(url + "/<RESOURCE_NAME>?token=" + token).then()...
     }
 
     @Test
