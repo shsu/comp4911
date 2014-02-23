@@ -57,6 +57,9 @@ public class WorkPackageStatusReport implements Serializable {
     @OneToMany
     private Set<Effort> estimatedWorkRemainingInPD = new HashSet<Effort>();
 
+    @Column
+    private String problemAnticipated;
+
     public Date getReportDate() {
         return reportDate;
     }
@@ -105,9 +108,6 @@ public class WorkPackageStatusReport implements Serializable {
         this.problemAnticipated = problemAnticipated;
     }
 
-    @Column
-    private String problemAnticipated;
-
     public Integer getId() {
         return this.id;
     }
@@ -122,6 +122,39 @@ public class WorkPackageStatusReport implements Serializable {
 
     public void setVersion(final int version) {
         this.version = version;
+    }
+
+    public int getWeekNumber() {
+        return this.weekNumber;
+    }
+
+    public void setWeekNumber(final int weekNumber) {
+        this.weekNumber = weekNumber;
+    }
+
+    public int getYear() {
+        return this.year;
+    }
+
+    public void setYear(final int year) {
+        this.year = year;
+    }
+
+    public WorkPackage getWorkPackage() {
+        return this.workPackage;
+    }
+
+    public void setWorkPackage(final WorkPackage workPackage) {
+        this.workPackage = workPackage;
+    }
+
+    public Set<Effort> getEstimatedWorkRemainingInPD() {
+        return this.estimatedWorkRemainingInPD;
+    }
+
+    public void setEstimatedWorkRemainingInPD(
+            final Set<Effort> estimatedWorkRemainingInPD) {
+        this.estimatedWorkRemainingInPD = estimatedWorkRemainingInPD;
     }
 
     @Override
@@ -149,22 +182,6 @@ public class WorkPackageStatusReport implements Serializable {
         return super.hashCode();
     }
 
-    public int getWeekNumber() {
-        return this.weekNumber;
-    }
-
-    public void setWeekNumber(final int weekNumber) {
-        this.weekNumber = weekNumber;
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-
-    public void setYear(final int year) {
-        this.year = year;
-    }
-
     @Override
     public String toString() {
         String result = getClass().getSimpleName() + " ";
@@ -173,20 +190,4 @@ public class WorkPackageStatusReport implements Serializable {
         return result;
     }
 
-    public WorkPackage getWorkPackage() {
-        return this.workPackage;
-    }
-
-    public void setWorkPackage(final WorkPackage workPackage) {
-        this.workPackage = workPackage;
-    }
-
-    public Set<Effort> getEstimatedWorkRemainingInPD() {
-        return this.estimatedWorkRemainingInPD;
-    }
-
-    public void setEstimatedWorkRemainingInPD(
-            final Set<Effort> estimatedWorkRemainingInPD) {
-        this.estimatedWorkRemainingInPD = estimatedWorkRemainingInPD;
-    }
 }
