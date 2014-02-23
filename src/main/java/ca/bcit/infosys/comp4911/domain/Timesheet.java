@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
@@ -27,11 +29,17 @@ public class Timesheet implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id = null;
+
     @Version
     @Column(name = "version")
     private int version = 0;
 
-    @OneToMany(mappedBy = "timesheet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name="TIMESHEET_TIMESHEETROW",
+            joinColumns = {@JoinColumn(name="TIMESHEET_ID")},
+            inverseJoinColumns = {@JoinColumn(name="TIMESHEETROW_ID")}
+    )
     private List<TimesheetRow> timesheetRows;
 
     @Column
@@ -41,10 +49,10 @@ public class Timesheet implements Serializable {
     private int year;
 
     @Column
-    private double flexTime;
+    private int flexTime;
 
     @Column
-    private double overTime;
+    private int overTime;
 
     @Column
     private boolean isApproved;
@@ -62,22 +70,6 @@ public class Timesheet implements Serializable {
 
     public void setTimesheetRows(List<TimesheetRow> timesheetRows) {
         this.timesheetRows = timesheetRows;
-    }
-
-    public double getFlexTime() {
-        return flexTime;
-    }
-
-    public void setFlexTime(double flexTime) {
-        this.flexTime = flexTime;
-    }
-
-    public double getOverTime() {
-        return overTime;
-    }
-
-    public void setOverTime(double overTime) {
-        this.overTime = overTime;
     }
 
     public boolean isApproved() {
@@ -110,6 +102,22 @@ public class Timesheet implements Serializable {
 
     public void setVersion(final int version) {
         this.version = version;
+    }
+
+    public int getFlexTime() {
+        return flexTime;
+    }
+
+    public void setFlexTime(int flexTime) {
+        this.flexTime = flexTime;
+    }
+
+    public int getOverTime() {
+        return overTime;
+    }
+
+    public void setOverTime(int overTime) {
+        this.overTime = overTime;
     }
 
     @Override
@@ -161,7 +169,7 @@ public class Timesheet implements Serializable {
         this.isApproved = isApproved;
     }
 
-    public Timesheet(int userId, int weekNumber, int year, double flexTime, double overTime, boolean isApproved, boolean isSigned) {
+    public Timesheet(int userId, int weekNumber, int year, int flexTime, int overTime, boolean isApproved, boolean isSigned) {
         this.userId = userId;
         this.weekNumber = weekNumber;
         this.year = year;
@@ -172,7 +180,7 @@ public class Timesheet implements Serializable {
         timesheetRows = new ArrayList<TimesheetRow>();
     }
 
-    public Timesheet(int userId, List<TimesheetRow> rows, int weekNumber, int year, double flexTime, double overTime, boolean isApproved, boolean isSigned) {
+    public Timesheet(int userId, List<TimesheetRow> rows, int weekNumber, int year, int flexTime, int overTime, boolean isApproved, boolean isSigned) {
         this.userId = userId;
         this.weekNumber = weekNumber;
         this.year = year;

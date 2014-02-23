@@ -1,21 +1,12 @@
 package ca.bcit.infosys.comp4911.domain;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.io.Serializable;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
+import javax.persistence.Id;
 import javax.persistence.Version;
-import java.lang.Override;
-
-import ca.bcit.infosys.comp4911.domain.Project;
-import ca.bcit.infosys.comp4911.domain.WorkPackage;
+import java.io.Serializable;
 
 @Entity
 public class TimesheetRow implements Serializable {
@@ -25,19 +16,21 @@ public class TimesheetRow implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id = null;
 
-    @Column
-    private int projectId;
-
-    @Column
-    private int workPackageId;
-
     @Version
     @Column(name = "version")
     private int version = 0;
 
+    @Column
+    private String projectNumber;
+
+    @Column
+    private String workPackageNumber;
+
+    /**
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     private Timesheet timesheet;
+     */
 
     // All these values are now in tenths
     @Column
@@ -136,14 +129,6 @@ public class TimesheetRow implements Serializable {
         this.sunday = sunday;
     }
 
-    public Timesheet getTimesheet() {
-        return timesheet;
-    }
-
-    public void setTimesheet(Timesheet timesheet) {
-        this.timesheet = timesheet;
-    }
-
     public String getNote() {
         return note;
     }
@@ -177,9 +162,9 @@ public class TimesheetRow implements Serializable {
         return super.hashCode();
     }
 
-    public TimesheetRow(int projectId, int workPackageId, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note) {
-        this.projectId = projectId;
-        this.workPackageId = workPackageId;
+    public TimesheetRow(String projectNumber, String workPackageNumber, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note) {
+        this.projectNumber = projectNumber;
+        this.workPackageNumber = workPackageNumber;
         this.monday = monday;
         this.tuesday = tuesday;
         this.wednesday = wednesday;
@@ -208,21 +193,5 @@ public class TimesheetRow implements Serializable {
         if (note != null && !note.trim().isEmpty())
             result += ", note: " + note;
         return result;
-    }
-
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    public int getWorkPackageId() {
-        return workPackageId;
-    }
-
-    public void setWorkPackageId(int workPackageId) {
-        this.workPackageId = workPackageId;
     }
 }

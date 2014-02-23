@@ -44,14 +44,14 @@ public class WorkPackageResource {
     }
 
     @GET
-    @Path("{id}")
+    @Path("{workpackage_number}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveWorkPackage(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("id") Integer id) {
+      @PathParam("workpackage_number") String workpackageNumber) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        WorkPackage workPackage = workPackageDao.read(id);
+        WorkPackage workPackage = workPackageDao.read(workpackageNumber);
         if (workPackage == null) {
             return SH.corsResponse(404);
         }
@@ -70,15 +70,15 @@ public class WorkPackageResource {
     }
 
     @PUT
-    @Path("{id}")
+    @Path("{workpackage_number}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateWorkPackage(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("id") Integer id,
+      @PathParam("workpackage_number") String workpackageNumber,
       WorkPackage workPackage) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        WorkPackage workPackageUpdate = workPackageDao.read(id);
+        WorkPackage workPackageUpdate = workPackageDao.read(workpackageNumber);
         if (workPackageUpdate == null) {
             return SH.corsResponse(404);
         }
@@ -88,13 +88,13 @@ public class WorkPackageResource {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("{workpackage_number}")
     public Response deleteWorkPackage(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("id") Integer id) {
+      @PathParam("workpackage_number") String workpackageNumber) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
-        WorkPackage workPackage = workPackageDao.read(id);
+        WorkPackage workPackage = workPackageDao.read(workpackageNumber);
         if (workPackage == null) {
             return SH.corsResponse(404);
         }

@@ -24,9 +24,9 @@ public class WorkPackageDao {
         em.persist(workPackage);
     }
 
-    public WorkPackage read ( final int workPackageID)
+    public WorkPackage read ( final String workPackageNumber)
     {
-        return em.find(WorkPackage.class, workPackageID);
+        return em.find(WorkPackage.class, workPackageNumber);
     }
 
     public void update (final WorkPackage workPackage)

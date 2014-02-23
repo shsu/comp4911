@@ -25,47 +25,30 @@ import ca.bcit.infosys.comp4911.domain.Effort;
 @Entity
 public class Project implements Serializable {
 
+    /** Actual id given to it by the HR who creates it */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Integer id = null;
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
+    @Column(updatable = false, nullable = false)
+    private String projectNumber;
 
     @Version
-
     @Column(name = "version")
     private int version = 0;
 
-    /** Actual id given to it by the HR who creates it */
-    @Column
-    private String projectId;
-
-    @Column
+    @Column(nullable = false)
     private String projectName;
 
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date issueDate;
 
     @Temporal(TemporalType.DATE)
     private Date completeDate;
-
-    @Column
-    private int string;
 
     @OneToMany(mappedBy = "project")
     private Set<WorkPackage> workPackages = new HashSet<WorkPackage>();
 
     @Column
     private BigDecimal clientRate;
-    @OneToMany
-    private Set<Effort> BudgetCostWorkScheduledInPD = new HashSet<Effort>();
 
     @Column
     private BigDecimal UnAllocatedBudget;
@@ -73,20 +56,52 @@ public class Project implements Serializable {
     @Column
     private BigDecimal AllocatedBudget;
 
-    public Integer getId() {
-        return this.id;
+    public String getProjectNumber() {
+        return projectNumber;
     }
 
-    public void setId(final Integer id) {
-        this.id = id;
+    public void setProjectNumber(String projectNumber) {
+        this.projectNumber = projectNumber;
     }
 
     public int getVersion() {
-        return this.version;
+        return version;
     }
 
-    public void setVersion(final int version) {
+    public void setVersion(int version) {
         this.version = version;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public Date getCompleteDate() {
+        return completeDate;
+    }
+
+    public void setCompleteDate(Date completeDate) {
+        this.completeDate = completeDate;
+    }
+
+    public Set<WorkPackage> getWorkPackages() {
+        return workPackages;
+    }
+
+    public void setWorkPackages(Set<WorkPackage> workPackages) {
+        this.workPackages = workPackages;
     }
 
     public BigDecimal getClientRate() {
@@ -95,65 +110,6 @@ public class Project implements Serializable {
 
     public void setClientRate(BigDecimal clientRate) {
         this.clientRate = clientRate;
-    }
-
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        if (id != null) {
-            return id.equals(((Project) that).id);
-        }
-        return super.equals(that);
-    }
-
-    @Override
-    public int hashCode() {
-        if (id != null) {
-            return id.hashCode();
-        }
-        return super.hashCode();
-    }
-
-    public String getProjectName() {
-        return this.projectName;
-    }
-
-    public void setProjectName(final String projectName) {
-        this.projectName = projectName;
-    }
-
-    public Date getIssueDate() {
-        return this.issueDate;
-    }
-
-    public void setIssueDate(final Date issueDate) {
-        this.issueDate = issueDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", version=" + version +
-                ", projectName='" + projectName + '\'' +
-                ", issueDate=" + issueDate +
-                ", completeDate=" + completeDate +
-                ", string=" + string +
-                ", workPackages=" + workPackages +
-                ", clientRate=" + clientRate +
-                ", BudgetCostWorkScheduledInPD=" + BudgetCostWorkScheduledInPD +
-                ", UnAllocatedBudget=" + UnAllocatedBudget +
-                ", AllocatedBudget=" + AllocatedBudget +
-                '}';
     }
 
     public BigDecimal getUnAllocatedBudget() {
@@ -172,37 +128,36 @@ public class Project implements Serializable {
         AllocatedBudget = allocatedBudget;
     }
 
-    public Date getCompleteDate() {
-        return this.completeDate;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Project project = (Project) o;
+
+        if (projectNumber != null ? !projectNumber.equals(project.projectNumber) : project.projectNumber != null)
+            return false;
+
+        return true;
     }
 
-    public void setCompleteDate(final Date completeDate) {
-        this.completeDate = completeDate;
+    @Override
+    public int hashCode() {
+        return projectNumber != null ? projectNumber.hashCode() : 0;
     }
 
-    public int getString() {
-        return this.string;
-    }
-
-    public void setString(final int string) {
-        this.string = string;
-    }
-
-
-    public Set<WorkPackage> getWorkPackages() {
-        return this.workPackages;
-    }
-
-    public void setWorkPackages(final Set<WorkPackage> workPackages) {
-        this.workPackages = workPackages;
-    }
-
-    public Set<Effort> getBudgetCostWorkScheduledInPD() {
-        return this.BudgetCostWorkScheduledInPD;
-    }
-
-    public void setBudgetCostWorkScheduledInPD(
-            final Set<Effort> BudgetCostWorkScheduledInPD) {
-        this.BudgetCostWorkScheduledInPD = BudgetCostWorkScheduledInPD;
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectNumber='" + projectNumber + '\'' +
+                ", version=" + version +
+                ", projectName='" + projectName + '\'' +
+                ", issueDate=" + issueDate +
+                ", completeDate=" + completeDate +
+                ", workPackages=" + workPackages +
+                ", clientRate=" + clientRate +
+                ", UnAllocatedBudget=" + UnAllocatedBudget +
+                ", AllocatedBudget=" + AllocatedBudget +
+                '}';
     }
 }

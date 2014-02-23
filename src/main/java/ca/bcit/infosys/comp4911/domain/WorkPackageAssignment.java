@@ -19,18 +19,25 @@ public class WorkPackageAssignment implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id = null;
+
     @Version
     @Column(name = "version")
     private int version = 0;
 
     @Column
-    private String workPackageId;
+    private String workPackageNumber;
 
     @Column
     private int userId;
 
     @Column
     private boolean isResponsibleEngineer;
+
+    @Temporal(TemporalType.DATE)
+    private Date activateDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date deactivateDate;
 
     public boolean isResponsibleEngineer() {
         return isResponsibleEngineer;
@@ -55,12 +62,6 @@ public class WorkPackageAssignment implements Serializable {
     public void setDeactivateDate(Date deactivateDate) {
         this.deactivateDate = deactivateDate;
     }
-
-    @Temporal(TemporalType.DATE)
-    private Date activateDate;
-
-    @Temporal(TemporalType.DATE)
-    private Date deactivateDate;
 
     public Integer getId() {
         return this.id;
@@ -103,12 +104,12 @@ public class WorkPackageAssignment implements Serializable {
         return super.hashCode();
     }
 
-    public String getWorkPackageId() {
-        return workPackageId;
+    public String getWorkPackageNumber() {
+        return workPackageNumber;
     }
 
-    public void setWorkPackageId(String workPackageId) {
-        this.workPackageId = workPackageId;
+    public void setWorkPackageNumber(String workPackageNumber) {
+        this.workPackageNumber = workPackageNumber;
     }
 
     public int getUserId() {

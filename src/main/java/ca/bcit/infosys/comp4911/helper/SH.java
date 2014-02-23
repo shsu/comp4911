@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
  */
 public class SH {
     public static final String AUTHORIZATION_STRING = "Authorization";
+    public static final String TOKEN = "token";
 
     public static javax.ws.rs.core.Response corsResponse(Integer code) {
         return javax.ws.rs.core.Response.status(code).header("Access-Control-Allow-Origin", "*")

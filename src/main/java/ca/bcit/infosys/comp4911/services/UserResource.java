@@ -36,7 +36,7 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAuthenticatedUserInfo(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam("token") final String queryToken) {
+      @QueryParam(SH.TOKEN) final String queryToken) {
         String token = SH.processHeaderQueryToken(headerToken, queryToken);
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
@@ -86,7 +86,7 @@ public class UserResource {
     @DELETE
     public Response invalidateToken(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam("token") final String queryToken) {
+      @QueryParam(SH.TOKEN) final String queryToken) {
         String token = SH.processHeaderQueryToken(headerToken, queryToken);
         if (!userTokens.clearToken(token)) {
             throw new WebApplicationException(SH.corsResponse(401));

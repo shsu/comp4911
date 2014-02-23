@@ -22,23 +22,19 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class WorkPackage implements Serializable {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Integer id = null;
+    @Column(updatable=false, nullable=false)
+    private int workPackageNumber;
+
     @Version
     @Column(name = "version")
     private int version = 0;
 
-    @ManyToOne
-    private Project project;
-
-    @Column
-    private int workPackageNumber;
-
     @Column
     private String workPackageName;
+
+    @ManyToOne
+    private Project project;
 
     @Temporal(TemporalType.DATE)
     private Date issueDate;
@@ -46,32 +42,20 @@ public class WorkPackage implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date completeDate;
 
+    @Column
     private String progressStatus;
 
-    private double budget;
-
+    @Column
     private String purpose;
 
+    @Column
     private String inputs;
 
+    @Column
     private String activities;
 
+    @Column
     private String outputs;
-
-    @Column
-    private Currency ActualCostWorkPerformedInDollars;
-
-    @Column
-    private int ActualCostWorkPerformedInPD;
-
-    @Column
-    private Currency BudgetedCostWorkPerformedInDollars;
-
-    @Column
-    private int BudgetedCostWorkPerfomedInPD;
-
-    @Column
-    private Currency BudgetedCostWorkScheduledInDollars;
 
     @OneToMany
     private Set<Effort> BudgetCostWorkScheduledInPD = new HashSet<Effort>();

@@ -32,11 +32,7 @@ public class UsersResource {
     public Response retrieveAllUsers(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
       @QueryParam("filter") final String filter) {
-        int userId = 1;
-        if (filter.equals("manager")) {
-            // get managers
-            // return
-        }
+        int userId = userTokens.verifyTokenAndReturnUserID(token);
         return SH.corsResponseWithEntity(200, userDao.getAll());
     }
 
@@ -46,9 +42,6 @@ public class UsersResource {
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
       final User user) {
         int userId = userTokens.verifyTokenAndReturnUserID(token);
-
-        // Need to do some Role Checks right here
-        // Throw a 401 or/and 403 otherwise
 
         userDao.create(user);
         return SH.corsResponse(201);

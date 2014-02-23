@@ -16,9 +16,11 @@ public class ProjectAssignment implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id = null;
+
     @Version
     @Column(name = "version")
     private int version = 0;
+
     @Column
     private String projectId;
 
@@ -52,6 +54,23 @@ public class ProjectAssignment implements Serializable {
         this.isProjectManager = isProjectManager;
     }
 
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
     @Override
     public String toString() {
         String result = getClass().getSimpleName() + " ";
@@ -83,21 +102,5 @@ public class ProjectAssignment implements Serializable {
             return id.hashCode();
         }
         return super.hashCode();
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

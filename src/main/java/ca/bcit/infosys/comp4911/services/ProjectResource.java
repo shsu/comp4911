@@ -62,11 +62,11 @@ public class ProjectResource {
     }
 
     @GET
-    @Path("{project_id}")
+    @Path("{project_number}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveProject(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("project_id") Integer id) {
+      @PathParam("project_number") Integer id) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         Project project = projectDao.read(id);
@@ -78,11 +78,11 @@ public class ProjectResource {
     }
 
     @PUT
-    @Path("{project_id}")
+    @Path("{project_number}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProject(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("project_id") Integer id,
+      @PathParam("project_number") Integer id,
       final Project Project) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
@@ -96,11 +96,11 @@ public class ProjectResource {
     }
 
     @GET
-    @Path("{project_id}/users")
+    @Path("{project_number}/users")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsersForProject(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("project_id") final Integer id) {
+      @PathParam("project_number") final Integer id) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         Project check = projectDao.read(id);

@@ -16,6 +16,7 @@ public class PayLevel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id = null;
+
     @Version
     @Column(name = "version")
     private int version = 0;
@@ -37,6 +38,14 @@ public class PayLevel implements Serializable {
 
     public void setVersion(final int version) {
         this.version = version;
+    }
+
+    public String getPayLevelName() {
+        return this.payLevelName;
+    }
+
+    public void setPayLevelName(final String payLevelName) {
+        this.payLevelName = payLevelName;
     }
 
     @Override
@@ -62,14 +71,6 @@ public class PayLevel implements Serializable {
             return id.hashCode();
         }
         return super.hashCode();
-    }
-
-    public String getPayLevelName() {
-        return this.payLevelName;
-    }
-
-    public void setPayLevelName(final String payLevelName) {
-        this.payLevelName = payLevelName;
     }
 
     @Override

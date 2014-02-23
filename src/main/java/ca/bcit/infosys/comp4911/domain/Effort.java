@@ -29,8 +29,9 @@ public class Effort implements Serializable {
     @ManyToOne
     private PayLevel payLevel;
 
+    /** Tenths of hours */
     @Column
-    private Double personDays;
+    private int personDays;
 
     public int getVersion() {
         return this.version;
@@ -73,11 +74,11 @@ public class Effort implements Serializable {
         this.payLevel = payLevel;
     }
 
-    public Double getPersonDays() {
+    public int getPersonDays() {
         return this.personDays;
     }
 
-    public void setPersonDays(final Double personDays) {
+    public void setPersonDays(final int personDays) {
         this.personDays = personDays;
     }
 
@@ -91,9 +92,11 @@ public class Effort implements Serializable {
 
     @Override
     public String toString() {
-        String result = getClass().getSimpleName() + " ";
-        if (personDays != null)
-            result += "personDays: " + personDays;
-        return result;
+        return "Effort{" +
+                "id=" + id +
+                ", version=" + version +
+                ", payLevel=" + payLevel +
+                ", personDays=" + personDays +
+                '}';
     }
 }

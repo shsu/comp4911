@@ -25,6 +25,7 @@ public class WorkPackageStatusReport implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id = null;
+
     @Version
     @Column(name = "version")
     private int version = 0;

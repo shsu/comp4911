@@ -12,6 +12,7 @@ import ca.bcit.infosys.comp4911.domain.PayLevel;
 
 import javax.persistence.ManyToOne;
 import java.lang.Override;
+import java.math.BigDecimal;
 
 @Entity
 public class PayRate implements Serializable {
@@ -20,6 +21,7 @@ public class PayRate implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id = null;
+
     @Version
     @Column(name = "version")
     private int version = 0;
@@ -28,7 +30,7 @@ public class PayRate implements Serializable {
     private int year;
 
     @Column
-    private double rate;
+    private BigDecimal rate;
 
     @ManyToOne
     private PayLevel payLevel;
@@ -47,6 +49,30 @@ public class PayRate implements Serializable {
 
     public void setVersion(final int version) {
         this.version = version;
+    }
+
+    public BigDecimal getRate() {
+        return rate;
+    }
+
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
+    }
+
+    public int getYear() {
+        return this.year;
+    }
+
+    public void setYear(final int year) {
+        this.year = year;
+    }
+
+    public PayLevel getPayLevel() {
+        return this.payLevel;
+    }
+
+    public void setPayLevel(final PayLevel payLevel) {
+        this.payLevel = payLevel;
     }
 
     @Override
@@ -72,30 +98,6 @@ public class PayRate implements Serializable {
             return id.hashCode();
         }
         return super.hashCode();
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-
-    public void setYear(final int year) {
-        this.year = year;
-    }
-
-    public double getRate() {
-        return this.rate;
-    }
-
-    public void setRate(final double rate) {
-        this.rate = rate;
-    }
-
-    public PayLevel getPayLevel() {
-        return this.payLevel;
-    }
-
-    public void setPayLevel(final PayLevel payLevel) {
-        this.payLevel = payLevel;
     }
 
     @Override

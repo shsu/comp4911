@@ -138,7 +138,7 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
 + Response 403
 + Response 409
 
-## Projects [/projects/:project_id]
+## Projects [/projects/:project_number]
 ### Retrieve a project [GET]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
@@ -172,7 +172,7 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
 + Response 403
 + Response 404
 
-## Projects [/projects/:project_id/users]
+## Projects [/projects/:project_number/users]
 ### Retrieve all users assigned to project [GET]
 Use HTTP Basic Auth username field for the token
 
@@ -187,7 +187,7 @@ Use HTTP Basic Auth username field for the token
 + Response 403
 + Response 404
 
-## Project Assignments [/projects/:project_id/assignments]
+## Project Assignments [/projects/:project_number/assignments]
 ### Create a project assignment [POST]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
@@ -211,7 +211,7 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
 + Response 404
 + Response 409
 
-## Project Assignments [/projects/:project_id/assignments/:user_id]
+## Project Assignments [/projects/:project_number/assignments/:user_id]
 ### Update a project assignment [PUT]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
