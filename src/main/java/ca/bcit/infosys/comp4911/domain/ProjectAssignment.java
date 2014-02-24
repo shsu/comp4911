@@ -22,7 +22,7 @@ public class ProjectAssignment implements Serializable {
     private int version = 0;
 
     @Column
-    private String projectId;
+    private String projectName;
 
     @ManyToOne
     private User user;
@@ -54,12 +54,12 @@ public class ProjectAssignment implements Serializable {
         this.isProjectManager = isProjectManager;
     }
 
-    public String getProjectId() {
-        return projectId;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public User getUser() {
