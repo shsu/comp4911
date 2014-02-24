@@ -45,8 +45,8 @@ public class WorkPackage implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date startDate;
 
-    @Column
-    private String progressStatus;
+    @Temporal(TemporalType.DATE)
+    private Date estimatedEndDate;
 
     @Column
     private String purpose;
@@ -62,6 +62,9 @@ public class WorkPackage implements Serializable {
 
     @Column
     private String outputs;
+
+    @Column
+    private String progressStatus;
 
     @OneToMany
     private Set<Effort> BudgetCostWorkScheduledInPD = new HashSet<Effort>();
@@ -189,6 +192,10 @@ public class WorkPackage implements Serializable {
     public void setEstimateToCompletionInPD(int estimateToCompletionInPD) {
         this.estimateToCompletionInPD = estimateToCompletionInPD;
     }
+
+    public Date getEstimatedEndDate() { return estimatedEndDate; }
+
+    public void setEstimatedEndDate(Date estimatedEndDate) { this.estimatedEndDate = estimatedEndDate; }
 
     @Override
     public boolean equals(Object o) {
