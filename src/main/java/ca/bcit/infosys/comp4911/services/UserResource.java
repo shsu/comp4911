@@ -88,6 +88,7 @@ public class UserResource {
         }
 
         return SH.corsResponseWithEntity(200, performLoginAndGenerateTokenInJSON(user.getUsername(), user.getPassword()));
+
     }
 
     @Path("/token")

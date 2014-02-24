@@ -33,7 +33,7 @@ public class UsersResource {
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token
       //@QueryParam("filter") final String filter
         ) {
-        int userId = 1; //userTokens.verifyTokenAndReturnUserID(token);
+        int userId = userTokens.verifyTokenAndReturnUserID(token);
         return SH.corsResponseWithEntity(200, userDao.getAll());
     }
 

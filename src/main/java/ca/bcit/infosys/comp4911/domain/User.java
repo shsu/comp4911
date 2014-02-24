@@ -79,6 +79,7 @@ public class User implements Serializable {
    @ManyToOne
    private User timesheetApprover;
 
+    @JsonIgnore
    @OneToMany(mappedBy = "timesheetApprover", fetch=FetchType.LAZY)
    private Set<User> peonsToApprove = new HashSet<User>();
 
@@ -330,3 +331,24 @@ public class User implements Serializable {
                 '}';
     }
 }
+
+/**
+ {
+ "username": "username0",
+ "password": "password",
+ "firstName": "firstName0",
+ "lastName": "lastName0",
+ "email": "employee0@example.com",
+ "startDate": "2014-02-24",
+ "status": "status0",
+ "defaultTimesheet": null,
+ "payLevel": null,
+ "supervisor": null,
+ "timesheetApprover": null,
+ "paidHoursPerWeek": 40,
+ "totalFlexTime": 0,
+ "totalOvertime": 0,
+ "vacationDays": 0,
+ "hr": false
+ }
+ */

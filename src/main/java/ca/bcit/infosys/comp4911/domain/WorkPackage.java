@@ -15,6 +15,7 @@ import java.util.Currency;
 import java.lang.Override;
 
 import ca.bcit.infosys.comp4911.domain.Effort;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -24,7 +25,7 @@ import javax.persistence.OneToMany;
 public class WorkPackage implements Serializable {
     @Id
     @Column(updatable=false, nullable=false)
-    private int workPackageNumber;
+    private String workPackageNumber;
 
     @Version
     @Column(name = "version")
@@ -66,18 +67,18 @@ public class WorkPackage implements Serializable {
     @Column
     private String progressStatus;
 
+    @JsonIgnore
     @OneToMany
-    private Set<Effort> BudgetCostWorkScheduledInPD = new HashSet<Effort>();
-
+    private Set<Effort> budgetCostWorkScheduledInPD = new HashSet<Effort>();
 
     @Column
     private int estimateToCompletionInPD;
 
-    public int getWorkPackageNumber() {
+    public String getWorkPackageNumber() {
         return workPackageNumber;
     }
 
-    public void setWorkPackageNumber(int workPackageNumber) {
+    public void setWorkPackageNumber(String workPackageNumber) {
         this.workPackageNumber = workPackageNumber;
     }
 
@@ -178,11 +179,11 @@ public class WorkPackage implements Serializable {
     }
 
     public Set<Effort> getBudgetCostWorkScheduledInPD() {
-        return BudgetCostWorkScheduledInPD;
+        return budgetCostWorkScheduledInPD;
     }
 
     public void setBudgetCostWorkScheduledInPD(Set<Effort> budgetCostWorkScheduledInPD) {
-        BudgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
+        this.budgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
     }
 
     public int getEstimateToCompletionInPD() {
@@ -204,25 +205,18 @@ public class WorkPackage implements Serializable {
 
         WorkPackage that = (WorkPackage) o;
 
-        if (version != that.version) return false;
-        if (workPackageNumber != that.workPackageNumber) return false;
-        if (workPackageName != null ? !workPackageName.equals(that.workPackageName) : that.workPackageName != null)
-            return false;
+        if (!workPackageNumber.equals(that.workPackageNumber)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = workPackageNumber;
-        result = 31 * result + version;
-        result = 31 * result + (workPackageName != null ? workPackageName.hashCode() : 0);
-        return result;
+        return workPackageNumber.hashCode();
     }
 
-    public WorkPackage(int workPackageNumber, int version, String workPackageName, Project project, Date issueDate, Date completeDate, Date startDate, String progressStatus, String purpose, String description, String inputs, String activities, String outputs, Set<Effort> budgetCostWorkScheduledInPD, int estimateToCompletionInPD) {
+    public WorkPackage(String workPackageNumber, String workPackageName, Project project, Date issueDate, Date completeDate, Date startDate, String progressStatus, String purpose, String description, String inputs, String activities, String outputs, Set<Effort> budgetCostWorkScheduledInPD, int estimateToCompletionInPD) {
         this.workPackageNumber = workPackageNumber;
-        this.version = version;
         this.workPackageName = workPackageName;
         this.project = project;
         this.issueDate = issueDate;
@@ -234,7 +228,7 @@ public class WorkPackage implements Serializable {
         this.inputs = inputs;
         this.activities = activities;
         this.outputs = outputs;
-        BudgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
+        this.budgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
         this.estimateToCompletionInPD = estimateToCompletionInPD;
     }
 
@@ -242,3 +236,32 @@ public class WorkPackage implements Serializable {
     {
     }
 }
+
+/**
+ {
+ "workPackageNumber": "123400",
+ "version": 0,
+ "workPackageName": "WorkPackageName0",
+ "project": {
+ "projectNumber": "12340",
+ "version": 0,
+ "projectName": "Project0",
+ "issueDate": "2014-02-24",
+ "completeDate": "2014-02-24",
+ "clientRate": 12.5,
+ "allocatedBudget": 1000,
+ "unAllocatedBudget": 1000
+ },
+ "issueDate": "2014-02-24",
+ "completeDate": "2014-02-24",
+ "startDate": "2014-02-24",
+ "estimatedEndDate": null,
+ "purpose": "description0",
+ "description": "inputs0",
+ "inputs": "outputs0",
+ "activities": "activities0",
+ "outputs": "progressStatus0",
+ "progressStatus": "purpose0",
+ "estimateToCompletionInPD": 100
+ }
+ */

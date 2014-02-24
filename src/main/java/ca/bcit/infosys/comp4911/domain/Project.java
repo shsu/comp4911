@@ -21,6 +21,7 @@ import java.util.HashSet;
 import javax.persistence.OneToMany;
 
 import ca.bcit.infosys.comp4911.domain.Effort;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 public class Project implements Serializable {
@@ -44,6 +45,7 @@ public class Project implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date completeDate;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "project")
     private Set<WorkPackage> workPackages = new HashSet<WorkPackage>();
 
@@ -126,6 +128,24 @@ public class Project implements Serializable {
 
     public void setAllocatedBudget(BigDecimal allocatedBudget) {
         AllocatedBudget = allocatedBudget;
+    }
+
+    public Project(String projectNumber, String projectName, Date issueDate, Date completeDate,
+                   Set<WorkPackage> workPackages, BigDecimal clientRate, BigDecimal unAllocatedBudget,
+                   BigDecimal allocatedBudget) {
+        this.projectNumber = projectNumber;
+        this.version = version;
+        this.projectName = projectName;
+        this.issueDate = issueDate;
+        this.completeDate = completeDate;
+        this.workPackages = workPackages;
+        this.clientRate = clientRate;
+        UnAllocatedBudget = unAllocatedBudget;
+        AllocatedBudget = allocatedBudget;
+    }
+
+    public Project()
+    {
     }
 
     @Override

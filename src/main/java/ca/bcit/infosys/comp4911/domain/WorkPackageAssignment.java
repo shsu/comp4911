@@ -79,6 +79,43 @@ public class WorkPackageAssignment implements Serializable {
         this.version = version;
     }
 
+    public String getWorkPackageNumber() {
+        return workPackageNumber;
+    }
+
+    public void setWorkPackageNumber(String workPackageNumber) {
+        this.workPackageNumber = workPackageNumber;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public boolean getIsResponsibleEngineer() {
+        return this.isResponsibleEngineer;
+    }
+
+    public void setIsResponsibleEngineer(final boolean isResponsibleEngineer) {
+        this.isResponsibleEngineer = isResponsibleEngineer;
+    }
+
+    public WorkPackageAssignment(String workPackageNumber, int userId, boolean isResponsibleEngineer, Date activateDate, Date deactivateDate) {
+        this.version = version;
+        this.workPackageNumber = workPackageNumber;
+        this.userId = userId;
+        this.isResponsibleEngineer = isResponsibleEngineer;
+        this.activateDate = activateDate;
+        this.deactivateDate = deactivateDate;
+    }
+
+    public WorkPackageAssignment() {
+
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -104,30 +141,6 @@ public class WorkPackageAssignment implements Serializable {
         return super.hashCode();
     }
 
-    public String getWorkPackageNumber() {
-        return workPackageNumber;
-    }
-
-    public void setWorkPackageNumber(String workPackageNumber) {
-        this.workPackageNumber = workPackageNumber;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public boolean getIsResponsibleEngineer() {
-        return this.isResponsibleEngineer;
-    }
-
-    public void setIsResponsibleEngineer(final boolean isResponsibleEngineer) {
-        this.isResponsibleEngineer = isResponsibleEngineer;
-    }
-
     @Override
     public String toString() {
         String result = getClass().getSimpleName() + " ";
@@ -135,3 +148,16 @@ public class WorkPackageAssignment implements Serializable {
         return result;
     }
 }
+
+/**
+ {
+ "id": 11,
+ "version": 0,
+ "workPackageNumber": "123400",
+ "userId": 1,
+ "isResponsibleEngineer": false,
+ "activateDate": "2014-02-24",
+ "deactivateDate": "2014-02-24",
+ "responsibleEngineer": false
+ }
+ */

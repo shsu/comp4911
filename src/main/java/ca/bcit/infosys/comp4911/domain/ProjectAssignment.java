@@ -22,7 +22,7 @@ public class ProjectAssignment implements Serializable {
     private int version = 0;
 
     @Column
-    private String projectName;
+    private String projectNumber;
 
     @ManyToOne
     private User user;
@@ -54,12 +54,12 @@ public class ProjectAssignment implements Serializable {
         this.isProjectManager = isProjectManager;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getProjectNumber() {
+        return projectNumber;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setProjectNumber(String projectNumber) {
+        this.projectNumber = projectNumber;
     }
 
     public User getUser() {
@@ -70,6 +70,15 @@ public class ProjectAssignment implements Serializable {
         this.user = user;
     }
 
+    public ProjectAssignment(String projectNumber, User user, boolean isProjectManager) {
+        this.projectNumber = projectNumber;
+        this.user = user;
+        this.isProjectManager = isProjectManager;
+    }
+
+    public ProjectAssignment()
+    {
+    }
 
     @Override
     public String toString() {
@@ -104,3 +113,30 @@ public class ProjectAssignment implements Serializable {
         return super.hashCode();
     }
 }
+
+/**
+ {
+ "projectNumber": "12340",
+ "user": {
+ "id": 2,
+ "version": 0,
+ "username": "username1",
+ "password": "$2a$10$1SmB5/Trt0TrBRBGAlIdAuYAV49lga.bGh649X66NOSO2oTlRe0Y.",
+ "firstName": "firstName1",
+ "lastName": "lastName1",
+ "email": "employee1@example.com",
+ "startDate": "2014-02-24",
+ "status": "status1",
+ "defaultTimesheet": null,
+ "payLevel": null,
+ "supervisor": null,
+ "timesheetApprover": null,
+ "paidHoursPerWeek": 40,
+ "totalFlexTime": 1,
+ "totalOvertime": 1,
+ "vacationDays": 1,
+ "hr": false
+ },
+ "projectManager": false
+ }
+ */
