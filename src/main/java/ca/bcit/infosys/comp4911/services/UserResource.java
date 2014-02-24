@@ -1,6 +1,8 @@
 package ca.bcit.infosys.comp4911.services;
 
+import ca.bcit.infosys.comp4911.access.ProjectDao;
 import ca.bcit.infosys.comp4911.access.UserDao;
+import ca.bcit.infosys.comp4911.access.WorkPackageDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
@@ -31,6 +33,12 @@ public class UserResource {
 
     @EJB
     private UserDao userDao;
+
+    @EJB
+    private ProjectDao projectDao;
+
+    @EJB
+    private WorkPackageDao workPackageDao;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -93,6 +101,30 @@ public class UserResource {
         }
 
         return SH.corsResponse(204);
+    }
+
+    @Path("/projects")
+    @GET
+    public Response retrieveAllProjectsAssignedToUser(
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN) final String queryToken) {
+        String token = SH.processHeaderQueryToken(headerToken, queryToken);
+        int userId = userTokens.verifyTokenAndReturnUserID(token);
+
+        // TODO: Get projects of user.
+        return SH.corsResponseWithEntity(200,projectDao.getAll());
+    }
+
+    @Path("/work_packages")
+    @GET
+    public Response retrieveAllWorkPackagesAssignedToUser(
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN) final String queryToken) {
+        String token = SH.processHeaderQueryToken(headerToken, queryToken);
+        int userId = userTokens.verifyTokenAndReturnUserID(token);
+
+        // TODO: Get work packages of user.
+        return SH.corsResponseWithEntity(200,workPackageDao.getAll());
     }
 
     private String performLoginAndGenerateTokenInJSON(final String username, final String password) {
