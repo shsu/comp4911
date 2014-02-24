@@ -60,7 +60,7 @@ public class WorkPackageAssignmentResource {
     public Response updateWorkPackageAssignment(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
       @PathParam("user_id") Integer id,
-      @PathParam("id") Integer wpId,
+      @PathParam("id") String wpId,
       WorkPackageAssignment workPackageAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 

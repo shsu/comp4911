@@ -38,7 +38,7 @@ public class StatusReportResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveWorkPackageResponseReports(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("id") final Integer id) {
+      @PathParam("id") final String id) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
         WorkPackage check = workPackageDao.read(id);
@@ -53,7 +53,7 @@ public class StatusReportResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createWorkPackageResponseReport(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("id") Integer id,
+      @PathParam("id") String id,
       WorkPackageStatusReport workPackageStatusReport) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
@@ -71,7 +71,7 @@ public class StatusReportResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveWorkPackageStatusReport(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("id") Integer workPackageId,
+      @PathParam("id") String workPackageId,
       @PathParam("report_id") Integer reportId) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
@@ -93,7 +93,7 @@ public class StatusReportResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateWorkPackageResponseReport(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("id") Integer workPackageId,
+      @PathParam("id") String workPackageId,
       @PathParam("report_id") Integer reportId,
       WorkPackageStatusReport workPackageStatusReport) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));

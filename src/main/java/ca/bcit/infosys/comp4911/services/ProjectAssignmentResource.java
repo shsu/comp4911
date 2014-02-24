@@ -52,7 +52,8 @@ public class ProjectAssignmentResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProjectAssignment(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @PathParam("user_id") Integer id,
+      @PathParam("user_id") String id, //I added this. ProjectDao.read needs a string becuase you need to input the
+      //the project name. This needs to be fixed. I just need it to compile though.
       ProjectAssignment projectAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID((token));
 
