@@ -30,9 +30,10 @@ public class UsersResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllUsers(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
-      @QueryParam("filter") final String filter) {
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String token
+      //@QueryParam("filter") final String filter
+        ) {
+        int userId = 1; //userTokens.verifyTokenAndReturnUserID(token);
         return SH.corsResponseWithEntity(200, userDao.getAll());
     }
 

@@ -3,6 +3,7 @@ package ca.bcit.infosys.comp4911.application;
 import ca.bcit.infosys.comp4911.access.TimesheetDao;
 import ca.bcit.infosys.comp4911.access.TimesheetRowDao;
 import ca.bcit.infosys.comp4911.access.UserDao;
+import ca.bcit.infosys.comp4911.domain.PayLevel;
 import ca.bcit.infosys.comp4911.domain.Timesheet;
 import ca.bcit.infosys.comp4911.domain.TimesheetRow;
 import ca.bcit.infosys.comp4911.domain.User;
@@ -15,7 +16,11 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Singleton
 @Startup
@@ -41,14 +46,36 @@ public class SampleData {
 
     private void generateUsers() {
         String hashedPassword = BCrypt.hashpw("password", BCrypt.gensalt());
-        userDao.create(new User("admin@example.com",hashedPassword,"FirstName","LastName"));
+        for(int i = 0; i < 5; i++)
+        {
+            userDao.create(new User(
+                    "username" + i,
+                    hashedPassword,
+                    "firstName" + i,
+                    "lastName" + i,
+                    "employee" + i + "@example.com",
+                    new Date(),
+                    false,
+                    "status" + i,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    40,
+                    i,
+                    i,
+                    i
+                    ));
+        }
     }
 
     private void generateTimesheets() {
-
+/**
         Timesheet timesheet;
 
-        for(int j = 0; j < 10; j++)
+        for(int j = 0; j < 2; j++)
         {
             timesheet = new Timesheet(j, j, j, j, j, false, false);
 
@@ -63,5 +90,8 @@ public class SampleData {
             }
         }
 
+        }
+    */
     }
+
 }

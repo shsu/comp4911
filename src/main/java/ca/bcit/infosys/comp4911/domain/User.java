@@ -2,10 +2,12 @@ package ca.bcit.infosys.comp4911.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -20,6 +22,9 @@ import java.util.HashSet;
 import javax.persistence.OneToMany;
 
 import ca.bcit.infosys.comp4911.domain.Effort;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class User implements Serializable {
@@ -58,7 +63,7 @@ public class User implements Serializable {
    private String status;
 
    // Just wondering if this should be a 1 to 1 maybe?
-   @ManyToOne
+   @OneToOne
    private Timesheet defaultTimesheet;
 
    @ManyToOne
@@ -67,13 +72,14 @@ public class User implements Serializable {
    @ManyToOne
    private User supervisor;
 
-   @OneToMany(mappedBy = "supervisor")
+    @JsonIgnore
+   @OneToMany(mappedBy = "supervisor", fetch= FetchType.LAZY)
    private Set<User> peon = new HashSet<User>();
 
    @ManyToOne
    private User timesheetApprover;
 
-   @OneToMany(mappedBy = "timesheetApprover")
+   @OneToMany(mappedBy = "timesheetApprover", fetch=FetchType.LAZY)
    private Set<User> peonsToApprove = new HashSet<User>();
 
    @Column
@@ -168,7 +174,7 @@ public class User implements Serializable {
         this.status = status;
     }
 
-    public Timesheet getDefaultTimesheet() {
+   public Timesheet getDefaultTimesheet() {
         return defaultTimesheet;
     }
 
@@ -270,6 +276,10 @@ public class User implements Serializable {
         this.totalFlexTime = totalFlexTime;
         this.totalOvertime = totalOvertime;
         this.vacationDays = vacationDays;
+    }
+
+    public User()
+    {
     }
 
     @Override
