@@ -36,7 +36,7 @@ public class WorkPackageDao {
 
     public void delete (final WorkPackage workPackage)
     {
-        em.remove(read(workPackage.getId()));
+        em.remove(read(workPackage.getWorkPackageName()));
     }
 
     public List<WorkPackage> getAll() {
