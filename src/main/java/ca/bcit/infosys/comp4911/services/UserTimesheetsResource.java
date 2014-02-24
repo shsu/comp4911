@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/user/timesheets")
-public class UserTimesheets {
+public class UserTimesheetsResource {
 
     @EJB
     private UserTokens userTokens;
@@ -34,20 +34,13 @@ public class UserTimesheets {
         String token = SH.processHeaderQueryToken(headerToken, queryToken);
         int userId = userTokens.verifyTokenAndReturnUserID(token);
 
-        List<Timesheet> timesheetList;
-
         if (timesheetsFilter.equals("current")) {
-            // TODO: Get only latest timesheets for user.
-            // timesheetDao.getCurrent(int year, int week)
-            //            SH.getCurrentWeek()
-            //            SH.getCurrentYear()
-            timesheetList = timesheetDao.getAll();
+            return SH.corsResponseWithEntity(200, timesheetDao.getByDate(
+              SH.getCurrentWeek(), SH.getCurrentYear(), userId));
         } else {
             // TODO: Get timesheet for user.
-            timesheetList = timesheetDao.getAll();
+            return SH.corsResponseWithEntity(200, timesheetDao.getAll());
         }
-
-        return SH.corsResponseWithEntity(200, timesheetList);
     }
 
     @GET
