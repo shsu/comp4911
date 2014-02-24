@@ -24,7 +24,7 @@ public class ProjectDao {
         em.persist(project);
     }
 
-    public Project read ( final Integer projectID)
+    public Project read ( final String projectID)
     {
         return em.find(Project.class, projectID);
     }
@@ -36,7 +36,7 @@ public class ProjectDao {
 
     public void delete (final Project project)
     {
-        em.remove(read(project.getId()));
+        em.remove(read(project.getProjectName()));
     }
 
     public List<Project> getAll() {
