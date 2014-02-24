@@ -13,13 +13,19 @@ public class SH {
     public static final String TOKEN = "token";
 
     public static javax.ws.rs.core.Response corsResponse(Integer code) {
-        return javax.ws.rs.core.Response.status(code).header("Access-Control-Allow-Origin", "*")
-          .build();
+        return javax.ws.rs.core.Response.status(code).
+          header("Access-Control-Allow-Origin", "*").
+          header("Access-Control-Allow-Methods","GET, POST, PUT, DELETE").
+          header("Access-Control-Allow-Headers","x-requested-with").
+          build();
     }
 
     public static javax.ws.rs.core.Response corsResponseWithEntity(Integer code, Object entity) {
-        return javax.ws.rs.core.Response.status(code).entity(entity).header("Access-Control-Allow-Origin", "*")
-          .build();
+        return javax.ws.rs.core.Response.status(code).entity(entity).
+          header("Access-Control-Allow-Origin", "*").
+          header("Access-Control-Allow-Methods","GET, POST, PUT, DELETE").
+          header("Access-Control-Allow-Headers","x-requested-with").
+          build();
     }
 
     public static String processHeaderQueryToken(final String headerToken, final String queryToken) {
