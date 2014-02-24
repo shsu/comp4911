@@ -54,4 +54,18 @@ public class TimesheetRowDao {
         return query.getResultList();
     }
 
+    public List<TimesheetRow> getAllByWP(final String wpNumber){
+        TypedQuery<TimesheetRow> query = em.createQuery("select t from " + TIMESHEET_ROW +
+                " t where t.workpackNumber = :wpNumber", TimesheetRow.class);
+        query.setParameter("wpNumber", wpNumber);
+        return query.getResultList();
+    }
+
+    public List<TimesheetRow> getAllByProject(final String projNumber){
+    TypedQuery<TimesheetRow> query = em.createQuery("select t from " + TIMESHEET_ROW +
+            " t where t.workpackNumber = :projNumber", TimesheetRow.class);
+    query.setParameter("projNumber", projNumber);
+    return query.getResultList();
+    }
+
 }
