@@ -111,6 +111,11 @@
             <version>2.2.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.thetransactioncompany</groupId>
+            <artifactId>cors-filter</artifactId>
+            <version>1.9</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>

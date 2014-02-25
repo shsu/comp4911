@@ -77,6 +77,7 @@ public class UserResource {
         return SH.corsResponseWithEntity(200, performLoginAndGenerateTokenInJSON(credentials[0], credentials[1]));
     }
 
+
     @Path("/token")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
