@@ -13,17 +13,11 @@ public class SH {
     public static final String TOKEN = "token";
 
     public static javax.ws.rs.core.Response corsResponse(Integer code) {
-        return javax.ws.rs.core.Response.status(code).
-          header("Access-Control-Allow-Methods","GET, POST, PUT, DELETE, OPTIONS, X-XSRF-TOKEN").
-          header("Access-Control-Max-Age",3600).
-          build();
+        return javax.ws.rs.core.Response.status(code).build();
     }
 
     public static javax.ws.rs.core.Response corsResponseWithEntity(Integer code, Object entity) {
-        return javax.ws.rs.core.Response.status(code).entity(entity).
-          header("Access-Control-Allow-Methods","GET, POST, PUT, DELETE, OPTIONS, X-XSRF-TOKEN").
-          header("Access-Control-Max-Age",3600).
-          build();
+        return javax.ws.rs.core.Response.status(code).entity(entity).build();
     }
 
     public static String processHeaderQueryToken(final String headerToken, final String queryToken) {
