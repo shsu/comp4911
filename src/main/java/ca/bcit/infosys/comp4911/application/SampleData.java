@@ -74,24 +74,14 @@ public class SampleData {
         for(int i = 0; i < 5; i++)
         {
             userDao.create(new User(
-                    "username" + i,
+                    "username" + i + "@example.com",
                     hashedPassword,
                     "firstName" + i,
                     "lastName" + i,
-                    "employee" + i + "@example.com",
                     new Date(),
                     false,
-                    "status" + i,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    40,
-                    i,
-                    i,
-                    i
+                    "",
+                    40,0,0,0,0,0,0,0
                     ));
         }
 

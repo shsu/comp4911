@@ -27,61 +27,38 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-public class User implements Serializable {
+public class User implements Serializable
+{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Integer id = null;
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id", updatable = false, nullable = false)
+   private Integer id = null;
 
-    @Version
-    @Column(name = "version")
-    private int version = 0;
+   @Version
+   @Column(name = "version")
+   private int version = 0;
 
-    @Column
-    private String username;
+   @Column
+   private String username;
 
-    @Column
-    private String password;
+   @Column
+   private String password;
 
-    @Column
-    private String firstName;
+   @Column
+   private String firstName;
 
-    @Column
-    private String lastName;
+   @Column
+   private String lastName;
 
-    @Column
-    private String email;
-
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+   @Temporal(TemporalType.DATE)
+   private Date startDate;
 
    @Column
    private boolean isHR;
 
    @Column
    private String status;
-
-   // Just wondering if this should be a 1 to 1 maybe?
-   @OneToOne
-   private Timesheet defaultTimesheet;
-
-   @ManyToOne
-   private PayLevel payLevel;
-
-   @ManyToOne
-   private User supervisor;
-
-    @JsonIgnore
-   @OneToMany(mappedBy = "supervisor", fetch= FetchType.LAZY)
-   private Set<User> peon = new HashSet<User>();
-
-   @ManyToOne
-   private User timesheetApprover;
-
-    @JsonIgnore
-   @OneToMany(mappedBy = "timesheetApprover", fetch=FetchType.LAZY)
-   private Set<User> peonsToApprove = new HashSet<User>();
 
    @Column
    private int paidHoursPerWeek;
@@ -95,260 +72,264 @@ public class User implements Serializable {
    @Column
    private int vacationDays;
 
-    public Integer getId() {
-        return id;
-    }
+   @Column
+   private int defaultTimesheetID;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+   @Column
+   private int supervisorUserID;
 
-    public int getVersion() {
-        return version;
-    }
+   @Column
+   private int timesheetApproverUserID;
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
+   @Column
+   private int payLevelID;
 
-    public String getUsername() {
-        return username;
-    }
+   public Integer getId()
+   {
+      return id;
+   }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+   public void setId(Integer id)
+   {
+      this.id = id;
+   }
 
-    public String getPassword() {
-        return password;
-    }
+   public int getVersion()
+   {
+      return version;
+   }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+   public void setVersion(int version)
+   {
+      this.version = version;
+   }
 
-    public String getFirstName() {
-        return firstName;
-    }
+   public String getUsername()
+   {
+      return username;
+   }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+   public void setUsername(String username)
+   {
+      this.username = username;
+   }
 
-    public String getLastName() {
-        return lastName;
-    }
+   public String getPassword()
+   {
+      return password;
+   }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+   public void setPassword(String password)
+   {
+      this.password = password;
+   }
 
-    public String getEmail() {
-        return email;
-    }
+   public String getFirstName()
+   {
+      return firstName;
+   }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+   public void setFirstName(String firstName)
+   {
+      this.firstName = firstName;
+   }
 
-    public Date getStartDate() {
-        return startDate;
-    }
+   public String getLastName()
+   {
+      return lastName;
+   }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+   public void setLastName(String lastName)
+   {
+      this.lastName = lastName;
+   }
 
-    public boolean isHR() {
-        return isHR;
-    }
+   public Date getStartDate()
+   {
+      return startDate;
+   }
 
-    public void setHR(boolean isHR) {
-        this.isHR = isHR;
-    }
+   public void setStartDate(Date startDate)
+   {
+      this.startDate = startDate;
+   }
 
-    public String getStatus() {
-        return status;
-    }
+   public boolean isHR()
+   {
+      return isHR;
+   }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+   public void setHR(boolean isHR)
+   {
+      this.isHR = isHR;
+   }
 
-   public Timesheet getDefaultTimesheet() {
-        return defaultTimesheet;
-    }
+   public String getStatus()
+   {
+      return status;
+   }
 
-    public void setDefaultTimesheet(Timesheet defaultTimesheet) {
-        this.defaultTimesheet = defaultTimesheet;
-    }
+   public void setStatus(String status)
+   {
+      this.status = status;
+   }
 
-    public PayLevel getPayLevel() {
-        return payLevel;
-    }
+   public int getPaidHoursPerWeek()
+   {
+      return paidHoursPerWeek;
+   }
 
-    public void setPayLevel(PayLevel payLevel) {
-        this.payLevel = payLevel;
-    }
+   public void setPaidHoursPerWeek(int paidHoursPerWeek)
+   {
+      this.paidHoursPerWeek = paidHoursPerWeek;
+   }
 
-    public User getSupervisor() {
-        return supervisor;
-    }
+   public int getTotalFlexTime()
+   {
+      return totalFlexTime;
+   }
 
-    public void setSupervisor(User supervisor) {
-        this.supervisor = supervisor;
-    }
+   public void setTotalFlexTime(int totalFlexTime)
+   {
+      this.totalFlexTime = totalFlexTime;
+   }
 
-    public Set<User> getPeon() {
-        return peon;
-    }
+   public int getTotalOvertime()
+   {
+      return totalOvertime;
+   }
 
-    public void setPeon(Set<User> peon) {
-        this.peon = peon;
-    }
+   public void setTotalOvertime(int totalOvertime)
+   {
+      this.totalOvertime = totalOvertime;
+   }
 
-    public User getTimesheetApprover() {
-        return timesheetApprover;
-    }
+   public int getVacationDays()
+   {
+      return vacationDays;
+   }
 
-    public void setTimesheetApprover(User timesheetApprover) {
-        this.timesheetApprover = timesheetApprover;
-    }
+   public void setVacationDays(int vacationDays)
+   {
+      this.vacationDays = vacationDays;
+   }
 
-    public Set<User> getPeonsToApprove() {
-        return peonsToApprove;
-    }
+   public User()
+   {
+   }
 
-    public void setPeonsToApprove(Set<User> peonsToApprove) {
-        this.peonsToApprove = peonsToApprove;
-    }
-
-    public int getPaidHoursPerWeek() {
-        return paidHoursPerWeek;
-    }
-
-    public void setPaidHoursPerWeek(int paidHoursPerWeek) {
-        this.paidHoursPerWeek = paidHoursPerWeek;
-    }
-
-    public int getTotalFlexTime() {
-        return totalFlexTime;
-    }
-
-    public void setTotalFlexTime(int totalFlexTime) {
-        this.totalFlexTime = totalFlexTime;
-    }
-
-    public int getTotalOvertime() {
-        return totalOvertime;
-    }
-
-    public void setTotalOvertime(int totalOvertime) {
-        this.totalOvertime = totalOvertime;
-    }
-
-    public int getVacationDays() {
-        return vacationDays;
-    }
-
-    public void setVacationDays(int vacationDays) {
-        this.vacationDays = vacationDays;
-    }
-
-    public User(String username, String password, String firstName, String lastName, String email, Date startDate,
-                boolean isHR, String status, Timesheet defaultTimesheet, PayLevel payLevel, User supervisor,
-                Set<User> peon, User timesheetApprover, Set<User> peonsToApprove, int paidHoursPerWeek,
-                int totalFlexTime, int totalOvertime, int vacationDays) {
+    public User(final String username, final String password, final String firstName, final String lastName, final Date startDate, final boolean isHR, final String status, final int paidHoursPerWeek, final int totalFlexTime, final int totalOvertime, final int vacationDays, final int defaultTimesheetID, final int supervisorUserID, final int timesheetApproverUserID, final int payLevelID) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.startDate = startDate;
         this.isHR = isHR;
         this.status = status;
-        this.defaultTimesheet = defaultTimesheet;
-        this.payLevel = payLevel;
-        this.supervisor = supervisor;
-        this.peon = peon;
-        this.timesheetApprover = timesheetApprover;
-        this.peonsToApprove = peonsToApprove;
         this.paidHoursPerWeek = paidHoursPerWeek;
         this.totalFlexTime = totalFlexTime;
         this.totalOvertime = totalOvertime;
         this.vacationDays = vacationDays;
-    }
-
-    public User()
-    {
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (version != user.version) return false;
-        if (!id.equals(user.id)) return false;
-        if (!username.equals(user.username)) return false;
-
-        return true;
+        this.defaultTimesheetID = defaultTimesheetID;
+        this.supervisorUserID = supervisorUserID;
+        this.timesheetApproverUserID = timesheetApproverUserID;
+        this.payLevelID = payLevelID;
     }
 
     @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + version;
-        result = 31 * result + username.hashCode();
-        return result;
-    }
+   public boolean equals(Object o)
+   {
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", version=" + version +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", startDate=" + startDate +
-                ", isHR=" + isHR +
-                ", status='" + status + '\'' +
-                ", defaultTimesheet=" + defaultTimesheet +
-                ", payLevel=" + payLevel +
-                ", supervisor=" + supervisor +
-                ", peon=" + peon +
-                ", timesheetApprover=" + timesheetApprover +
-                ", peonsToApprove=" + peonsToApprove +
-                ", paidHoursPerWeek=" + paidHoursPerWeek +
-                ", totalFlexTime=" + totalFlexTime +
-                ", totalOvertime=" + totalOvertime +
-                ", vacationDays=" + vacationDays +
-                '}';
-    }
+      User user = (User) o;
+
+      if (version != user.version)
+         return false;
+      if (!id.equals(user.id))
+         return false;
+      if (!username.equals(user.username))
+         return false;
+
+      return true;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      int result = id.hashCode();
+      result = 31 * result + version;
+      result = 31 * result + username.hashCode();
+      return result;
+   }
+
+   public int getDefaultTimesheetID()
+   {
+      return this.defaultTimesheetID;
+   }
+
+   public void setDefaultTimesheetID(final int defaultTimesheetID)
+   {
+      this.defaultTimesheetID = defaultTimesheetID;
+   }
+
+   public int getSupervisorUserID()
+   {
+      return this.supervisorUserID;
+   }
+
+   public void setSupervisorUserID(final int supervisorUserID)
+   {
+      this.supervisorUserID = supervisorUserID;
+   }
+
+   public int getTimesheetApproverUserID()
+   {
+      return this.timesheetApproverUserID;
+   }
+
+   public void setTimesheetApproverUserID(final int timesheetApproverUserID)
+   {
+      this.timesheetApproverUserID = timesheetApproverUserID;
+   }
+
+   public int getPayLevelID()
+   {
+      return this.payLevelID;
+   }
+
+   public void setPayLevelID(final int payLevelID)
+   {
+      this.payLevelID = payLevelID;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      if (id != null)
+         result += "id: " + id;
+      if (username != null && !username.trim().isEmpty())
+         result += ", username: " + username;
+      if (password != null && !password.trim().isEmpty())
+         result += ", password: " + password;
+      if (firstName != null && !firstName.trim().isEmpty())
+         result += ", firstName: " + firstName;
+      if (lastName != null && !lastName.trim().isEmpty())
+         result += ", lastName: " + lastName;
+      result += ", isHR: " + isHR;
+      if (status != null && !status.trim().isEmpty())
+         result += ", status: " + status;
+      result += ", paidHoursPerWeek: " + paidHoursPerWeek;
+      result += ", totalFlexTime: " + totalFlexTime;
+      result += ", totalOvertime: " + totalOvertime;
+      result += ", vacationDays: " + vacationDays;
+      result += ", defaultTimesheetID: " + defaultTimesheetID;
+      result += ", supervisorUserID: " + supervisorUserID;
+      result += ", timesheetApproverUserID: " + timesheetApproverUserID;
+      result += ", payLevelID: " + payLevelID;
+      return result;
+   }
 }
-
-/**
- {
- "username": "username0",
- "password": "password",
- "firstName": "firstName0",
- "lastName": "lastName0",
- "email": "employee0@example.com",
- "startDate": "2014-02-24",
- "status": "status0",
- "defaultTimesheet": null,
- "payLevel": null,
- "supervisor": null,
- "timesheetApprover": null,
- "paidHoursPerWeek": 40,
- "totalFlexTime": 0,
- "totalOvertime": 0,
- "vacationDays": 0,
- "hr": false
- }
- */
