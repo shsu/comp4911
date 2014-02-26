@@ -18,7 +18,7 @@ public class UsersResourceTest {
 
     @Before
     public void setUp() throws Exception {
-        final Response response = given().auth().preemptive().basic("admin@example.com", "password").when().get(url + "/user/token");
+        final Response response = given().auth().preemptive().basic("username0@example.com", "password").when().get(url + "/user/token");
         response.then().statusCode(200);
         token = (String) new JSONObject(response.asString()).get("token");
         assertFalse(Strings.isNullOrEmpty(token));

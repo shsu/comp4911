@@ -22,7 +22,7 @@ public class UserResourceTest {
 
     @Test
     public void testRetrieveAuthenticatedUserInfoHeader() throws Exception {
-        final Response response = given().auth().preemptive().basic("admin@example.com", "password").when().get(url + "/user/token");
+        final Response response = given().auth().preemptive().basic("username0@example.com", "password").when().get(url + "/user/token");
         response.then().statusCode(200);
         String token = (String) new JSONObject(response.asString()).get("token");
 
@@ -32,7 +32,7 @@ public class UserResourceTest {
 
     @Test
     public void testRetrieveAuthenticatedUserInfoQuery() throws Exception {
-        final Response response = given().auth().preemptive().basic("admin@example.com", "password").when().get(url + "/user/token");
+        final Response response = given().auth().preemptive().basic("username0@example.com", "password").when().get(url + "/user/token");
         response.then().statusCode(200);
         String token = (String) new JSONObject(response.asString()).get("token");
 
@@ -43,13 +43,13 @@ public class UserResourceTest {
     @Test
     public void testRetrieveTokenGET() throws Exception {
         // Place user/pass inside the auth header then GET token.
-        given().auth().preemptive().basic("admin@example.com", "password").when().
+        given().auth().preemptive().basic("username0@example.com", "password").when().
           get(url + "/user/token").then().assertThat().body("user_id", equalTo(1));
     }
 
     @Test
     public void testRetrieveTokenPOST() throws Exception {
-        authorizationJSONObject.put("username", "admin@example.com");
+        authorizationJSONObject.put("username", "username0@example.com");
         authorizationJSONObject.put("password", "password");
 
         // Place user/pass inside JSON object then POST to token.
@@ -61,7 +61,7 @@ public class UserResourceTest {
     public void testRetrieveTokenGETWithBadInput() throws Exception {
         given().auth().preemptive().basic("", "").when().
           get(url + "/user/token").then().statusCode(400);
-        given().auth().preemptive().basic("admin@example.com", "").when().
+        given().auth().preemptive().basic("username0@example.com", "").when().
           get(url + "/user/token").then().statusCode(400);
         given().auth().preemptive().basic("", "password").when().
           get(url + "/user/token").then().statusCode(400);
@@ -89,10 +89,10 @@ public class UserResourceTest {
 
     @Test
     public void testRetrieveTokenGETWithIncorrectCase() throws Exception {
-        given().auth().preemptive().basic("ADMIN@EXAMPLE.COM", "password").when().
+        given().auth().preemptive().basic("USERNAME0@EXAMPLE.COM", "password").when().
           get(url + "/user/token").then().statusCode(401);
 
-        given().auth().preemptive().basic("admin@example.com", "PASSWORD").when().
+        given().auth().preemptive().basic("username0@example.com", "PASSWORD").when().
           get(url + "/user/token").then().statusCode(401);
     }
 
@@ -101,7 +101,7 @@ public class UserResourceTest {
         given().auth().preemptive().basic("bad_username", "password").when().
           get(url + "/user/token").then().statusCode(401);
 
-        given().auth().preemptive().basic("admin@example.com", "bad_password").when().
+        given().auth().preemptive().basic("username0@example.com", "bad_password").when().
           get(url + "/user/token").then().statusCode(401);
 
         given().auth().preemptive().basic("bad_username", "bad_password").when().
@@ -110,7 +110,7 @@ public class UserResourceTest {
 
     @Test
     public void testInvalidateToken() throws Exception {
-        final Response response = given().auth().preemptive().basic("admin@example.com", "password").when().get(url + "/user/token");
+        final Response response = given().auth().preemptive().basic("username0@example.com", "password").when().get(url + "/user/token");
         response.then().statusCode(200);
         String token = (String) new JSONObject(response.asString()).get("token");
 
