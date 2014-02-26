@@ -22,219 +22,227 @@ import java.util.HashSet;
 import javax.persistence.OneToMany;
 
 @Entity
-public class WorkPackage implements Serializable {
-    @Id
-    @Column(updatable=false, nullable=false)
-    private String workPackageNumber;
+public class WorkPackage implements Serializable
+{
+   @Id
+   @Column(updatable = false, nullable = false)
+   private String workPackageNumber;
 
-    @Version
-    @Column(name = "version")
-    private int version = 0;
+   @Version
+   @Column(name = "version")
+   private int version = 0;
 
-    @Column
-    private String workPackageName;
+   @Column
+   private String workPackageName;
 
-    @ManyToOne
-    private Project project;
+   @ManyToOne
+   private Project project;
 
-    @Temporal(TemporalType.DATE)
-    private Date issueDate;
+   @Temporal(TemporalType.DATE)
+   private Date issueDate;
 
-    @Temporal(TemporalType.DATE)
-    private Date completeDate;
+   @Temporal(TemporalType.DATE)
+   private Date completeDate;
 
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+   @Temporal(TemporalType.DATE)
+   private Date startDate;
 
-    @Temporal(TemporalType.DATE)
-    private Date estimatedEndDate;
+   @Temporal(TemporalType.DATE)
+   private Date estimatedEndDate;
 
-    @Column
-    private String purpose;
+   @Column
+   private String purpose;
 
-    @Column
-    private String description;
+   @Column
+   private String description;
 
-    @Column
-    private String inputs;
+   @Column
+   private String progressStatus;
 
-    @Column
-    private String activities;
+   @JsonIgnore
+   @OneToMany
+   private Set<Effort> budgetCostWorkScheduledInPD = new HashSet<Effort>();
 
-    @Column
-    private String outputs;
+   public String getWorkPackageNumber()
+   {
+      return workPackageNumber;
+   }
 
-    @Column
-    private String progressStatus;
+   public void setWorkPackageNumber(String workPackageNumber)
+   {
+      this.workPackageNumber = workPackageNumber;
+   }
 
-    @JsonIgnore
-    @OneToMany
-    private Set<Effort> budgetCostWorkScheduledInPD = new HashSet<Effort>();
+   public int getVersion()
+   {
+      return version;
+   }
 
-    @Column
-    private int estimateToCompletionInPD;
+   public void setVersion(int version)
+   {
+      this.version = version;
+   }
 
-    public String getWorkPackageNumber() {
-        return workPackageNumber;
-    }
+   public String getWorkPackageName()
+   {
+      return workPackageName;
+   }
 
-    public void setWorkPackageNumber(String workPackageNumber) {
-        this.workPackageNumber = workPackageNumber;
-    }
+   public void setWorkPackageName(String workPackageName)
+   {
+      this.workPackageName = workPackageName;
+   }
 
-    public int getVersion() {
-        return version;
-    }
+   public Project getProject()
+   {
+      return project;
+   }
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
+   public void setProject(Project project)
+   {
+      this.project = project;
+   }
 
-    public String getWorkPackageName() {
-        return workPackageName;
-    }
+   public Date getIssueDate()
+   {
+      return issueDate;
+   }
 
-    public void setWorkPackageName(String workPackageName) {
-        this.workPackageName = workPackageName;
-    }
+   public void setIssueDate(Date issueDate)
+   {
+      this.issueDate = issueDate;
+   }
 
-    public Project getProject() {
-        return project;
-    }
+   public Date getCompleteDate()
+   {
+      return completeDate;
+   }
 
-    public void setProject(Project project) {
-        this.project = project;
-    }
+   public void setCompleteDate(Date completeDate)
+   {
+      this.completeDate = completeDate;
+   }
 
-    public Date getIssueDate() {
-        return issueDate;
-    }
+   public Date getStartDate()
+   {
+      return startDate;
+   }
 
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
-    }
+   public void setStartDate(Date startDate)
+   {
+      this.startDate = startDate;
+   }
 
-    public Date getCompleteDate() {
-        return completeDate;
-    }
+   public String getProgressStatus()
+   {
+      return progressStatus;
+   }
 
-    public void setCompleteDate(Date completeDate) {
-        this.completeDate = completeDate;
-    }
+   public void setProgressStatus(String progressStatus)
+   {
+      this.progressStatus = progressStatus;
+   }
 
-    public Date getStartDate() {
-        return startDate;
-    }
+   public String getPurpose()
+   {
+      return purpose;
+   }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+   public void setPurpose(String purpose)
+   {
+      this.purpose = purpose;
+   }
 
-    public String getProgressStatus() {
-        return progressStatus;
-    }
+   public String getDescription()
+   {
+      return description;
+   }
 
-    public void setProgressStatus(String progressStatus) {
-        this.progressStatus = progressStatus;
-    }
+   public void setDescription(String description)
+   {
+      this.description = description;
+   }
 
-    public String getPurpose() {
-        return purpose;
-    }
+   public Set<Effort> getBudgetCostWorkScheduledInPD()
+   {
+      return budgetCostWorkScheduledInPD;
+   }
 
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
+   public void setBudgetCostWorkScheduledInPD(Set<Effort> budgetCostWorkScheduledInPD)
+   {
+      this.budgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
+   }
 
-    public String getDescription() {
-        return description;
-    }
+   public Date getEstimatedEndDate()
+   {
+      return estimatedEndDate;
+   }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+   public void setEstimatedEndDate(Date estimatedEndDate)
+   {
+      this.estimatedEndDate = estimatedEndDate;
+   }
 
-    public String getInputs() {
-        return inputs;
-    }
+   @Override
+   public boolean equals(Object o)
+   {
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
 
-    public void setInputs(String inputs) {
-        this.inputs = inputs;
-    }
+      WorkPackage that = (WorkPackage) o;
 
-    public String getActivities() {
-        return activities;
-    }
+      if (!workPackageNumber.equals(that.workPackageNumber))
+         return false;
 
-    public void setActivities(String activities) {
-        this.activities = activities;
-    }
+      return true;
+   }
 
-    public String getOutputs() {
-        return outputs;
-    }
+   @Override
+   public int hashCode()
+   {
+      return workPackageNumber.hashCode();
+   }
 
-    public void setOutputs(String outputs) {
-        this.outputs = outputs;
-    }
+   public WorkPackage(String workPackageNumber, String workPackageName, Project project, Date issueDate, Date completeDate, Date startDate, String progressStatus, String purpose, String description, String inputs, String activities, String outputs, Set<Effort> budgetCostWorkScheduledInPD, int estimateToCompletionInPD)
+   {
+      this.workPackageNumber = workPackageNumber;
+      this.workPackageName = workPackageName;
+      this.project = project;
+      this.issueDate = issueDate;
+      this.completeDate = completeDate;
+      this.startDate = startDate;
+      this.progressStatus = progressStatus;
+      this.purpose = purpose;
+      this.description = description;
+      this.inputs = inputs;
+      this.activities = activities;
+      this.outputs = outputs;
+      this.budgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
+      this.estimateToCompletionInPD = estimateToCompletionInPD;
+   }
 
-    public Set<Effort> getBudgetCostWorkScheduledInPD() {
-        return budgetCostWorkScheduledInPD;
-    }
+   public WorkPackage()
+   {
+   }
 
-    public void setBudgetCostWorkScheduledInPD(Set<Effort> budgetCostWorkScheduledInPD) {
-        this.budgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
-    }
-
-    public int getEstimateToCompletionInPD() {
-        return estimateToCompletionInPD;
-    }
-
-    public void setEstimateToCompletionInPD(int estimateToCompletionInPD) {
-        this.estimateToCompletionInPD = estimateToCompletionInPD;
-    }
-
-    public Date getEstimatedEndDate() { return estimatedEndDate; }
-
-    public void setEstimatedEndDate(Date estimatedEndDate) { this.estimatedEndDate = estimatedEndDate; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        WorkPackage that = (WorkPackage) o;
-
-        if (!workPackageNumber.equals(that.workPackageNumber)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return workPackageNumber.hashCode();
-    }
-
-    public WorkPackage(String workPackageNumber, String workPackageName, Project project, Date issueDate, Date completeDate, Date startDate, String progressStatus, String purpose, String description, String inputs, String activities, String outputs, Set<Effort> budgetCostWorkScheduledInPD, int estimateToCompletionInPD) {
-        this.workPackageNumber = workPackageNumber;
-        this.workPackageName = workPackageName;
-        this.project = project;
-        this.issueDate = issueDate;
-        this.completeDate = completeDate;
-        this.startDate = startDate;
-        this.progressStatus = progressStatus;
-        this.purpose = purpose;
-        this.description = description;
-        this.inputs = inputs;
-        this.activities = activities;
-        this.outputs = outputs;
-        this.budgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
-        this.estimateToCompletionInPD = estimateToCompletionInPD;
-    }
-
-    public WorkPackage()
-    {
-    }
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      if (workPackageNumber != null && !workPackageNumber.trim().isEmpty())
+         result += "workPackageNumber: " + workPackageNumber;
+      if (workPackageName != null && !workPackageName.trim().isEmpty())
+         result += ", workPackageName: " + workPackageName;
+      if (purpose != null && !purpose.trim().isEmpty())
+         result += ", purpose: " + purpose;
+      if (description != null && !description.trim().isEmpty())
+         result += ", description: " + description;
+      if (progressStatus != null && !progressStatus.trim().isEmpty())
+         result += ", progressStatus: " + progressStatus;
+      return result;
+   }
 }
 
 /**
