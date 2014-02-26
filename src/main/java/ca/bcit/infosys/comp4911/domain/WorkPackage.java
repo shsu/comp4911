@@ -205,7 +205,7 @@ public class WorkPackage implements Serializable
       return workPackageNumber.hashCode();
    }
 
-   public WorkPackage(String workPackageNumber, String workPackageName, Project project, Date issueDate, Date completeDate, Date startDate, String progressStatus, String purpose, String description, String inputs, String activities, String outputs, Set<Effort> budgetCostWorkScheduledInPD, int estimateToCompletionInPD)
+   public WorkPackage(String workPackageNumber, String workPackageName, Project project, Date issueDate, Date completeDate, Date startDate, String progressStatus, String purpose, String description, Set<Effort> budgetCostWorkScheduledInPD, int estimateToCompletionInPD)
    {
       this.workPackageNumber = workPackageNumber;
       this.workPackageName = workPackageName;
@@ -216,11 +216,7 @@ public class WorkPackage implements Serializable
       this.progressStatus = progressStatus;
       this.purpose = purpose;
       this.description = description;
-      this.inputs = inputs;
-      this.activities = activities;
-      this.outputs = outputs;
       this.budgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
-      this.estimateToCompletionInPD = estimateToCompletionInPD;
    }
 
    public WorkPackage()

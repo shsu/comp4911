@@ -129,9 +129,6 @@ public class SampleData {
                     new Date(),
                     "purpose" + i,
                     "description" + i,
-                    "inputs" + i,
-                    "outputs" + i,
-                    "activities" + i,
                     "progressStatus" + i,
                     null,
                     100 + i
