@@ -18,6 +18,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -28,72 +29,75 @@ import java.util.List;
 @Path("/work_packages/{id}/assignments")
 public class WorkPackageAssignmentResource {
     @EJB
-    UserTokens userTokens;
+    private UserTokens userTokens;
 
     @EJB
-    WorkPackageAssignmentDao workPackageAssignmentDao;
+    private WorkPackageAssignmentDao workPackageAssignmentDao;
 
     @EJB
-    WorkPackageDao workPackageDao;
+    private WorkPackageDao workPackageDao;
 
     @EJB
-    UserDao userDao;
+    private UserDao userDao;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllWorkPackageAssignments(
-            @HeaderParam(SH.AUTHORIZATION_STRING) final String token) {
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.corsResponseWithEntity(200, workPackageAssignmentDao.getAll());
+        return SH.responseWithEntity(200, workPackageAssignmentDao.getAll());
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createWorkPackageAssignment(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("id") Integer id,
-      WorkPackageAssignment workPackageAssignment) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+      final WorkPackageAssignment workPackageAssignment) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         WorkPackageAssignment update = workPackageAssignmentDao.read(id);
         if (update == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
         workPackageAssignmentDao.create(workPackageAssignment);
-        return SH.corsResponse(201);
+        return SH.response(201);
     }
 
     @PUT
     @Path("{user_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateWorkPackageAssignment(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("user_id") Integer id,
       @PathParam("id") String wpId,
-      WorkPackageAssignment workPackageAssignment) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+      final WorkPackageAssignment workPackageAssignment) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         WorkPackage workPackage = workPackageDao.read(wpId);
         if (workPackage == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
         User user = userDao.read(id);
         if (user == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
         // See WorkPackageAssignmentDao for explanation
         List<WorkPackageAssignment> wpAssignmentList =
           workPackageAssignmentDao.getByUserAndWorkPackage(workPackage, user);
         if (wpAssignmentList == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
         workPackageAssignmentDao.update(workPackageAssignment);
-        return SH.corsResponse(200);
+        return SH.response(200);
     }
 
 }

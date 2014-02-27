@@ -14,9 +14,7 @@ import java.util.List;
 public class UserDao {
 
     @PersistenceContext(unitName = "comp4911")
-    EntityManager em;
-
-    public static final String USER = User.class.getSimpleName();
+    private EntityManager em;
 
     public void create(final User user) {
         em.persist(user);
@@ -35,7 +33,7 @@ public class UserDao {
     }
 
     public List<User> getAll() {
-        TypedQuery<User> query = em.createQuery("select u from " + USER + " u",
+        TypedQuery<User> query = em.createQuery("select u from User u",
           User.class);
         return query.getResultList();
     }

@@ -14,57 +14,58 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Graeme on 2/8/14.
- */
 @Path("/pay_rates")
 public class PayRateResource {
 
     @EJB
-    PayRateDao payRateDao;
+    private PayRateDao payRateDao;
 
     @EJB
-    UserTokens userTokens;
+    private UserTokens userTokens;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllPayRates(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.corsResponseWithEntity(200, payRateDao.getAllPayRates());
+        return SH.responseWithEntity(200, payRateDao.getAllPayRates());
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createPayRate(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       final PayRate payRate) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         payRateDao.create(payRate);
-        return SH.corsResponse(201);
+        return SH.response(201);
     }
 
     @GET
     @Path("{pay_level}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllPayLevelRates(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("pay_level") String payLevelName) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         List<PayRate> payRates = payRateDao.getAllPayRatesByLevel(payLevelName);
         if (payRates == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
-        return SH.corsResponseWithEntity(200, payRates);
+        return SH.responseWithEntity(200, payRates);
     }
 
     /**
@@ -74,10 +75,13 @@ public class PayRateResource {
     @Path("{pay_level}/{year}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePayRate(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("id") Integer id,
       final String payLevel,
       final Date year) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
         return null;
     }
 
@@ -85,16 +89,17 @@ public class PayRateResource {
     @Path("{pay_level}/{year}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrievePayRate(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("pay_level") final String payLevel,
       @PathParam("year") final String year) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         PayRate payRate = payRateDao.getPayRateByLevelAndYear(payLevel, year);
         if (payRate == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
-        return SH.corsResponseWithEntity(200, payRate);
+        return SH.responseWithEntity(200, payRate);
     }
 }

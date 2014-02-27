@@ -17,97 +17,100 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by Graeme on 2/8/14.
- */
 @Path("/projects")
 public class ProjectResource {
 
     @EJB
-    ProjectDao projectDao;
+    private ProjectDao projectDao;
 
     @EJB
-    WorkPackageAssignmentDao workPackageAssignmentDao;
+    private WorkPackageAssignmentDao workPackageAssignmentDao;
 
     @EJB
-    ProjectAssignmentDao projectAssignmentDao;
+    private ProjectAssignmentDao projectAssignmentDao;
 
     @EJB
-    UserDao userDao;
+    private UserDao userDao;
 
     @EJB
-    UserTokens userTokens;
+    private UserTokens userTokens;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllProjects(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.corsResponseWithEntity(200, projectDao.getAll());
+        return SH.responseWithEntity(200, projectDao.getAll());
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProject(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       final Project project) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         projectDao.create(project);
-        return SH.corsResponse(201);
+        return SH.response(201);
     }
 
     @GET
     @Path("{project_number}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveProject(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("project_number") String id) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         Project project = projectDao.read(id);
         if (project == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
-        return SH.corsResponseWithEntity(200, project);
+        return SH.responseWithEntity(200, project);
     }
 
     @PUT
     @Path("{project_number}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProject(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("project_number") String id,
       final Project Project) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         Project check = projectDao.read(id);
         if (check == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
         projectDao.update(Project);
-        return SH.corsResponse(200);
+        return SH.response(200);
     }
 
     @GET
     @Path("{project_number}/users")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsersForProject(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("project_number") final String id) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         Project check = projectDao.read(id);
         if (check == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
-        return SH.corsResponseWithEntity(200, projectAssignmentDao.getAllUsers(id));
+        return SH.responseWithEntity(200, projectAssignmentDao.getAllUsers(id));
     }
 }

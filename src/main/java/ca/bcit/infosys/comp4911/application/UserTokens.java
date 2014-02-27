@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.application;
 
 import ca.bcit.infosys.comp4911.helper.SH;
+import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.common.io.BaseEncoding;
@@ -31,25 +32,29 @@ public class UserTokens {
         return token;
     }
 
-    public int verifyTokenAndReturnUserID(final String token) throws WebApplicationException {
-        if (Strings.isNullOrEmpty(token)) {
-            throw new WebApplicationException(SH.corsResponse(401));
-        }
+    public boolean clearToken(final String headerToken, final String queryToken) {
+        return tokensForAuthenticatedUserID.remove(processHeaderQueryToken(headerToken,queryToken)) != null;
+    }
 
-        Integer userID = tokensForAuthenticatedUserID.get(token);
+    public int verifyTokenAndReturnUserID(final String headerToken, final String queryToken) throws WebApplicationException {
+        Integer userID = tokensForAuthenticatedUserID.get(processHeaderQueryToken(headerToken,queryToken));
 
         if (userID == null) {
-            throw new WebApplicationException(SH.corsResponse(401));
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         return userID;
     }
 
-    public boolean clearToken(String tokenToBeCleared) {
-        if (Strings.isNullOrEmpty(tokenToBeCleared)) {
-            return false;
+    private String processHeaderQueryToken(final String headerToken, final String queryToken) {
+        if (!Strings.isNullOrEmpty(headerToken)) {
+            String decodedToken = new String(
+              BaseEncoding.base64().decode(headerToken.substring("Basic ".length())), Charsets.UTF_8);
+            return decodedToken.substring(0, decodedToken.length() - 1);
+        } else if (!Strings.isNullOrEmpty(queryToken)) {
+            return queryToken;
         }
 
-        return tokensForAuthenticatedUserID.remove(tokenToBeCleared) != null;
+        throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }
 }

@@ -2,7 +2,6 @@ package ca.bcit.infosys.comp4911.services;
 
 import ca.bcit.infosys.comp4911.access.TimesheetDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
-import ca.bcit.infosys.comp4911.domain.Timesheet;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
@@ -14,7 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/user/timesheets")
 public class UserTimesheetsResource {
@@ -29,17 +27,16 @@ public class UserTimesheetsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllTimesheetsForUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN) final String queryToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @QueryParam("filter") final String timesheetsFilter) {
-        String token = SH.processHeaderQueryToken(headerToken, queryToken);
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         if (timesheetsFilter.equals("current")) {
-            return SH.corsResponseWithEntity(200, timesheetDao.getByDate(
+            return SH.responseWithEntity(200, timesheetDao.getByDate(
               SH.getCurrentWeek(), SH.getCurrentYear(), userId));
         } else {
             // TODO: Get timesheet for user.
-            return SH.corsResponseWithEntity(200, timesheetDao.getAll());
+            return SH.responseWithEntity(200, timesheetDao.getAll());
         }
     }
 
@@ -48,13 +45,12 @@ public class UserTimesheetsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createTimesheetForUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN) final String queryToken) {
-        String token = SH.processHeaderQueryToken(headerToken, queryToken);
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         //TODO: create a new timesheet, persist it and return the timesheet in the body.
 
-        return SH.corsResponseWithEntity(201, null);
+        return SH.responseWithEntity(201, null);
     }
 
     @Path("/rejected")
@@ -62,11 +58,10 @@ public class UserTimesheetsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllRejectedTimesheetsForUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN) final String queryToken) {
-        String token = SH.processHeaderQueryToken(headerToken, queryToken);
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.corsResponseWithEntity(200, timesheetDao.getRejected(userId));
+        return SH.responseWithEntity(200, timesheetDao.getRejected(userId));
     }
 
     @Path("/to_be_approved")
@@ -74,12 +69,11 @@ public class UserTimesheetsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllTimesheetsNeedApprovalByUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN) final String queryToken) {
-        String token = SH.processHeaderQueryToken(headerToken, queryToken);
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         //TODO
-        return SH.corsResponseWithEntity(200, null);
+        return SH.responseWithEntity(200, null);
     }
 
 }

@@ -25,23 +25,24 @@ import javax.ws.rs.core.Response;
 public class TimesheetResource {
 
     @EJB
-    TimesheetDao timesheetDao;
+    private TimesheetDao timesheetDao;
 
     @EJB
-    UserTokens userTokens;
+    private UserTokens userTokens;
 
     // we're going to have to mix this in with the timesheetRowDao as well
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllTimesheets(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @QueryParam("filter") final String filter) {
-        int userId = 1; //userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         if (filter != null) {
             if (filter.equals("current")) {
                 Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(), userId);
-                return SH.corsResponseWithEntity(200, timesheet);
+                return SH.responseWithEntity(200, timesheet);
             }
             if (filter.equals("default")) {
                 //Timesheet timesheet = timesheetDao.getByDate(54, userId);  Not sure where we'll store the default sheet
@@ -49,18 +50,19 @@ public class TimesheetResource {
         }
 
         // if no filter return all the timesheets
-        return SH.corsResponseWithEntity(200, timesheetDao.getAll());
+        return SH.responseWithEntity(200, timesheetDao.getAll());
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createTimesheet(
-      //@HeaderParam(SH.AUTHORIZATION_STRING) final String token
-      Timesheet timesheet
-    ) {
-        int userId = 1; //userTokens.verifyTokenAndReturnUserID((token))
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
+      final Timesheet timesheet) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
         timesheetDao.create(timesheet);
-        return SH.corsResponse(201);
+
+        return SH.response(201);
     }
 
     /**
@@ -70,31 +72,33 @@ public class TimesheetResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveTimesheet(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("id") Integer id) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         Timesheet timesheet = timesheetDao.read(id);
         if (timesheet == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
-        return SH.corsResponseWithEntity(200, timesheet);
+        return SH.responseWithEntity(200, timesheet);
     }
 
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTimesheet(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("id") Integer id, Timesheet timesheet) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         Timesheet update = timesheetDao.read(id);
         if (update == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
         timesheetDao.update(timesheet);
-        return SH.corsResponse(200);
+        return SH.response(200);
     }
 }

@@ -22,64 +22,66 @@ import javax.ws.rs.core.Response;
 public class UsersResource {
 
     @EJB
-    UserDao userDao;
+    private UserDao userDao;
 
     @EJB
-    UserTokens userTokens;
+    private UserTokens userTokens;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllUsers(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token
-      //@QueryParam("filter") final String filter
-        ) {
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
-        return SH.corsResponseWithEntity(200, userDao.getAll());
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+        return SH.responseWithEntity(200, userDao.getAll());
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       final User user) {
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         userDao.create(user);
-        return SH.corsResponse(201);
+        return SH.response(201);
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveUser(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("id") final Integer id) {
 
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         User user = userDao.read(id);
         if (user == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
-        return SH.corsResponseWithEntity(200, user);
+        return SH.responseWithEntity(200, user);
     }
 
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUser(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("id") final Integer id,
       final User user) {
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         User check = userDao.read(id);
         if (check == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
 
         userDao.update(user);
-        return SH.corsResponse(200);
+        return SH.response(200);
     }
 }

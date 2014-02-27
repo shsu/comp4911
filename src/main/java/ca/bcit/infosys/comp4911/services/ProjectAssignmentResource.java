@@ -17,63 +17,64 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by Graeme on 2/11/14.
- */
 @Path("/projects/{id}/assignments")
 public class ProjectAssignmentResource {
 
     @EJB
-    UserTokens userTokens;
+    private UserTokens userTokens;
 
     @EJB
-    ProjectDao projectDao;
+    private ProjectDao projectDao;
 
     @EJB
-    ProjectAssignmentDao projectAssignmentDao;
+    private ProjectAssignmentDao projectAssignmentDao;
 
     @EJB
-    UserDao userDao;
+    private UserDao userDao;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllProjectAssignments(
-            @HeaderParam(SH.AUTHORIZATION_STRING) final String token) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.corsResponseWithEntity(200, projectAssignmentDao.getAll());
+        return SH.responseWithEntity(200, projectAssignmentDao.getAll());
     }
 
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProjectAssignments(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       final ProjectAssignment projectAssignment) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         projectAssignmentDao.create(projectAssignment);
-        return SH.corsResponse(201);
+        return SH.response(201);
     }
 
     @PUT
     @Path("{user_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProjectAssignment(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String token,
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("user_id") String id, //I added this. ProjectDao.read needs a string becuase you need to input the
       //the project name. This needs to be fixed. I just need it to compile though.
-      ProjectAssignment projectAssignment) {
-        int userId = userTokens.verifyTokenAndReturnUserID((token));
+      final ProjectAssignment projectAssignment) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         Project update = projectDao.read(id);
         if (update == null) {
-            return SH.corsResponse(404);
+            return SH.response(404);
         }
         projectAssignmentDao.update(projectAssignment);
-        return SH.corsResponse(200);
+        return SH.response(200);
     }
 }

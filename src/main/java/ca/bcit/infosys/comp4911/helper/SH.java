@@ -10,28 +10,18 @@ import org.joda.time.DateTime;
  */
 public class SH {
     public static final String AUTHORIZATION_STRING = "Authorization";
-    public static final String TOKEN = "token";
+    public static final String TOKEN_STRING = "token";
 
-    public static javax.ws.rs.core.Response corsResponse(Integer code) {
+    public static javax.ws.rs.core.Response response(Integer code) {
         return javax.ws.rs.core.Response.status(code).build();
     }
 
-    public static javax.ws.rs.core.Response corsResponseWithEntity(Integer code, Object entity) {
-        return javax.ws.rs.core.Response.status(code).entity(entity).build();
-    }
-
-    public static String processHeaderQueryToken(final String headerToken, final String queryToken) {
-        String token = null;
-
-        if (!Strings.isNullOrEmpty(headerToken)) {
-            String decodedToken = new String(
-              BaseEncoding.base64().decode(headerToken.substring("Basic ".length())), Charsets.UTF_8);
-            token = decodedToken.substring(0, decodedToken.length() - 1);
-        } else if (!Strings.isNullOrEmpty(queryToken)) {
-            token = queryToken;
+    public static javax.ws.rs.core.Response responseWithEntity(int code, Object entity) {
+        if (entity == null) {
+            response(code);
         }
 
-        return token;
+        return javax.ws.rs.core.Response.status(code).entity(entity).build();
     }
 
     public static Integer getCurrentWeek() {

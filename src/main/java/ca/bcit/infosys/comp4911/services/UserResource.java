@@ -44,11 +44,10 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAuthenticatedUserInfo(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN) final String queryToken) {
-        String token = SH.processHeaderQueryToken(headerToken, queryToken);
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.corsResponseWithEntity(200, userDao.read(userId));
+        return SH.responseWithEntity(200, userDao.read(userId));
     }
 
     @Path("/token")
@@ -57,7 +56,7 @@ public class UserResource {
     public Response retrieveToken(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerAuth) {
         if (Strings.isNullOrEmpty(headerAuth)) {
-            throw new WebApplicationException(SH.corsResponse(401));
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         String decodedCredentials = new String(
@@ -65,16 +64,16 @@ public class UserResource {
         String[] credentials = decodedCredentials.split(":");
 
         if (credentials.length != 2) {
-            throw new WebApplicationException(SH.corsResponse(400));
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        for(String credential:credentials){
-            if(Strings.isNullOrEmpty(credential)){
-                throw new WebApplicationException(SH.corsResponse(400));
+        for (String credential : credentials) {
+            if (Strings.isNullOrEmpty(credential)) {
+                throw new WebApplicationException(SH.response(400));
             }
         }
 
-        return SH.corsResponseWithEntity(200, performLoginAndGenerateTokenInJSON(credentials[0], credentials[1]));
+        return SH.responseWithEntity(200, performLoginAndGenerateTokenInJSON(credentials[0], credentials[1]));
     }
 
 
@@ -85,10 +84,10 @@ public class UserResource {
     public Response retrieveToken(User user) {
         if (user == null || Strings.isNullOrEmpty(user.getUsername()) ||
           Strings.isNullOrEmpty(user.getPassword())) {
-            throw new WebApplicationException(SH.corsResponse(400));
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        return SH.corsResponseWithEntity(200, performLoginAndGenerateTokenInJSON(user.getUsername(), user.getPassword()));
+        return SH.responseWithEntity(200, performLoginAndGenerateTokenInJSON(user.getUsername(), user.getPassword()));
 
     }
 
@@ -96,44 +95,39 @@ public class UserResource {
     @DELETE
     public Response invalidateToken(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN) final String queryToken) {
-        String token = SH.processHeaderQueryToken(headerToken, queryToken);
-        if (!userTokens.clearToken(token)) {
-            throw new WebApplicationException(SH.corsResponse(401));
-        }
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        userTokens.clearToken(headerToken, queryToken);
 
-        return SH.corsResponse(204);
+        return SH.response(204);
     }
 
     @Path("/projects")
     @GET
     public Response retrieveAllProjectsAssignedToUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN) final String queryToken) {
-        String token = SH.processHeaderQueryToken(headerToken, queryToken);
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         // TODO: Get projects of user.
-        return SH.corsResponseWithEntity(200,projectDao.getAll());
+        return SH.responseWithEntity(200, projectDao.getAll());
     }
 
     @Path("/work_packages")
     @GET
     public Response retrieveAllWorkPackagesAssignedToUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN) final String queryToken) {
-        String token = SH.processHeaderQueryToken(headerToken, queryToken);
-        int userId = userTokens.verifyTokenAndReturnUserID(token);
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         // TODO: Get work packages of user.
-        return SH.corsResponseWithEntity(200,workPackageDao.getAll());
+        return SH.responseWithEntity(200, workPackageDao.getAll());
     }
 
     private String performLoginAndGenerateTokenInJSON(final String username, final String password) {
         Optional<User> authenticatedUser = userDao.authenticate(username, password);
 
         if (!authenticatedUser.isPresent()) {
-            throw new WebApplicationException(SH.corsResponse(401));
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         // Create a response with userId and token
