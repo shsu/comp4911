@@ -1,0 +1,71 @@
+<content>
+  <h1 class="secondary">Assign Responsible Engineer to WP</h1>
+  <div>
+    <div class="row">
+      <p class="col-xs-3">Project No.: PR0111</p>
+      <p class="col-xs-9">Project Name: MOSAICS</p>
+      <p class="col-xs-3">WP No.: 111000</p>
+      <p class="col-xs-9">Description: Project Start</p>
+    </div>
+    <div class="row">
+      <form action="" class="form-inline">
+        <p>Search Engineer:  <input ng-model="query" type="text" placeholder="Search" class="form-control" /></p>
+      </form>
+    </div>
+    <div class="row table-wrapper">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <tbody>
+            <tr>
+              <th style="width:20%;">Emp ID</th>
+              <th style="width:40%;">Emp Name</th>
+              <th style="width:40%;">Pay Grade</th>
+            </tr>
+            <tr ng-click="selectM($index)" class="{{manager.selected}}" ng-hide="!query" ng-repeat="manager in managers | filter:query">
+              <td>{{manager.id}}</td> 
+              <td>{{manager.name}}</td>
+              <td>{{manager.paygrade}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <a href="" data-toggle="modal" data-target="#addModal" class="pull-right btn btn-primary">Select</a>
+      <button ng-click="cancel()" class="pull-right btn btn-primary">Cancel</button>
+    </div>
+
+  <div class="modal manager fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>Do you want to add this engineer to the work package?</p>
+            <div ng-model="selectedManager">
+              <span style="margin-right: 20px;"><strong>Name:</strong> {{selectedManager.name}}</span>
+              <span><strong>Pay Grade:</strong> {{selectedManager.paygrade}}</span>
+            </div>
+            <p>&nbsp;</p>
+            <p class="pull-left">Other Responsible WPs:</p>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>WP No.</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td>WP111200</td>
+                  <td>Blueprint</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cancel()">Add</button>
+            <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</content>
+
