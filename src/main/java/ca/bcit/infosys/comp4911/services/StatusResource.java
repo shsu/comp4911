@@ -18,7 +18,7 @@ public class StatusResource {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("<link href=\"//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css\" rel=\"stylesheet\">");
         stringBuffer.append("<div class=\"container\"><br />");
-        stringBuffer.append("<div class=\"alert alert-success\"><h3>All Systems Operational</h3></div>");
+        stringBuffer.append("<div class=\"alert alert-success\"><h3>API Endpoint is Operational</h3></div>");
         stringBuffer.append("</div>");
         return stringBuffer.toString();
     }

@@ -11,7 +11,7 @@ import static com.jayway.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
 
 public class UserResourceTest {
-    private static final String url = "https://comp4911-stevenhsu.rhcloud.com";
+    private static final String url = "https://comp4911-stevenhsu.rhcloud.com/api";
 
     private JSONObject authorizationJSONObject;
 

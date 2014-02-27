@@ -12,7 +12,7 @@ import static com.jayway.restassured.RestAssured.when;
 import static org.junit.Assert.assertFalse;
 
 public class UsersResourceTest {
-    private static final String url = "https://comp4911-stevenhsu.rhcloud.com";
+    private static final String url = "https://comp4911-stevenhsu.rhcloud.com/api";
 
     private String token;
 
