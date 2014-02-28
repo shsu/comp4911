@@ -26,12 +26,6 @@ public class TimesheetRow implements Serializable {
     @Column
     private String workPackageNumber;
 
-    /**
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Timesheet timesheet;
-     */
-
     // All these values are now in tenths
     @Column
     private int monday;

@@ -24,8 +24,8 @@ public class ProjectAssignment implements Serializable {
     @Column
     private String projectNumber;
 
-    @ManyToOne
-    private User user;
+    @Column
+    private int userId;
 
     @Column
     private boolean isProjectManager;
@@ -62,17 +62,17 @@ public class ProjectAssignment implements Serializable {
         this.projectNumber = projectNumber;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public ProjectAssignment(String projectNumber, User user, boolean isProjectManager) {
+    public ProjectAssignment(String projectNumber,  int userId, boolean isProjectManager) {
         this.projectNumber = projectNumber;
-        this.user = user;
+        this.userId = userId;
         this.isProjectManager = isProjectManager;
     }
 

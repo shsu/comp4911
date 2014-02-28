@@ -29,7 +29,7 @@ public class Project implements Serializable {
     /** Actual id given to it by the HR who creates it */
     @Id
     @Column(updatable = false, nullable = false)
-    private String projectNumber;
+    private int projectNumber;
 
     @Version
     @Column(name = "version")
@@ -45,10 +45,6 @@ public class Project implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date completeDate;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "project")
-    private Set<WorkPackage> workPackages = new HashSet<WorkPackage>();
-
     @Column
     private BigDecimal clientRate;
 
@@ -58,11 +54,11 @@ public class Project implements Serializable {
     @Column
     private BigDecimal AllocatedBudget;
 
-    public String getProjectNumber() {
+    public int getProjectNumber() {
         return projectNumber;
     }
 
-    public void setProjectNumber(String projectNumber) {
+    public void setProjectNumber(int projectNumber) {
         this.projectNumber = projectNumber;
     }
 
@@ -98,14 +94,6 @@ public class Project implements Serializable {
         this.completeDate = completeDate;
     }
 
-    public Set<WorkPackage> getWorkPackages() {
-        return workPackages;
-    }
-
-    public void setWorkPackages(Set<WorkPackage> workPackages) {
-        this.workPackages = workPackages;
-    }
-
     public BigDecimal getClientRate() {
         return clientRate;
     }
@@ -130,15 +118,14 @@ public class Project implements Serializable {
         AllocatedBudget = allocatedBudget;
     }
 
-    public Project(String projectNumber, String projectName, Date issueDate, Date completeDate,
-                   Set<WorkPackage> workPackages, BigDecimal clientRate, BigDecimal unAllocatedBudget,
-                   BigDecimal allocatedBudget) {
+    public Project(int projectNumber, String projectName, Date issueDate, Date completeDate,
+                    BigDecimal clientRate, BigDecimal unAllocatedBudget,
+                    BigDecimal allocatedBudget) {
         this.projectNumber = projectNumber;
         this.version = version;
         this.projectName = projectName;
         this.issueDate = issueDate;
         this.completeDate = completeDate;
-        this.workPackages = workPackages;
         this.clientRate = clientRate;
         UnAllocatedBudget = unAllocatedBudget;
         AllocatedBudget = allocatedBudget;
@@ -155,15 +142,14 @@ public class Project implements Serializable {
 
         Project project = (Project) o;
 
-        if (projectNumber != null ? !projectNumber.equals(project.projectNumber) : project.projectNumber != null)
-            return false;
+        if (projectNumber != project.projectNumber) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return projectNumber != null ? projectNumber.hashCode() : 0;
+        return projectNumber;
     }
 
     @Override
@@ -174,7 +160,6 @@ public class Project implements Serializable {
                 ", projectName='" + projectName + '\'' +
                 ", issueDate=" + issueDate +
                 ", completeDate=" + completeDate +
-                ", workPackages=" + workPackages +
                 ", clientRate=" + clientRate +
                 ", UnAllocatedBudget=" + UnAllocatedBudget +
                 ", AllocatedBudget=" + AllocatedBudget +

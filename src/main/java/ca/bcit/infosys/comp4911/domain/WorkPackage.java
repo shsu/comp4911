@@ -35,8 +35,8 @@ public class WorkPackage implements Serializable
    @Column
    private String workPackageName;
 
-   @ManyToOne
-   private Project project;
+   @Column
+   private int projectNumber;
 
    @Temporal(TemporalType.DATE)
    private Date issueDate;
@@ -91,16 +91,6 @@ public class WorkPackage implements Serializable
    public void setWorkPackageName(String workPackageName)
    {
       this.workPackageName = workPackageName;
-   }
-
-   public Project getProject()
-   {
-      return project;
-   }
-
-   public void setProject(Project project)
-   {
-      this.project = project;
    }
 
    public Date getIssueDate()
@@ -183,7 +173,15 @@ public class WorkPackage implements Serializable
       this.estimatedEndDate = estimatedEndDate;
    }
 
-   @Override
+    public int getProjectNumber() {
+        return projectNumber;
+    }
+
+    public void setProjectNumber(int projectNumber) {
+        this.projectNumber = projectNumber;
+    }
+
+    @Override
    public boolean equals(Object o)
    {
       if (this == o)
@@ -205,11 +203,11 @@ public class WorkPackage implements Serializable
       return workPackageNumber.hashCode();
    }
 
-   public WorkPackage(String workPackageNumber, String workPackageName, Project project, Date issueDate, Date completeDate, Date startDate, String progressStatus, String purpose, String description, Set<Effort> budgetCostWorkScheduledInPD, int estimateToCompletionInPD)
+   public WorkPackage(String workPackageNumber, String workPackageName, int projectNumber, Date issueDate, Date completeDate, Date startDate, String progressStatus, String purpose, String description, Set<Effort> budgetCostWorkScheduledInPD, int estimateToCompletionInPD)
    {
       this.workPackageNumber = workPackageNumber;
       this.workPackageName = workPackageName;
-      this.project = project;
+      this.projectNumber = projectNumber;
       this.issueDate = issueDate;
       this.completeDate = completeDate;
       this.startDate = startDate;

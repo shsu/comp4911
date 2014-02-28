@@ -36,8 +36,8 @@ public class WorkPackageStatusReport implements Serializable {
     @Column
     private int year;
 
-    @ManyToOne
-    private WorkPackage workPackage;
+    @Column
+    private String workPackageId;
 
     @Temporal(TemporalType.DATE)
     private Date reportDate;
@@ -140,12 +140,12 @@ public class WorkPackageStatusReport implements Serializable {
         this.year = year;
     }
 
-    public WorkPackage getWorkPackage() {
-        return this.workPackage;
+    public String getWorkPackageId() {
+        return workPackageId;
     }
 
-    public void setWorkPackage(final WorkPackage workPackage) {
-        this.workPackage = workPackage;
+    public void setWorkPackageId(String workPackageId) {
+        this.workPackageId = workPackageId;
     }
 
     public Set<Effort> getEstimatedWorkRemainingInPD() {

@@ -34,11 +34,13 @@ public class UserPayRateHistory {
     @Column
     private Date endDate;
 
-    @ManyToOne
-    private PayLevel payLevel;
+    // Leaving as Id, could potentially want to change names down the road
+    // Would screw up system if mapped by name
+    @Column
+    private int payLevelId;
 
-    @ManyToOne
-    private User user;
+    @Column
+    private int userId;
 
     @Override
     public boolean equals(Object o) {
@@ -93,27 +95,27 @@ public class UserPayRateHistory {
         this.endDate = endDate;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getPayLevelId() {
+        return payLevelId;
+    }
+
+    public void setPayLevelId(int payLevelId) {
+        this.payLevelId = payLevelId;
+    }
+
     @Override
     public String toString() {
         String result = getClass().getSimpleName() + " ";
         if (id != null)
             result += "id: " + id;
         return result;
-    }
-
-    public PayLevel getPayLevel() {
-        return this.payLevel;
-    }
-
-    public void setPayLevel(final PayLevel payLevel) {
-        this.payLevel = payLevel;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(final User user) {
-        this.user = user;
     }
 }
