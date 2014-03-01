@@ -2,6 +2,31 @@ var cascadiaControllers = angular.module('cascadiaControllers', []);
 
 /*
 
+ LOGIN CONTROLLER
+
+ */
+
+cascadiaControllers.controller('LoginController', ['$scope', '$http', function($scope, $http) {
+  $scope.username;
+  $scope.password;
+
+  $scope.login = function() {
+    postdata = {
+      'username' : $scope.username,
+      'password' : $scope.password
+    };
+
+    $http({method: 'POST', data: postdata,
+      url: 'http://localhost:8080/comp4911/api/user/token'}).
+      success(function(data, status, headers, config) {
+        $scope.response = status;
+        $scope.token = data.token;
+      });
+  };
+}]);
+
+/*
+
   PACKAGE CONTROLLER
 
 */
