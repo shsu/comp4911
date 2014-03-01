@@ -15,16 +15,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.lang.Override;
 
-import ca.bcit.infosys.comp4911.domain.PayLevel;
-
-import java.util.Set;
-import java.util.HashSet;
-import javax.persistence.OneToMany;
-
-import ca.bcit.infosys.comp4911.domain.Effort;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import ca.bcit.infosys.comp4911.domain.PayRate.PayLevel;
 
 @Entity
 public class User implements Serializable
@@ -82,7 +73,7 @@ public class User implements Serializable
    private int timesheetApproverUserID;
 
    @Column
-   private int payLevelID;
+   private PayLevel payLevel;
 
    public Integer getId()
    {
@@ -218,7 +209,10 @@ public class User implements Serializable
    {
    }
 
-    public User(final String username, final String password, final String firstName, final String lastName, final Date startDate, final boolean isHR, final String status, final int paidHoursPerWeek, final int totalFlexTime, final int totalOvertime, final int vacationDays, final int defaultTimesheetID, final int supervisorUserID, final int timesheetApproverUserID, final int payLevelID) {
+    public User(final String username, final String password, final String firstName, final String lastName,
+                final Date startDate, final boolean isHR, final String status, final int paidHoursPerWeek,
+                final int totalFlexTime, final int totalOvertime, final int vacationDays, final int defaultTimesheetID,
+                final int supervisorUserID, final int timesheetApproverUserID, final PayLevel payLevel) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -233,7 +227,7 @@ public class User implements Serializable
         this.defaultTimesheetID = defaultTimesheetID;
         this.supervisorUserID = supervisorUserID;
         this.timesheetApproverUserID = timesheetApproverUserID;
-        this.payLevelID = payLevelID;
+        this.payLevel = payLevel;
     }
 
     @Override
@@ -295,17 +289,15 @@ public class User implements Serializable
       this.timesheetApproverUserID = timesheetApproverUserID;
    }
 
-   public int getPayLevelID()
-   {
-      return this.payLevelID;
-   }
+    public PayLevel getPayLevel() {
+        return payLevel;
+    }
 
-   public void setPayLevelID(final int payLevelID)
-   {
-      this.payLevelID = payLevelID;
-   }
+    public void setPayLevel(PayLevel payLevel) {
+        this.payLevel = payLevel;
+    }
 
-   @Override
+    @Override
    public String toString()
    {
       String result = getClass().getSimpleName() + " ";
@@ -329,7 +321,7 @@ public class User implements Serializable
       result += ", defaultTimesheetID: " + defaultTimesheetID;
       result += ", supervisorUserID: " + supervisorUserID;
       result += ", timesheetApproverUserID: " + timesheetApproverUserID;
-      result += ", payLevelID: " + payLevelID;
+      result += ", payLevel: " + payLevel;
       return result;
    }
 }

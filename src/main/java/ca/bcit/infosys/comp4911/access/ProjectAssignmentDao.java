@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+
 /**
  * Created by Graeme on 2/12/14.
  */
@@ -17,8 +18,6 @@ import java.util.List;
 public class ProjectAssignmentDao {
     @PersistenceContext(unitName = "comp4911")
     EntityManager em;
-
-    public static final String PROJECT_ASSIGNMENT = ProjectAssignment.class.getSimpleName();
 
     public void create (final ProjectAssignment projectAssignment)
     {
@@ -41,7 +40,7 @@ public class ProjectAssignmentDao {
     }
 
     public List<ProjectAssignment> getAll() {
-        TypedQuery<ProjectAssignment> query = em.createQuery("select p from " + PROJECT_ASSIGNMENT + " p",
+        TypedQuery<ProjectAssignment> query = em.createQuery("select p from ProjectAssignment p",
                 ProjectAssignment.class);
         return query.getResultList();
     }
@@ -49,10 +48,11 @@ public class ProjectAssignmentDao {
     /** Get all Users by Project Id
     /** This doesn't feel right with being in this class, but makes most logical sense I think */
     public List<User> getAllUsers(final String name) {
-        TypedQuery<User> query = em.createQuery("select DISTINCT p.user from " + PROJECT_ASSIGNMENT
-                + " p where p.id == :id",
+        TypedQuery<User> query = em.createQuery("select DISTINCT p.user from ProjectAssignment "
+               + "p where p.id = :id",
                 User.class);
         query.setParameter("id", name);
         return query.getResultList();
     }
+
 }

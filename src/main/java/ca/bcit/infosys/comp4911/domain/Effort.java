@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 
 import java.io.Serializable;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,10 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Version;
 
 import java.lang.Override;
-
-import ca.bcit.infosys.comp4911.domain.PayLevel;
-
-import javax.persistence.ManyToOne;
+import ca.bcit.infosys.comp4911.domain.PayRate.PayLevel;
 
 @Entity
 public class Effort implements Serializable {
@@ -26,7 +25,7 @@ public class Effort implements Serializable {
     @Column(name = "version")
     private int version = 0;
 
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
     private PayLevel payLevel;
 
     /** Tenths of hours */

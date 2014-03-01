@@ -38,12 +38,7 @@ public class UserDao {
         return query.getResultList();
     }
 
-    /**
-    public List<User> getAllManagers()
-    {
-        return List<User
-    }
-     */
+
 
     public Optional<User> authenticate(final String username, final String password){
         for (User user : getAll()) {

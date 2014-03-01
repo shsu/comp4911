@@ -108,8 +108,7 @@ public class UserResource {
       @QueryParam(SH.TOKEN_STRING) final String queryToken) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        // TODO: Get projects of user.
-        return SH.responseWithEntity(200, projectDao.getAll());
+        return SH.responseWithEntity(200, projectDao.getAllByUser(userId));
     }
 
     @Path("/work_packages")
@@ -119,8 +118,7 @@ public class UserResource {
       @QueryParam(SH.TOKEN_STRING) final String queryToken) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        // TODO: Get work packages of user.
-        return SH.responseWithEntity(200, workPackageDao.getAll());
+        return SH.responseWithEntity(200, workPackageDao.getAllByUser(userId));
     }
 
     private String performLoginAndGenerateTokenInJSON(final String username, final String password) {

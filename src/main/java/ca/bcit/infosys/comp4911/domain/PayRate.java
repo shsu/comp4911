@@ -2,6 +2,8 @@ package ca.bcit.infosys.comp4911.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +34,7 @@ public class PayRate implements Serializable {
     @Column
     private BigDecimal rate;
 
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
     private PayLevel payLevel;
 
     public Integer getId() {
@@ -68,10 +70,10 @@ public class PayRate implements Serializable {
     }
 
     public PayLevel getPayLevel() {
-        return this.payLevel;
+        return payLevel;
     }
 
-    public void setPayLevel(final PayLevel payLevel) {
+    public void setPayLevel(PayLevel payLevel) {
         this.payLevel = payLevel;
     }
 
@@ -108,5 +110,9 @@ public class PayRate implements Serializable {
         result += ", year: " + year;
         result += ", rate: " + rate;
         return result;
+    }
+
+    public enum PayLevel {
+        P1, P2, P3, P4, P5;
     }
 }

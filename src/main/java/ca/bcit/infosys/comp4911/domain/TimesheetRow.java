@@ -21,7 +21,7 @@ public class TimesheetRow implements Serializable {
     private int version = 0;
 
     @Column
-    private String projectNumber;
+    private int projectNumber;
 
     @Column
     private String workPackageNumber;
@@ -65,6 +65,22 @@ public class TimesheetRow implements Serializable {
 
     public void setVersion(final int version) {
         this.version = version;
+    }
+
+    public int getProjectNumber() {
+        return projectNumber;
+    }
+
+    public void setProjectNumber(int projectNumber) {
+        this.projectNumber = projectNumber;
+    }
+
+    public String getWorkPackageNumber() {
+        return workPackageNumber;
+    }
+
+    public void setWorkPackageNumber(String workPackageNumber) {
+        this.workPackageNumber = workPackageNumber;
     }
 
     public int getMonday() {
@@ -156,7 +172,7 @@ public class TimesheetRow implements Serializable {
         return super.hashCode();
     }
 
-    public TimesheetRow(String projectNumber, String workPackageNumber, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note) {
+    public TimesheetRow(int projectNumber, String workPackageNumber, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note) {
         this.projectNumber = projectNumber;
         this.workPackageNumber = workPackageNumber;
         this.monday = monday;
@@ -174,18 +190,19 @@ public class TimesheetRow implements Serializable {
 
     @Override
     public String toString() {
-        String result = getClass().getSimpleName() + " ";
-        if (id != null)
-            result += "id: " + id;
-        result += ", monday: " + monday;
-        result += ", tuesday: " + tuesday;
-        result += ", wednesday: " + wednesday;
-        result += ", thursday: " + thursday;
-        result += ", friday: " + friday;
-        result += ", saturday: " + saturday;
-        result += ", sunday: " + sunday;
-        if (note != null && !note.trim().isEmpty())
-            result += ", note: " + note;
-        return result;
+        return "TimesheetRow{" +
+                "id=" + id +
+                ", version=" + version +
+                ", projectNumber=" + projectNumber +
+                ", workPackageNumber='" + workPackageNumber + '\'' +
+                ", monday=" + monday +
+                ", tuesday=" + tuesday +
+                ", wednesday=" + wednesday +
+                ", thursday=" + thursday +
+                ", friday=" + friday +
+                ", saturday=" + saturday +
+                ", sunday=" + sunday +
+                ", note='" + note + '\'' +
+                '}';
     }
 }

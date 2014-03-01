@@ -45,5 +45,15 @@ public class WorkPackageDao {
         return query.getResultList();
     }
 
+    public List<WorkPackage> getAllByUser(int userId)
+    {
+        TypedQuery<WorkPackage> query = em.createQuery("select w from WorkPackage w "
+                + "where w.workPackageNumber = (SELECT i.workPackageNumber from WorkPackageAssignment i"
+                + " where i.userId = :userId)",
+                WorkPackage.class);
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }
+
 
 }

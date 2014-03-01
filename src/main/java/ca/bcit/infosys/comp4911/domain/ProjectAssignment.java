@@ -22,7 +22,7 @@ public class ProjectAssignment implements Serializable {
     private int version = 0;
 
     @Column
-    private String projectNumber;
+    private int projectNumber;
 
     @Column
     private int userId;
@@ -36,6 +36,14 @@ public class ProjectAssignment implements Serializable {
 
     public void setId(final Integer id) {
         this.id = id;
+    }
+
+    public int getProjectNumber() {
+        return projectNumber;
+    }
+
+    public void setProjectNumber(int projectNumber) {
+        this.projectNumber = projectNumber;
     }
 
     public int getVersion() {
@@ -54,14 +62,6 @@ public class ProjectAssignment implements Serializable {
         this.isProjectManager = isProjectManager;
     }
 
-    public String getProjectNumber() {
-        return projectNumber;
-    }
-
-    public void setProjectNumber(String projectNumber) {
-        this.projectNumber = projectNumber;
-    }
-
     public int getUserId() {
         return userId;
     }
@@ -70,7 +70,7 @@ public class ProjectAssignment implements Serializable {
         this.userId = userId;
     }
 
-    public ProjectAssignment(String projectNumber,  int userId, boolean isProjectManager) {
+    public ProjectAssignment(int projectNumber,  int userId, boolean isProjectManager) {
         this.projectNumber = projectNumber;
         this.userId = userId;
         this.isProjectManager = isProjectManager;

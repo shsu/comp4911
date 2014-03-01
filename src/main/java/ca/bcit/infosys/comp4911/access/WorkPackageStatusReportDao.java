@@ -18,8 +18,6 @@ public class WorkPackageStatusReportDao {
     @PersistenceContext
     EntityManager em;
 
-    public static final String STATUS_REPORT = WorkPackageStatusReport.class.getSimpleName();
-
     public void create (final WorkPackageStatusReport workPackageStatusReport)
     {
         em.persist(workPackageStatusReport);
@@ -41,13 +39,14 @@ public class WorkPackageStatusReportDao {
     }
 
     public List<WorkPackageStatusReport> getAll() {
-        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from " + STATUS_REPORT + " r",
+        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r",
                 WorkPackageStatusReport.class);
         return query.getResultList();
     }
 
     public List<WorkPackageStatusReport> getAllByWorkPackage(final WorkPackage workPackage) {
-        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from " + STATUS_REPORT + " r where r.workPackage = :workPackage",
+        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r"
+                + " where r.workPackage = :workPackage",
                 WorkPackageStatusReport.class);
         query.setParameter("workPackage", workPackage);
         return query.getResultList();

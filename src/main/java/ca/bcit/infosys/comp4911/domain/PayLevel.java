@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Version;
 import java.lang.Override;
 
+/** Propose to Delete this class, Unnecessary  */
 @Entity
 public class PayLevel implements Serializable {
 

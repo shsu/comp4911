@@ -9,16 +9,11 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 
-/**
- * Created by Graeme on 2/8/14.
- */
 @Stateless
 public class PayRateDao {
 
     @PersistenceContext(unitName = "comp4911")
     EntityManager em;
-
-    public static final String PAYRATE = PayRate.class.getSimpleName();
 
     public void create (final PayRate payRate)
     {
@@ -36,23 +31,23 @@ public class PayRateDao {
     }
 
     public List<PayRate> getAllPayRates() {
-        TypedQuery<PayRate> query = em.createQuery("select p from " + PAYRATE + " p",
+        TypedQuery<PayRate> query = em.createQuery("select p from PayRate p",
                 PayRate.class);
         return query.getResultList();
     }
 
     public List<PayRate> getAllPayRatesByLevel(final String payLevel) {
-        TypedQuery<PayRate> query = em.createQuery("select p from " + PAYRATE + " p where p.payLevelName = :payLevel ",
+        TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.payLevel = :payLevel ",
                 PayRate.class);
-        query.setParameter("payLevel", payLevel);
+        query.setParameter("payLevel", PayRate.PayLevel.valueOf(payLevel));
         return query.getResultList();
     }
 
     public PayRate getPayRateByLevelAndYear(final String payLevel,
                                                final String year) {
-        TypedQuery<PayRate> query = em.createQuery("select p from " + PAYRATE + " p where p.payLevelName = :payLevel" +
+        TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.payLevelName = :payLevel" +
             " and p.year = :year", PayRate.class);
-        query.setParameter("payLevel", payLevel);
+        query.setParameter("payLevel", PayRate.PayLevel.valueOf(payLevel));
         query.setParameter("year", year);
         return query.getSingleResult();
     }

@@ -7,16 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Version;
 import java.util.Date;
 import java.lang.Override;
+import ca.bcit.infosys.comp4911.domain.PayRate.PayLevel;
 
-import ca.bcit.infosys.comp4911.domain.PayLevel;
-
-import javax.persistence.ManyToOne;
-
-import ca.bcit.infosys.comp4911.domain.User;
-
-/**
- * Created by Graeme on 2/12/14.
- */
 public class UserPayRateHistory {
 
     @Id
@@ -34,10 +26,8 @@ public class UserPayRateHistory {
     @Column
     private Date endDate;
 
-    // Leaving as Id, could potentially want to change names down the road
-    // Would screw up system if mapped by name
     @Column
-    private int payLevelId;
+    private PayLevel payLevel;
 
     @Column
     private int userId;
@@ -103,12 +93,12 @@ public class UserPayRateHistory {
         this.userId = userId;
     }
 
-    public int getPayLevelId() {
-        return payLevelId;
+    public PayLevel getPayLevel() {
+        return payLevel;
     }
 
-    public void setPayLevelId(int payLevelId) {
-        this.payLevelId = payLevelId;
+    public void setPayLevel(PayLevel payLevel) {
+        this.payLevel = payLevel;
     }
 
     @Override

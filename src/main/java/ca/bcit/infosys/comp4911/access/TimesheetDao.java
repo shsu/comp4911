@@ -39,8 +39,22 @@ public class TimesheetDao {
         em.remove(read(ts.getId()));
     }
 
-    public Timesheet getByDate(final Integer weekNumber, final Integer year, final Integer userID) {
-        TypedQuery<Timesheet> query = em.createQuery("select t from " + TIMESHEET + " t" +
+    public List<Timesheet> getAll() {
+        TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t",
+                Timesheet.class);
+        return query.getResultList();
+    }
+
+    public List<Timesheet> getAllByUser(final int userId)
+    {
+        TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t"
+                + " where t.userId = :id", Timesheet.class);
+        query.setParameter("id", userId);
+        return query.getResultList();
+    }
+
+    public Timesheet getByDate(final int weekNumber, final int year, final int userID) {
+        TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t" +
             " where t.weekNumber = :week and t.userID = :id and t.year = :year", Timesheet.class);
         query.setParameter("week", weekNumber);
         query.setParameter("id", userID);
@@ -48,14 +62,8 @@ public class TimesheetDao {
         return query.getSingleResult();
     }
 
-    public List<Timesheet> getAll() {
-        TypedQuery<Timesheet> query = em.createQuery("select t from " + TIMESHEET + " t",
-                Timesheet.class);
-        return query.getResultList();
-    }
-
     public List<Timesheet> getRejected(final Integer userID) {
-        TypedQuery<Timesheet> query = em.createQuery("select t from " + TIMESHEET + " t where t.isApproved = :approved" +
+        TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.isApproved = :approved" +
                 " and t.userID = :id",
                 Timesheet.class);
         query.setParameter("approved", false);

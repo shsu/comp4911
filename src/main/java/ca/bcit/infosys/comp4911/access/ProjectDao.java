@@ -40,8 +40,18 @@ public class ProjectDao {
     }
 
     public List<Project> getAll() {
-        TypedQuery<Project> query = em.createQuery("select p from " + PROJECT + " p",
+        TypedQuery<Project> query = em.createQuery("select p from Project p",
                 Project.class);
+        return query.getResultList();
+    }
+
+    public List<Project> getAllByUser(int userId)
+    {
+        TypedQuery<Project> query = em.createQuery("select p from Project p "
+                + "where p.projectNumber = (SELECT i.projectNumber from ProjectAssignment i"
+                                             + " where i.userId = :userId)",
+                Project.class);
+        query.setParameter("userId", userId);
         return query.getResultList();
     }
 }
