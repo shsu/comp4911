@@ -1,19 +1,14 @@
 package ca.bcit.infosys.comp4911.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-
-import java.io.Serializable;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Version;
-
-import java.lang.Override;
-import ca.bcit.infosys.comp4911.domain.PayRate.PayLevel;
+import java.io.Serializable;
 
 @Entity
 public class Effort implements Serializable {

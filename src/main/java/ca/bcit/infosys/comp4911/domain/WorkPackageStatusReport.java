@@ -5,18 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
-
-import ca.bcit.infosys.comp4911.domain.Effort;
-
-import java.util.Set;
 import java.util.HashSet;
-import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 public class WorkPackageStatusReport implements Serializable {

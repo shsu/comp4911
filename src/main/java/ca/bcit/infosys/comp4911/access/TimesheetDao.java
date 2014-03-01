@@ -8,9 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- * Created by Graeme on 2/8/14.
- */
 @Stateless
 public class TimesheetDao {
 
@@ -53,11 +50,11 @@ public class TimesheetDao {
         return query.getResultList();
     }
 
-    public Timesheet getByDate(final int weekNumber, final int year, final int userID) {
+    public Timesheet getByDate(final int weekNumber, final int year, final int userId) {
         TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t" +
             " where t.weekNumber = :week and t.userID = :id and t.year = :year", Timesheet.class);
         query.setParameter("week", weekNumber);
-        query.setParameter("id", userID);
+        query.setParameter("id", userId);
         query.setParameter("year", year);
         return query.getSingleResult();
     }
@@ -68,6 +65,14 @@ public class TimesheetDao {
                 Timesheet.class);
         query.setParameter("approved", false);
         query.setParameter("id", userID);
+        return query.getResultList();
+    }
+
+    public List<Timesheet> getAllTimesheetsToApprove(final int userID) {
+        TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.isApproved = :approved" +
+                " and t.userID = (select u.id from User u where u.timesheetApproverUserID = :user_id)",
+                Timesheet.class);
+        query.setParameter("user_id", userID);
         return query.getResultList();
     }
 }

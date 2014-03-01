@@ -2,8 +2,6 @@ package ca.bcit.infosys.comp4911.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -11,17 +9,6 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.lang.Override;
-import java.util.Currency;
-
-import ca.bcit.infosys.comp4911.domain.WorkPackage;
-
-import java.util.Set;
-import java.util.HashSet;
-import javax.persistence.OneToMany;
-
-import ca.bcit.infosys.comp4911.domain.Effort;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 public class Project implements Serializable {

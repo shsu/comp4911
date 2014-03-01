@@ -1,33 +1,26 @@
 package ca.bcit.infosys.comp4911.domain;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.Hibernate;
-
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.io.Serializable;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
-import java.lang.Override;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import ca.bcit.infosys.comp4911.domain.User;
 
 @Entity
 public class Timesheet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "TIMESHEET_ID", updatable = false, nullable = false)
     private Integer id = null;
 
     @Version
@@ -35,11 +28,7 @@ public class Timesheet implements Serializable {
     private int version = 0;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name="TIMESHEET_TIMESHEETROW",
-            joinColumns = {@JoinColumn(name="TIMESHEET_ID")},
-            inverseJoinColumns = {@JoinColumn(name="TIMESHEETROW_ID")}
-    )
+    @JoinColumn(name="OWNER_ID", referencedColumnName="TIMESHEET_ID")
     private List<TimesheetRow> timesheetRows;
 
     @Column

@@ -1,5 +1,6 @@
 package ca.bcit.infosys.comp4911.access;
 
+import ca.bcit.infosys.comp4911.domain.PayLevel;
 import ca.bcit.infosys.comp4911.domain.PayRate;
 
 import javax.persistence.EntityManager;
@@ -39,7 +40,7 @@ public class PayRateDao {
     public List<PayRate> getAllPayRatesByLevel(final String payLevel) {
         TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.payLevel = :payLevel ",
                 PayRate.class);
-        query.setParameter("payLevel", PayRate.PayLevel.valueOf(payLevel));
+        query.setParameter("payLevel", PayLevel.valueOf(payLevel));
         return query.getResultList();
     }
 
@@ -47,7 +48,7 @@ public class PayRateDao {
                                                final String year) {
         TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.payLevelName = :payLevel" +
             " and p.year = :year", PayRate.class);
-        query.setParameter("payLevel", PayRate.PayLevel.valueOf(payLevel));
+        query.setParameter("payLevel", PayLevel.valueOf(payLevel));
         query.setParameter("year", year);
         return query.getSingleResult();
     }

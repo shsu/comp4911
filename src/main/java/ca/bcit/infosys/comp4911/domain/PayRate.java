@@ -9,11 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 import java.io.Serializable;
-
-import ca.bcit.infosys.comp4911.domain.PayLevel;
-
-import javax.persistence.ManyToOne;
-import java.lang.Override;
 import java.math.BigDecimal;
 
 @Entity
@@ -110,9 +105,5 @@ public class PayRate implements Serializable {
         result += ", year: " + year;
         result += ", rate: " + rate;
         return result;
-    }
-
-    public enum PayLevel {
-        P1, P2, P3, P4, P5;
     }
 }

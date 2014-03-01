@@ -1,9 +1,11 @@
 package ca.bcit.infosys.comp4911.services;
 
 import ca.bcit.infosys.comp4911.access.ProjectDao;
+import ca.bcit.infosys.comp4911.access.TimesheetDao;
 import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
+import ca.bcit.infosys.comp4911.domain.Timesheet;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
 import com.google.common.base.Charsets;
@@ -39,6 +41,9 @@ public class UserResource {
 
     @EJB
     private WorkPackageDao workPackageDao;
+
+    @EJB
+    private TimesheetDao timesheetDao;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -119,6 +124,39 @@ public class UserResource {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         return SH.responseWithEntity(200, workPackageDao.getAllByUser(userId));
+    }
+
+    @Path("/timesheets")
+    @GET
+    public Response retrieveAllTimesheetsToUser(
+        @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+        @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+            int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        return SH.responseWithEntity(200, timesheetDao.getAllByUser(userId));
+    }
+
+    // Create Timesheet for Authenticated User
+    @Path("/timesheets")
+    @POST
+    public Response createTimesheet(
+        @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+        @QueryParam(SH.TOKEN_STRING) final String queryToken,
+        final Timesheet timesheet) {
+            int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+            timesheetDao.create(timesheet);
+            return SH.response(201);
+    }
+
+    @Path("/timesheets/to_approve")
+    public Response getAllTimesheetsToApprove(
+         @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+         @QueryParam(SH.TOKEN_STRING) final String queryToken,
+         final Timesheet timesheet) {
+            int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+            return SH.responseWithEntity(200,timesheetDao.getAllTimesheetsToApprove(userId));
     }
 
     private String performLoginAndGenerateTokenInJSON(final String username, final String password) {

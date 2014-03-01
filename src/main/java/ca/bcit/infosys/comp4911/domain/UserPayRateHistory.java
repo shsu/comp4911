@@ -6,8 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 import java.util.Date;
-import java.lang.Override;
-import ca.bcit.infosys.comp4911.domain.PayRate.PayLevel;
 
 public class UserPayRateHistory {
 

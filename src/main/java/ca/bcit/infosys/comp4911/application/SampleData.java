@@ -7,29 +7,21 @@ import ca.bcit.infosys.comp4911.access.TimesheetRowDao;
 import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
-import ca.bcit.infosys.comp4911.domain.PayRate.PayLevel;
+import ca.bcit.infosys.comp4911.domain.PayLevel;
 import ca.bcit.infosys.comp4911.domain.Project;
 import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
-import ca.bcit.infosys.comp4911.domain.Timesheet;
-import ca.bcit.infosys.comp4911.domain.TimesheetRow;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.domain.WorkPackage;
 import ca.bcit.infosys.comp4911.domain.WorkPackageAssignment;
-import org.hibernate.Session;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Singleton
 @Startup
@@ -81,7 +73,7 @@ public class SampleData {
                     new Date(),
                     false,
                     "",
-                    40,0,0,0,0,0,0,PayLevel.P1
+                    40,0,0,0,0,0,0, PayLevel.P1
                     ));
         }
 
@@ -155,9 +147,9 @@ public class SampleData {
             ));
         }
     }
-
+    /**
     private void generateTimesheets() {
-/**
+
         Timesheet timesheet;
 
         for(int j = 0; j < 2; j++)
@@ -176,7 +168,7 @@ public class SampleData {
         }
 
         }
-    */
-    }
 
+    }
+    */
 }
