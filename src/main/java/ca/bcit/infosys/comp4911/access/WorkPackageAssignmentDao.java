@@ -18,8 +18,6 @@ public class WorkPackageAssignmentDao {
     @PersistenceContext
         EntityManager em;
 
-    public static final String WORKPACKAGE_ASSIGNMENT = WorkPackageAssignment.class.getSimpleName();
-
     public void create (final WorkPackageAssignment workPackageAssignment)
     {
         em.persist(workPackageAssignment);
@@ -43,7 +41,7 @@ public class WorkPackageAssignmentDao {
     // creating a list even though it is a single result, avoids an exception being thrown on no entity found.
     public List<WorkPackageAssignment> getByUserAndWorkPackage(final WorkPackage workPackage,
                                                          final User user) {
-        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from " + WORKPACKAGE_ASSIGNMENT + " w"
+        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from WorkPackageAssignment w"
                 + " where w.workPackage = :workPackage and w.user = :user",
                 WorkPackageAssignment.class);
         query.setParameter("workPackage", workPackage);
@@ -52,13 +50,13 @@ public class WorkPackageAssignmentDao {
     }
 
     public List<WorkPackageAssignment> getAll() {
-        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from " + WORKPACKAGE_ASSIGNMENT + " w",
+        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from WorkPackageAssignment w",
                 WorkPackageAssignment.class);
         return query.getResultList();
     }
 
     public List<WorkPackageAssignment> getAllByUser(final User user) {
-        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from " + WORKPACKAGE_ASSIGNMENT + " w where w.user = :user",
+        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from WorkPackageAssignment w where w.user = :user",
                 WorkPackageAssignment.class);
         query.setParameter("user", user);
         return query.getResultList();

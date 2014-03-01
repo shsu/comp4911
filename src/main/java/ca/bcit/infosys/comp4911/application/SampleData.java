@@ -7,7 +7,7 @@ import ca.bcit.infosys.comp4911.access.TimesheetRowDao;
 import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
-import ca.bcit.infosys.comp4911.domain.PayLevel;
+import ca.bcit.infosys.comp4911.domain.PayRate.PayLevel;
 import ca.bcit.infosys.comp4911.domain.Project;
 import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
 import ca.bcit.infosys.comp4911.domain.Timesheet;
@@ -81,7 +81,7 @@ public class SampleData {
                     new Date(),
                     false,
                     "",
-                    40,0,0,0,0,0,0,0
+                    40,0,0,0,0,0,0,PayLevel.P1
                     ));
         }
 
@@ -92,11 +92,10 @@ public class SampleData {
         for (int i = 0; i < 5; i++)
         {
             projectDao.create(new Project(
-                "1234" + i,
+                        i,
                     "Project" + i,
                     new Date(),
                     new Date(),
-                    null,
                     new BigDecimal(12.5),
                     new BigDecimal(1000 + i * i),
                     new BigDecimal(1000 + i)
@@ -111,9 +110,9 @@ public class SampleData {
         for (int i = 0; i < 5; i++)
         {
             workPackageDao.create(new WorkPackage(
-                    projects.get(i).getProjectNumber() + i,
+                    "WorkPackageNumber" + i,
                     "WorkPackageName" + i,
-                    projects.get(i),
+                    projects.get(i).getProjectNumber(),
                     new Date(),
                     new Date(),
                     new Date(),
@@ -151,7 +150,7 @@ public class SampleData {
         {
             projectAssignmentDao.create(new ProjectAssignment(
                     projects.get(i).getProjectNumber(),
-                    users.get(i),
+                    users.get(i).getId(),
                     false
             ));
         }
