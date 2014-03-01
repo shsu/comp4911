@@ -6,6 +6,7 @@ import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.Project;
 import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
+import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
@@ -21,7 +22,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/projects/{id}/assignments")
+@Path("/projects/{project_number}/assignments")
 public class ProjectAssignmentResource {
 
     @EJB
@@ -65,15 +66,20 @@ public class ProjectAssignmentResource {
     public Response updateProjectAssignment(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @PathParam("user_id") String id, //I added this. ProjectDao.read needs a string becuase you need to input the
-      //the project name. This needs to be fixed. I just need it to compile though.
+      @PathParam("project_number") int projectNumber,
+      @PathParam("user_id") int id,
       final ProjectAssignment projectAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        Project update = projectDao.read(id);
-        if (update == null) {
+        Project project = projectDao.read(projectNumber);
+        if (project == null) {
             return SH.response(404);
         }
+        User user = userDao.read(id);
+        if (user == null ) {
+            return SH.response(404);
+        }
+
         projectAssignmentDao.update(projectAssignment);
         return SH.response(200);
     }

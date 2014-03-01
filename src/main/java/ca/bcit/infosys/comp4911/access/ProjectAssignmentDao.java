@@ -10,10 +10,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-
-/**
- * Created by Graeme on 2/12/14.
- */
 @Stateless
 public class ProjectAssignmentDao {
     @PersistenceContext(unitName = "comp4911")
@@ -47,11 +43,11 @@ public class ProjectAssignmentDao {
 
     /** Get all Users by Project Id
     /** This doesn't feel right with being in this class, but makes most logical sense I think */
-    public List<User> getAllUsers(final String name) {
+    public List<User> getAllUsers(final int projectNumber) {
         TypedQuery<User> query = em.createQuery("select DISTINCT p.user from ProjectAssignment "
                + "p where p.id = :id",
                 User.class);
-        query.setParameter("id", name);
+        query.setParameter("id", projectNumber);
         return query.getResultList();
     }
 

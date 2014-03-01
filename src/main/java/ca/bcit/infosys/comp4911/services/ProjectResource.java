@@ -67,10 +67,10 @@ public class ProjectResource {
     public Response retrieveProject(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @PathParam("project_number") String id) {
+      @PathParam("project_number") int projectNumber) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        Project project = projectDao.read(id);
+        Project project = projectDao.read(projectNumber);
         if (project == null) {
             return SH.response(404);
         }
@@ -84,11 +84,11 @@ public class ProjectResource {
     public Response updateProject(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @PathParam("project_number") String id,
+      @PathParam("project_number") int projectNumber,
       final Project Project) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        Project check = projectDao.read(id);
+        Project check = projectDao.read(projectNumber);
         if (check == null) {
             return SH.response(404);
         }
@@ -103,14 +103,14 @@ public class ProjectResource {
     public Response getUsersForProject(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @PathParam("project_number") final String id) {
+      @PathParam("project_number") final int projectNumber) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        Project check = projectDao.read(id);
+        Project check = projectDao.read(projectNumber);
         if (check == null) {
             return SH.response(404);
         }
 
-        return SH.responseWithEntity(200, projectAssignmentDao.getAllUsers(id));
+        return SH.responseWithEntity(200, projectAssignmentDao.getAllUsers(projectNumber));
     }
 }

@@ -17,16 +17,14 @@ public class ProjectDao {
     @PersistenceContext(unitName = "comp4911")
     EntityManager em;
 
-    public static final String PROJECT = Project.class.getSimpleName();
-
     public void create (final Project project)
     {
         em.persist(project);
     }
 
-    public Project read ( final String projectID)
+    public Project read ( final int projectNumber)
     {
-        return em.find(Project.class, projectID);
+        return em.find(Project.class, projectNumber);
     }
 
     public void update (final Project project)
@@ -36,7 +34,7 @@ public class ProjectDao {
 
     public void delete (final Project project)
     {
-        em.remove(read(project.getProjectName()));
+        em.remove(read(project.getProjectNumber()));
     }
 
     public List<Project> getAll() {
