@@ -13,7 +13,6 @@ import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.domain.WorkPackage;
 import ca.bcit.infosys.comp4911.domain.WorkPackageAssignment;
-import org.mindrot.jbcrypt.BCrypt;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -62,12 +61,11 @@ public class SampleData {
     }
 
     private void generateUsers() {
-        String hashedPassword = BCrypt.hashpw("password", BCrypt.gensalt());
         for(int i = 0; i < 5; i++)
         {
             userDao.create(new User(
                     "username" + i + "@example.com",
-                    hashedPassword,
+                    "password",
                     "firstName" + i,
                     "lastName" + i,
                     new Date(),
