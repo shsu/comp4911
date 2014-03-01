@@ -30,10 +30,24 @@ public class ProjectAssignmentDao {
         em.merge(projectAssignment);
     }
 
+    public void updateIsProjectManager(final ProjectAssignment projectAssignment, boolean isProjectManager)
+    {
+
+    }
+
     public void delete (final ProjectAssignment projectAssignment)
     {
         em.remove(read(projectAssignment.getId()));
     }
+
+    public ProjectAssignment getByProject(final int projectNumber) {
+        TypedQuery<ProjectAssignment> query = em.createQuery("select DISTINCT p from ProjectAssignment "
+                + "p where p.projectNumber = :projectNumber",
+                ProjectAssignment.class);
+        query.setParameter("projectNumber", projectNumber);
+        return query.getSingleResult();
+    }
+
 
     public List<ProjectAssignment> getAll() {
         TypedQuery<ProjectAssignment> query = em.createQuery("select p from ProjectAssignment p",

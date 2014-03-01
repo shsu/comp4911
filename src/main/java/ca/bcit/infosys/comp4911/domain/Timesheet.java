@@ -28,7 +28,9 @@ public class Timesheet implements Serializable {
     private int version = 0;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="OWNER_ID", referencedColumnName="TIMESHEET_ID")
+    @JoinTable(name="TIMESHEET_TIMESHEET_ROW",
+            joinColumns = { @JoinColumn(name="TIMESHEET_ID")},
+            inverseJoinColumns = { @JoinColumn(name="ROW_ID")})
     private List<TimesheetRow> timesheetRows;
 
     @Column
@@ -53,7 +55,6 @@ public class Timesheet implements Serializable {
     private int userId;
 
     public List<TimesheetRow> getTimesheetRows() {
-        // Hibernate.initialize(timesheetRows);
         return timesheetRows;
     }
 
@@ -109,6 +110,38 @@ public class Timesheet implements Serializable {
         this.overTime = overTime;
     }
 
+    public int getWeekNumber() {
+        return this.weekNumber;
+    }
+
+    public void setWeekNumber(final int weekNumber) {
+        this.weekNumber = weekNumber;
+    }
+
+    public int getYear() {
+        return this.year;
+    }
+
+    public void setYear(final int year) {
+        this.year = year;
+    }
+
+    public boolean getIsApproved() {
+        return this.isApproved;
+    }
+
+    public void setIsApproved(final boolean isApproved) {
+        this.isApproved = isApproved;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -132,30 +165,6 @@ public class Timesheet implements Serializable {
             return id.hashCode();
         }
         return super.hashCode();
-    }
-
-    public int getWeekNumber() {
-        return this.weekNumber;
-    }
-
-    public void setWeekNumber(final int weekNumber) {
-        this.weekNumber = weekNumber;
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-
-    public void setYear(final int year) {
-        this.year = year;
-    }
-
-    public boolean getIsApproved() {
-        return this.isApproved;
-    }
-
-    public void setIsApproved(final boolean isApproved) {
-        this.isApproved = isApproved;
     }
 
     public Timesheet(int userId, int weekNumber, int year, int flexTime, int overTime, boolean isApproved, boolean isSigned) {
@@ -196,13 +205,5 @@ public class Timesheet implements Serializable {
         result += ", isApproved: " + isApproved;
         result += ", isSigned: " + isSigned;
         return result;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 }

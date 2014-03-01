@@ -35,21 +35,9 @@ public class TimesheetResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllTimesheets(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @QueryParam("filter") final String filter) {
+      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        if (filter != null) {
-            if (filter.equals("current")) {
-                Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(), userId);
-                return SH.responseWithEntity(200, timesheet);
-            }
-            if (filter.equals("default")) {
-                //Timesheet timesheet = timesheetDao.getByDate(54, userId);  Not sure where we'll store the default sheet
-            }
-        }
-
-        // if no filter return all the timesheets
         return SH.responseWithEntity(200, timesheetDao.getAll());
     }
 
@@ -65,9 +53,6 @@ public class TimesheetResource {
         return SH.response(201);
     }
 
-    /**
-     * Should we just use this method for retrieving the default
-     */
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -90,7 +75,8 @@ public class TimesheetResource {
     public Response updateTimesheet(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @PathParam("id") Integer id, Timesheet timesheet) {
+      @PathParam("id") Integer id,
+      final Timesheet timesheet) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         Timesheet update = timesheetDao.read(id);

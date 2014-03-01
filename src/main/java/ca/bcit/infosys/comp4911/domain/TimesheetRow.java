@@ -5,15 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Version;
 import java.io.Serializable;
 
 @Entity
+@Table(name="TIMESHEET_ROW")
 public class TimesheetRow implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "ROW_ID", updatable = false, nullable = false)
     private Integer id = null;
 
     @Version

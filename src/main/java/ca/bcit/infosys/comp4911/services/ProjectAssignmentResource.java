@@ -61,6 +61,26 @@ public class ProjectAssignmentResource {
     }
 
     @PUT
+    @Path("{project_number}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateProjectIsManager(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("project_number") int projectNumber,
+            final Boolean isProjectManager ) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+        Project project = projectDao.read(projectNumber);
+        if (project == null) {
+            return SH.response(404);
+        }
+        ProjectAssignment projectAssignment = projectAssignmentDao.getByProject(projectNumber);
+        projectAssignment.setProjectManager(isProjectManager);
+        return SH.response(200);
+    }
+
+    /*
+
+    @PUT
     @Path("{user_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProjectAssignment(
@@ -83,4 +103,5 @@ public class ProjectAssignmentResource {
         projectAssignmentDao.update(projectAssignment);
         return SH.response(200);
     }
+    */
 }

@@ -22,6 +22,7 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
@@ -141,10 +142,22 @@ public class UserResource {
 
     @Path("/timesheets")
     @GET
-    public Response retrieveAllTimesheetsToUser(
-        @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-        @QueryParam(SH.TOKEN_STRING) final String queryToken) {
-            int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+    public Response retrieveAllTimesheetsForUser(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @QueryParam(SH.FILTER) final String filter) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        if (filter != null) {
+            if (filter.equals("current")) {
+                Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(), userId);
+                return SH.responseWithEntity(200, timesheet);
+            }
+            if (filter.equals("default")) {
+                Timesheet timesheet = timesheetDao.getByDate(0, 0, userId);
+                return SH.responseWithEntity(200, timesheet);
+            }
+        }
 
         return SH.responseWithEntity(200, timesheetDao.getAllByUser(userId));
     }

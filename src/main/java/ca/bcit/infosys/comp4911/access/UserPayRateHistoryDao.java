@@ -9,17 +9,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- * Created by Graeme on 2/12/14.
- */
 @Stateless
 public class UserPayRateHistoryDao {
 
-
     @PersistenceContext(unitName = "comp4911")
     EntityManager em;
-
-    public static final String USER_PAYRATE_HISTORY = UserPayRateHistory.class.getSimpleName();
 
     public void create (final UserPayRateHistory payRateHistory)
     {
@@ -42,13 +36,13 @@ public class UserPayRateHistoryDao {
     }
 
     public List<UserPayRateHistory> getAllUserPayRateHistories() {
-        TypedQuery<UserPayRateHistory> query = em.createQuery("select p from " + USER_PAYRATE_HISTORY + " p",
+        TypedQuery<UserPayRateHistory> query = em.createQuery("select p from UserPayRateHistory p",
                 UserPayRateHistory.class);
         return query.getResultList();
     }
 
     public List<UserPayRateHistory> getAllUserPayRateHistoryByUser(final User user) {
-        TypedQuery<UserPayRateHistory> query = em.createQuery("select p from " + USER_PAYRATE_HISTORY + " p where p.user = :user ",
+        TypedQuery<UserPayRateHistory> query = em.createQuery("select p from UserPayRateHistory p where p.user = :user ",
                 UserPayRateHistory.class);
         query.setParameter("user", user);
         return query.getResultList();

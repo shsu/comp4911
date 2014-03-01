@@ -9,16 +9,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- * Created by Graeme on 2/12/14.
- */
 @Stateless
 public class TimesheetRowDao {
 
     @PersistenceContext(unitName = "comp4911")
     EntityManager em;
-
-    public static final String TIMESHEET_ROW = TimesheetRow.class.getSimpleName();
 
     public void create (final TimesheetRow row)
     {
@@ -42,30 +37,29 @@ public class TimesheetRowDao {
 
 
     public List<TimesheetRow> getAll() {
-        TypedQuery<TimesheetRow> query = em.createQuery("select t from " + TIMESHEET_ROW + " t",
+        TypedQuery<TimesheetRow> query = em.createQuery("select t from TimesheetRow t",
                 TimesheetRow.class);
         return query.getResultList();
     }
 
     public List<TimesheetRow> getAllById(final Timesheet timesheet) {
-        TypedQuery<TimesheetRow> query = em.createQuery("select t from " + TIMESHEET_ROW + " t where t.timesheet = :timesheet ",
+        TypedQuery<TimesheetRow> query = em.createQuery("select t from TimesheetRow t where t.timesheet = :timesheet ",
                 TimesheetRow.class);
         query.setParameter("timesheet", timesheet);
         return query.getResultList();
     }
 
     public List<TimesheetRow> getAllByWP(final String wpNumber){
-        TypedQuery<TimesheetRow> query = em.createQuery("select t from " + TIMESHEET_ROW +
-                " t where t.workpackNumber = :wpNumber", TimesheetRow.class);
+        TypedQuery<TimesheetRow> query = em.createQuery("select t from TimesheetRow" +
+                " t where t.workPackageNumber = :wpNumber", TimesheetRow.class);
         query.setParameter("wpNumber", wpNumber);
         return query.getResultList();
     }
 
-    public List<TimesheetRow> getAllByProject(final String projNumber){
-    TypedQuery<TimesheetRow> query = em.createQuery("select t from " + TIMESHEET_ROW +
-            " t where t.workpackNumber = :projNumber", TimesheetRow.class);
-    query.setParameter("projNumber", projNumber);
+    public List<TimesheetRow> getAllByProject(final String projectNumber){
+    TypedQuery<TimesheetRow> query = em.createQuery("select t from TimesheetRow" +
+            " t where t.workPackageNumber = :projectNumber", TimesheetRow.class);
+    query.setParameter("projectNumber", projectNumber);
     return query.getResultList();
     }
-
 }
