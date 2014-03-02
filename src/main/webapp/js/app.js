@@ -7,8 +7,14 @@ cascadia.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/assign-wp', {controller: 'PackageController', templateUrl:'assign-wp.html'}).
     when('/assign-re', {controller: 'ManagerController', templateUrl:'assign-re.html'}).
-    when('/login', {controller: 'LoginController', templateUrl:'login.html'})
+    when('/login', {controller: 'LoginController', templateUrl:'login.html'}).
+    when('/users-management', {controller: 'UsersManagementController', templateUrl:'users-management.html'}).
     otherwise({redirectTo:'/'});
+}]);
+
+cascadia.config(['$httpProvider', function($httpProvider) {
+  $httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }]);
 
 cascadia.directive('content', function() {

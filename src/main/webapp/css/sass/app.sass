@@ -1,0 +1,262 @@
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//  File: app.sass                                                //
+//                                                                //
+//  Compile using:                                                //
+//  sass app.sass app.css                                         //
+//                                                                //
+//  or using 'watch' option                                       //
+//  (file is automatically compiled when changes are detected):   //
+//  sass --watch app.sass:app.css                                 //
+//                                                                //
+//                                                                //
+////////////////////////////////////////////////////////////////////
+
+@import "bourbon/bourbon"
+@import "themes/junko.sass"
+
+//                                                     STYLE CLASSES
+//------------------------------------------------------------------
+// class="bg-primary"
+.html .body .bg-primary
+  background: $primary
+
+// class="primary"
+.html .body .primary
+  color: $primary
+
+// class="bg-secondary"
+.html .body .bg-secondary
+  background: $secondary
+
+// class="secondary"
+.html .body .secondary
+  color: $secondary
+
+// class="bg-tertiary"
+.html .body .bg-tertiary
+  background: $tertiary
+
+// class="tertiary"
+.html .body .tertiary
+  color: $tertiary
+
+// class="header-link"
+.html .body .header-link
+  color: $header-link
+
+// class="no-padding"
+.no-padding, .table > tbody > tr > td.no-padding
+  padding: 0
+
+.center
+  text-align: center
+
+div.ng-scope
+  padding: 0 20px
+
+//                                                            GLOBAL
+//------------------------------------------------------------------
+.body
+  min-height: 1000px
+
+.row
+  margin-bottom: 20px
+
+.table-hover > tbody > tr > td.active:hover,
+.table-hover > tbody > tr > th.active:hover,
+.table-hover > tbody > tr.active:hover > td,
+.table-hover > tbody > tr.active:hover > th
+  background: $table-hover
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th
+  background: $table-hover
+
+.body table.table
+  margin-bottom: 0
+  border: 1px solid $table-border
+
+  tr > th
+    background: #ccc
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td
+  padding: 15px
+
+.btn.pull-right
+  margin-left: 20px
+
+.no-pl
+  padding-left: 0
+
+
+//                                                            NAVBAR
+//------------------------------------------------------------------
+.navbar
+  border-radius: 0
+
+  .nav li a
+    color: $header-link
+
+    &:hover
+      opacity: 0.5
+
+//.navbar-nav
+  width: 100%
+
+.navbar-inverse
+  //background-color: $primary
+ 
+//                                                        LOGIN PAGE
+//------------------------------------------------------------------
+.form-signin
+  max-width: 330px
+  padding: 15px
+  margin: 80px auto
+
+.btn-login
+  display: block
+  margin: 40px auto
+
+#forgot
+  margin: 20px 0 0 12px
+  display: block
+
+.modal-dialog
+  width: 300px
+  margin: 80px auto
+
+.modal-content
+  padding: 10px
+
+.modal-header
+  border-bottom: none
+
+.modal-title, .modal-body p
+  text-align: center
+
+.modal-footer
+  border-top: none
+  text-align: none
+  margin-top: 0
+
+  button
+    width: 48.66%
+    float: left
+
+
+//                                                    TIMESHEET PAGE
+//------------------------------------------------------------------
+.emp-info
+  padding-top: 37px
+
+.timesheet
+  padding: 20px
+  border: 1px solid $table-border
+
+  footer
+    margin-top: 20px
+    clear: both
+    height: 40px
+
+    button
+      float: right
+
+.timesheet-nav
+  text-align: center
+
+  li 
+    border: 1px solid $table-border
+    padding: 10px
+
+    &:first-child
+      padding-left: 10px
+
+footer.row
+  margin-top: 40px
+
+  button
+    float: right
+
+//                                                         PCPR PAGE
+//------------------------------------------------------------------
+time
+  padding: 5px
+  border: 1px solid $table-border
+  border-radius: 5px
+
+//                                                    ASSIGN WP PAGE
+//------------------------------------------------------------------
+
+.results
+  border: 1px solid #ccc
+  min-height: 300px
+
+  ul
+    list-style: none
+    margin-top: 15px
+
+    li
+      background: $table-hover
+      padding: 5px
+      margin-top: 5px
+
+    .disabled-true
+      background: #ddd
+
+    .true
+      background: rgba(0, 255, 0, 0.2) !important
+
+//                                                ADD ENGINEERS PAGE
+//------------------------------------------------------------------
+.results
+  border: 1px solid #ccc
+  min-height: 300px
+  padding: 0
+
+  .table-hover > tbody > tr.disabled-true:hover > td,
+  .table-hover > tbody > tr.disabled-true:hover > th
+    background: #ddd
+
+  .disabled-true
+    background: #ddd
+
+  .true
+    background: rgba(0, 255, 0, 0.2) !important
+
+//                                                 ADD MANAGERS PAGE
+//------------------------------------------------------------------
+.table-wrapper
+  border: 1px solid #ddd
+  min-height: 400px
+
+  tr.true
+    background: rgba(0, 255, 0, 0.2) !important
+
+.manager .modal-dialog
+  width: 500px
+
+
+//                                              USER MANAGEMENT PAGE
+//------------------------------------------------------------------
+.usertable
+  font-family: monospace
+
+.body .usertable table.table tr .th-narrow
+  width: 15%
+
+.body .usertable table.table tr .th-wide
+  width: 20%
+
+
+// USERS MANAGEMENT - API TESTING
+
+#users-management
+  list-style: none
+  padding-left: 0
+
+#users-management li
+  padding: 10px
+  background: #ddd
+  border-radius: 5px
+  margin-bottom: 10px

@@ -1,34 +1,33 @@
 var cascadiaControllers = angular.module('cascadiaControllers', []);
 
 /*
-
- LOGIN CONTROLLER
-
- */
-
+    LOGIN CONTROLLER
+*/
 cascadiaControllers.controller('LoginController', ['$scope', '$http', function($scope, $http) {
   $scope.username;
   $scope.password;
 
   $scope.login = function() {
-    postdata = {
+    var postdata = {
       'username' : $scope.username,
       'password' : $scope.password
     };
 
     $http({method: 'POST', data: postdata,
-      url: 'http://localhost:8080/comp4911/api/user/token'}).
+      url: 'http://www.comp4911.com/api/user/token'}).
       success(function(data, status, headers, config) {
         $scope.response = status;
         $scope.token = data.token;
-      });
+    });
   };
+
+  
 }]);
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 /*
-
-  PACKAGE CONTROLLER
-
+    PACKAGE CONTROLLER
 */
 cascadiaControllers.controller('PackageController', ['$scope', 
   function ($scope){
@@ -109,9 +108,7 @@ cascadiaControllers.controller('PackageController', ['$scope',
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-
-  ENGINEER CONTROLLER
-
+    ENGINEER CONTROLLER
 */
 cascadiaControllers.controller('EngineerController', ['$scope',
   function ($scope){
@@ -188,9 +185,7 @@ cascadiaControllers.controller('EngineerController', ['$scope',
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-
-  MANAGER CONTROLLER
-
+    MANAGER CONTROLLER
 */
 cascadiaControllers.controller('ManagerController', ['$scope',
   function ($scope){
@@ -222,3 +217,37 @@ cascadiaControllers.controller('ManagerController', ['$scope',
     }
   }
 ]);
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+    USERS CONTROLLER
+    for Users Management API Endpoints
+
+      GET /users
+      POST /users
+      GET /users/:user_id
+      PUT /users/:user_id  
+*/
+
+cascadiaControllers.controller('UsersManagementController', ['$scope', '$http',
+  function ($scope, $http){
+    $scope.users = [
+      {employeeID: 1111, name: "steven", username: "shsu", plevel: 3},
+      {employeeID: 1112, name: "graeme", username: "gfunk", plevel: 3},
+      {employeeID: 1113, name: "chris", username: "charris", plevel: 1}
+    ];
+
+    $scope.delete = function($index){
+      $scope.users.splice($index, 1);
+      console.log("user deleted");
+    }
+
+    $scope.edit = function($user){
+      console.log($user);
+    }
+
+  }
+]);
+
+

@@ -1,0 +1,15 @@
+<content>
+  <div ng-controller="UsersManagementController">
+    <ul id="users-management">
+      <li ng-repeat="user in users">
+        <span ng-repeat="(key, value) in user">
+          <input type="text" placeholder="{{value}}"></input>
+        </span>
+        <button class="btn btn-primary" ng-click="edit(user)">Save</button>
+        <button class="btn btn-primary" ng-click="delete()">Delete</button>
+      </li>
+    </ul>
+
+    <div ng-model="users">{{users}}</div>
+  </div>
+</content>
