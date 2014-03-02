@@ -185,6 +185,16 @@ public class UserResource {
             return SH.responseWithEntity(200,timesheetDao.getAllTimesheetsToApprove(userId));
     }
 
+    @Path("/peons")
+    @GET
+    public Response getAllPeons(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        return SH.responseWithEntity(200, userDao.getAllPeons(userId));
+    }
+
     private String performLoginAndGenerateTokenInJSON(final String username, final String password) {
         Optional<User> authenticatedUser = userDao.authenticate(username, password);
 
