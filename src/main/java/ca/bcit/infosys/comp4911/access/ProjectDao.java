@@ -52,4 +52,15 @@ public class ProjectDao {
         query.setParameter("userId", userId);
         return query.getResultList();
     }
+
+    public List<Project> getAllManagedByUser(int userId)
+    {
+        TypedQuery<Project> query = em.createQuery("select p from Project p" +
+            "where p.projectNumber = (SELECT pa.projectNumber from ProjectAsignment pa)"
+                                       + " where pa.userId = :userId AND"
+                                        + " where pa.isProjectManager = TRUE",
+                Project.class);
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }
 }

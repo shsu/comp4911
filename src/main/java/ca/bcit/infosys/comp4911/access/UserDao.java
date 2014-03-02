@@ -66,10 +66,11 @@ public class UserDao {
         return Optional.absent();
     }
 
-    public List<User> getAllPeons(int id) {
+    public List<User> getAllPeons(int supervisorId) {
         TypedQuery<User> query = em.createQuery("select u from User u " +
-                "Where u.supervisorUserID == id", User.class);
+                "Where u.supervisorUserID == :supervisorId", User.class);
 
+        query.setParameter("supervisorId", supervisorId);
         return query.getResultList();
     }
 

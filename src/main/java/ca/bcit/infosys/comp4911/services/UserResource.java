@@ -130,6 +130,18 @@ public class UserResource {
         return SH.responseWithEntity(200, projectDao.getAllByUser(userId));
     }
 
+    @Path("/projects/managed")
+    @GET
+    public Response retrieveAllUserManagedProjects(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        return SH.responseWithEntity(200, projectDao.getAllManagedByUser(userId));
+    }
+
+
+
     @Path("/work_packages")
     @GET
     public Response retrieveAllWorkPackagesAssignedToUser(
