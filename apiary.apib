@@ -373,6 +373,19 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramate
 
 + Response 401
 
+## User Peons [/user/peons]
+### Retrieve all peons managed by the current user.
+Authenticate using HTTP Basic Auth (token as the username) or use query paramater of: token=<token>.
++ Response 200
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
+
 ## User Timesheets [/user/timesheets]
 ### Retrieve all timesheets of authenticated user [GET]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
