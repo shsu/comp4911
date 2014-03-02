@@ -360,6 +360,19 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
 
 + Response 401
 
+## User Managed Projects [/user/projects/managed]
+### Retrieve all projects managed by the current user.
+Authenticate using HTTP Basic Auth (token as the username) or use query paramater of: token=<token>.
++ Response 200
+    + Body
+    
+            [
+                {
+                }
+            ]
+
++ Response 401
+
 ## User Timesheets [/user/timesheets]
 ### Retrieve all timesheets of authenticated user [GET]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
