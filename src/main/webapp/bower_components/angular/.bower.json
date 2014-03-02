@@ -1,0 +1,16 @@
+{
+  "name": "angular",
+  "version": "1.2.15-build.2361+sha.9bffccd",
+  "main": "./angular.js",
+  "dependencies": {},
+  "homepage": "https://github.com/angular/bower-angular",
+  "_release": "1.2.15-build.2361+sha.9bffccd",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.15-build.2361+sha.9bffccd",
+    "commit": "85e4efc3a2784dd87bbdc61553ea5d721095de70"
+  },
+  "_source": "git://github.com/angular/bower-angular.git",
+  "_target": ">= 1.0.8",
+  "_originalSource": "angular"
+}

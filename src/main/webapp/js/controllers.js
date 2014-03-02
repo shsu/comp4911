@@ -1,13 +1,13 @@
-var cascadiaControllers = angular.module('cascadiaControllers', []);
+var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
 
 /*
     LOGIN CONTROLLER
 */
-cascadiaControllers.controller('LoginController', ['$scope', '$http', function($scope, $http) {
+cascadiaControllers.controller('LoginController', ['$scope', '$http', '$base64', function($scope, $http, $base64) {
   $scope.username;
   $scope.password;
 
-  $scope.login = function() {
+  $scope.login = function($base64) {
     var postdata = {
       'username' : $scope.username,
       'password' : $scope.password
@@ -21,6 +21,8 @@ cascadiaControllers.controller('LoginController', ['$scope', '$http', function($
     });
   };
 
+  var testString = 'testing';
+  $scope.encodedString = $base64.encode(testString);
   
 }]);
 
