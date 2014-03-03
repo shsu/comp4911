@@ -75,7 +75,7 @@ public class UserResource {
     public Response retrieveToken(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerAuth) {
         if (Strings.isNullOrEmpty(headerAuth)) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+            throw new WebApplicationException(Response.status(401).header("WWW-Authenticate","Basic realm=\"comp4911\"").build());
         }
 
         String decodedCredentials = new String(
@@ -88,7 +88,7 @@ public class UserResource {
 
         for (String credential : credentials) {
             if (Strings.isNullOrEmpty(credential)) {
-                throw new WebApplicationException(SH.response(400));
+                throw new WebApplicationException(Response.Status.BAD_REQUEST);
             }
         }
 
