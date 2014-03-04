@@ -1,10 +1,11 @@
 <content>
-    <div>
-        <input type="text" class="form-control" ng-model="username" placeholder="username" /><br/>
-        <input type="text" class="form-control" ng-model="password" placeholder="password" /><br />
+    <div ng-controller="LoginController">
+        <input type="text" class="form-control" ng-model="username" />
+        <input type="text" class="form-control" ng-model="password" /><br />
         <input type="submit" class="btn btn-primary" ng-click="login()" value="Submit" />
-        <div>{{response}}</div>
-        <div>{{token}}</div>
-        <h1>{{encodedString}}</h1>
+        <p>&nbsp;</p>
+        <p>Response: {{response}}</p>
+        <p>Token: {{token}}</p>
+        <p>Encoded Token: {{encodedString}}</p>
     </div>
 </content>

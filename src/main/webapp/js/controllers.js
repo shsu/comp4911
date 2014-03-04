@@ -4,25 +4,16 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
     LOGIN CONTROLLER
 */
 cascadiaControllers.controller('LoginController', ['$scope', '$http', '$base64', function($scope, $http, $base64) {
-  $scope.username;
-  $scope.password;
 
-  $scope.login = function($base64) {
-    var postdata = {
-      'username' : $scope.username,
-      'password' : $scope.password
-    };
-
-    $http({method: 'POST', data: postdata,
+  $scope.login = function() {
+    $http({method: 'POST', data: {'username': $scope.username, 'password': $scope.password},
       url: 'http://www.comp4911.com/api/user/token'}).
       success(function(data, status, headers, config) {
         $scope.response = status;
         $scope.token = data.token;
+        $scope.encodedString = $base64.encode($scope.token + ':');    
     });
   };
-
-  var testString = 'testing';
-  $scope.encodedString = $base64.encode(testString);
   
 }]);
 
@@ -245,7 +236,10 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$http',
       console.log("user deleted");
     }
 
-    $scope.edit = function($user){
+    $scope.edit = function($user, $index){
+      
+
+      alert($scope.users[0].plevel);
       console.log($user);
     }
 
