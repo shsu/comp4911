@@ -1,19 +1,18 @@
-var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
+var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular']);
 
 /*
     LOGIN CONTROLLER
 */
-cascadiaControllers.controller('LoginController', ['$scope', '$http', '$base64', function($scope, $http, $base64) {
+cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restangular', function($scope, $base64, Restangular) {
 
   $scope.login = function() {
-    $http({method: 'POST', data: {'username': $scope.username, 'password': $scope.password},
-      url: 'http://www.comp4911.com/api/user/token'}).
-      success(function(data, status, headers, config) {
-        $scope.response = status;
-        $scope.token = data.token;
-        $scope.encodedString = $base64.encode($scope.token + ':');    
+    var data = {'username' : $scope.username, 'password' : $scope.password};
+    var baseTest = Restangular.one('user');
+    baseTest.post('token', data).then(function(response) {
+      $scope.token = response.token;
     });
   };
+
   
 }]);
 

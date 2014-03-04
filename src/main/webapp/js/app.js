@@ -1,6 +1,7 @@
 var cascadia = angular.module('cascadiaApp', [
     'ngRoute',
-    'cascadiaControllers'
+    'cascadiaControllers',
+    'restangular'
 ]);
 
 cascadia.config(['$routeProvider', function($routeProvider) {
@@ -12,10 +13,9 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     otherwise({redirectTo:'/'});
 }]);
 
-cascadia.config(['$httpProvider', function($httpProvider) {
-  $httpProvider.defaults.useXDomain = true;
-  delete $httpProvider.defaults.headers.common['X-Requested-With'];
-}]);
+cascadia.config(function(RestangularProvider) {
+    RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
+});
 
 cascadia.directive('content', function() {
   return  {
