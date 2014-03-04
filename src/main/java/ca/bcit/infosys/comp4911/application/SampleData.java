@@ -74,7 +74,10 @@ public class SampleData {
                     40,0,0,0,0,0,0, PayLevel.P1
                     ));
         }
-
+        
+        userDao.create(new User(
+          "q","q","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0,PayLevel.P5
+        ));
     }
 
     private void generateProjects() {
