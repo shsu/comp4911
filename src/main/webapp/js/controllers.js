@@ -7,14 +7,14 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
 
   $scope.login = function() {
     var data = {'username' : $scope.username, 'password' : $scope.password};
-    var baseTest = Restangular.one('user');
-    baseTest.post('token', data).then(function(response) {
-      $scope.token = response.token;
+    Restangular.one('user').post('token', data).then(function(response) {
+      $scope.encodedString = $base64.encode(response.token + ":");
+     Restangular.setDefaultHeaders({'Authorization': 'Basic ' + $scope.encodedString});
     });
   };
-
-  
 }]);
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -222,22 +222,29 @@ cascadiaControllers.controller('ManagerController', ['$scope',
       PUT /users/:user_id  
 */
 
-cascadiaControllers.controller('UsersManagementController', ['$scope', '$http',
-  function ($scope, $http){
+cascadiaControllers.controller('UsersManagementController', ['$scope', 'Restangular',
+  function ($scope, Restangular){
+    Restangular.one('user').get().then(function(response){
+      $scope.user = response;
+    });
+
+    /*
     $scope.users = [
       {employeeID: 1111, name: "steven", username: "shsu", plevel: 3},
       {employeeID: 1112, name: "graeme", username: "gfunk", plevel: 3},
       {employeeID: 1113, name: "chris", username: "charris", plevel: 1}
     ];
 
+  */
+
     $scope.delete = function($index){
       $scope.users.splice($index, 1);
+      var user = Restangular.one('users');
+
       console.log("user deleted");
     }
 
-    $scope.edit = function($user, $index){
-      
-
+    $scope.edit = function($user, $index){ 
       alert($scope.users[0].plevel);
       console.log($user);
     }
