@@ -1,15 +1,27 @@
 var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular']);
 
 /*
+    TRIED USING THIS SERVICE TO MANAGE MENU VISIBILITY, BUT SCOPE NOT WORKING FOR SOME REASON
+*/
+cascadiaControllers.factory('MenuService', function() {
+  return {
+    welcome : false
+  };
+});
+
+
+
+/*
     LOGIN CONTROLLER
 */
-cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restangular', function($scope, $base64, Restangular) {
+cascadiaControllers.controller('LoginController', ['$rootScope', '$scope', '$base64', 'Restangular', function($rootScope, $scope, $base64, Restangular) {
+  $rootScope.welcome = false;
 
   $scope.login = function() {
     var data = {'username' : $scope.username, 'password' : $scope.password};
     Restangular.one('user').post('token', data).then(function(response) {
       $scope.encodedString = $base64.encode(response.token + ":");
-     Restangular.setDefaultHeaders({'Authorization': 'Basic ' + $scope.encodedString});
+      Restangular.setDefaultHeaders({'Authorization': 'Basic ' + $scope.encodedString});
     });
   };
 }]);
@@ -210,11 +222,12 @@ cascadiaControllers.controller('ManagerController', ['$scope',
   }
 ]);
 
-cascadiaControllers.controller('ProfileController', ['$scope', 'Restangular',
-  function ($scope, Restangular){
+cascadiaControllers.controller('ProfileController', ['$rootScope', '$scope', 'Restangular',
+  function ($rootScope, $scope, Restangular){
     Restangular.one('user').get().then(function(response){
       $scope.user = response;
-      $scope.id = response.id;
+      $rootScope.user = $scope.user;
+      $rootScope.welcome = true;
     });
   }
 ]);
@@ -232,25 +245,22 @@ cascadiaControllers.controller('ProfileController', ['$scope', 'Restangular',
 
 cascadiaControllers.controller('UsersManagementController', ['$scope', 'Restangular',
   function ($scope, Restangular){
-   
-    $scope.users = [
-      {employeeID: 1111, name: "steven", username: "shsu", plevel: 3},
-      {employeeID: 1112, name: "graeme", username: "gfunk", plevel: 3},
-      {employeeID: 1113, name: "chris", username: "charris", plevel: 1}
-    ];
-  
+    Restangular.all('users').getList().then(function(response){
+        $scope.users = response;
+    })
 
-    $scope.delete = function($index){
-      $scope.users.splice($index, 1);
-      var user = Restangular.one('users');
+    $scope.delete = function(user, $index){
+      user.remove().then(function(){
+        $scope.users.splice($index, 1);
+      })
 
-      console.log("user deleted");
-    }
+        console.log("user deleted");
+      }
 
-    $scope.edit = function($user, $index){ 
-      alert($scope.users[0].plevel);
-      console.log($user);
-    }
+      $scope.edit = function(user){ 
+        user.put();
+        console.log(user);
+      }
 
   }
 ]);

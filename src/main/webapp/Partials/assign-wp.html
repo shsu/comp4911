@@ -1,0 +1,46 @@
+<content>
+  <div>
+    <div class="row">
+      <h1 class="secondary">Assign Work Packages to Project</h1>
+    </div>
+    <div class="row">
+      <ul class="list-inline">
+        <li class="col-xs-3">User ID: A00001</li>
+        <li class="col-xs-3">User Name: Junko Yamamoto</li>
+        <li class="col-xs-3">Labour Grade: P4</li>
+      </ul>
+    </div>
+    <div class="row">
+      <ul class="list-inline">
+        <li class="col-xs-3">Project No: </li>
+        <li class="col-xs-3">Project Name: </li>
+      </ul>
+    </div>
+    <hr>
+    <div class="row">
+      <p>WP No. & Description</p>
+      <p class="col-xs-12 no-pl"><input type="text" ng-model="query" class="col-xs-5" placeholder="Enter package number or description"/></p>
+      <div class="col-xs-5 results">
+        <ul class="no-pl">
+          <li ng-click="select($index)" class="{{package.selected}} disabled-{{package.disabled}}" ng-hide="!query" ng-repeat="package in packages | filter:query">
+          {{package.number}}  {{package.title}}
+          </li>
+        <ul>     
+      </div>
+      <div class="col-xs-2">
+        <button ng-click="add()" class="btn btn-primary btn-block">Add</button>
+        <button ng-click="remove()" class="btn btn-primary btn-block">Remove</button>
+      </div>
+      <div class="col-xs-5 results">
+        <ul class="no-pl">
+          <li ng-click="addedSelect($index)" class="{{selectedPackage.selected}}" ng-hide="!selectedPackages" ng-repeat="selectedPackage in selectedPackages">
+          {{selectedPackage.number}}  {{selectedPackage.title}}
+          </li>
+        <ul> 
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary pull-right">Save</button>
+    </div>
+  </div>
+</content>
