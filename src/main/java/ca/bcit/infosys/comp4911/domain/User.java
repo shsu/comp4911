@@ -11,6 +11,9 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 @Entity
 public class User implements Serializable
 {
@@ -25,15 +28,21 @@ public class User implements Serializable
    private int version = 0;
 
    @Column
+   @NotNull
    private String username;
 
    @Column
+   @NotNull
    private String password;
 
    @Column
+   @NotNull
+   @Size(min=1)
    private String firstName;
 
    @Column
+   @NotNull
+   @Size(min=1)
    private String lastName;
 
    @Temporal(TemporalType.DATE)
@@ -46,15 +55,19 @@ public class User implements Serializable
    private String status;
 
    @Column
+   @Min(0)
    private int paidHoursPerWeek;
 
    @Column
+   @Min(0)
    private int totalFlexTime;
 
    @Column
+   @Min(0)
    private int totalOvertime;
 
    @Column
+   @Min(0)
    private int vacationDays;
 
    @Column
