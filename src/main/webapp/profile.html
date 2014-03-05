@@ -1,0 +1,19 @@
+<content>
+  <div ng-controller="ProfileController">
+    <div ng-repeat="(key, value) in user">
+      {{key}} : {{value}}
+      <!--<input type="text" placeholder="{{value}}"></input>-->
+      
+    </div>
+    <button class="btn btn-primary" ng-click="edit(user)">Save</button>
+    <button class="btn btn-primary" ng-click="delete()">Delete</button>
+
+    <!--
+    <div ng-model="user">
+      FirstName: {{user.firstName}}<br />
+      LastName: {{user.lastName}}<br />
+      PayLevel: {{user.payLevel}}
+    </div>
+    -->
+  </div>
+</content>

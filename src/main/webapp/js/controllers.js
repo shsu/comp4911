@@ -210,6 +210,14 @@ cascadiaControllers.controller('ManagerController', ['$scope',
   }
 ]);
 
+cascadiaControllers.controller('ProfileController', ['$scope', 'Restangular',
+  function ($scope, Restangular){
+    Restangular.one('user').get().then(function(response){
+      $scope.user = response;
+      $scope.id = response.id;
+    });
+  }
+]);
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
@@ -224,18 +232,13 @@ cascadiaControllers.controller('ManagerController', ['$scope',
 
 cascadiaControllers.controller('UsersManagementController', ['$scope', 'Restangular',
   function ($scope, Restangular){
-    Restangular.one('user').get().then(function(response){
-      $scope.user = response;
-    });
-
-    /*
+   
     $scope.users = [
       {employeeID: 1111, name: "steven", username: "shsu", plevel: 3},
       {employeeID: 1112, name: "graeme", username: "gfunk", plevel: 3},
       {employeeID: 1113, name: "chris", username: "charris", plevel: 1}
     ];
-
-  */
+  
 
     $scope.delete = function($index){
       $scope.users.splice($index, 1);

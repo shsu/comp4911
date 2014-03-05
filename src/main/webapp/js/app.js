@@ -10,6 +10,7 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/assign-re', {controller: 'ManagerController', templateUrl:'assign-re.html'}).
     when('/login', {controller: 'LoginController', templateUrl:'login.html'}).
     when('/users-management', {controller: 'UsersManagementController', templateUrl:'users-management.html'}).
+    when('/profile', {controller: 'ProfileController', templateUrl:'profile.html'}).
     otherwise({redirectTo:'/'});
 }]);
 

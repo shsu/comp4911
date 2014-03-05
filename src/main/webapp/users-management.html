@@ -1,19 +1,11 @@
 <content>
   <div ng-controller="UsersManagementController">
-    <ul id="users-management">
-      <li ng-repeat="user in users">
-        <span ng-repeat="(key, value) in user">
-          <input type="text" placeholder="{{value}}"></input>
-        </span>
-        <button class="btn btn-primary" ng-click="edit(user)">Save</button>
-        <button class="btn btn-primary" ng-click="delete()">Delete</button>
-      </li>
-    </ul>
-
-    <div ng-model="user">
-      FirstName: {{user.firstName}}<br />
-      LastName: {{user.lastName}}<br />
-      PayLevel: {{user.payLevel}}
+    <div ng-repeat="user in users">
+      <span ng-repeat="(key, value) in user">
+        <input type="text" placeholder="{{value}}"></input>   
+      </span>
+      <button class="btn btn-primary" ng-click="edit(user)">Save</button>
+      <button class="btn btn-primary" ng-click="delete()">Delete</button>
     </div>
   </div>
 </content>
