@@ -15,7 +15,7 @@ cascadia.config(['$routeProvider', function($routeProvider) {
 }]);
 
 cascadia.config(function(RestangularProvider) {
-    RestangularProvider.setBaseUrl('http://localhost:8080/comp4911/api');
+    RestangularProvider.setBaseUrl('http://localhost:8080/comp4911');
 });
 
 cascadia.directive('content', function() {

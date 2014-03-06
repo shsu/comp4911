@@ -1,30 +1,32 @@
 var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular']);
 
 /*
-    TRIED USING THIS SERVICE TO MANAGE MENU VISIBILITY, BUT SCOPE NOT WORKING FOR SOME REASON
-*/
-cascadiaControllers.factory('MenuService', function() {
-  return {
-    welcome : false
-  };
-});
-
-
-
-/*
     LOGIN CONTROLLER
 */
-cascadiaControllers.controller('LoginController', ['$rootScope', '$scope', '$base64', 'Restangular', function($rootScope, $scope, $base64, Restangular) {
-  $rootScope.welcome = false;
+cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restangular', '$rootScope',
+  function($scope, $base64, Restangular, $rootScope) {
+    $rootScope.menu_visible = false;
 
-  $scope.login = function() {
-    var data = {'username' : $scope.username, 'password' : $scope.password};
-    Restangular.one('user').post('token', data).then(function(response) {
-      $scope.encodedString = $base64.encode(response.token + ":");
-      Restangular.setDefaultHeaders({'Authorization': 'Basic ' + $scope.encodedString});
-    });
-  };
-}]);
+    $scope.login = function() {
+      var data = {
+        'username': $scope.username,
+        'password': $scope.password
+      };
+      Restangular.one('api/user').post('token', data).then(function(response) {
+        $scope.encodedString = $base64.encode(response.token + ":");
+        localStorage.setItem('token', $scope.encodedString);
+        Restangular.setDefaultHeaders({
+          'Authorization': 'Basic ' + $scope.encodedString
+        });
+
+        Restangular.one('api/user').get().then(function(response) {
+          $rootScope.user = response;
+          $rootScope.menu_visible = true;
+        });
+      });
+    };
+  }
+]);
 
 
 
@@ -33,13 +35,24 @@ cascadiaControllers.controller('LoginController', ['$rootScope', '$scope', '$bas
 /*
     PACKAGE CONTROLLER
 */
-cascadiaControllers.controller('PackageController', ['$scope', 
-  function ($scope){
-    $scope.packages = [
-      {number: 'B1111', title: 'Project Setup', selected: false, disabled: false},
-      {number: 'B1112', title: 'Ongoing Updating', selected: false, disabled: false},
-      {number: 'B1113', title: 'Detailed Planning', selected: false, disabled: false}
-    ];
+cascadiaControllers.controller('PackageController', ['$scope',
+  function($scope) {
+    $scope.packages = [{
+      number: 'B1111',
+      title: 'Project Setup',
+      selected: false,
+      disabled: false
+    }, {
+      number: 'B1112',
+      title: 'Ongoing Updating',
+      selected: false,
+      disabled: false
+    }, {
+      number: 'B1113',
+      title: 'Detailed Planning',
+      selected: false,
+      disabled: false
+    }];
 
     $scope.selectedPackages = [];
 
@@ -52,7 +65,7 @@ cascadiaControllers.controller('PackageController', ['$scope',
         $scope.packages[$index].selected = true;
       } else {
         $scope.packages[$index].selected = false;
-      }   
+      }
     }
 
     $scope.addedSelect = function($index) {
@@ -60,7 +73,7 @@ cascadiaControllers.controller('PackageController', ['$scope',
         $scope.selectedPackages[$index].selected = true;
       } else {
         $scope.selectedPackages[$index].selected = false;
-      }   
+      }
     }
 
     $scope.add = function() {
@@ -70,7 +83,11 @@ cascadiaControllers.controller('PackageController', ['$scope',
     // Helper forEach function for $scope.add
     function addToSelected(obj) {
       if (obj.selected === true && obj.disabled !== true) {
-        $scope.selectedPackages.push({number: obj.number, title: obj.title, selected: false});
+        $scope.selectedPackages.push({
+          number: obj.number,
+          title: obj.title,
+          selected: false
+        });
         obj.disabled = true;
         obj.selected = false;
       }
@@ -115,12 +132,26 @@ cascadiaControllers.controller('PackageController', ['$scope',
     ENGINEER CONTROLLER
 */
 cascadiaControllers.controller('EngineerController', ['$scope',
-  function ($scope){
-    $scope.engineers = [
-      {number: 'A1111', name: 'Javier Olson', paygrade: 'P4', selected: false, disabled: false},
-      {number: 'A1112', name: 'Nancy Garcia', paygrade: 'P5', selected: false, disabled: false},
-      {number: 'A1113', name: 'David Bowden', paygrade: 'SS', selected: false, disabled: false}
-    ];
+  function($scope) {
+    $scope.engineers = [{
+      number: 'A1111',
+      name: 'Javier Olson',
+      paygrade: 'P4',
+      selected: false,
+      disabled: false
+    }, {
+      number: 'A1112',
+      name: 'Nancy Garcia',
+      paygrade: 'P5',
+      selected: false,
+      disabled: false
+    }, {
+      number: 'A1113',
+      name: 'David Bowden',
+      paygrade: 'SS',
+      selected: false,
+      disabled: false
+    }];
 
     $scope.selectedEngineers = [];
 
@@ -133,7 +164,7 @@ cascadiaControllers.controller('EngineerController', ['$scope',
         $scope.engineers[$index].selected = true;
       } else {
         $scope.engineers[$index].selected = false;
-      }   
+      }
     }
 
     $scope.addedSelectE = function($index) {
@@ -141,7 +172,7 @@ cascadiaControllers.controller('EngineerController', ['$scope',
         $scope.selectedEngineers[$index].selected = true;
       } else {
         $scope.selectedEngineers[$index].selected = false;
-      }   
+      }
     }
 
     $scope.addE = function() {
@@ -150,7 +181,12 @@ cascadiaControllers.controller('EngineerController', ['$scope',
 
     function addToSelectedE(obj) {
       if (obj.selected === true && obj.disabled !== true) {
-        $scope.selectedEngineers.push({number: obj.number, name: obj.name, paygrade: obj.paygrade, selected: false});
+        $scope.selectedEngineers.push({
+          number: obj.number,
+          name: obj.name,
+          paygrade: obj.paygrade,
+          selected: false
+        });
         obj.disabled = true;
         obj.selected = false;
       }
@@ -192,23 +228,38 @@ cascadiaControllers.controller('EngineerController', ['$scope',
     MANAGER CONTROLLER
 */
 cascadiaControllers.controller('ManagerController', ['$scope',
-  function ($scope){
-    $scope.managers = [
-      {id: 'A1111', name: 'Javier Olson', paygrade: 'P4', selected: false},
-      {id: 'A1112', name: 'Nancy Garcia', paygrade: 'P2', selected: false},
-      {id: 'A1113', name: 'David Bowden', paygrade: 'P5', selected: false},
-      {id: 'A1114', name: 'Juan Burdine', paygrade: 'SS', selected: false}
-    ];
+  function($scope) {
+    $scope.managers = [{
+      id: 'A1111',
+      name: 'Javier Olson',
+      paygrade: 'P4',
+      selected: false
+    }, {
+      id: 'A1112',
+      name: 'Nancy Garcia',
+      paygrade: 'P2',
+      selected: false
+    }, {
+      id: 'A1113',
+      name: 'David Bowden',
+      paygrade: 'P5',
+      selected: false
+    }, {
+      id: 'A1114',
+      name: 'Juan Burdine',
+      paygrade: 'SS',
+      selected: false
+    }];
 
     $scope.selectedManager = {};
 
     $scope.selectM = function($index) {
-        var id = $scope.managers[$index].id;
+      var id = $scope.managers[$index].id;
 
-        $scope.managers.forEach(setSelectedFalse);
+      $scope.managers.forEach(setSelectedFalse);
 
-        $scope.managers[$index].selected = true;
-        $scope.selectedManager = $scope.managers[$index];
+      $scope.managers[$index].selected = true;
+      $scope.selectedManager = $scope.managers[$index];
     }
 
     function setSelectedFalse(obj) {
@@ -222,14 +273,8 @@ cascadiaControllers.controller('ManagerController', ['$scope',
   }
 ]);
 
-cascadiaControllers.controller('ProfileController', ['$rootScope', '$scope', 'Restangular',
-  function ($rootScope, $scope, Restangular){
-    Restangular.one('user').get().then(function(response){
-      $scope.user = response;
-      $rootScope.user = $scope.user;
-      $rootScope.welcome = true;
-    });
-  }
+cascadiaControllers.controller('ProfileController', ['$scope',
+  function($scope) { }
 ]);
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -244,25 +289,33 @@ cascadiaControllers.controller('ProfileController', ['$rootScope', '$scope', 'Re
 */
 
 cascadiaControllers.controller('UsersManagementController', ['$scope', 'Restangular',
-  function ($scope, Restangular){
-    Restangular.all('users').getList().then(function(response){
-        $scope.users = response;
+  function($scope, Restangular) {
+    Restangular.one('api/users').getList().then(function(response) {
+      $scope.users = response;
     })
 
-    $scope.delete = function(user, $index){
-      user.remove().then(function(){
+    $scope.delete = function(user, $index) {
+      user.remove().then(function() {
         $scope.users.splice($index, 1);
       })
 
-        console.log("user deleted");
-      }
+      console.log("user deleted");
+    }
 
-      $scope.edit = function(user){ 
-        user.put();
-        console.log(user);
-      }
+    $scope.edit = function(user) {
+      user.put();
+      console.log(user);
+    }
 
+    $scope.add = function() {
+      $scope.add_user = true;
+    }
+
+    $scope.save = function() {
+      newuser = $scope.newuser;
+      Restangular.one('api').post('users', newuser).then(function(response) {
+        $scope.add_user = false;
+      })
+    }
   }
 ]);
-
-

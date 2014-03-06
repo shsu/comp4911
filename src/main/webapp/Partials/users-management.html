@@ -1,11 +1,22 @@
 <content>
   <div ng-controller="UsersManagementController">
-    <div ng-repeat="user in users">
-      <input type="text" ng-model="user.id" placeholder="{{user.id}}"></input>   
-      <input type="text" ng-model="user.username" placeholder="{{user.username}}"></input>
-      <input type="text" ng-model="user.paidHoursPerWeek" placeholder="{{user.paidHoursPerWeek}}"></input>
-      <button class="btn btn-primary" ng-click="edit(user)">Save</button>
-      <button class="btn btn-primary" ng-click="delete(user)">Delete</button>
+  	<div ng-hide="add_user">
+	    <div ng-repeat="user in users">
+	      <input type="text" ng-model="user.id" placeholder="{{user.id}}"></input>   
+	      <input type="text" ng-model="user.username" placeholder="{{user.username}}"></input>
+	      <input type="text" ng-model="user.paidHoursPerWeek" placeholder="{{user.paidHoursPerWeek}}"></input>
+	      <button class="btn btn-primary" ng-click="edit(user)">Save</button>
+	      <button class="btn btn-primary" ng-click="delete(user)">Delete</button>
+	    </div>
+	    <button class="btn btn-primary" ng-click="add()">Add User</button>
+    </div>
+    <div ng-show="add_user">
+    	<input type="text" ng-model="newuser.username" placeholder="Username"></input>
+    	<input type="text" ng-model="newuser.firstName" placeholder="First Name"></input>
+    	<input type="text" ng-model="newuser.lastName" placeholder="Last Name"></input>
+    	<input type="password" ng-model="newuser.password" placeholder="Password"></input>
+    	<input type="text" ng-model="newuser.paidHoursPerWeek" placeholder="Paid Hours"></input>
+    	<button class="btn btn-primary" ng-click="save()">Save User</button>
     </div>
   </div>
 </content>
