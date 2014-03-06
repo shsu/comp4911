@@ -1,33 +1,58 @@
 var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular']);
 
+cascadiaControllers.service('CascadiaService', function($rootScope) {
+      $rootScope.user = JSON.parse(localStorage.getItem('user'));
+});
+
+/*
+    INDEX CONTROLLER
+*/
+
+cascadiaControllers.controller('IndexController', ['$scope', 'CascadiaService', '$location',
+  function($scope, CascadiaService, $location) {
+    $scope.logout = function() {
+      localStorage.clear();
+      $location.path('/login');
+    }
+  }
+]);
+
 /*
     LOGIN CONTROLLER
 */
-cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restangular', '$rootScope',
-  function($scope, $base64, Restangular, $rootScope) {
-    $rootScope.menu_visible = false;
+cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restangular', '$rootScope', '$location', 'CascadiaService',
+  function($scope, $base64, Restangular, $rootScope, $location, CascadiaService) {
 
     $scope.login = function() {
       var data = {
         'username': $scope.username,
         'password': $scope.password
       };
-      Restangular.one('api/user').post('token', data).then(function(response) {
+
+      Restangular.one('user').post('token', data).then(function(response) {
         $scope.encodedString = $base64.encode(response.token + ":");
         localStorage.setItem('token', $scope.encodedString);
         Restangular.setDefaultHeaders({
           'Authorization': 'Basic ' + $scope.encodedString
         });
 
-        Restangular.one('api/user').get().then(function(response) {
-          $rootScope.user = response;
-          $rootScope.menu_visible = true;
+        Restangular.one('user').get().then(function(response) {
+          localStorage.setItem('user', JSON.stringify(response));
+          $location.path('/dashboard');
         });
       });
     };
   }
 ]);
 
+/*
+    DASHBOARD CONTROLLER
+*/
+
+cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'CascadiaService',
+  function($scope, $rootScope, Restangular, CascadiaService) {
+  }
+]);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -273,8 +298,9 @@ cascadiaControllers.controller('ManagerController', ['$scope',
   }
 ]);
 
-cascadiaControllers.controller('ProfileController', ['$scope',
-  function($scope) { }
+cascadiaControllers.controller('ProfileController', ['$scope', 'CascadiaService',
+  function($scope, CascadiaService) { 
+  }
 ]);
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -290,7 +316,9 @@ cascadiaControllers.controller('ProfileController', ['$scope',
 
 cascadiaControllers.controller('UsersManagementController', ['$scope', 'Restangular',
   function($scope, Restangular) {
-    Restangular.one('api/users').getList().then(function(response) {
+    var base = Restangular.all('users');
+
+    base.getList().then(function(response) {
       $scope.users = response;
     })
 
@@ -313,7 +341,8 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', 'Restangu
 
     $scope.save = function() {
       newuser = $scope.newuser;
-      Restangular.one('api').post('users', newuser).then(function(response) {
+
+      base.post(newuser).then(function(response) {
         $scope.add_user = false;
       })
     }

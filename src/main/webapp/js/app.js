@@ -9,13 +9,28 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
     when('/assign-re', {controller: 'ManagerController', templateUrl:'Partials/assign-re.html'}).
     when('/login', {controller: 'LoginController', templateUrl:'Partials/login.html'}).
+    when('/logout', {controller: 'LogoutController'}).
     when('/users-management', {controller: 'UsersManagementController', templateUrl:'Partials/users-management.html'}).
     when('/profile', {controller: 'ProfileController', templateUrl:'Partials/profile.html'}).
+    when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
     otherwise({redirectTo:'/'});
-}]);
+}])
+.run(function($rootScope, authenticateUser) {
+  $rootScope.$on('$routeChangeSuccess', function() {
+     authenticateUser($rootScope);
+  })
+})
+.factory('authenticateUser', function($location) {
+  return function(scope){
+    scope.isAuthenticated = (localStorage.getItem('token')) ? true : false;
+    if(!scope.isAuthenticated) {
+        $location.path('/login');
+    }
+  }
+});
 
 cascadia.config(function(RestangularProvider) {
-    RestangularProvider.setBaseUrl('http://localhost:8080/comp4911');
+    RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
 });
 
 cascadia.directive('content', function() {
