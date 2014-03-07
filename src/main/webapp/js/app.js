@@ -13,6 +13,8 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/users-management', {controller: 'UsersManagementController', templateUrl:'Partials/users-management.html'}).
     when('/profile', {controller: 'ProfileController', templateUrl:'Partials/profile.html'}).
     when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
+    when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
+    when('/project', {controller: 'ProjectManagementController', templateUrl:'Partials/project-management.html'}).
     otherwise({redirectTo:'/'});
 }])
 .run(function($rootScope, authenticateUser) {

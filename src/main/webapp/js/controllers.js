@@ -1,7 +1,7 @@
 var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular']);
 
 cascadiaControllers.service('CascadiaService', function($rootScope) {
-      $rootScope.user = JSON.parse(localStorage.getItem('user'));
+  $rootScope.user = JSON.parse(localStorage.getItem('user'));
 });
 
 /*
@@ -17,6 +17,17 @@ cascadiaControllers.controller('IndexController', ['$scope', 'CascadiaService', 
   }
 ]);
 
+/*
+    TIMESHEET MANAGEMENT CONTROLLER
+*/
+
+cascadiaControllers.controller('TimesheetController', ['$scope', 'CascadiaService', '$location', 'Restangular',
+  function($scope, CascadiaService, $location, Restangular) {
+    Restangular.one('timesheets').getList().then(function(response) {
+      $scope.timesheets = response;
+    });
+  }
+]);
 /*
     LOGIN CONTROLLER
 */
@@ -50,8 +61,7 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
 */
 
 cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'CascadiaService',
-  function($scope, $rootScope, Restangular, CascadiaService) {
-  }
+  function($scope, $rootScope, Restangular, CascadiaService) {}
 ]);
 
 
@@ -93,7 +103,8 @@ cascadiaControllers.controller('PackageController', ['$scope',
       }
     }
 
-    $scope.addedSelect = function($index) {
+    $scop
+    e.addedSelect = function($index) {
       if (!$scope.selectedPackages[$index].selected) {
         $scope.selectedPackages[$index].selected = true;
       } else {
@@ -298,9 +309,36 @@ cascadiaControllers.controller('ManagerController', ['$scope',
   }
 ]);
 
-cascadiaControllers.controller('ProfileController', ['$scope', 'CascadiaService',
-  function($scope, CascadiaService) { 
+/*
+    PROJECT MANAGEMENT CONTROLLER
+*/
+
+cascadiaControllers.controller('ProjectManagementController', ['$scope', 'CascadiaService', 'Restangular',
+  function($scope, CascadiaService, Restangular) {
+    var base = Restangular.all('projects');
+
+    base.getList().then(function(response){
+      $scope.projects = response;
+    })
+
+    $scope.add = function() {
+      $scope.add_project = true;
+    }
+
+    $scope.save = function() {
+      newproject = $scope.newproject;
+
+      base.post(newproject).then(function(response) {
+        $scope.projects.push(newproject);
+        $scope.add_project = false;
+      })
+    }
   }
+]);
+
+
+cascadiaControllers.controller('ProfileController', ['$scope', 'CascadiaService',
+  function($scope, CascadiaService) {}
 ]);
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
