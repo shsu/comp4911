@@ -21,7 +21,7 @@ public class Effort implements Serializable {
     private int version = 0;
 
     @Enumerated(EnumType.STRING)
-    private PayLevel payLevel;
+    private PLevel pLevel;
 
     /** Tenths of hours */
     @Column
@@ -60,12 +60,12 @@ public class Effort implements Serializable {
         return super.hashCode();
     }
 
-    public PayLevel getPayLevel() {
-        return this.payLevel;
+    public PLevel getpLevel() {
+        return this.pLevel;
     }
 
-    public void setPayLevel(final PayLevel payLevel) {
-        this.payLevel = payLevel;
+    public void setpLevel(final PLevel pLevel) {
+        this.pLevel = pLevel;
     }
 
     public int getPersonDays() {
@@ -89,7 +89,7 @@ public class Effort implements Serializable {
         return "Effort{" +
                 "id=" + id +
                 ", version=" + version +
-                ", payLevel=" + payLevel +
+                ", pLevel=" + pLevel +
                 ", personDays=" + personDays +
                 '}';
     }

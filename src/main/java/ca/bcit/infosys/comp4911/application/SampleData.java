@@ -7,7 +7,7 @@ import ca.bcit.infosys.comp4911.access.TimesheetRowDao;
 import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
-import ca.bcit.infosys.comp4911.domain.PayLevel;
+import ca.bcit.infosys.comp4911.domain.PLevel;
 import ca.bcit.infosys.comp4911.domain.Project;
 import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
 import ca.bcit.infosys.comp4911.domain.User;
@@ -71,12 +71,12 @@ public class SampleData {
                     new Date(),
                     false,
                     "",
-                    40,0,0,0,0,0,0, PayLevel.P1
+                    40,0,0,0,0,0,0, PLevel.P1
                     ));
         }
         
         userDao.create(new User(
-          "q","q","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0,PayLevel.P5
+          "q","q","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
         ));
     }
 

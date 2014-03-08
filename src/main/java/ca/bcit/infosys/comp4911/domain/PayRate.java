@@ -30,7 +30,7 @@ public class PayRate implements Serializable {
     private BigDecimal rate;
 
     @Enumerated(EnumType.STRING)
-    private PayLevel payLevel;
+    private PLevel pLevel;
 
     public Integer getId() {
         return this.id;
@@ -64,12 +64,12 @@ public class PayRate implements Serializable {
         this.year = year;
     }
 
-    public PayLevel getPayLevel() {
-        return payLevel;
+    public PLevel getpLevel() {
+        return pLevel;
     }
 
-    public void setPayLevel(PayLevel payLevel) {
-        this.payLevel = payLevel;
+    public void setpLevel(PLevel pLevel) {
+        this.pLevel = pLevel;
     }
 
     @Override

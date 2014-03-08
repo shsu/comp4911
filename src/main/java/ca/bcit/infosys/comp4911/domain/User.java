@@ -80,7 +80,7 @@ public class User implements Serializable
    private int timesheetApproverUserID;
 
    @Column
-   private PayLevel payLevel;
+   private PLevel pLevel;
 
    public Integer getId()
    {
@@ -219,7 +219,7 @@ public class User implements Serializable
     public User(final String username, final String password, final String firstName, final String lastName,
                 final Date startDate, final boolean isHR, final String status, final int paidHoursPerWeek,
                 final int totalFlexTime, final int totalOvertime, final int vacationDays, final int defaultTimesheetID,
-                final int supervisorUserID, final int timesheetApproverUserID, final PayLevel payLevel) {
+                final int supervisorUserID, final int timesheetApproverUserID, final PLevel pLevel) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -234,7 +234,7 @@ public class User implements Serializable
         this.defaultTimesheetID = defaultTimesheetID;
         this.supervisorUserID = supervisorUserID;
         this.timesheetApproverUserID = timesheetApproverUserID;
-        this.payLevel = payLevel;
+        this.pLevel = pLevel;
     }
 
     @Override
@@ -296,12 +296,12 @@ public class User implements Serializable
       this.timesheetApproverUserID = timesheetApproverUserID;
    }
 
-    public PayLevel getPayLevel() {
-        return payLevel;
+    public PLevel getpLevel() {
+        return pLevel;
     }
 
-    public void setPayLevel(PayLevel payLevel) {
-        this.payLevel = payLevel;
+    public void setpLevel(PLevel pLevel) {
+        this.pLevel = pLevel;
     }
 
     @Override
@@ -328,7 +328,7 @@ public class User implements Serializable
       result += ", defaultTimesheetID: " + defaultTimesheetID;
       result += ", supervisorUserID: " + supervisorUserID;
       result += ", timesheetApproverUserID: " + timesheetApproverUserID;
-      result += ", payLevel: " + payLevel;
+      result += ", pLevel: " + pLevel;
       return result;
    }
 }

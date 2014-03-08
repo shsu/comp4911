@@ -25,7 +25,7 @@ public class UserPayRateHistory {
     private Date endDate;
 
     @Column
-    private PayLevel payLevel;
+    private PLevel pLevel;
 
     @Column
     private int userId;
@@ -91,12 +91,12 @@ public class UserPayRateHistory {
         this.userId = userId;
     }
 
-    public PayLevel getPayLevel() {
-        return payLevel;
+    public PLevel getpLevel() {
+        return pLevel;
     }
 
-    public void setPayLevel(PayLevel payLevel) {
-        this.payLevel = payLevel;
+    public void setpLevel(PLevel pLevel) {
+        this.pLevel = pLevel;
     }
 
     @Override

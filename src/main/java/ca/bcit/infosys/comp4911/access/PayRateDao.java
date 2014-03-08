@@ -1,12 +1,11 @@
 package ca.bcit.infosys.comp4911.access;
 
-import ca.bcit.infosys.comp4911.domain.PayLevel;
+import ca.bcit.infosys.comp4911.domain.PLevel;
 import ca.bcit.infosys.comp4911.domain.PayRate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -37,18 +36,18 @@ public class PayRateDao {
         return query.getResultList();
     }
 
-    public List<PayRate> getAllPayRatesByLevel(final String payLevel) {
-        TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.payLevel = :payLevel ",
+    public List<PayRate> getAllPayRatesByLevel(final String pLevel) {
+        TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.pLevel = :pLevel ",
                 PayRate.class);
-        query.setParameter("payLevel", PayLevel.valueOf(payLevel));
+        query.setParameter("pLevel", PLevel.valueOf(pLevel));
         return query.getResultList();
     }
 
-    public PayRate getPayRateByLevelAndYear(final String payLevel,
+    public PayRate getPayRateByLevelAndYear(final String pLevel,
                                                final String year) {
-        TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.payLevelName = :payLevel" +
+        TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.pLevel = :pLevel" +
             " and p.year = :year", PayRate.class);
-        query.setParameter("payLevel", PayLevel.valueOf(payLevel));
+        query.setParameter("pLevel", PLevel.valueOf(pLevel));
         query.setParameter("year", year);
         return query.getSingleResult();
     }
