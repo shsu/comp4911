@@ -6,150 +6,175 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.Size;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.lang.Override;
 
 @Entity
-public class Project implements Serializable {
+public class Project implements Serializable
+{
 
-    /** Actual id given to it by the HR who creates it */
-    @Id
-    @Column(updatable = false, nullable = false)
-    private int projectNumber;
+   @Id
+   @Column(updatable = false, nullable = false)
+   @Size(min=5)
+   private String projectNumber;
+   
+   @Version
+   @Column(name = "version")
+   private int version = 0;
 
-    @Version
-    @Column(name = "version")
-    private int version = 0;
+   @Column(nullable = false)
+   private String projectName;
 
-    @Column(nullable = false)
-    private String projectName;
+   @Temporal(TemporalType.DATE)
+   @Column(nullable = false)
+   private Date issueDate;
 
-    @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
-    private Date issueDate;
+   @Temporal(TemporalType.DATE)
+   private Date completeDate;
 
-    @Temporal(TemporalType.DATE)
-    private Date completeDate;
+   @Column
+   private BigDecimal clientRate;
 
-    @Column
-    private BigDecimal clientRate;
+   @Column
+   private BigDecimal UnAllocatedBudget;
 
-    @Column
-    private BigDecimal UnAllocatedBudget;
+   @Column
+   private BigDecimal AllocatedBudget;
 
-    @Column
-    private BigDecimal AllocatedBudget;
 
-    public int getProjectNumber() {
-        return projectNumber;
-    }
 
-    public void setProjectNumber(int projectNumber) {
-        this.projectNumber = projectNumber;
-    }
+   public int getVersion()
+   {
+      return version;
+   }
 
-    public int getVersion() {
-        return version;
-    }
+   public void setVersion(int version)
+   {
+      this.version = version;
+   }
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
+   public String getProjectName()
+   {
+      return projectName;
+   }
 
-    public String getProjectName() {
-        return projectName;
-    }
+   public void setProjectName(String projectName)
+   {
+      this.projectName = projectName;
+   }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
+   public Date getIssueDate()
+   {
+      return issueDate;
+   }
 
-    public Date getIssueDate() {
-        return issueDate;
-    }
+   public void setIssueDate(Date issueDate)
+   {
+      this.issueDate = issueDate;
+   }
 
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
-    }
+   public Date getCompleteDate()
+   {
+      return completeDate;
+   }
 
-    public Date getCompleteDate() {
-        return completeDate;
-    }
+   public void setCompleteDate(Date completeDate)
+   {
+      this.completeDate = completeDate;
+   }
 
-    public void setCompleteDate(Date completeDate) {
-        this.completeDate = completeDate;
-    }
+   public BigDecimal getClientRate()
+   {
+      return clientRate;
+   }
 
-    public BigDecimal getClientRate() {
-        return clientRate;
-    }
+   public void setClientRate(BigDecimal clientRate)
+   {
+      this.clientRate = clientRate;
+   }
 
-    public void setClientRate(BigDecimal clientRate) {
-        this.clientRate = clientRate;
-    }
+   public BigDecimal getUnAllocatedBudget()
+   {
+      return UnAllocatedBudget;
+   }
 
-    public BigDecimal getUnAllocatedBudget() {
-        return UnAllocatedBudget;
-    }
+   public void setUnAllocatedBudget(BigDecimal unAllocatedBudget)
+   {
+      UnAllocatedBudget = unAllocatedBudget;
+   }
 
-    public void setUnAllocatedBudget(BigDecimal unAllocatedBudget) {
-        UnAllocatedBudget = unAllocatedBudget;
-    }
+   public BigDecimal getAllocatedBudget()
+   {
+      return AllocatedBudget;
+   }
 
-    public BigDecimal getAllocatedBudget() {
-        return AllocatedBudget;
-    }
+   public void setAllocatedBudget(BigDecimal allocatedBudget)
+   {
+      AllocatedBudget = allocatedBudget;
+   }
 
-    public void setAllocatedBudget(BigDecimal allocatedBudget) {
-        AllocatedBudget = allocatedBudget;
-    }
+   public Project(String projectNumber, String projectName, Date issueDate, Date completeDate,
+         BigDecimal clientRate, BigDecimal unAllocatedBudget,
+         BigDecimal allocatedBudget)
+   {
+      this.projectNumber = projectNumber;
+      this.version = version;
+      this.projectName = projectName;
+      this.issueDate = issueDate;
+      this.completeDate = completeDate;
+      this.clientRate = clientRate;
+      UnAllocatedBudget = unAllocatedBudget;
+      AllocatedBudget = allocatedBudget;
+   }
 
-    public Project(int projectNumber, String projectName, Date issueDate, Date completeDate,
-                    BigDecimal clientRate, BigDecimal unAllocatedBudget,
-                    BigDecimal allocatedBudget) {
-        this.projectNumber = projectNumber;
-        this.version = version;
-        this.projectName = projectName;
-        this.issueDate = issueDate;
-        this.completeDate = completeDate;
-        this.clientRate = clientRate;
-        UnAllocatedBudget = unAllocatedBudget;
-        AllocatedBudget = allocatedBudget;
-    }
+   public Project()
+   {
+   }
 
-    public Project()
-    {
-    }
+   @Override
+   public boolean equals(Object o)
+   {
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+      Project project = (Project) o;
 
-        Project project = (Project) o;
+      if (projectNumber != project.projectNumber)
+         return false;
 
-        if (projectNumber != project.projectNumber) return false;
+      return true;
+   }
 
-        return true;
-    }
+   @Override
+   public int hashCode()
+   {
+      return projectNumber.hashCode();
+   }
 
-    @Override
-    public int hashCode() {
-        return projectNumber;
-    }
+   public String getProjectNumber()
+   {
+      return this.projectNumber;
+   }
 
-    @Override
-    public String toString() {
-        return "Project{" +
-                "projectNumber='" + projectNumber + '\'' +
-                ", version=" + version +
-                ", projectName='" + projectName + '\'' +
-                ", issueDate=" + issueDate +
-                ", completeDate=" + completeDate +
-                ", clientRate=" + clientRate +
-                ", UnAllocatedBudget=" + UnAllocatedBudget +
-                ", AllocatedBudget=" + AllocatedBudget +
-                '}';
-    }
+   public void setProjectNumber(final String projectNumber)
+   {
+      this.projectNumber = projectNumber;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      if (projectName != null && !projectName.trim().isEmpty())
+         result += "projectName: " + projectName;
+      if (projectNumber != null && !projectNumber.trim().isEmpty())
+         result += ", projectNumber: " + projectNumber;
+      return result;
+   }
 }

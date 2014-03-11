@@ -9,181 +9,250 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.lang.Override;
 
 @Entity
-public class WorkPackageStatusReport implements Serializable {
+public class WorkPackageStatusReport implements Serializable
+{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Integer id = null;
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id", updatable = false, nullable = false)
+   private Integer id = null;
 
-    @Version
-    @Column(name = "version")
-    private int version = 0;
+   @Version
+   @Column(name = "version")
+   private int version = 0;
 
-    @Column
-    private int weekNumber;
+   @Column
+   private int weekNumber;
 
-    @Column
-    private int year;
+   @Column
+   private int year;
 
-    @Column
-    private String workPackageId;
+   @Temporal(TemporalType.DATE)
+   private Date reportDate;
 
-    @Temporal(TemporalType.DATE)
-    private Date reportDate;
+   @Column
+   private String comment;
 
-    @Column
-    private String comment;
+   @Column
+   private String workAccomplished;
 
-    @Column
-    private String workAccomplished;
+   @Column
+   private String problemEncountered;
 
-    @Column
-    private String problemEncountered;
+   @Column
+   private String workPlanned;
 
-    @Column
-    private String workPlanned;
+   @OneToMany
+   private Set<Effort> estimatedWorkRemainingInPD = new HashSet<Effort>();
 
-    @OneToMany
-    private Set<Effort> estimatedWorkRemainingInPD = new HashSet<Effort>();
+   @Column
+   private String problemAnticipated;
 
-    @Column
-    private String problemAnticipated;
+   @Column
+   private String workPackageNumber;
 
-    public Date getReportDate() {
-        return reportDate;
-    }
+   public WorkPackageStatusReport(Integer id, int weekNumber, int year,
+		Date reportDate, String comment, String workAccomplished,
+		String problemEncountered, String workPlanned,
+		Set<Effort> estimatedWorkRemainingInPD, String problemAnticipated,
+		String workPackageNumber) {
+	super();
+	this.id = id;
+	this.weekNumber = weekNumber;
+	this.year = year;
+	this.reportDate = reportDate;
+	this.comment = comment;
+	this.workAccomplished = workAccomplished;
+	this.problemEncountered = problemEncountered;
+	this.workPlanned = workPlanned;
+	this.estimatedWorkRemainingInPD = estimatedWorkRemainingInPD;
+	this.problemAnticipated = problemAnticipated;
+	this.workPackageNumber = workPackageNumber;
+   }
 
-    public void setReportDate(Date reportDate) {
-        this.reportDate = reportDate;
-    }
+   public WorkPackageStatusReport(){
+	   
+   }
+   public Date getReportDate()
+   {
+      return reportDate;
+   }
 
-    public String getComment() {
-        return comment;
-    }
+   public void setReportDate(Date reportDate)
+   {
+      this.reportDate = reportDate;
+   }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+   public String getComment()
+   {
+      return comment;
+   }
 
-    public String getWorkAccomplished() {
-        return workAccomplished;
-    }
+   public void setComment(String comment)
+   {
+      this.comment = comment;
+   }
 
-    public void setWorkAccomplished(String workAccomplished) {
-        this.workAccomplished = workAccomplished;
-    }
+   public String getWorkAccomplished()
+   {
+      return workAccomplished;
+   }
 
-    public String getProblemEncountered() {
-        return problemEncountered;
-    }
+   public void setWorkAccomplished(String workAccomplished)
+   {
+      this.workAccomplished = workAccomplished;
+   }
 
-    public void setProblemEncountered(String problemEncountered) {
-        this.problemEncountered = problemEncountered;
-    }
+   public String getProblemEncountered()
+   {
+      return problemEncountered;
+   }
 
-    public String getWorkPlanned() {
-        return workPlanned;
-    }
+   public void setProblemEncountered(String problemEncountered)
+   {
+      this.problemEncountered = problemEncountered;
+   }
 
-    public void setWorkPlanned(String workPlanned) {
-        this.workPlanned = workPlanned;
-    }
+   public String getWorkPlanned()
+   {
+      return workPlanned;
+   }
 
-    public String getProblemAnticipated() {
-        return problemAnticipated;
-    }
+   public void setWorkPlanned(String workPlanned)
+   {
+      this.workPlanned = workPlanned;
+   }
 
-    public void setProblemAnticipated(String problemAnticipated) {
-        this.problemAnticipated = problemAnticipated;
-    }
+   public String getProblemAnticipated()
+   {
+      return problemAnticipated;
+   }
 
-    public Integer getId() {
-        return this.id;
-    }
+   public void setProblemAnticipated(String problemAnticipated)
+   {
+      this.problemAnticipated = problemAnticipated;
+   }
 
-    public void setId(final Integer id) {
-        this.id = id;
-    }
+   public Integer getId()
+   {
+      return this.id;
+   }
 
-    public int getVersion() {
-        return this.version;
-    }
+   public void setId(final Integer id)
+   {
+      this.id = id;
+   }
 
-    public void setVersion(final int version) {
-        this.version = version;
-    }
+   public int getVersion()
+   {
+      return this.version;
+   }
 
-    public int getWeekNumber() {
-        return this.weekNumber;
-    }
+   public void setVersion(final int version)
+   {
+      this.version = version;
+   }
 
-    public void setWeekNumber(final int weekNumber) {
-        this.weekNumber = weekNumber;
-    }
+   public int getWeekNumber()
+   {
+      return this.weekNumber;
+   }
 
-    public int getYear() {
-        return this.year;
-    }
+   public void setWeekNumber(final int weekNumber)
+   {
+      this.weekNumber = weekNumber;
+   }
 
-    public void setYear(final int year) {
-        this.year = year;
-    }
+   public int getYear()
+   {
+      return this.year;
+   }
 
-    public String getWorkPackageId() {
-        return workPackageId;
-    }
+   public void setYear(final int year)
+   {
+      this.year = year;
+   }
 
-    public void setWorkPackageId(String workPackageId) {
-        this.workPackageId = workPackageId;
-    }
+   public Set<Effort> getEstimatedWorkRemainingInPD()
+   {
+      return this.estimatedWorkRemainingInPD;
+   }
 
-    public Set<Effort> getEstimatedWorkRemainingInPD() {
-        return this.estimatedWorkRemainingInPD;
-    }
+   public void setEstimatedWorkRemainingInPD(
+         final Set<Effort> estimatedWorkRemainingInPD)
+   {
+      this.estimatedWorkRemainingInPD = estimatedWorkRemainingInPD;
+   }
 
-    public void setEstimatedWorkRemainingInPD(
-            final Set<Effort> estimatedWorkRemainingInPD) {
-        this.estimatedWorkRemainingInPD = estimatedWorkRemainingInPD;
-    }
+   @Override
+   public boolean equals(Object that)
+   {
+      if (this == that)
+      {
+         return true;
+      }
+      if (that == null)
+      {
+         return false;
+      }
+      if (getClass() != that.getClass())
+      {
+         return false;
+      }
+      if (id != null)
+      {
+         return id.equals(((WorkPackageStatusReport) that).id);
+      }
+      return super.equals(that);
+   }
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        if (id != null) {
-            return id.equals(((WorkPackageStatusReport) that).id);
-        }
-        return super.equals(that);
-    }
+   @Override
+   public int hashCode()
+   {
+      if (id != null)
+      {
+         return id.hashCode();
+      }
+      return super.hashCode();
+   }
 
-    @Override
-    public int hashCode() {
-        if (id != null) {
-            return id.hashCode();
-        }
-        return super.hashCode();
-    }
+   public String getWorkPackageNumber()
+   {
+      return this.workPackageNumber;
+   }
 
-    @Override
-    public String toString() {
-        String result = getClass().getSimpleName() + " ";
-        result += "weekNumber: " + weekNumber;
-        result += ", year: " + year;
-        return result;
-    }
+   public void setWorkPackageNumber(final String workPackageNumber)
+   {
+      this.workPackageNumber = workPackageNumber;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      result += "weekNumber: " + weekNumber;
+      result += ", year: " + year;
+      if (comment != null && !comment.trim().isEmpty())
+         result += ", comment: " + comment;
+      if (workAccomplished != null && !workAccomplished.trim().isEmpty())
+         result += ", workAccomplished: " + workAccomplished;
+      if (problemEncountered != null && !problemEncountered.trim().isEmpty())
+         result += ", problemEncountered: " + problemEncountered;
+      if (workPlanned != null && !workPlanned.trim().isEmpty())
+         result += ", workPlanned: " + workPlanned;
+      if (problemAnticipated != null && !problemAnticipated.trim().isEmpty())
+         result += ", problemAnticipated: " + problemAnticipated;
+      if (workPackageNumber != null && !workPackageNumber.trim().isEmpty())
+         result += ", workPackageNumber: " + workPackageNumber;
+      return result;
+   }
 
 }

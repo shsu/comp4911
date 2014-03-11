@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+
 import java.util.Date;
 
 public class UserPayRateHistory {
@@ -28,9 +30,23 @@ public class UserPayRateHistory {
     private PLevel pLevel;
 
     @Column
+    @Min(0)
     private int userId;
 
-    @Override
+    public UserPayRateHistory(Date startDate, Date endDate, PLevel pLevel,
+			int userId) {
+		super();
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.pLevel = pLevel;
+		this.userId = userId;
+	}
+    
+    public UserPayRateHistory(){
+    	
+    }
+
+	@Override
     public boolean equals(Object o) {
         if (this == o)
             return true;

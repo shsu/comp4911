@@ -9,16 +9,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.lang.Override;
 
 @Entity
 public class WorkPackage implements Serializable
 {
    @Id
    @Column(updatable = false, nullable = false)
+   @Size(min=7)
    private String workPackageNumber;
 
    @Version
@@ -27,9 +32,6 @@ public class WorkPackage implements Serializable
 
    @Column
    private String workPackageName;
-
-   @Column
-   private int projectNumber;
 
    @Temporal(TemporalType.DATE)
    private Date issueDate;
@@ -40,9 +42,6 @@ public class WorkPackage implements Serializable
    @Temporal(TemporalType.DATE)
    private Date startDate;
 
-   @Temporal(TemporalType.DATE)
-   private Date estimatedEndDate;
-
    @Column
    private String purpose;
 
@@ -52,9 +51,19 @@ public class WorkPackage implements Serializable
    @Column
    private String progressStatus;
 
-   @JsonIgnore
-   @OneToMany
-   private Set<Effort> budgetCostWorkScheduledInPD = new HashSet<Effort>();
+   @Temporal(TemporalType.DATE)
+   private Date endDate;
+
+   @Column
+   private String projectNumber;
+
+   @Column
+   @Min(0)
+   private int estimateToCompletion;
+
+   @Column
+   @Min(0)
+   private int estimateAtStart;
 
    public String getWorkPackageNumber()
    {
@@ -146,35 +155,7 @@ public class WorkPackage implements Serializable
       this.description = description;
    }
 
-   public Set<Effort> getBudgetCostWorkScheduledInPD()
-   {
-      return budgetCostWorkScheduledInPD;
-   }
-
-   public void setBudgetCostWorkScheduledInPD(Set<Effort> budgetCostWorkScheduledInPD)
-   {
-      this.budgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
-   }
-
-   public Date getEstimatedEndDate()
-   {
-      return estimatedEndDate;
-   }
-
-   public void setEstimatedEndDate(Date estimatedEndDate)
-   {
-      this.estimatedEndDate = estimatedEndDate;
-   }
-
-    public int getProjectNumber() {
-        return projectNumber;
-    }
-
-    public void setProjectNumber(int projectNumber) {
-        this.projectNumber = projectNumber;
-    }
-
-    @Override
+   @Override
    public boolean equals(Object o)
    {
       if (this == o)
@@ -196,22 +177,62 @@ public class WorkPackage implements Serializable
       return workPackageNumber.hashCode();
    }
 
-   public WorkPackage(String workPackageNumber, String workPackageName, int projectNumber, Date issueDate, Date completeDate, Date startDate, String progressStatus, String purpose, String description, Set<Effort> budgetCostWorkScheduledInPD, int estimateToCompletionInPD)
-   {
-      this.workPackageNumber = workPackageNumber;
-      this.workPackageName = workPackageName;
-      this.projectNumber = projectNumber;
-      this.issueDate = issueDate;
-      this.completeDate = completeDate;
-      this.startDate = startDate;
-      this.progressStatus = progressStatus;
-      this.purpose = purpose;
-      this.description = description;
-      this.budgetCostWorkScheduledInPD = budgetCostWorkScheduledInPD;
-   }
+   public WorkPackage(String workPackageNumber, String workPackageName,
+			Date issueDate, String purpose, String progressStatus, Date endDate,
+			String projectNumber, int estimateAtStart) {
+		super();
+		this.workPackageNumber = workPackageNumber;
+		this.workPackageName = workPackageName;
+		this.issueDate = issueDate;
+		this.purpose = purpose;
+		this.progressStatus = progressStatus;
+		this.endDate = endDate;
+		this.projectNumber = projectNumber;
+		this.estimateAtStart = estimateAtStart;
+	}
 
    public WorkPackage()
    {
+   }
+
+   public Date getEndDate()
+   {
+      return this.endDate;
+   }
+
+   public void setEndDate(final Date endDate)
+   {
+      this.endDate = endDate;
+   }
+
+   public String getProjectNumber()
+   {
+      return this.projectNumber;
+   }
+
+   public void setProjectNumber(final String projectNumber)
+   {
+      this.projectNumber = projectNumber;
+   }
+
+   public int getEstimateToCompletion()
+   {
+      return this.estimateToCompletion;
+   }
+
+   public void setEstimateToCompletion(final int estimateToCompletion)
+   {
+      this.estimateToCompletion = estimateToCompletion;
+   }
+
+   public int getEstimateAtStart()
+   {
+      return this.estimateAtStart;
+   }
+
+   public void setEstimateAtStart(final int estimateAtStart)
+   {
+      this.estimateAtStart = estimateAtStart;
    }
 
    @Override
@@ -228,6 +249,10 @@ public class WorkPackage implements Serializable
          result += ", description: " + description;
       if (progressStatus != null && !progressStatus.trim().isEmpty())
          result += ", progressStatus: " + progressStatus;
+      if (projectNumber != null && !projectNumber.trim().isEmpty())
+         result += ", projectNumber: " + projectNumber;
+      result += ", estimateToCompletion: " + estimateToCompletion;
+      result += ", estimateAtStart: " + estimateAtStart;
       return result;
    }
 }

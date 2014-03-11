@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -24,6 +26,7 @@ public class PayRate implements Serializable {
     private int version = 0;
 
     @Column
+    @Min(0)
     private int year;
 
     @Column
@@ -32,7 +35,18 @@ public class PayRate implements Serializable {
     @Enumerated(EnumType.STRING)
     private PLevel pLevel;
 
-    public Integer getId() {
+    public PayRate(int year, BigDecimal rate, PLevel pLevel) {
+		super();
+		this.year = year;
+		this.rate = rate;
+		this.pLevel = pLevel;
+	}
+    
+    public PayRate(){
+    	
+    }
+
+	public Integer getId() {
         return this.id;
     }
 

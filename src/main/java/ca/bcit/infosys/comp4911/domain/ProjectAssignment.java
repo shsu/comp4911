@@ -6,111 +6,139 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 import java.io.Serializable;
+import java.lang.Override;
 
 @Entity
-public class ProjectAssignment implements Serializable {
+public class ProjectAssignment implements Serializable
+{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Integer id = null;
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id", updatable = false, nullable = false)
+   private Integer id = null;
 
-    @Version
-    @Column(name = "version")
-    private int version = 0;
+   @Version
+   @Column(name = "version")
+   private int version = 0;
 
-    @Column
-    private int projectNumber;
+   @Column
+   @Min(0)
+   private int userId;
 
-    @Column
-    private int userId;
+   @Column
+   private boolean isProjectManager;
 
-    @Column
-    private boolean isProjectManager;
+   @Column
+   @Size(min=5)
+   private String projectNumber;
 
-    public Integer getId() {
-        return this.id;
-    }
+   public Integer getId()
+   {
+      return this.id;
+   }
 
-    public void setId(final Integer id) {
-        this.id = id;
-    }
+   public void setId(final Integer id)
+   {
+      this.id = id;
+   }
 
-    public int getProjectNumber() {
-        return projectNumber;
-    }
+   public int getVersion()
+   {
+      return this.version;
+   }
 
-    public void setProjectNumber(int projectNumber) {
-        this.projectNumber = projectNumber;
-    }
+   public void setVersion(final int version)
+   {
+      this.version = version;
+   }
 
-    public int getVersion() {
-        return this.version;
-    }
+   public boolean isProjectManager()
+   {
+      return this.isProjectManager;
+   }
 
-    public void setVersion(final int version) {
-        this.version = version;
-    }
+   public void setProjectManager(boolean isProjectManager)
+   {
+      this.isProjectManager = isProjectManager;
+   }
 
-    public boolean isProjectManager() {
-        return this.isProjectManager;
-    }
+   public int getUserId()
+   {
+      return userId;
+   }
 
-    public void setProjectManager(boolean isProjectManager) {
-        this.isProjectManager = isProjectManager;
-    }
+   public void setUserId(int userId)
+   {
+      this.userId = userId;
+   }
 
-    public int getUserId() {
-        return userId;
-    }
+   public ProjectAssignment(String projectNumber, int userId, boolean isProjectManager)
+   {
+      this.projectNumber = projectNumber;
+      this.userId = userId;
+      this.isProjectManager = isProjectManager;
+   }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+   public ProjectAssignment()
+   {
+   }
 
-    public ProjectAssignment(int projectNumber,  int userId, boolean isProjectManager) {
-        this.projectNumber = projectNumber;
-        this.userId = userId;
-        this.isProjectManager = isProjectManager;
-    }
+   @Override
+   public boolean equals(Object that)
+   {
+      if (this == that)
+      {
+         return true;
+      }
+      if (that == null)
+      {
+         return false;
+      }
+      if (getClass() != that.getClass())
+      {
+         return false;
+      }
+      if (id != null)
+      {
+         return id.equals(((ProjectAssignment) that).id);
+      }
+      return super.equals(that);
+   }
 
-    public ProjectAssignment()
-    {
-    }
+   @Override
+   public int hashCode()
+   {
+      if (id != null)
+      {
+         return id.hashCode();
+      }
+      return super.hashCode();
+   }
 
-    @Override
-    public String toString() {
-        String result = getClass().getSimpleName() + " ";
-        if (id != null)
-            result += "id: " + id;
-        return result;
-    }
+   public String getProjectNumber()
+   {
+      return this.projectNumber;
+   }
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        if (id != null) {
-            return id.equals(((ProjectAssignment) that).id);
-        }
-        return super.equals(that);
-    }
+   public void setProjectNumber(final String projectNumber)
+   {
+      this.projectNumber = projectNumber;
+   }
 
-    @Override
-    public int hashCode() {
-        if (id != null) {
-            return id.hashCode();
-        }
-        return super.hashCode();
-    }
+   @Override
+   public String toString()
+   {
+      String result = getClass().getSimpleName() + " ";
+      result += "userId: " + userId;
+      result += ", isProjectManager: " + isProjectManager;
+      if (projectNumber != null && !projectNumber.trim().isEmpty())
+         result += ", projectNumber: " + projectNumber;
+      return result;
+   }
 }
 
 /**

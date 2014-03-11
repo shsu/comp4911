@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+
 import java.io.Serializable;
 
 @Entity
@@ -16,7 +18,8 @@ public class Effort implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id = null;
-    @Version
+    
+	@Version
     @Column(name = "version")
     private int version = 0;
 
@@ -25,8 +28,19 @@ public class Effort implements Serializable {
 
     /** Tenths of hours */
     @Column
+    @Min(0)
     private int personDays;
 
+    public Effort(PLevel pLevel, int personDays) {
+		super();
+		this.pLevel = pLevel;
+		this.personDays = personDays;
+	}
+    
+    public Effort(){
+    	
+    }
+    
     public int getVersion() {
         return this.version;
     }
