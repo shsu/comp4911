@@ -6,7 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,8 +18,7 @@ public class Project implements Serializable
 
    @Id
    @Column(updatable = false, nullable = false)
-   @Size(min=5)
-   private String projectNumber;
+   private Integer projectNumber;
    
    @Version
    @Column(name = "version")
@@ -45,7 +43,15 @@ public class Project implements Serializable
    @Column
    private BigDecimal AllocatedBudget;
 
+    public Integer getProjectNumber()
+    {
+        return this.projectNumber;
+    }
 
+    public void setProjectNumber(final Integer projectNumber)
+    {
+        this.projectNumber = projectNumber;
+    }
 
    public int getVersion()
    {
@@ -117,12 +123,11 @@ public class Project implements Serializable
       AllocatedBudget = allocatedBudget;
    }
 
-   public Project(String projectNumber, String projectName, Date issueDate, Date completeDate,
+   public Project(Integer projectNumber, String projectName, Date issueDate, Date completeDate,
          BigDecimal clientRate, BigDecimal unAllocatedBudget,
          BigDecimal allocatedBudget)
    {
       this.projectNumber = projectNumber;
-      this.version = version;
       this.projectName = projectName;
       this.issueDate = issueDate;
       this.completeDate = completeDate;
@@ -155,26 +160,5 @@ public class Project implements Serializable
    public int hashCode()
    {
       return projectNumber.hashCode();
-   }
-
-   public String getProjectNumber()
-   {
-      return this.projectNumber;
-   }
-
-   public void setProjectNumber(final String projectNumber)
-   {
-      this.projectNumber = projectNumber;
-   }
-
-   @Override
-   public String toString()
-   {
-      String result = getClass().getSimpleName() + " ";
-      if (projectName != null && !projectName.trim().isEmpty())
-         result += "projectName: " + projectName;
-      if (projectNumber != null && !projectNumber.trim().isEmpty())
-         result += ", projectNumber: " + projectNumber;
-      return result;
    }
 }
