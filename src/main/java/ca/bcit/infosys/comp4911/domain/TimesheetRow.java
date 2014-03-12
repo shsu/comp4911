@@ -54,7 +54,7 @@ public class TimesheetRow implements Serializable
    private String note;
 
    @Column
-   private String projectNumber;
+   private int projectNumber;
 
    public Integer getId()
    {
@@ -198,7 +198,7 @@ public class TimesheetRow implements Serializable
       return super.hashCode();
    }
 
-   public TimesheetRow(String projectNumber, String workPackageNumber, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note)
+   public TimesheetRow(int projectNumber, String workPackageNumber, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note)
    {
       this.projectNumber = projectNumber;
       this.workPackageNumber = workPackageNumber;
@@ -216,12 +216,12 @@ public class TimesheetRow implements Serializable
    {
    }
 
-   public String getProjectNumber()
+   public int getProjectNumber()
    {
       return this.projectNumber;
    }
 
-   public void setProjectNumber(final String projectNumber)
+   public void setProjectNumber(final int projectNumber)
    {
       this.projectNumber = projectNumber;
    }
@@ -241,8 +241,7 @@ public class TimesheetRow implements Serializable
       result += ", sunday: " + sunday;
       if (note != null && !note.trim().isEmpty())
          result += ", note: " + note;
-      if (projectNumber != null && !projectNumber.trim().isEmpty())
-         result += ", projectNumber: " + projectNumber;
+      result += ", projectNumber: " + projectNumber;
       return result;
    }
 }

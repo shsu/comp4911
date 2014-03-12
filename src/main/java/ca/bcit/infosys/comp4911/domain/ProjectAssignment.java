@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.lang.Override;
@@ -33,8 +32,7 @@ public class ProjectAssignment implements Serializable
    private boolean isProjectManager;
 
    @Column
-   @Size(min=5)
-   private String projectNumber;
+   private int projectNumber;
 
    public Integer getId()
    {
@@ -76,7 +74,7 @@ public class ProjectAssignment implements Serializable
       this.userId = userId;
    }
 
-   public ProjectAssignment(String projectNumber, int userId, boolean isProjectManager)
+   public ProjectAssignment(int projectNumber, int userId, boolean isProjectManager)
    {
       this.projectNumber = projectNumber;
       this.userId = userId;
@@ -119,12 +117,12 @@ public class ProjectAssignment implements Serializable
       return super.hashCode();
    }
 
-   public String getProjectNumber()
+   public int getProjectNumber()
    {
       return this.projectNumber;
    }
 
-   public void setProjectNumber(final String projectNumber)
+   public void setProjectNumber(final int projectNumber)
    {
       this.projectNumber = projectNumber;
    }
@@ -135,35 +133,7 @@ public class ProjectAssignment implements Serializable
       String result = getClass().getSimpleName() + " ";
       result += "userId: " + userId;
       result += ", isProjectManager: " + isProjectManager;
-      if (projectNumber != null && !projectNumber.trim().isEmpty())
-         result += ", projectNumber: " + projectNumber;
+      result += ", projectNumber: " + projectNumber;
       return result;
    }
 }
-
-/**
- {
- "projectNumber": "12340",
- "user": {
- "id": 2,
- "version": 0,
- "username": "username1",
- "password": "$2a$10$1SmB5/Trt0TrBRBGAlIdAuYAV49lga.bGh649X66NOSO2oTlRe0Y.",
- "firstName": "firstName1",
- "lastName": "lastName1",
- "email": "employee1@example.com",
- "startDate": "2014-02-24",
- "status": "status1",
- "defaultTimesheet": null,
- "payLevel": null,
- "supervisor": null,
- "timesheetApprover": null,
- "paidHoursPerWeek": 40,
- "totalFlexTime": 1,
- "totalOvertime": 1,
- "vacationDays": 1,
- "hr": false
- },
- "projectManager": false
- }
- */

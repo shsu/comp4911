@@ -1,11 +1,8 @@
 package ca.bcit.infosys.comp4911.domain;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -14,8 +11,6 @@ import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.lang.Override;
 
 @Entity
@@ -52,15 +47,15 @@ public class WorkPackage implements Serializable
    private Date endDate;
 
    @Column
-   private String projectNumber;
-
-   @Column
    @Min(0)
    private int estimateToCompletion;
 
    @Column
    @Min(0)
    private int estimateAtStart;
+
+   @Column
+   private int projectNumber;
 
    public String getWorkPackageNumber()
    {
@@ -166,7 +161,7 @@ public class WorkPackage implements Serializable
 
    public WorkPackage(String workPackageNumber, String workPackageName,
          Date issueDate, String progressStatus, Date endDate,
-         String projectNumber, int estimateAtStart)
+         int projectNumber, int estimateAtStart)
    {
       super();
       this.workPackageNumber = workPackageNumber;
@@ -192,16 +187,6 @@ public class WorkPackage implements Serializable
       this.endDate = endDate;
    }
 
-   public String getProjectNumber()
-   {
-      return this.projectNumber;
-   }
-
-   public void setProjectNumber(final String projectNumber)
-   {
-      this.projectNumber = projectNumber;
-   }
-
    public int getEstimateToCompletion()
    {
       return this.estimateToCompletion;
@@ -222,6 +207,16 @@ public class WorkPackage implements Serializable
       this.estimateAtStart = estimateAtStart;
    }
 
+   public int getProjectNumber()
+   {
+      return this.projectNumber;
+   }
+
+   public void setProjectNumber(final int projectNumber)
+   {
+      this.projectNumber = projectNumber;
+   }
+
    @Override
    public String toString()
    {
@@ -234,10 +229,9 @@ public class WorkPackage implements Serializable
          result += ", description: " + description;
       if (progressStatus != null && !progressStatus.trim().isEmpty())
          result += ", progressStatus: " + progressStatus;
-      if (projectNumber != null && !projectNumber.trim().isEmpty())
-         result += ", projectNumber: " + projectNumber;
       result += ", estimateToCompletion: " + estimateToCompletion;
       result += ", estimateAtStart: " + estimateAtStart;
+      result += ", projectNumber: " + projectNumber;
       return result;
    }
 }
