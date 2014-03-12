@@ -18,7 +18,9 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -78,6 +80,36 @@ public class SampleData {
         userDao.create(new User(
           "q","q","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
         ));
+        
+        Date startDate = setDate(1, 1, 2000);
+        
+        userDao.create(new User(
+        		"jedward", "q", "John", "Edward", startDate, false, "Active", 40, 0, 0, 14,
+        		12345678, 56789012, 56789012, PLevel.P1));
+        
+        userDao.create(new User(
+                "awong", "q", "Alice", "Wong", startDate, false, "Active", 40, 0, 0, 14,
+                23456789, 56789012, 56789012, PLevel.P2));
+        
+        userDao.create(new User(
+                "bnelson", "q", "Bob", "Nelson", startDate, false, "Active", 40, 0, 0, 14,
+                34567890, 56789012, 56789012, PLevel.P3));
+        
+        userDao.create(new User(
+                "csandhu", "q", "Christine", "Sandhu", startDate, true, "Active", 40, 0, 0, 14,
+                45678901, 56789012, 56789012, PLevel.P4));
+        
+        userDao.create(new User(
+                "zcantwell", "q", "Zamir", "Cantwell", startDate, false, "Active", 40, 0, 0, 14,
+                56789012, 0, 0, PLevel.P5));
+        
+        userDao.create(new User(
+                "cpark", "q", "Chi-En", "Park", startDate, false, "Active", 40, 0, 0, 14,
+                67890123, 56789012, 56789012, PLevel.SS));
+        
+        userDao.create(new User(
+                "gsmith", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 0, 14,
+                78901234, 56789012, 56789012, PLevel.DS));
     }
 
     private void generateProjects() {
@@ -95,6 +127,26 @@ public class SampleData {
                     )
             );
         }
+        
+        Date issueDate = setDate(1, 1, 2014);
+        
+        projectDao.create(new Project(
+        		12345, "Apollo", issueDate, null, new BigDecimal(1000), new BigDecimal(0), new BigDecimal(500000)));
+        
+        issueDate = setDate(11, 1, 2013);
+        
+        projectDao.create(new Project(
+        		55522, "Barbosa", issueDate, null, new BigDecimal(2000), new BigDecimal(250000), new BigDecimal(1500000)));
+        
+        issueDate = setDate(7, 31, 2012);
+        
+        projectDao.create(new Project(
+        		99777, "Carolina", issueDate, null, new BigDecimal(2000), new BigDecimal(10000000), new BigDecimal(40000000)));
+        
+        issueDate = setDate(2, 1, 2014);
+        
+        projectDao.create(new Project(
+        		88999, "Davenport", issueDate, null, new BigDecimal(2000), new BigDecimal(30000), new BigDecimal(3000000)));
     }
 
     private void generateWorkPackages() {
@@ -105,17 +157,61 @@ public class SampleData {
             workPackageDao.create(new WorkPackage(
                     "WorkPackageNumber" + i,
                     "WorkPackageName" + i,
-                    projects.get(i).getProjectNumber(),
                     new Date(),
-                    new Date(),
-                    new Date(),
-                    "purpose" + i,
-                    "description" + i,
                     "progressStatus" + i,
-                    null,
+                    new Date(),
+                    projects.get(i).getProjectNumber(),
                     100 + i
             ));
         }
+        
+        Date issueDate = setDate(1, 2, 2014);
+        Date endDate = setDate(1, 10, 2014);
+        
+        workPackageDao.create(new WorkPackage(
+        		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, 100000));
+        
+        issueDate = setDate(2, 5, 2014);
+        endDate = setDate(2, 12, 2014);
+        
+        workPackageDao.create(new WorkPackage(
+        		"B3332222", "Write tests", issueDate, "100", endDate, 12345, 50000));
+        
+        issueDate = setDate(1, 14, 2014);
+        endDate = setDate(4, 17, 2014);
+        
+        workPackageDao.create(new WorkPackage(
+        		"B3332223", "Something important", issueDate, "0", endDate, 12345, 350000));
+        
+        issueDate = setDate(11, 10, 2013);
+        endDate = setDate(11, 28, 2013);
+        
+        workPackageDao.create(new WorkPackage(
+        		"A3334444", "Design Database", issueDate, "100", endDate, 55522, 25000));
+        
+        issueDate = setDate(11, 12, 2013);
+        endDate = setDate(12, 8, 2013);
+        
+        workPackageDao.create(new WorkPackage(
+        		"C3332222", "Preliminary front end design", issueDate, "100", endDate, 55522, 100000));
+        
+        issueDate = setDate(12, 15, 2013);
+        endDate = setDate(2, 5, 2014);
+        
+        workPackageDao.create(new WorkPackage(
+        		"A3334452", "Implement login logic", issueDate, "100", endDate, 55522, 45000));
+        
+        issueDate = setDate(8, 2, 2012);
+        endDate = setDate(3, 12, 2013);
+        
+        workPackageDao.create(new WorkPackage(
+        		"ZZ334222", "Research technologies", issueDate, "0", endDate, 99977, 5000000));
+        
+        issueDate = setDate(3, 15, 2013);
+        endDate = setDate(6, 23, 2017);
+        
+        workPackageDao.create(new WorkPackage(
+        		"ZZ334222", "Solve world hunger", issueDate, "0", endDate, 99977, 25000000));
     }
 
     private void generateWorkPackageAssignments() {
@@ -172,4 +268,14 @@ public class SampleData {
 
     }
     */
+    
+    private Date setDate(int month, int day, int year)
+    {
+    	Calendar c = Calendar.getInstance();
+    	c.set(Calendar.DATE, day);
+    	c.set(Calendar.MONTH, month - 1);
+    	c.set(Calendar.YEAR, year);
+    	Date theDate = c.getTime();
+    	return theDate;
+    }
 }
