@@ -23,7 +23,7 @@ public class WorkPackage implements Serializable
 {
    @Id
    @Column(updatable = false, nullable = false)
-   @Size(min=7)
+   @Size(min = 7)
    private String workPackageNumber;
 
    @Version
@@ -41,9 +41,6 @@ public class WorkPackage implements Serializable
 
    @Temporal(TemporalType.DATE)
    private Date startDate;
-
-   @Column
-   private String purpose;
 
    @Column
    private String description;
@@ -135,16 +132,6 @@ public class WorkPackage implements Serializable
       this.progressStatus = progressStatus;
    }
 
-   public String getPurpose()
-   {
-      return purpose;
-   }
-
-   public void setPurpose(String purpose)
-   {
-      this.purpose = purpose;
-   }
-
    public String getDescription()
    {
       return description;
@@ -178,18 +165,18 @@ public class WorkPackage implements Serializable
    }
 
    public WorkPackage(String workPackageNumber, String workPackageName,
-			Date issueDate, String purpose, String progressStatus, Date endDate,
-			String projectNumber, int estimateAtStart) {
-		super();
-		this.workPackageNumber = workPackageNumber;
-		this.workPackageName = workPackageName;
-		this.issueDate = issueDate;
-		this.purpose = purpose;
-		this.progressStatus = progressStatus;
-		this.endDate = endDate;
-		this.projectNumber = projectNumber;
-		this.estimateAtStart = estimateAtStart;
-	}
+         Date issueDate, String progressStatus, Date endDate,
+         String projectNumber, int estimateAtStart)
+   {
+      super();
+      this.workPackageNumber = workPackageNumber;
+      this.workPackageName = workPackageName;
+      this.issueDate = issueDate;
+      this.progressStatus = progressStatus;
+      this.endDate = endDate;
+      this.projectNumber = projectNumber;
+      this.estimateAtStart = estimateAtStart;
+   }
 
    public WorkPackage()
    {
@@ -243,8 +230,6 @@ public class WorkPackage implements Serializable
          result += "workPackageNumber: " + workPackageNumber;
       if (workPackageName != null && !workPackageName.trim().isEmpty())
          result += ", workPackageName: " + workPackageName;
-      if (purpose != null && !purpose.trim().isEmpty())
-         result += ", purpose: " + purpose;
       if (description != null && !description.trim().isEmpty())
          result += ", description: " + description;
       if (progressStatus != null && !progressStatus.trim().isEmpty())
@@ -256,32 +241,3 @@ public class WorkPackage implements Serializable
       return result;
    }
 }
-
-/**
- {
- "workPackageNumber": "123400",
- "version": 0,
- "workPackageName": "WorkPackageName0",
- "project": {
- "projectNumber": "12340",
- "version": 0,
- "projectName": "Project0",
- "issueDate": "2014-02-24",
- "completeDate": "2014-02-24",
- "clientRate": 12.5,
- "allocatedBudget": 1000,
- "unAllocatedBudget": 1000
- },
- "issueDate": "2014-02-24",
- "completeDate": "2014-02-24",
- "startDate": "2014-02-24",
- "estimatedEndDate": null,
- "purpose": "description0",
- "description": "inputs0",
- "inputs": "outputs0",
- "activities": "activities0",
- "outputs": "progressStatus0",
- "progressStatus": "purpose0",
- "estimateToCompletionInPD": 100
- }
- */
