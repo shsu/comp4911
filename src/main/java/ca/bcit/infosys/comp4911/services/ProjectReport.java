@@ -60,7 +60,7 @@ public class ProjectReport {
         JSONObject report = new JSONObject();
         project = projectDao.read(projectId);
         reportHelper = new ReportHelper(project.getProjectNumber(), project.getProjectName());
-        latestTwentyReports = wpsrDao.getLatestByProject(projectId);
+        //latestTwentyReports = wpsrDao.getLatestByProject(projectId);
         Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
         reportHelperRow = new ReportHelperRow();
