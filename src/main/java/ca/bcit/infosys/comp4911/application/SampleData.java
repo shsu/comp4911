@@ -38,16 +38,16 @@ public class SampleData {
     private TimesheetRowDao timesheetRowDao;
 
     @EJB
-    ProjectDao projectDao;
+    private ProjectDao projectDao;
 
     @EJB
-    ProjectAssignmentDao projectAssignmentDao;
+    private ProjectAssignmentDao projectAssignmentDao;
 
     @EJB
-    WorkPackageAssignmentDao workPackageAssignmentDao;
+    private WorkPackageAssignmentDao workPackageAssignmentDao;
 
     @EJB
-    WorkPackageDao workPackageDao;
+    private WorkPackageDao workPackageDao;
 
     public SampleData() {
     }
@@ -56,9 +56,9 @@ public class SampleData {
     public void populateData() {
         generateUsers();
         generateProjects();
-        generateProjectAssignments();
+        //generateProjectAssignments();
         generateWorkPackages();
-        generateWorkPackageAssignments();
+        //generateWorkPackageAssignments();
         //generateTimesheets();
     }
 
@@ -113,21 +113,6 @@ public class SampleData {
     }
 
     private void generateProjects() {
-
-        for (int i = 0; i < 5; i++)
-        {
-            projectDao.create(new Project(
-                        i,
-                    "Project" + i,
-                    new Date(),
-                    new Date(),
-                    new BigDecimal(12.5),
-                    new BigDecimal(1000 + i * i),
-                    new BigDecimal(1000 + i)
-                    )
-            );
-        }
-        
         Date issueDate = setDate(1, 1, 2014);
         
         projectDao.create(new Project(
@@ -150,20 +135,6 @@ public class SampleData {
     }
 
     private void generateWorkPackages() {
-        List<Project> projects = projectDao.getAll();
-
-        for (int i = 0; i < 5; i++)
-        {
-            workPackageDao.create(new WorkPackage(
-                    "WorkPackageNumber" + i,
-                    "WorkPackageName" + i,
-                    new Date(),
-                    "progressStatus" + i,
-                    new Date(),
-                    projects.get(i).getProjectNumber(),
-                    100 + i
-            ));
-        }
         
         Date issueDate = setDate(1, 2, 2014);
         Date endDate = setDate(1, 10, 2014);
