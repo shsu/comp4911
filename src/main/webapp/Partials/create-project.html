@@ -1,0 +1,26 @@
+<content>
+  <div ng-controller="CreateProjectsController">
+    <div class="row">
+      <h1 class="secondary">Create Project</h1>
+      <p>Start Date: <input type="text" /></p>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <p>Project No: <input type="text" ng-model=""></p>
+        <p>Project Name: <input type="text" ng-model=""></p>
+        <p>Assigned Manager: <input type="text" ng-model=""></p>
+      </div>
+      <div class="col-sm-6">
+        <p>Budget: <input type="text" ng-model=""></p>
+        <p>Estimate at Completion: <input type="text" ng-model=""></p>
+        <p>Client Rate: <input type="text" ng-model=""></p>
+      </div>            
+    </div>
+    <div class="row">
+      <button class="btn btn-primary pull-right">Add New Row</button>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary pull-right">Save</button>
+    </div>
+  </div>
+</content>

@@ -1,5 +1,16 @@
 <content>
   <div ng-controller="DashboardController">
-    This is the Dashboard
+    <h1>Timesheet</h1>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <tbody>
+          <tr ng-repeat="timesheet in timesheets">
+            <td>{{date}}</td>
+            <td>{{timesheet.isApproved}}</td>
+            <td><input type="checkbox" ng-click="delete(timesheet)"> Delete</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </content>

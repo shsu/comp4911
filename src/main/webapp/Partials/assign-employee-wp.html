@@ -1,14 +1,8 @@
 <content>
-  <div ng-controller="PackageController">
+  <div ng-controller="AEWPController">
     <div class="row">
-      <h1 class="secondary">Assign Work Packages to Project</h1>
-    </div>
-    <div class="row">
-      <ul class="list-inline">
-        <li class="col-xs-3">User ID: A00001</li>
-        <li class="col-xs-3">User Name: Junko Yamamoto</li>
-        <li class="col-xs-3">Labour Grade: P4</li>
-      </ul>
+      <h1 class="secondary">Assign Employees to Work Package</h1>
+      <h2>(TEST) ID param: {{param}}</h2>
     </div>
     <div class="row">
       <ul class="list-inline">
@@ -16,13 +10,17 @@
         <li class="col-xs-3">Project Name: </li>
       </ul>
     </div>
-    <hr>
     <div class="row">
-      <p>WP No. & Description</p>
-      <p class="col-xs-12 no-pl"><input type="text" ng-model="query" class="col-xs-5" placeholder="Enter package number or description"/></p>
+      <ul class="list-inline">
+        <li class="col-xs-3">Emp ID: {{user.id}}</li>
+        <li class="col-xs-3">Emp Name: {{user.username}}</li>
+      </ul>
+    </div>
+    <div class="row">
+      <p>Projects List</p>
       <div class="col-xs-5 results">
         <ul class="no-pl">
-          <li ng-click="select($index)" class="{{package.selected}} disabled-{{package.disabled}}" ng-hide="!query" ng-repeat="package in packages | filter:query">
+          <li ng-click="select($index)" class="{{package.selected}} disabled-{{package.disabled}}" ng-repeat="package in packages">
           {{package.number}}  {{package.title}}
           </li>
         <ul>     

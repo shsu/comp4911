@@ -1,0 +1,37 @@
+<content>
+  <div ng-controller="AEPController">
+    <div class="row">
+      <h1 class="secondary">Assign Employee to Project</h1>
+    </div>
+    <div class="row">
+      <ul class="list-inline">
+        <li class="col-xs-3">Emp ID: {{user.id}}</li>
+        <li class="col-xs-3">Emp Name: {{user.username}}</li>
+      </ul>
+    </div>
+    <div class="row">
+      <p>Projects List</p>
+      <div class="col-xs-5 results">
+        <ul class="no-pl">
+          <li ng-click="select($index)" class="{{project.selected}} disabled-{{project.disabled}}" ng-repeat="project in projects">
+          {{project.number}}  {{project.title}}
+          </li>
+        <ul>     
+      </div>
+      <div class="col-xs-2">
+        <button ng-click="add()" class="btn btn-primary btn-block">Add</button>
+        <button ng-click="remove()" class="btn btn-primary btn-block">Remove</button>
+      </div>
+      <div class="col-xs-5 results">
+        <ul class="no-pl">
+          <li ng-click="addedSelect($index)" class="{{selectedProject.selected}}" ng-hide="!selectedProjects" ng-repeat="selectedProject in selectedProjects">
+          {{selectedProject.number}}  {{selectedProject.title}}
+          </li>
+        <ul> 
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary pull-right">Save</button>
+    </div>
+  </div>
+</content>

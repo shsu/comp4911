@@ -1,0 +1,40 @@
+<content>
+  <div ng-controller="APController">
+    <div class="row">
+      <h1 class="secondary">Assign to Projects</h1>
+    </div>
+    <div class="row">
+      <ul class="list-inline">
+        <li class="col-xs-3">User ID: A00001</li>
+        <li class="col-xs-3">User Name: Junko Yamamoto</li>
+        <li class="col-xs-3">Labour Grade: P4</li>
+      </ul>
+    </div>
+    <div class="row">
+        <p>Project No.</p>
+        <div class="col-xs-5" name="" id="" cols="30" rows="10">
+          <input type="text" ng-model="query" class="col-xs-12" placeholder="Enter project number or title"/>
+            <table>
+              <tbody>
+                <tr>
+                  <th style="margin-right: 80px; display: inline-block;">Project No.</th>
+                  <th>Title</th>
+                </tr>
+                <tr ng-hide="!query" ng-repeat="project in projects | filter:query">
+                  <td>{{project.number}}</td>
+                  <td>{{project.title}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-primary btn-block">Add</button>
+          <button class="btn btn-primary btn-block">Remove</button>
+        </div>
+        <textarea class="col-xs-5" name="" id="" cols="30" rows="10"></textarea>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary pull-right">Save</button>
+    </div>
+  </div>
+</content>

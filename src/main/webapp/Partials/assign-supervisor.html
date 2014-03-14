@@ -1,15 +1,13 @@
 <content>
-  <h1 class="secondary">Assign Responsible Engineer to WP</h1>
-  <div ng-controller="ARController">
+  <h1 class="secondary">Assign To Supervisor</h1>
+  <div ng-controller="ASController">
     <div class="row">
-      <p class="col-xs-3">Project No.: PR0111</p>
-      <p class="col-xs-9">Project Name: MOSAICS</p>
-      <p class="col-xs-3">WP No.: {{package.id}}</p>
-      <p class="col-xs-9">Description: Project Start</p>
+      <p class="col-xs-3">Emp ID: {{user.id}}</p>
+      <p class="col-xs-9">Emp Name: {{user.username}}</p>
     </div>
     <div class="row">
       <form action="" class="form-inline">
-        <p>Search Engineer:  <input ng-model="query" type="text" placeholder="Search" class="form-control" /></p>
+        <p>Search Supervisor:  <input ng-model="query" type="text" placeholder="Search" class="form-control" /></p>
       </form>
     </div>
     <div class="row table-wrapper">
@@ -21,10 +19,10 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="selectM($index)" class="{{engineer.selected}}" ng-hide="!query" ng-repeat="engineer in engineers | filter:query">
-              <td>{{engineer.id}}</td> 
-              <td>{{engineer.name}}</td>
-              <td>{{engineer.paygrade}}</td>
+            <tr ng-click="selectM($index)" class="{{supervisor.selected}}" ng-hide="!query" ng-repeat="supervisor in supervisors | filter:query">
+              <td>{{supervisor.id}}</td> 
+              <td>{{supervisor.name}}</td>
+              <td>{{supervisor.paygrade}}</td>
             </tr>
           </tbody>
         </table>
@@ -39,25 +37,11 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            <p>Do you want to add this engineer to the work package?</p>
+            <p>Do you want to assign this Supervisor to this employee?</p>
             <div ng-model="selectedEngineer">
-              <span style="margin-right: 20px;"><strong>Name:</strong> {{selectedManager.name}}</span>
+              <span style="margin-right: 20px;"><strong>Name:</strong> {{selectedEngineer.name}}</span>
               <span><strong>Pay Grade:</strong> {{selectedEngineer.paygrade}}</span>
             </div>
-            <p>&nbsp;</p>
-            <p class="pull-left">Other Responsible WPs:</p>
-            <table class="table table-bordered">
-              <tbody>
-                <tr>
-                  <th>WP No.</th>
-                  <th>Description</th>
-                </tr>
-                <tr>
-                  <td>WP111200</td>
-                  <td>Blueprint</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
           <div class="modal-footer">
             <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cancel()">Add</button>
@@ -66,6 +50,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>  
 </content>
-
