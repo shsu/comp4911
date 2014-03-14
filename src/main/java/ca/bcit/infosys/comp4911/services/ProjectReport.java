@@ -1,11 +1,10 @@
 package ca.bcit.infosys.comp4911.services;
 
 import ca.bcit.infosys.comp4911.access.ProjectDao;
+import ca.bcit.infosys.comp4911.access.TimesheetRowDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageStatusReportDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
-import ca.bcit.infosys.comp4911.domain.Effort;
-import ca.bcit.infosys.comp4911.domain.Project;
-import ca.bcit.infosys.comp4911.domain.WorkPackageStatusReport;
+import ca.bcit.infosys.comp4911.domain.*;
 import ca.bcit.infosys.comp4911.helper.ReportHelper;
 import ca.bcit.infosys.comp4911.helper.ReportHelperRow;
 import ca.bcit.infosys.comp4911.helper.SH;
@@ -24,6 +23,8 @@ import java.util.Set;
 @Path("/reports")
 public class ProjectReport {
 
+    public static final int CONVERT_TO_TENTHS_OF_AN_HOUR = 10;
+
     @EJB
     private UserTokens userTokens;
 
@@ -36,9 +37,14 @@ public class ProjectReport {
     @EJB
     private ProjectDao projectDao;
 
+    @EJB
+    private TimesheetRowDao tsrDao;
+
     private List<WorkPackageStatusReport> latestTwentyReports;
 
     private WorkPackageStatusReport wpsr;
+
+    private List<TimesheetRow> wpTimesheetRows;
 
     private Project project;
 
@@ -67,10 +73,23 @@ public class ProjectReport {
         while(wpsrIterator.hasNext()){
             wpsr = wpsrIterator.next();
             reportHelperRow.setWpNumber(wpsr.getWorkPackageNumber());
+            wpTimesheetRows = tsrDao.getAllByWP(wpsr.getWorkPackageNumber());
+            calculatePLevels(reportHelperRow, wpTimesheetRows);
 
         }
 
 
         return SH.responseWithEntity(200, report);
+    }
+
+    private void calculatePLevels(ReportHelperRow reportHelperRow, List<TimesheetRow> wpTimesheetRows){
+        double total = 0;
+
+        Iterator<TimesheetRow> tsrIterator = wpTimesheetRows.listIterator();
+        while(tsrIterator.hasNext()){
+            total += tsrIterator.next().getTotal();
+        }
+
+        reportHelperRow.setP1(total/CONVERT_TO_TENTHS_OF_AN_HOUR);
     }
 }

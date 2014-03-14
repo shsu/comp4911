@@ -244,4 +244,8 @@ public class TimesheetRow implements Serializable
       result += ", projectNumber: " + projectNumber;
       return result;
    }
+
+    public int getTotal(){
+        return monday + tuesday + wednesday + thursday + friday + saturday + sunday;
+    }
 }
