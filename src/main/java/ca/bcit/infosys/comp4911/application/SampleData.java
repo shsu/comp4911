@@ -211,7 +211,7 @@ public class SampleData {
         endDate = setDate(6, 23, 2017);
         
         workPackageDao.create(new WorkPackage(
-        		"ZZ334222", "Solve world hunger", issueDate, "0", endDate, 99977, 25000000));
+        		"ZZ334225", "Solve world hunger", issueDate, "0", endDate, 99977, 25000000));
     }
 
     private void generateWorkPackageAssignments() {
