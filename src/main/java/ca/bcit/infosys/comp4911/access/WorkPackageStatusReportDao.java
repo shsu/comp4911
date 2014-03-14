@@ -1,5 +1,6 @@
 package ca.bcit.infosys.comp4911.access;
 
+import ca.bcit.infosys.comp4911.domain.Project;
 import ca.bcit.infosys.comp4911.domain.WorkPackage;
 import ca.bcit.infosys.comp4911.domain.WorkPackageStatusReport;
 
@@ -50,5 +51,17 @@ public class WorkPackageStatusReportDao {
                 WorkPackageStatusReport.class);
         query.setParameter("workPackage", workPackage);
         return query.getResultList();
+    }
+
+    public List<WorkPackageStatusReport> getAllByProject(final Project project) {
+        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r"
+            + " JOIN WorkPackage w ON r.workPackageNumber = w.workPackageNumber"
+            + " JOIN Project p ON p.projectNumber = w.projectNumber"
+            + " WHERE p.projectNumber = :projectNumber"
+            + " ORDER BY r.reportDate", WorkPackageStatusReport.class);
+        query.setParameter("projectNumber", project.getProjectNumber());
+        List<WorkPackageStatusReport> sublist = query.getResultList();
+        sublist = sublist.subList(0, 19);
+        return sublist;
     }
 }
