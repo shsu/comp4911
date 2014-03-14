@@ -67,7 +67,7 @@ public class ProjectReport {
         while(wpsrIterator.hasNext()){
             wpsr = wpsrIterator.next();
             reportHelperRow.setWpNumber(wpsr.getWorkPackageNumber());
-            effortSet = wpsr.ge
+
         }
 
 
