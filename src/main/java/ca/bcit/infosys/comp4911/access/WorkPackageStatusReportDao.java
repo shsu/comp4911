@@ -53,13 +53,13 @@ public class WorkPackageStatusReportDao {
         return query.getResultList();
     }
 
-    public List<WorkPackageStatusReport> getAllByProject(final Project project) {
+    public List<WorkPackageStatusReport> getLatestByProject(final int projectId) {
         TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r"
             + " JOIN WorkPackage w ON r.workPackageNumber = w.workPackageNumber"
             + " JOIN Project p ON p.projectNumber = w.projectNumber"
             + " WHERE p.projectNumber = :projectNumber"
             + " ORDER BY r.reportDate", WorkPackageStatusReport.class);
-        query.setParameter("projectNumber", project.getProjectNumber());
+        query.setParameter("projectNumber", projectId);
         List<WorkPackageStatusReport> sublist = query.getResultList();
         sublist = sublist.subList(0, 19);
         return sublist;
