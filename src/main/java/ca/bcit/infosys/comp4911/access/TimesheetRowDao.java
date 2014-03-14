@@ -35,7 +35,6 @@ public class TimesheetRowDao {
         em.remove(read(row.getId()));
     }
 
-
     public List<TimesheetRow> getAll() {
         TypedQuery<TimesheetRow> query = em.createQuery("select t from TimesheetRow t",
                 TimesheetRow.class);
@@ -49,10 +48,10 @@ public class TimesheetRowDao {
         return query.getResultList();
     }
 
-    public List<TimesheetRow> getAllByWP(final String wpNumber){
+    public List<TimesheetRow> getAllByWP(final String workPackageNumber){
         TypedQuery<TimesheetRow> query = em.createQuery("select t from TimesheetRow" +
-                " t where t.workPackageNumber = :wpNumber", TimesheetRow.class);
-        query.setParameter("wpNumber", wpNumber);
+                " t where t.workPackageNumber = :workPackageNumber", TimesheetRow.class);
+        query.setParameter("workPackageNumber", workPackageNumber);
         return query.getResultList();
     }
 

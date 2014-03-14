@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
 public class PayRateDao {
 
     @PersistenceContext(unitName = "comp4911")
-    EntityManager em;
+    private EntityManager em;
 
     public void create (final PayRate payRate)
     {

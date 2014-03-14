@@ -10,14 +10,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- * Created by Graeme on 2/9/14.
- */
 @Stateless
 public class WorkPackageStatusReportDao {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     public void create (final WorkPackageStatusReport workPackageStatusReport)
     {
@@ -45,21 +42,21 @@ public class WorkPackageStatusReportDao {
         return query.getResultList();
     }
 
-    public List<WorkPackageStatusReport> getAllByWorkPackage(final WorkPackage workPackage) {
+    public List<WorkPackageStatusReport> getAllByWorkPackage(final String workPackageNumber) {
         TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r"
-                + " where r.workPackage = :workPackage",
+                + " where r.workPackageNumber = :workPackageNumber",
                 WorkPackageStatusReport.class);
-        query.setParameter("workPackage", workPackage);
+        query.setParameter("workPackageNumber", workPackageNumber);
         return query.getResultList();
     }
 
-    public List<WorkPackageStatusReport> getLatestByProject(final int projectId) {
+    public List<WorkPackageStatusReport> getAllByProject(final int projectNumber) {
         TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r"
             + " JOIN WorkPackage w ON r.workPackageNumber = w.workPackageNumber"
             + " JOIN Project p ON p.projectNumber = w.projectNumber"
             + " WHERE p.projectNumber = :projectNumber"
             + " ORDER BY r.reportDate", WorkPackageStatusReport.class);
-        query.setParameter("projectNumber", projectId);
+        query.setParameter("projectNumber", projectNumber);
         List<WorkPackageStatusReport> sublist = query.getResultList();
         sublist = sublist.subList(0, 19);
         return sublist;

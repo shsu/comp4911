@@ -8,47 +8,39 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- * Created by Graeme on 2/8/14.
- */
 @Stateless
 public class WorkPackageDao {
 
     @PersistenceContext(unitName = "comp4911")
-    EntityManager em;
+    private EntityManager em;
 
-    public void create (final WorkPackage workPackage)
-    {
+    public void create(final WorkPackage workPackage) {
         em.persist(workPackage);
     }
 
-    public WorkPackage read ( final String workPackageNumber)
-    {
+    public WorkPackage read(final String workPackageNumber) {
         return em.find(WorkPackage.class, workPackageNumber);
     }
 
-    public void update (final WorkPackage workPackage)
-    {
+    public void update(final WorkPackage workPackage) {
         em.merge(workPackage);
     }
 
-    public void delete (final WorkPackage workPackage)
-    {
+    public void delete(final WorkPackage workPackage) {
         em.remove(read(workPackage.getWorkPackageName()));
     }
 
     public List<WorkPackage> getAll() {
         TypedQuery<WorkPackage> query = em.createQuery("select wp from WorkPackage wp",
-                WorkPackage.class);
+          WorkPackage.class);
         return query.getResultList();
     }
 
-    public List<WorkPackage> getAllByUser(int userId)
-    {
+    public List<WorkPackage> getAllByUser(int userId) {
         TypedQuery<WorkPackage> query = em.createQuery("select w from WorkPackage w "
-                + "where w.workPackageNumber = (SELECT i.workPackageNumber from WorkPackageAssignment i"
-                + " where i.userId = :userId)",
-                WorkPackage.class);
+          + "where w.workPackageNumber = (SELECT i.workPackageNumber from WorkPackageAssignment i"
+          + " where i.userId = :userId)",
+          WorkPackage.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }

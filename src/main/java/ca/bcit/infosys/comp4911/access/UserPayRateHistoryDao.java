@@ -1,6 +1,5 @@
 package ca.bcit.infosys.comp4911.access;
 
-import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.domain.UserPayRateHistory;
 
 import javax.ejb.Stateless;
@@ -13,7 +12,7 @@ import java.util.List;
 public class UserPayRateHistoryDao {
 
     @PersistenceContext(unitName = "comp4911")
-    EntityManager em;
+    private EntityManager em;
 
     public void create (final UserPayRateHistory payRateHistory)
     {
@@ -41,10 +40,10 @@ public class UserPayRateHistoryDao {
         return query.getResultList();
     }
 
-    public List<UserPayRateHistory> getAllUserPayRateHistoryByUser(final User user) {
-        TypedQuery<UserPayRateHistory> query = em.createQuery("select p from UserPayRateHistory p where p.user = :user ",
+    public List<UserPayRateHistory> getAllUserPayRateHistoryByUser(final int userId) {
+        TypedQuery<UserPayRateHistory> query = em.createQuery("select p from UserPayRateHistory p where p.userId = :userId ",
                 UserPayRateHistory.class);
-        query.setParameter("user", user);
+        query.setParameter("userId", userId);
         return query.getResultList();
     }
 }

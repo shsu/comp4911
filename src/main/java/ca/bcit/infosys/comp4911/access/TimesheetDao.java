@@ -12,9 +12,7 @@ import java.util.List;
 public class TimesheetDao {
 
     @PersistenceContext (unitName = "comp4911")
-    EntityManager em;
-
-    public static final String TIMESHEET = Timesheet.class.getSimpleName();
+    private EntityManager em;
 
     public void create (final Timesheet ts)
     {
@@ -52,27 +50,27 @@ public class TimesheetDao {
 
     public Timesheet getByDate(final int weekNumber, final int year, final int userId) {
         TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t" +
-            " where t.weekNumber = :week and t.userID = :id and t.year = :year", Timesheet.class);
+            " where t.weekNumber = :week and t.userId = :userId and t.year = :year", Timesheet.class);
         query.setParameter("week", weekNumber);
-        query.setParameter("id", userId);
+        query.setParameter("userId", userId);
         query.setParameter("year", year);
         return query.getSingleResult();
     }
 
-    public List<Timesheet> getRejected(final Integer userID) {
+    public List<Timesheet> getRejected(final Integer userId) {
         TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.isApproved = :approved" +
-                " and t.userID = :id",
+                " and t.userId = :userId",
                 Timesheet.class);
         query.setParameter("approved", false);
-        query.setParameter("id", userID);
+        query.setParameter("userId", userId);
         return query.getResultList();
     }
 
-    public List<Timesheet> getAllTimesheetsToApprove(final int userID) {
+    public List<Timesheet> getAllTimesheetsToApprove(final int userId) {
         TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.isApproved = :approved" +
-                " and t.userID = (select u.id from User u where u.timesheetApproverUserID = :user_id)",
+                " and t.userId = (select u.id from User u where u.timesheetApproverUserID = :userId)",
                 Timesheet.class);
-        query.setParameter("user_id", userID);
+        query.setParameter("userId", userId);
         return query.getResultList();
     }
 }

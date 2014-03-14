@@ -1,7 +1,5 @@
 package ca.bcit.infosys.comp4911.access;
 
-import ca.bcit.infosys.comp4911.domain.User;
-import ca.bcit.infosys.comp4911.domain.WorkPackage;
 import ca.bcit.infosys.comp4911.domain.WorkPackageAssignment;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -9,14 +7,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- * Created by Graeme on 2/9/14.
- */
 @Stateless
 public class WorkPackageAssignmentDao {
     
     @PersistenceContext
-        EntityManager em;
+    private EntityManager em;
 
     public void create (final WorkPackageAssignment workPackageAssignment)
     {
@@ -39,13 +34,12 @@ public class WorkPackageAssignmentDao {
     }
 
     // creating a list even though it is a single result, avoids an exception being thrown on no entity found.
-    public List<WorkPackageAssignment> getByUserAndWorkPackage(final WorkPackage workPackage,
-                                                         final User user) {
+    public List<WorkPackageAssignment> getByUserAndWorkPackage(final String workPackageNumber, final int userId) {
         TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from WorkPackageAssignment w"
-                + " where w.workPackage = :workPackage and w.user = :user",
+                + " where w.workPackageNumber = :workPackageNumber and w.userId = :userId",
                 WorkPackageAssignment.class);
-        query.setParameter("workPackage", workPackage);
-        query.setParameter("user", user);
+        query.setParameter("workPackageNumber", workPackageNumber);
+        query.setParameter("userId", userId);
         return query.getResultList();
     }
 
@@ -55,10 +49,10 @@ public class WorkPackageAssignmentDao {
         return query.getResultList();
     }
 
-    public List<WorkPackageAssignment> getAllByUser(final User user) {
-        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from WorkPackageAssignment w where w.user = :user",
+    public List<WorkPackageAssignment> getAllByUser(final int userId) {
+        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from WorkPackageAssignment w where w.userId = :userId",
                 WorkPackageAssignment.class);
-        query.setParameter("user", user);
+        query.setParameter("userId", userId);
         return query.getResultList();
     }
 

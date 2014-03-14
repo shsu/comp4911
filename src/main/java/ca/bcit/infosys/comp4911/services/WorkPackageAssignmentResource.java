@@ -74,24 +74,24 @@ public class WorkPackageAssignmentResource {
     public Response updateWorkPackageAssignment(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @PathParam("user_id") Integer id,
-      @PathParam("id") String wpId,
+      @PathParam("user_id") Integer user_id,
+      @PathParam("wp_id") String wpId,
       final WorkPackageAssignment workPackageAssignment) {
-        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+        userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         WorkPackage workPackage = workPackageDao.read(wpId);
         if (workPackage == null) {
             return SH.response(404);
         }
 
-        User user = userDao.read(id);
+        User user = userDao.read(user_id);
         if (user == null) {
             return SH.response(404);
         }
 
         // See WorkPackageAssignmentDao for explanation
         List<WorkPackageAssignment> wpAssignmentList =
-          workPackageAssignmentDao.getByUserAndWorkPackage(workPackage, user);
+          workPackageAssignmentDao.getByUserAndWorkPackage(wpId, user_id);
         if (wpAssignmentList == null) {
             return SH.response(404);
         }

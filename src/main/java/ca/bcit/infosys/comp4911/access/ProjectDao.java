@@ -8,14 +8,11 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import javax.ejb.Stateless;
 
-/**
- * Created by Graeme on 2/8/14.
- */
 @Stateless
 public class ProjectDao {
 
     @PersistenceContext(unitName = "comp4911")
-    EntityManager em;
+    private EntityManager em;
 
     public void create (final Project project)
     {
