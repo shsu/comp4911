@@ -123,8 +123,34 @@ cascadiaControllers.controller('CreateWPController', ['$scope', 'CascadiaService
     EDIT PAY RATES CONTROLLER
 */
 cascadiaControllers.controller('EditPayRatesController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
-    
+  function($scope, CascadiaService, $location, Restangular) {
+    var base = Restangular.all('pay_rates');
+
+    base.getList().then(function(response){
+      $scope.payRates = response;
+    });
+
+    payRatesChanged = [];
+
+    $scope.change = function(payRate) {
+      unique = true;
+      for(var i = 0; i < payRatesChanged.length; i++) {
+        if(payRatesChanged[i].id == payRate.id) {
+          unique = false;
+          break;
+        } 
+      }
+
+      if(unique) {
+        payRatesChanged.push(payRate);
+      }
+    };
+
+    $scope.edit = function() {
+      for(var i = 0; i < payRatesChanged.length; i++) {
+        payRatesChanged[i].put();
+      }
+    }
   }
 ]);
 

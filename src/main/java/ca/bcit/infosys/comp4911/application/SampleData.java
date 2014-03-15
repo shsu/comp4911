@@ -1,18 +1,7 @@
 package ca.bcit.infosys.comp4911.application;
 
-import ca.bcit.infosys.comp4911.access.ProjectAssignmentDao;
-import ca.bcit.infosys.comp4911.access.ProjectDao;
-import ca.bcit.infosys.comp4911.access.TimesheetDao;
-import ca.bcit.infosys.comp4911.access.TimesheetRowDao;
-import ca.bcit.infosys.comp4911.access.UserDao;
-import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
-import ca.bcit.infosys.comp4911.access.WorkPackageDao;
-import ca.bcit.infosys.comp4911.domain.PLevel;
-import ca.bcit.infosys.comp4911.domain.Project;
-import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
-import ca.bcit.infosys.comp4911.domain.User;
-import ca.bcit.infosys.comp4911.domain.WorkPackage;
-import ca.bcit.infosys.comp4911.domain.WorkPackageAssignment;
+import ca.bcit.infosys.comp4911.access.*;
+import ca.bcit.infosys.comp4911.domain.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -38,6 +27,9 @@ public class SampleData {
     private TimesheetRowDao timesheetRowDao;
 
     @EJB
+    private PayRateDao payRateDao;
+
+    @EJB
     private ProjectDao projectDao;
 
     @EJB
@@ -56,6 +48,7 @@ public class SampleData {
     public void populateData() {
         generateUsers();
         generateProjects();
+        generatePayRates();
         //generateProjectAssignments();
         generateWorkPackages();
         //generateWorkPackageAssignments();
@@ -110,6 +103,24 @@ public class SampleData {
         userDao.create(new User(
                 "gsmith", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 0, 14,
                 78901234, 56789012, 56789012, PLevel.DS));
+    }
+
+    private void generatePayRates() {
+        payRateDao.create(new PayRate(
+            2014, new BigDecimal(70), PLevel.P1));
+        payRateDao.create(new PayRate(
+            2014, new BigDecimal(90), PLevel.P2));
+        payRateDao.create(new PayRate(
+            2014, new BigDecimal(110), PLevel.P3));
+        payRateDao.create(new PayRate(
+            2014, new BigDecimal(160), PLevel.P4));
+        payRateDao.create(new PayRate(
+            2014, new BigDecimal(200), PLevel.P5));
+        payRateDao.create(new PayRate(
+            2014, new BigDecimal(100), PLevel.DS));
+        payRateDao.create(new PayRate(
+            2014, new BigDecimal(100), PLevel.SS));
+
     }
 
     private void generateProjects() {

@@ -1,37 +1,16 @@
 <content>
-  <h1 class="secondary">Edit Pay Rates</h1>
+  <div ng-controller="EditPayRatesController">
+    <h1 class="secondary">Edit Pay Rates</h1>
     <div class="table-responsive">
       <table class="table table-hover table-bordered">
         <tbody>
-          <tr>
-            <td>P5/P6</td>
-            <td><input type="text" /></td>
-          </tr>
-          <tr>
-            <td>P4</td>
-            <td><input type="text" /></td>
-          </tr>
-          <tr>
-            <td>P3</td>
-            <td><input type="text" /></td>
-          </tr>
-          <tr>
-            <td>P2</td>
-            <td><input type="text" /></td>
-          </tr>
-          <tr>
-            <td>P1</td>
-            <td><input type="text" /></td>
-          </tr>
-          <tr>
-            <td>DS</td>
-            <td><input type="text" /></td>
-          </tr>
-          <tr>
-            <td>SS</td>
-            <td><input type="text" /></td>
+          <tr ng-repeat="p in payRates">
+            <td>{{p.pLevel}}</td>
+            <td><input type="text" ng-change="change(p)" ng-model="p.rate"/></td>
           </tr>
         </tbody>
       </table>
-  </div>  
+      <button class="btn btn-primary" ng-click="edit()">Save</button>
+   </div>  
+  </div>
 </content>

@@ -26,7 +26,6 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/profile', {controller: 'ProfileController', templateUrl:'Partials/profile.html'}).
     when('/project', {controller: 'ProjectManagementController', templateUrl:'Partials/project-management.html'}).
     when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
-    when('/users-management', {controller: 'UsersManagementController', templateUrl:'Partials/api-testing/users-management.html'}).
     when('/user-management-hr', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
     when('/user-management-super', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-super.html'}).
     otherwise({redirectTo:'/'});
