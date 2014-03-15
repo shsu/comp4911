@@ -1,3 +1,83 @@
 <content>
-  <h1 class="secondary">Work Package Details</h1>  
+  <h1 class="secondary">Work Package Details</h1>
+  <div ng-controller="WPDetailsController">
+    <!-- <p>{{package}}</p> -->
+    <div class="row">
+      <p class="col-sm-3">Project No: {{package.projectNumber}}</p>
+      <p class="col-sm-3">Project Name: </p>
+      <p class="col-sm-3">Budget: </p>
+      <p class="col-sm-3">Remaining Budget: </p>
+    </div>
+    <div class="row">
+      <p class="col-sm-4">WP Number: {{package.workPackageNumber}}</p>
+      <p class="col-sm-8">WP Title: {{package.workPackageName}}</p>
+    </div>
+    <div class="row">
+      <p class="description">
+        WP Description
+      </p>
+    </div>
+    <div class="row">
+      <p>Assigned Employees:</p>
+    </div>
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <th>Assigned Employees</th>
+              <th>Pay Grade</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-7">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <th>Pay Grade</th>
+              <th>Person Days for Completion</th>
+              <th>Person Days Spent</th>
+              <th>Estimated Remaining Person Days</th>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <p class="col-sm-5">Future Assigned Employees:</p>
+      <p class="col-sm-7">Budget and Cost</p>
+    </div>
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered">
+            <thead>
+              <th>Assigned Employees</th>
+              <th>Pay Grade</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-7">
+        <p>Budgeted Cost: {{package.estimateAtStart}}</p>
+        <p>Engineers Estimate: </p>
+        <p>Estimated Actual Cost at Completion: {{package.estimateToCompletion}}</p>
+        <p>Estimated Start Date: {{package.startDate}}</p>
+        <p>Estimated End Date: {{package.endDate}}</p>
+      </div>
+    </div>
+  </div>  
 </content>

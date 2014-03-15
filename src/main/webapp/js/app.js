@@ -23,11 +23,15 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/logout', {controller: 'LogoutController'}).
     when('/manage-approver', {controller: 'ManageApproverController', templateUrl:'Partials/manage-approver.html'}).
     when('/manage-project', {controller: 'ManageProjectController', templateUrl:'Partials/manage-project.html'}).
-    when('/profile', {controller: 'ProfileController', templateUrl:'Partials/profile.html'}).
     when('/project', {controller: 'ProjectManagementController', templateUrl:'Partials/project-management.html'}).
     when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
     when('/user-management-hr', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
     when('/user-management-super', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-super.html'}).
+    when('/user-profile/:id', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
+    when('/weekly-project', {controller: 'WeeklyProjectController', templateUrl:'Partials/weekly-project.html'}).
+    when('/wp-details', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).
+    when('/wp-details/:id', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).
+    when('/wp-status-report', {controller: 'WPStatusReportController', templateUrl:'Partials/wp-status-report.html'}).
     otherwise({redirectTo:'/'});
 }])
 .run(function($rootScope, authenticateUser) {

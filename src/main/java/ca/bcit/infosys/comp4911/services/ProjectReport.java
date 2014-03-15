@@ -19,8 +19,6 @@ import java.util.*;
 @Path("/reports")
 public class ProjectReport {
 
-    public static final int CONVERT_TO_TENTHS_OF_AN_HOUR = 10;
-
     @EJB
     private UserTokens userTokens;
 
@@ -45,16 +43,8 @@ public class ProjectReport {
     @EJB
     private UserPayRateHistoryDao userPayRateHistoryDao;
 
-    private List<WorkPackageStatusReport> latestTwentyReports;
-
-    private WorkPackageStatusReport wpsr;
-
-    private List<Timesheet> wpTimesheets;
-
-    private Project project;
-
-    private ReportHelper reportHelper;
-
+    @EJB
+    private PayRateDao payRateDao;
     @GET
     @Path("{id}")
     public Response getProjectReport(
@@ -62,19 +52,27 @@ public class ProjectReport {
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
             @PathParam("id") final Integer projectId){
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        List<Timesheet> wpTimesheets;
+        Project project;
+        ReportHelper reportHelper;
         ReportHelperRow[] reportHelperRows = new ReportHelperRow[20];
+        WorkPackageStatusReport wpsr;
+        List<WorkPackageStatusReport> latestTwentyReports;
 
         // No need for actual Entity because it is not actually stored in DB
         JSONObject report = new JSONObject();
         project = projectDao.read(projectId);
         reportHelper = new ReportHelper(project.getProjectNumber(), project.getProjectName());
-        //latestTwentyReports = wpsrDao.getLatestByProject(projectId);
+
+        latestTwentyReports = wpsrDao.getLatestByProject(projectId);
         Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
         while(wpsrIterator.hasNext()){
             wpsr = wpsrIterator.next();
             wpTimesheets = tsDao.getTimesheetsByWP(wpsr.getWorkPackageNumber());
             reportHelperRows[i] = getWPPersonHours(wpTimesheets, wpsr.getWorkPackageNumber());
+            calculateTotalLabourDollars(reportHelperRows[i], wpsr.getYear());
             i++;
         }
 
@@ -82,6 +80,7 @@ public class ProjectReport {
         reportHelper.setProjectName(project.getProjectName());
         reportHelper.setProjectNumber(project.getProjectNumber());
         report.append("report", reportHelper);
+
         return SH.responseWithEntity(200, report);
     }
 
@@ -92,8 +91,8 @@ public class ProjectReport {
      */
     private PLevel getUserPLevel (int userId, int year, int weekNumber) {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.WEEK_OF_YEAR, 52);
         cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.WEEK_OF_YEAR, 52);
         Date date = cal.getTime();
         UserPayRateHistory userPayRateHistory = userPayRateHistoryDao.getByUserIdAndTimesheetDate(userId, date);
 
@@ -112,14 +111,17 @@ public class ProjectReport {
         List<TimesheetRow> timesheetRowList;
         PLevel plevel;
         Iterator<Timesheet> timesheetIterator = timesheetList.iterator();
-        while(timesheetIterator.hasNext()){
+
+        while(timesheetIterator.hasNext())
+        {
             currentTimesheet = timesheetIterator.next();
+
             plevel = getUserPLevel(currentTimesheet.getUserId(),
                     currentTimesheet.getYear(), currentTimesheet.getWeekNumber());
             timesheetRowList = currentTimesheet.getTimesheetRows();
             reportHelperRow = incrementPLevelHours(plevel, timesheetRowList, wpNumber, reportHelperRow);
-
         }
+
         return reportHelperRow;
     }
 
@@ -170,5 +172,18 @@ public class ProjectReport {
         }
 
         return reportHelperRow;
+    }
+
+    public void calculateTotalLabourDollars(ReportHelperRow reportHelperRow, int year){
+        List<PayRate> yearPayRate = payRateDao.getPayRateByYear(year);
+        double totalLabourDollars = 0;
+        totalLabourDollars += yearPayRate.get(0).getRate().doubleValue()*reportHelperRow.getDS();
+        totalLabourDollars += yearPayRate.get(1).getRate().doubleValue()*reportHelperRow.getP1();
+        totalLabourDollars += yearPayRate.get(2).getRate().doubleValue()*reportHelperRow.getP2();
+        totalLabourDollars += yearPayRate.get(3).getRate().doubleValue()*reportHelperRow.getP3();
+        totalLabourDollars += yearPayRate.get(4).getRate().doubleValue()*reportHelperRow.getP4();
+        totalLabourDollars += yearPayRate.get(5).getRate().doubleValue()*reportHelperRow.getP5();
+        totalLabourDollars += yearPayRate.get(6).getRate().doubleValue()*reportHelperRow.getSS();
+        reportHelperRow.setLabourDollars(totalLabourDollars);
     }
 }

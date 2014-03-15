@@ -233,6 +233,7 @@ cascadiaControllers.controller('IndexController', ['$scope', 'CascadiaService', 
     $scope.logout = function() {
       localStorage.clear();
       $location.path('/login');
+      $.growl.notice({ title: "Success!", message: "You have been logged out." });
     }
   }
 ]);
@@ -287,7 +288,7 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
 */
 cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'CascadiaService',
   function($scope, $rootScope, Restangular, CascadiaService) {
-    Restangular.all('user/timesheets').getList().then(function(response) {
+    Restangular.one('user/timesheets').get().then(function(response) {
       $scope.timesheets = response;
     });
 
@@ -580,10 +581,64 @@ cascadiaControllers.controller('ProjectManagementController', ['$scope', 'Cascad
 ]);
 
 
-cascadiaControllers.controller('ProfileController', ['$scope', 'CascadiaService',
-  function($scope, CascadiaService) {}
+
+/*
+    USER PROFILE CONTROLLER
+*/
+cascadiaControllers.controller('UserProfileController', ['$scope', 'CascadiaService', '$routeParams', 'Restangular',
+  function($scope, CascadiaService, $params, Restangular) {
+    $scope.param = $params.id;
+
+    var base = Restangular.one('users' + $params.id);
+
+    base.get().then(function(response){
+      $scope.user = response;
+    });
+  }
 ]);
 
+
+
+/*
+    WEEKLY PROJECT CONTROLLER
+*/
+cascadiaControllers.controller('WeeklyProjectController', ['$scope', 'Restangular',
+  function($scope, Restangular){
+    
+  }
+]);
+
+
+
+/*
+    WORK PACKAGE DETAILS CONTROLLER
+*/
+cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', '$routeParams',
+  function($scope, Restangular, $params){
+    $scope.param = $params.id;
+
+    var base = Restangular.one('work_packages/' + $scope.param);
+
+    base.get().then(function(response){
+      $scope.package = response;
+    });
+  }
+]);
+
+
+
+/*
+    WORK PACKAGE STATUS REPORT CONTROLLER
+*/
+cascadiaControllers.controller('WPStatusReportController', ['$scope', 'Restangular',
+  function($scope, Restangular){
+    
+  }
+]);
+
+
+
+///////////////   API TESTING   ///////////////
 
 
 /*
