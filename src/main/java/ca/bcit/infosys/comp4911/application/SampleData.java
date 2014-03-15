@@ -2,14 +2,13 @@ package ca.bcit.infosys.comp4911.application;
 
 import ca.bcit.infosys.comp4911.access.*;
 import ca.bcit.infosys.comp4911.domain.*;
-import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -144,7 +143,7 @@ public class SampleData {
         		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, 100000));
         
         issueDate = setDate(2, 5, 2014);
-        endDate = setDate(2, 12, 2014);
+        endDate = setDate(4, 12, 2014);
         
         workPackageDao.create(new WorkPackage(
         		"B3332222", "Write tests", issueDate, "100", endDate, 12345, 50000));
@@ -167,14 +166,14 @@ public class SampleData {
         workPackageDao.create(new WorkPackage(
         		"C3332222", "Preliminary front end design", issueDate, "100", endDate, 55522, 100000));
         
-        issueDate = setDate(12, 15, 2013);
+        issueDate = setDate(11, 15, 2013);
         endDate = setDate(2, 5, 2014);
         
         workPackageDao.create(new WorkPackage(
         		"A3334452", "Implement login logic", issueDate, "100", endDate, 55522, 45000));
         
         issueDate = setDate(8, 2, 2012);
-        endDate = setDate(3, 12, 2013);
+        endDate = setDate(3, 27, 2013);
         
         workPackageDao.create(new WorkPackage(
         		"ZZ334222", "Research technologies", issueDate, "0", endDate, 99977, 5000000));
@@ -223,26 +222,51 @@ public class SampleData {
                 true
         ));
     }
-
+    
     private void generateTimesheets() {
-
-        Timesheet timesheet;
-
-
-        for(int j = 0; j < 12; j++)
-        {
-            timesheet = new Timesheet(1, j, 2014, j, j, false, false);
-            timesheetDao.create(timesheet);
-            List<TimesheetRow> rows = timesheet.getTimesheetRows();
-            for(int i = 0; i < 5; i++)
-            {
-                TimesheetRow temp = new TimesheetRow(i, "" + i, i, i, i, i, i, i, i, "hi" + i);
-                timesheetRowDao.create(temp);
-                rows.add(temp);
-            }
-        }
+    	TimesheetRow wp1Row1 = new TimesheetRow(12345, "A1112222", 80, 80, 80, 80, 80, 40, 0, null);
+        TimesheetRow wp1Row2 = new TimesheetRow(12345, "B3332222", 80, 0, 0, 0, 0, 0, 0, null);
+        TimesheetRow wp1Row3 = new TimesheetRow(12345, "B3332223", 0, 50, 60, 30, 50, 30, 0, null);
+        
+        TimesheetRow wp2Row1 = new TimesheetRow(55522, "A3334444", 0, 65, 25, 35, 0, 0, 0, null);
+        TimesheetRow wp2Row2 = new TimesheetRow(55522, "C3332222", 50, 0, 0, 25, 80, 0, 0, null);
+        TimesheetRow wp2Row3 = new TimesheetRow(55522, "A3334452", 30, 0, 50, 0, 0, 40, 0, null);
+        
+        TimesheetRow wp3Row1 = new TimesheetRow(99777, "ZZ334222", 25, 0, 75, 0, 40, 60, 20, null);
+        TimesheetRow wp3Row2 = new TimesheetRow(99777, "ZZ334229", 70, 20, 5, 0, 40, 30, 60, null);
+        
+        List<TimesheetRow> rowCollection = new ArrayList<TimesheetRow>();
+        Timesheet tempTimesheet;
+        
+        rowCollection.add(wp1Row1);
+        timesheetRowDao.create(wp1Row1);
+        tempTimesheet = new Timesheet(12345678, rowCollection, 1, 2014, 0, 40, true, true);
+        timesheetDao.create(tempTimesheet);
+        rowCollection.clear();
+        
+        rowCollection.add(wp1Row2);
+        rowCollection.add(wp1Row3);
+        timesheetRowDao.create(wp1Row2);
+        timesheetRowDao.create(wp1Row3);
+        tempTimesheet = new Timesheet(23456789, rowCollection, 12, 2014, -90, 0, false, true);
+        rowCollection.clear();
+        
+        rowCollection.add(wp2Row1);
+        rowCollection.add(wp2Row2);
+        rowCollection.add(wp2Row3);
+        timesheetRowDao.create(wp2Row1);
+        timesheetRowDao.create(wp2Row2);
+        timesheetRowDao.create(wp2Row3);
+        tempTimesheet = new Timesheet(34567890, rowCollection, 47, 2013, 0, 0, true, true);
+        rowCollection.clear();
+        
+        rowCollection.add(wp3Row1);
+        rowCollection.add(wp3Row2);
+        timesheetRowDao.create(wp3Row1);
+        timesheetRowDao.create(wp3Row2);
+        tempTimesheet = new Timesheet(23456789, rowCollection, 11, 2014, 45, 0, true, true);
+        rowCollection.clear();
     }
-
     
     private Date setDate(int month, int day, int year)
     {
