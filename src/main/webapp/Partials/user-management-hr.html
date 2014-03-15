@@ -23,7 +23,7 @@
             <td>{{user.id}}</td>
             <td>{{user.firstName}} {{user.lastName}}</td>
             <td>{{user.username}}</td>
-            <td><input type="text" ng-change="change(user)" ng-model="user.supervisorUserId" /></td>
+            <td><input type="text" ng-change="change(user)" ng-model="supervisor"/>{{mapOfUsers[1].username}}</td>
             <td>
               <select ng-model="user.pLevel" ng-change="change(user)" ng-options="i for i in items">     
               </select>

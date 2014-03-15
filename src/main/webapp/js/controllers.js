@@ -2,6 +2,14 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'rest
 
 cascadiaControllers.service('CascadiaService', function($rootScope) {
   $rootScope.user = JSON.parse(localStorage.getItem('user'));
+
+  this.initMapOfUsers = function(listOfUsers) {
+    var worker = new Worker('js/web-worker.js');
+    worker.addEventListener('message', function(e){
+      $rootScope.mapOfUsers = JSON.parse(e.data);
+    }, false);
+    worker.postMessage(JSON.stringify(listOfUsers));
+  };
 });
 
 
@@ -525,16 +533,19 @@ cascadiaControllers.controller('ProfileController', ['$scope', 'CascadiaService'
       GET /users/:user_id
       PUT /users/:user_id  
 */
-cascadiaControllers.controller('UsersManagementController', ['$scope', 'Restangular',
-  function($scope, Restangular) {
+cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootScope', 'Restangular', 'CascadiaService',
+  function($scope, $rootScope, Restangular, CascadiaService) {
     var base = Restangular.all('users');
 
     $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
     $scope.statuses = [ 'Active', 'Inactive' ];
+
+
     usersChanged = [];
 
     base.getList().then(function(response) {
       $scope.users = response;
+      CascadiaService.initMapOfUsers($scope.users);
     })
 
     $scope.change = function(user) {
