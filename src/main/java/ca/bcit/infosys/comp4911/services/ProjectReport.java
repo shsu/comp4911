@@ -86,8 +86,7 @@ public class ProjectReport {
     }
 
     /**
-     * This method still needs to be fixed. Need the method to compare timesheet date vs the date in
-     * UserPayRateHistory.
+     * This method uses the userId, and the timesheet date to find the user PLevel for a given timesheet.
      * @param userId, year, weekNumber
      * @return
      */
@@ -102,8 +101,10 @@ public class ProjectReport {
     }
 
     /**
-     * Gets the amount of PLevel days per a list of Timesheets.
+     * Gets the amount of PLevel days per a list of Timesheets. This iterates through all of the Timesheets associated
+     * with a specific Work Package. It then updates the amount of PLevels used per work package.
      * @param timesheetList, wpNumber
+     * @return - the finished reportHelperRow
      */
     private ReportHelperRow getWPPersonHours(List<Timesheet> timesheetList, String wpNumber){
         ReportHelperRow reportHelperRow = new ReportHelperRow();
@@ -122,6 +123,16 @@ public class ProjectReport {
         return reportHelperRow;
     }
 
+    /**
+     * This method is used to update the PLevels. A Timesheet's rows are passed as parameter. The method iterates through
+     * the timesheet rows. If the work package number for Timesheet Row matches the given work package number then
+     * the report row's PLevel hours are updated.
+     * @param plevel
+     * @param timesheetRowList
+     * @param wpNumber
+     * @param reportHelperRow
+     * @return
+     */
     private ReportHelperRow incrementPLevelHours(PLevel plevel, List<TimesheetRow> timesheetRowList, String wpNumber,
                                                  ReportHelperRow reportHelperRow){
         Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();

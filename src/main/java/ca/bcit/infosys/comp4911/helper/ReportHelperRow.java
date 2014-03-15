@@ -1,6 +1,8 @@
 package ca.bcit.infosys.comp4911.helper;
 
 /**
+ * A project manager needs to see the most recent WPs associated with a project, and how much work has been
+ * done for each work package within the project.
  * Created by craigleclair on 3/14/2014.
  */
 public class ReportHelperRow {
