@@ -1,7 +1,6 @@
 package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.Timesheet;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -73,4 +72,14 @@ public class TimesheetDao {
         query.setParameter("userId", userId);
         return query.getResultList();
     }
+
+    public List<Timesheet> getTimesheetsByWP(final String workpackageId){
+        TypedQuery<Timesheet> query = em.createQuery("SELECT DISTINCT t from Timesheet t" +
+                " JOIN TimesheetRow tr ON t.id = tr.TimesheetId" +
+                " WHERE tr.workPackageNumber = :wpId", Timesheet.class);
+        query.setParameter("wpId", workpackageId);
+        return query.getResultList();
+    }
+
+
 }

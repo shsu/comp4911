@@ -16,6 +16,44 @@ public class ReportHelperRow {
     private String wpNumber;
     private String wpDescription;
 
+    public ReportHelperRow() {
+        P1 = 0;
+        P2 = 0;
+        P3 = 0;
+        P4 = 0;
+        P5 = 0;
+        DS = 0;
+        SS = 0;
+    }
+
+    public void incrementP1(double hours){
+        P1 += hours;
+    }
+
+    public void incrementP2(double hours){
+        P2 += hours;
+    }
+
+    public void incrementP3(double hours){
+        P3 += hours;
+    }
+
+    public void incrementP4(double hours){
+        P4 += hours;
+    }
+
+    public void incrementP5(double hours){
+        P5 += hours;
+    }
+
+    public void incrementSS(double hours){
+        SS += hours;
+    }
+
+    public void incrementDS(double hours){
+        DS += hours;
+    }
+
     public double getP1() {
         return P1;
     }

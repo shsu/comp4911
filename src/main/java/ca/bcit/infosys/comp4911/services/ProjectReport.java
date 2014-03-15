@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.services;
 
 import ca.bcit.infosys.comp4911.access.ProjectDao;
+import ca.bcit.infosys.comp4911.access.TimesheetDao;
 import ca.bcit.infosys.comp4911.access.TimesheetRowDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageStatusReportDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
@@ -40,19 +41,18 @@ public class ProjectReport {
     @EJB
     private TimesheetRowDao tsrDao;
 
+    @EJB
+    private TimesheetDao tsDao;
+
     private List<WorkPackageStatusReport> latestTwentyReports;
 
     private WorkPackageStatusReport wpsr;
 
-    private List<TimesheetRow> wpTimesheetRows;
+    private List<Timesheet> wpTimesheets;
 
     private Project project;
 
     private ReportHelper reportHelper;
-
-    private ReportHelperRow reportHelperRow;
-
-    private Set<Effort> effortSet;
 
     @GET
     @Path("{id}")
@@ -61,6 +61,7 @@ public class ProjectReport {
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
             @PathParam("id") final Integer projectId){
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+        ReportHelperRow[] reportHelperRows = new ReportHelperRow[20];
 
         // No need for actual Entity because it is not actually stored in DB
         JSONObject report = new JSONObject();
@@ -69,27 +70,87 @@ public class ProjectReport {
         //latestTwentyReports = wpsrDao.getLatestByProject(projectId);
         Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
-        reportHelperRow = new ReportHelperRow();
         while(wpsrIterator.hasNext()){
             wpsr = wpsrIterator.next();
-            reportHelperRow.setWpNumber(wpsr.getWorkPackageNumber());
-            wpTimesheetRows = tsrDao.getAllByWP(wpsr.getWorkPackageNumber());
-            calculatePLevels(reportHelperRow, wpTimesheetRows);
-
+            wpTimesheets = tsDao.getTimesheetsByWP(wpsr.getWorkPackageNumber());
+            reportHelperRows[i] = getWPPersonHours(wpTimesheets, wpsr.getWorkPackageNumber());
+            i++;
         }
 
-
+        reportHelper.setRhRows(reportHelperRows);
+        reportHelper.setProjectName(project.getProjectName());
+        reportHelper.setProjectNumber(project.getProjectNumber());
+        report.append("report", reportHelper);
         return SH.responseWithEntity(200, report);
     }
 
-    private void calculatePLevels(ReportHelperRow reportHelperRow, List<TimesheetRow> wpTimesheetRows){
-        double total = 0;
+    /**
+     * This method still needs to be fixed. Need the method to compare timesheet date vs the date in
+     * UserPayRateHistory.
+     * @param userId, year, weekNumber
+     * @return
+     */
+    private PLevel getUserPLevel (int userId, int year, int weekNumber) {
+        return PLevel.P1;
+    }
 
-        Iterator<TimesheetRow> tsrIterator = wpTimesheetRows.listIterator();
-        while(tsrIterator.hasNext()){
-            total += tsrIterator.next().getTotal();
+    /**
+     * Gets the amount of PLevel days per a list of Timesheets.
+     * @param timesheetList, wpNumber
+     */
+    private ReportHelperRow getWPPersonHours(List<Timesheet> timesheetList, String wpNumber){
+        ReportHelperRow reportHelperRow = new ReportHelperRow();
+        Timesheet currentTimesheet;
+        List<TimesheetRow> timesheetRowList;
+        PLevel plevel;
+        Iterator<Timesheet> timesheetIterator = timesheetList.iterator();
+        while(timesheetIterator.hasNext()){
+            currentTimesheet = timesheetIterator.next();
+            plevel = getUserPLevel(currentTimesheet.getUserId(),
+                    currentTimesheet.getYear(), currentTimesheet.getWeekNumber());
+            timesheetRowList = currentTimesheet.getTimesheetRows();
+            reportHelperRow = incrementPLevelHours(plevel, timesheetRowList, wpNumber, reportHelperRow);
+
+        }
+        return reportHelperRow;
+    }
+
+    private ReportHelperRow incrementPLevelHours(PLevel plevel, List<TimesheetRow> timesheetRowList, String wpNumber,
+                                                 ReportHelperRow reportHelperRow){
+        Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
+        TimesheetRow tsr;
+        while(timesheetRowIterator.hasNext()){
+            tsr = timesheetRowIterator.next();
+            if(!(tsr.getWorkPackageNumber().equalsIgnoreCase(wpNumber)))
+            {
+                continue;
+            }
+            switch(plevel){
+                case P1:
+                    reportHelperRow.incrementP1(tsr.getTotal());
+                    break;
+                case P2:
+                    reportHelperRow.incrementP2(tsr.getTotal());
+                    break;
+                case P3:
+                    reportHelperRow.incrementP3(tsr.getTotal());
+                    break;
+                case P4:
+                    reportHelperRow.incrementP4(tsr.getTotal());
+                    break;
+                case P5:
+                    reportHelperRow.incrementP5(tsr.getTotal());
+                    break;
+                case SS:
+                    reportHelperRow.incrementSS(tsr.getTotal());
+                    break;
+                case DS:
+                    reportHelperRow.incrementDS(tsr.getTotal());
+                    break;
+            }
+
         }
 
-        reportHelperRow.setP1(total/CONVERT_TO_TENTHS_OF_AN_HOUR);
+        return reportHelperRow;
     }
 }
