@@ -42,16 +42,16 @@ public class WorkPackageResource {
         return SH.responseWithEntity(200, workPackageDao.getAll());
     }
 
-    @GET
-    @Path("{project_number}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAllWorkPackagesByProject(
-       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-       @PathParam("project_number") int projectNumber) {
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createWorkPackage(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            final WorkPackage workPackage) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.responseWithEntity(200, workPackageDao.getAllByProject(projectNumber));
+        workPackageDao.create(workPackage);
+        return SH.response(201);
     }
 
     @GET
@@ -70,29 +70,17 @@ public class WorkPackageResource {
         return SH.responseWithEntity(200, workPackage);
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPayRate(
-      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      final WorkPackage workPackage) {
-        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
-
-        workPackageDao.create(workPackage);
-        return SH.response(201);
-    }
-
     @PUT
     @Path("{workpackage_number}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateWorkPackage(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @PathParam("workpackage_number") String workpackageNumber,
-      final WorkPackage workPackage) {
+      @PathParam("workpackage_number") String workPackageNumber,
+      WorkPackage workPackage) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        WorkPackage workPackageUpdate = workPackageDao.read(workpackageNumber);
+        WorkPackage workPackageUpdate = workPackageDao.read(workPackageNumber);
         if (workPackageUpdate == null) {
             return SH.response(404);
         }
@@ -116,5 +104,17 @@ public class WorkPackageResource {
 
         workPackageDao.delete(workPackage);
         return SH.response(204);
+    }
+
+    @GET
+    @Path("project/{project_number}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllWorkPackagesByProject(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("project_number") int projectNumber) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        return SH.responseWithEntity(200, workPackageDao.getAllByProject(projectNumber));
     }
 }

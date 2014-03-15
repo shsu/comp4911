@@ -109,11 +109,47 @@ cascadiaControllers.controller('CreateProjectsController', ['$scope', 'CascadiaS
 
 
 /*
-    CREATE WP CONTROLLER
+   WP MANAGEMENT CONTROLLER
 */
-cascadiaControllers.controller('CreateWPController', ['$scope', 'CascadiaService', '$location', 'Restangular',
+cascadiaControllers.controller('WPManagementController', ['$scope', 'CascadiaService', '$location', 'Restangular',
   function($scope, CascadiaService, $location, Restangular){
-    // Restangular.one('package').post() ...
+    $scope.statuses = [ 'Open', 'Closed'];
+    $scope.project = {};
+    mapOfWP = {};
+    wpChanged = [];
+
+    $scope.listWP = function(project) {
+      Restangular.one('work_packages/project').getList(project.projectNumber).then(function(response){
+        $scope.workPackages = response;
+      });
+    }  
+
+    Restangular.one('user/projects/managed').getList().then(function(response){
+      $scope.projects = response;
+    });
+
+    $scope.change = function(wp) {
+      unique = true;
+      for(var i = 0; i < wpChanged.length; i++) {
+        if(wpChanged[i].workPackageNumber == wp.workPackageNumber) {
+          unique = false;
+          break;
+        } 
+      }
+
+      if(unique) {
+        wpChanged.push(wp);
+      }
+    };
+    
+    $scope.edit = function() {
+      for(var i = 0; i < wpChanged.length; i++) {
+        el = wpChanged[i];
+        Restangular.one('work_packages', el.workPackageNumber).customPUT(el);
+      }
+      wpChanged = [];
+    }
+    
   }
 ]);
 
@@ -600,6 +636,7 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootSco
       for(var i = 0; i < usersChanged.length; i++) {
         usersChanged[i].put();
       }
+      usersChanged = [];
     }
 
     $scope.add = function() {
@@ -611,7 +648,7 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootSco
 
       base.post(newuser).then(function(response) {
         $scope.add_user = false;
-      })
+      });
     }
   }
 ]);

@@ -1,0 +1,51 @@
+<content>
+<div ng-controller="WPManagementController">
+  <div class="row">
+    <p class="col-xs-3">Project No. 
+      <select ng-model="project" ng-change="listWP(project)" ng-options="p.projectNumber for p in projects">
+      </select>
+    </p>
+    <p class="col-xs-3">Project Name: {{project.projectName}}</p>
+    <p class="col-xs-3">Budget: {{project.allocatedBudget | currency: amount: symbol}}</p>
+  </div>
+  <div class="row">
+    <form action="" class="form-inline">
+      <p>Search WP Number:  <input type="text" ng-model="query.workPackageNumber" placeholder="search" class="form-control" /></p>
+    </form>
+  </div>
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered">
+        <tbody>
+          <tr>
+            <th>WP Number</th>
+            <th>WP Title</th>
+            <th>Responsible Engineer</th>
+            <th>Add Engineer</th>
+            <th>Issue Date</th>
+            <th>Budget</th>
+            <th>Status</th>
+          </tr>
+          <tr ng-repeat="wp in workPackages | filter: query">
+            <td>{{wp.workPackageNumber}}</td>
+            <td>{{wp.workPackageName}}</td>
+            <td><select name="" id=""><option value="">Name</option></select></td>
+            <td><a href="#">Add Engineer</a></td>
+            <td>{{wp.issueDate}}</td>
+            <!-- Figure this out later -->
+            <td>TBD</td>
+            <td>
+              <select ng-model="wp.progressStatus" ng-change="change(wp)" ng-options="s for s in statuses">
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <button class="pull-right btn btn-primary" ng-click="edit()">Save</button>
+    <button class="pull-right btn btn-primary">Create Work Package</button>
+  </div>
+</div>
+</content>

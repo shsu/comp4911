@@ -8,14 +8,14 @@ cascadia.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/add-engineer', {controller: 'EngineerController', templateUrl:'Partials/add-engineer.html'}).
     when('/assign-employee-project', {controller: 'AEPController', templateUrl:'Partials/assign-employee-project.html'}).
-    when('/assign-employee-wp/:id', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html'}).
+    when('/assign-employee-wp', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html'}).
     when('/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/assign-manager.html'}).
     when('/assign-project', {controller: 'PackageController', templateUrl:'Partials/assign-project.html'}).
     when('/assign-re/:id', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
     when('/assign-supervisor', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
     when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
     when('/create-project', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html'}).
-    when('/create-wp', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html'}).
+    when('/manage-wp', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html'}).
     when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
     when('/edit-pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html'}).
     when('/engineer-budget', {controller: 'EngineerBudgetController', templateUrl:'Partials/engineer-budget.html'}).
@@ -50,7 +50,7 @@ cascadia.config(['$routeProvider', function($routeProvider) {
 });
 
 cascadia.config(function(RestangularProvider) {
-    RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
+    RestangularProvider.setBaseUrl('http://localhost:8080/comp4911/api');
 });
 
 cascadia.directive('content', function() {
