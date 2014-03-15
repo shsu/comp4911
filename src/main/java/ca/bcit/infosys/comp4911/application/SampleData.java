@@ -57,22 +57,11 @@ public class SampleData {
 
     private void generateUsers() {
         userDao.create(new User(
+          "username0@example.com","password","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
+        ));
+        userDao.create(new User(
                 "q","q","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
         ));
-
-        for(int i = 0; i < 5; i++)
-        {
-            userDao.create(new User(
-                    "username" + i + "@example.com",
-                    "password",
-                    "firstName" + i,
-                    "lastName" + i,
-                    new Date(),
-                    false,
-                    "",
-                    40,0,0,0,0,0,0, PLevel.P1
-                    ));
-        }
         
         Date startDate = setDate(1, 1, 2000);
         
