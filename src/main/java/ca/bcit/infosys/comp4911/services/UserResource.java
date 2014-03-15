@@ -122,6 +122,7 @@ public class UserResource {
 
     @Path("/projects")
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllProjectsAssignedToUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken) {
@@ -132,6 +133,7 @@ public class UserResource {
 
     @Path("/projects/managed")
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllUserManagedProjects(
             @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
             @QueryParam(SH.TOKEN_STRING) final String queryToken) {
@@ -144,6 +146,7 @@ public class UserResource {
 
     @Path("/work_packages")
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllWorkPackagesAssignedToUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken) {
@@ -154,6 +157,7 @@ public class UserResource {
 
     @Path("/timesheets")
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllTimesheetsForUser(
             @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
@@ -177,6 +181,7 @@ public class UserResource {
     // Create Timesheet for Authenticated User
     @Path("/timesheets")
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response createTimesheet(
         @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
         @QueryParam(SH.TOKEN_STRING) final String queryToken,
@@ -188,10 +193,11 @@ public class UserResource {
     }
 
     @Path("/timesheets/to_approve")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTimesheetsToApprove(
          @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-         @QueryParam(SH.TOKEN_STRING) final String queryToken,
-         final Timesheet timesheet) {
+         @QueryParam(SH.TOKEN_STRING) final String queryToken) {
             int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
             return SH.responseWithEntity(200,timesheetDao.getAllTimesheetsToApprove(userId));
@@ -199,6 +205,7 @@ public class UserResource {
 
     @Path("/peons")
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getAllPeons(
             @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
             @QueryParam(SH.TOKEN_STRING) final String queryToken) {

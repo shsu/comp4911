@@ -43,6 +43,18 @@ public class WorkPackageResource {
     }
 
     @GET
+    @Path("{project_number}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllWorkPackagesByProject(
+       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+       @QueryParam(SH.TOKEN_STRING) final String queryToken,
+       @PathParam("project_number") int projectNumber) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        return SH.responseWithEntity(200, workPackageDao.getAllByProject(projectNumber));
+    }
+
+    @GET
     @Path("{workpackage_number}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveWorkPackage(
