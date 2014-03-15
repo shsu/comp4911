@@ -44,11 +44,18 @@ public class PayRateDao {
     }
 
     public PayRate getPayRateByLevelAndYear(final String pLevel,
-                                               final String year) {
+                                               final int year) {
         TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.pLevel = :pLevel" +
             " and p.year = :year", PayRate.class);
         query.setParameter("pLevel", PLevel.valueOf(pLevel));
         query.setParameter("year", year);
         return query.getSingleResult();
+    }
+
+    public List<PayRate> getPayRateByYear(final int year) {
+        TypedQuery<PayRate> query = em.createQuery("SELECT p FROM PayRate p WHERE p.year = :year" +
+                " ORDER BY p.pLevel", PayRate.class);
+        query.setParameter("year", year);
+        return query.getResultList();
     }
 }
