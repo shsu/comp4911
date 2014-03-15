@@ -1,12 +1,13 @@
 <content>
+<div ng-controller="UsersManagementController">
   <h1 class="secondary">User Management</h1>
   <div class="row">
     <form action="" class="form-inline col-xs-8">
-      <p>Search Employees:  <input type="text" placeholder="search" class="form-control" ng-model="query" /></p>
+      <p>Search Employees: <input type="text" placeholder="search" class="form-control" ng-model="query.id" /></p>
     </form>
     <a href="#" id="edit" data-toggle="modal" data-target="#editModal" class="pull-right">Edit Pay Rates</a>
   </div>
-  <div class="row usertable" ng-controller="userController">
+  <div class="row usertable">
     <div class="table-responsive">
       <table class="table table-striped table-hover table-bordered">
         <tbody>
@@ -14,32 +15,21 @@
             <th class="th-narrow">Emp ID</th>
             <th class="th-narrow">Emp Name</th>
             <th class="th-narrow">User Name</th>
-            <th class="th-narrow">Password</th>
-            <th class="th-wide">E-Mail</th>
             <th class="th-wide">Assign to Supervisor</th>
             <th class="th-narrow">Labour Grade</th>
             <th class="th-narrow">Status</th>
           </tr>
-          <tr ng-repeat="user in users | filter: query">
+          <tr ng-repeat="user in users | filter: query" ng-hide="!query || query.id == ''">
             <td>{{user.id}}</td>
-            <td>{{user.name}}</td>
+            <td>{{user.firstName}} {{user.lastName}}</td>
             <td>{{user.username}}</td>
-            <td>********</td>
-            <td>{{user.email}}</td>
-            <td><input type="text" /></td>
+            <td><input type="text" ng-change="change(user)" ng-model="user.supervisorUserId" /></td>
             <td>
-              <select name="" id="">
-                <option value="">P5</option>
-                <option value="">P4</option>
-                <option value="">P3</option>
-                <option value="">P2</option>
-                <option value="">P1</option>
+              <select ng-model="user.pLevel" ng-change="change(user)" ng-options="i for i in items">     
               </select>
             </td>
             <td>
-              <select name="" id="">
-                <option value="">Active</option>
-                <option value="">Inactive</option>
+              <select ng-model="user.status" ng-change="change(user)" ng-options="s for s in statuses">
               </select>
             </td>
           </tr>
@@ -51,7 +41,7 @@
     <button class="btn btn-primary pull-right">Add New Employee</button>
   </div>
   <div class="row">
-    <button class="btn btn-primary pull-right">Save</button>
+    <button class="btn btn-primary pull-right" ng-click="edit()">Save</button>
   </div>
 
   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -181,4 +171,5 @@
         </div>
       </div>
     </div>
+  </div>
 </content>

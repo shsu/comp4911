@@ -529,9 +529,27 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', 'Restangu
   function($scope, Restangular) {
     var base = Restangular.all('users');
 
+    $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
+    $scope.statuses = [ 'Active', 'Inactive' ];
+    usersChanged = [];
+
     base.getList().then(function(response) {
       $scope.users = response;
     })
+
+    $scope.change = function(user) {
+      unique = true;
+      for(var i = 0; i < usersChanged.length; i++) {
+        if(usersChanged[i].id == user.id) {
+          unique = false;
+          break;
+        } 
+      }
+
+      if(unique) {
+        usersChanged.push(user);
+      }
+    };
 
     $scope.delete = function(user, $index) {
       user.remove().then(function() {
@@ -541,9 +559,10 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', 'Restangu
       console.log("user deleted");
     }
 
-    $scope.edit = function(user) {
-      user.put();
-      console.log(user);
+    $scope.edit = function() {
+      for(var i = 0; i < usersChanged.length; i++) {
+        usersChanged[i].put();
+      }
     }
 
     $scope.add = function() {

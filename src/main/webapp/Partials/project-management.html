@@ -6,7 +6,7 @@
         <button class="btn btn-primary" ng-click="add()">Add Project</button>
         <div class="col-xs-10 results">
           <ul class="no-pl">
-            <li ng-repeat="project in projects | filter:query" ng-hide="!query">
+            <li ng-repeat="project in projects | filter:query" ng-hide="!query || query.projectNumber == ''">
       	      {{project.projectNumber}} {{project.projectName}} {{project.allocatedBudget}} {{project.unAllocatedBudget}} 
               {{project.completeDate}} {{project.issueDate}} {{project.clientRate}}
             </li>

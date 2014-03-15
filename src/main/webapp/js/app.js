@@ -27,6 +27,8 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/project', {controller: 'ProjectManagementController', templateUrl:'Partials/project-management.html'}).
     when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
     when('/users-management', {controller: 'UsersManagementController', templateUrl:'Partials/api-testing/users-management.html'}).
+    when('/user-management-hr', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
+    when('/user-management-super', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-super.html'}).
     otherwise({redirectTo:'/'});
 }])
 .run(function($rootScope, authenticateUser) {
@@ -34,11 +36,16 @@ cascadia.config(['$routeProvider', function($routeProvider) {
      authenticateUser($rootScope);
   })
 })
-.factory('authenticateUser', function($location) {
+// Runs every time page is reloaded or routed, ensures authentication and headers are set appropriately
+.factory('authenticateUser', function($location, Restangular) {
   return function(scope){
     scope.isAuthenticated = (localStorage.getItem('token')) ? true : false;
     if(!scope.isAuthenticated) {
         $location.path('/login');
+    } else {
+      Restangular.setDefaultHeaders({
+        'Authorization': 'Basic ' + localStorage.getItem('token')
+      });
     }
   }
 });
