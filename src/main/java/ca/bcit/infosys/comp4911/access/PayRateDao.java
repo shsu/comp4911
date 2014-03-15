@@ -43,8 +43,16 @@ public class PayRateDao {
         return query.getResultList();
     }
 
+
+    /**
+     * Does it matter for this method that year is passed in as a string an not an integer? It's stored in the
+     * DB as an integer. Wanted to make a note because I know I'll forget.
+     * @param pLevel
+     * @param year
+     * @return
+     */
     public PayRate getPayRateByLevelAndYear(final String pLevel,
-                                               final int year) {
+                                               final String year) {
         TypedQuery<PayRate> query = em.createQuery("select p from PayRate p where p.pLevel = :pLevel" +
             " and p.year = :year", PayRate.class);
         query.setParameter("pLevel", PLevel.valueOf(pLevel));
