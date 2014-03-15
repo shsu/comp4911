@@ -197,6 +197,7 @@ cascadiaControllers.controller('IndexController', ['$scope', 'CascadiaService', 
     $scope.logout = function() {
       localStorage.clear();
       $location.path('/login');
+      $.growl.notice({ title: "Success!", message: "You have been logged out." });
     }
   }
 ]);
