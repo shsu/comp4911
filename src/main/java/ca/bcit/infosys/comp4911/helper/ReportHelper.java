@@ -7,6 +7,24 @@ public class ReportHelper {
     private Integer projectNumber;
     private String projectName;
     private ReportHelperRow[] rhRows = new ReportHelperRow[20];
+    private Integer projectBudget;
+    private Integer usedBudget;
+
+    public Integer getUsedBudget() {
+        return usedBudget;
+    }
+
+    public void setUsedBudget(Integer usedBudget) {
+        this.usedBudget = usedBudget;
+    }
+
+    public Integer getProjectBudget() {
+        return projectBudget;
+    }
+
+    public void setProjectBudget(Integer projectBudget) {
+        this.projectBudget = projectBudget;
+    }
 
     public ReportHelper(Integer projectNumber, String projectName) {
         this.projectNumber = projectNumber;

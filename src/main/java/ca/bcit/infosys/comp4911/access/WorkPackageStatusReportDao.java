@@ -50,7 +50,7 @@ public class WorkPackageStatusReportDao {
         return query.getResultList();
     }
 
-    public List<WorkPackageStatusReport> getAllByProject(final int projectNumber) {
+    public List<WorkPackageStatusReport> getLatestByProject(final int projectNumber) {
         TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r"
             + " JOIN WorkPackage w ON r.workPackageNumber = w.workPackageNumber"
             + " JOIN Project p ON p.projectNumber = w.projectNumber"

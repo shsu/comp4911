@@ -45,16 +45,6 @@ public class ProjectReport {
     @EJB
     private UserPayRateHistoryDao userPayRateHistoryDao;
 
-    private List<WorkPackageStatusReport> latestTwentyReports;
-
-    private WorkPackageStatusReport wpsr;
-
-    private List<Timesheet> wpTimesheets;
-
-    private Project project;
-
-    private ReportHelper reportHelper;
-
     @GET
     @Path("{id}")
     public Response getProjectReport(
@@ -62,13 +52,20 @@ public class ProjectReport {
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
             @PathParam("id") final Integer projectId){
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        List<Timesheet> wpTimesheets;
+        Project project;
+        ReportHelper reportHelper;
         ReportHelperRow[] reportHelperRows = new ReportHelperRow[20];
+        WorkPackageStatusReport wpsr;
+        List<WorkPackageStatusReport> latestTwentyReports;
 
         // No need for actual Entity because it is not actually stored in DB
         JSONObject report = new JSONObject();
         project = projectDao.read(projectId);
         reportHelper = new ReportHelper(project.getProjectNumber(), project.getProjectName());
-        //latestTwentyReports = wpsrDao.getLatestByProject(projectId);
+
+        latestTwentyReports = wpsrDao.getLatestByProject(projectId);
         Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
         while(wpsrIterator.hasNext()){
@@ -82,6 +79,7 @@ public class ProjectReport {
         reportHelper.setProjectName(project.getProjectName());
         reportHelper.setProjectNumber(project.getProjectNumber());
         report.append("report", reportHelper);
+
         return SH.responseWithEntity(200, report);
     }
 
@@ -92,8 +90,8 @@ public class ProjectReport {
      */
     private PLevel getUserPLevel (int userId, int year, int weekNumber) {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.WEEK_OF_YEAR, 52);
         cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.WEEK_OF_YEAR, 52);
         Date date = cal.getTime();
         UserPayRateHistory userPayRateHistory = userPayRateHistoryDao.getByUserIdAndTimesheetDate(userId, date);
 
@@ -112,14 +110,17 @@ public class ProjectReport {
         List<TimesheetRow> timesheetRowList;
         PLevel plevel;
         Iterator<Timesheet> timesheetIterator = timesheetList.iterator();
-        while(timesheetIterator.hasNext()){
+
+        while(timesheetIterator.hasNext())
+        {
             currentTimesheet = timesheetIterator.next();
+
             plevel = getUserPLevel(currentTimesheet.getUserId(),
                     currentTimesheet.getYear(), currentTimesheet.getWeekNumber());
             timesheetRowList = currentTimesheet.getTimesheetRows();
             reportHelperRow = incrementPLevelHours(plevel, timesheetRowList, wpNumber, reportHelperRow);
-
         }
+
         return reportHelperRow;
     }
 
