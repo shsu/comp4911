@@ -41,12 +41,12 @@ public class ProjectAssignmentResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllProjectAssignments(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
+      @PathParam("project_number") int projectNumber) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.responseWithEntity(200, projectAssignmentDao.getAll());
+        return SH.responseWithEntity(200, projectAssignmentDao.getByProject(projectNumber));
     }
-
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -58,6 +58,18 @@ public class ProjectAssignmentResource {
 
         projectAssignmentDao.create(projectAssignment);
         return SH.response(201);
+    }
+
+    @GET
+    @Path("manager")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProjectManager(
+      @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
+        @PathParam("project_number") int projectNumber) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        return SH.responseWithEntity(200, projectAssignmentDao.getProjectManager(projectNumber));
     }
 
     @PUT

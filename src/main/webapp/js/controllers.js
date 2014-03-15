@@ -524,7 +524,7 @@ cascadiaControllers.controller('ProjectManagementController', ['$scope', 'Cascad
   function($scope, CascadiaService, Restangular) {
     var base = Restangular.all('projects');
 
-    base.getList().then(function(response){
+    Restangular.one('user/projects/managed').getList().then(function(response){
       $scope.projects = response;
     })
 

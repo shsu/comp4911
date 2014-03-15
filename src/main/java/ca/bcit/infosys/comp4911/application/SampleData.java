@@ -49,13 +49,17 @@ public class SampleData {
         generateUsers();
         generateProjects();
         generatePayRates();
-        //generateProjectAssignments();
+        generateProjectAssignments();
         generateWorkPackages();
         //generateWorkPackageAssignments();
         //generateTimesheets();
     }
 
     private void generateUsers() {
+        userDao.create(new User(
+                "q","q","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
+        ));
+
         for(int i = 0; i < 5; i++)
         {
             userDao.create(new User(
@@ -69,10 +73,6 @@ public class SampleData {
                     40,0,0,0,0,0,0, PLevel.P1
                     ));
         }
-        
-        userDao.create(new User(
-          "q","q","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
-        ));
         
         Date startDate = setDate(1, 1, 2000);
         
@@ -217,6 +217,7 @@ public class SampleData {
         List<Project> projects = projectDao.getAll();
         List<User> users = userDao.getAll();
 
+        /*
         for(int i = 0; i < 5; i++)
         {
             projectAssignmentDao.create(new ProjectAssignment(
@@ -225,6 +226,12 @@ public class SampleData {
                     false
             ));
         }
+        */
+        projectAssignmentDao.create(new ProjectAssignment(
+                projects.get(0).getProjectNumber(),
+                users.get(0).getId(),
+                true
+        ));
     }
     /**
     private void generateTimesheets() {

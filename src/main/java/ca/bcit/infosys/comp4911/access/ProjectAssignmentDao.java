@@ -44,6 +44,13 @@ public class ProjectAssignmentDao {
         return query.getSingleResult();
     }
 
+    public ProjectAssignment getProjectManager(final int projectNumber) {
+        TypedQuery<ProjectAssignment> query = em.createQuery("select DISTINCT p.userId from ProjectAssignment"
+            + "p where p.projectNumber = :projectNumber and p.isProjectManager = true",
+                ProjectAssignment.class);
+        query.setParameter("projectNumber", projectNumber);
+        return query.getSingleResult();
+    }
 
     public List<ProjectAssignment> getAll() {
         TypedQuery<ProjectAssignment> query = em.createQuery("select p from ProjectAssignment p",
