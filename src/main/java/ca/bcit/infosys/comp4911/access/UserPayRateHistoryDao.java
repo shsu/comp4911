@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -45,5 +46,14 @@ public class UserPayRateHistoryDao {
                 UserPayRateHistory.class);
         query.setParameter("userId", userId);
         return query.getResultList();
+    }
+
+    public UserPayRateHistory getByUserIdAndTimesheetDate(final int userId, final Date date) {
+        TypedQuery<UserPayRateHistory> query = em.createQuery("SELECT p from UserPayRateHistory p WHERE" +
+                " p.userId = :userId AND p.startDate <= :date AND p.endDate >= :date", UserPayRateHistory.class);
+        query.setParameter("userId", userId);
+        query.setParameter("date", date);
+
+        return query.getSingleResult();
     }
 }

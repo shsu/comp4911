@@ -1,9 +1,6 @@
 package ca.bcit.infosys.comp4911.services;
 
-import ca.bcit.infosys.comp4911.access.ProjectDao;
-import ca.bcit.infosys.comp4911.access.TimesheetDao;
-import ca.bcit.infosys.comp4911.access.TimesheetRowDao;
-import ca.bcit.infosys.comp4911.access.WorkPackageStatusReportDao;
+import ca.bcit.infosys.comp4911.access.*;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.*;
 import ca.bcit.infosys.comp4911.helper.ReportHelper;
@@ -14,9 +11,7 @@ import org.json.JSONObject;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Dynamically creates report and returns it.
@@ -43,6 +38,12 @@ public class ProjectReport {
 
     @EJB
     private TimesheetDao tsDao;
+
+    @EJB
+    private UserDao userDao;
+
+    @EJB
+    private UserPayRateHistoryDao userPayRateHistoryDao;
 
     private List<WorkPackageStatusReport> latestTwentyReports;
 
@@ -91,7 +92,13 @@ public class ProjectReport {
      * @return
      */
     private PLevel getUserPLevel (int userId, int year, int weekNumber) {
-        return PLevel.P1;
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.WEEK_OF_YEAR, 52);
+        cal.set(Calendar.YEAR, year);
+        Date date = cal.getTime();
+        UserPayRateHistory userPayRateHistory = userPayRateHistoryDao.getByUserIdAndTimesheetDate(userId, date);
+
+        return userPayRateHistory.getpLevel();
     }
 
     /**
