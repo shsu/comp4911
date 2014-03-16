@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html class="html" lang="en" ng-app="cascadiaApp">
 <head>
@@ -9,6 +10,9 @@
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="bower_components/growl/stylesheets/jquery.growl.css" />
   <link rel="stylesheet" href="css/app.css">
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    
 </head>
 <body class="body">
   <nav class="navbar navbar-inverse bg-primary" ng-controller="IndexController" ng-show="isAuthenticated" role="navigation">
@@ -19,15 +23,59 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Project Management System</a>
+      <a class="navbar-brand" href="#/dashboard">Project Management System</a>
     </div>
     <div class="navbar-collapse collapse in">
       <ul class="nav navbar-nav">
-        <li><a href="#/project">Project</a></li>
-        <li><a href="#/manage-wp">WP Management</a></li>
-        <li><a href="#/timesheet">TimeSheet</a></li>
-        <li><a href="#">Report</a></li>
-        <li><a href="#/user-management-hr">User Management</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#/create-project">Create Project</a></li>
+            <li><a href="#/manage-project">Manage Project</a></li>
+            <li><a href="#/search-project">Search Project</a></li>
+            <li class="divider"></li>
+            <li><a href="#/pcbac">PCBAC</a></li>
+          </ul>
+        </li>          
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">WP Management<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Create WP</a></li>
+            <li><a href="#/manage-wp">Manage WP</a></li>
+            <li><a href="#/wp-details">WP Details</a></li>
+          </ul>
+        </li>          
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">TimeSheet<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#/timesheet">Enter TimeSheet</a></li>
+            <li><a href="#/timesheet-approval">Approve TimeSheet</a></li>
+          </ul>
+        </li>          
+          
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Report<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#/wp-status-report">WP Status Report</a></li>
+            <li><a href="#/weekly-project">Weekly Project Report</a></li>
+            <li><a href="#/monthly-wp">Monthly WP Report</a></li>
+            <li><a href="#/project-summary">Project Summary</a></li>
+            <li><a href="#/pcpr">PCPR</a></li>
+            <li><a href="#">Earned Value Report</a></li>
+          </ul>
+        </li>          
+          
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Management<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#/user-management-hr">Manage User - HR</a></li>
+            <li><a href="#/user-management-super">Manage User - Supervisor</a></li>
+            <li class="divider"></li>
+            <li><a href="#/edit-pay-rates">Edit Pay Rates - HR</a></li>
+            <li class="divider"></li>
+            <li><a href="#/user-profile">User Profile</a></li>
+          </ul>
+        </li>          
       </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
