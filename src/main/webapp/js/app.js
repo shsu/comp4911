@@ -55,7 +55,18 @@ cascadia.config(['$routeProvider', function($routeProvider) {
 });
 
 cascadia.config(function(RestangularProvider) {
-    RestangularProvider.setBaseUrl('http://localhost:8080/comp4911/api');
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', "http://localhost:8080/comp4911/api", false);
+    try {
+        xhr.send();
+        if (xhr.status >= 200 && xhr.status < 304) {
+            RestangularProvider.setBaseUrl('http://localhost:8080/comp4911/api');
+        } else {
+            RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
+        }
+    } catch (e) {
+        RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
+    }
 });
 
 cascadia.directive('content', function() {
