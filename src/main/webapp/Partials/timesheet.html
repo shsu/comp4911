@@ -10,9 +10,9 @@
     <div class="row">
       <div class="table-responsive timesheet">
         <ul class="list-inline timesheet-nav">
-          <li>&lt; Week</li>
+          <li ng-click="prior()">&lt; Week</li>
           <li class="bg-tertiary">Today</li>
-          <li>Week &gt;</li>
+          <li ng-click="next()">Week &gt;</li>
         </ul>
         
         <table class="table table-hover table-striped table-bordered">
@@ -31,15 +31,21 @@
               <th>Delete</th>
             </tr>
             <tr ng-repeat="r in timesheet.timesheetRows">
-              <td><select ng-model="r.projectNumber" ng-change="listWP(r.projectNumber)" ng-options="p for p in projectNumbers"></select></td>
-              <td><select ng-model="r.workPackageNumber" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select></td>
-              <td><input type="text" class="form-control" ng-model="r.saturday" /></td>
-              <td><input type="text" class="form-control" ng-model="r.sunday" /></td>
-              <td><input type="text" class="form-control" ng-model="r.monday" /></td>
-              <td><input type="text" class="form-control" ng-model="r.tuesday" /></td>
-              <td><input type="text" class="form-control" ng-model="r.wednesday" /></td>
-              <td><input type="text" class="form-control" ng-model="r.thursday" /></td>
-              <td><input type="text" class="form-control" ng-model="r.friday" /></td>
+              <td>
+                <select ng-model="r.projectNumber" ng-hide="timesheet.signed" ng-change="listWP(r.projectNumber)" ng-options="p for p in projectNumbers"></select>
+                <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
+              </td>
+              <td>
+                <select ng-model="r.workPackageNumber" ng-hide="timesheet.signed" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select>
+                <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
+              </td>
+              <td><input type="text" class="form-control" ng-readonly="timesheet.signed" ng-model="r.saturday" /></td>
+              <td><input type="text" class="form-control" ng-readonly="timesheet.signed" ng-model="r.sunday" /></td>
+              <td><input type="text" class="form-control" ng-readonly="timesheet.signed" ng-model="r.monday" /></td>
+              <td><input type="text" class="form-control" ng-readonly="timesheet.signed"ng-model="r.tuesday" /></td>
+              <td><input type="text" class="form-control" ng-readonly="timesheet.signed" ng-model="r.wednesday" /></td>
+              <td><input type="text" class="form-control" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
+              <td><input type="text" class="form-control" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
               <td>{{total}}</td>
               <td><a href="#">Delete</a></td>
             </tr>

@@ -12,6 +12,8 @@ public class SH {
     public static final String AUTHORIZATION_STRING = "Authorization";
     public static final String TOKEN_STRING = "token";
     public static final String FILTER = "filter";
+    public static final String YEAR = "year";
+    public static final String WEEK = "week";
 
     public static javax.ws.rs.core.Response response(Integer code) {
         return javax.ws.rs.core.Response.status(code).build();

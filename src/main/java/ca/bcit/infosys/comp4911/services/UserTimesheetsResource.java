@@ -35,7 +35,9 @@ public class UserTimesheetsResource {
     public Response retrieveAllTimesheetsForUser(
             @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
-            @QueryParam(SH.FILTER) final String filter) {
+            @QueryParam(SH.FILTER) final String filter,
+            @QueryParam(SH.YEAR) final int year,
+            @QueryParam(SH.WEEK) final int week) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         if (filter != null) {
@@ -50,8 +52,32 @@ public class UserTimesheetsResource {
                 return SH.responseWithEntity(200, timesheets.get(0));
             }
         }
+        if(year != 0) {
+            List<Timesheet> timesheets = timesheetDao.getByDate(week, year, userId);
+            if(timesheets.isEmpty())
+            {
+                return SH.response(404);
+            }
 
+            return SH.responseWithEntity(200, timesheets.get(0));
+        }
         return SH.responseWithEntity(200, timesheetDao.getAllByUser(userId));
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveTimesheet(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("id") Integer id) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        Timesheet timesheet = timesheetDao.read(id);
+        if (timesheet == null) {
+            return SH.response(404);
+        }
+        return SH.responseWithEntity(200, timesheet);
     }
 
     @PUT

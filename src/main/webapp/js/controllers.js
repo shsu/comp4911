@@ -245,7 +245,8 @@ cascadiaControllers.controller('IndexController', ['$scope', 'CascadiaService', 
 */
 cascadiaControllers.controller('TimesheetController', ['$scope', 'CascadiaService', '$location', 'Restangular',
   function($scope, CascadiaService, $location, Restangular) {
-    
+    var base = Restangular.one('user/timesheets');
+
     $scope.workPackageNumbers = {};
     $scope.projectNumbers = [];
 
@@ -267,8 +268,27 @@ cascadiaControllers.controller('TimesheetController', ['$scope', 'CascadiaServic
       });
     } 
 
-    Restangular.one('user/timesheets').get({"filter":"current"}).then(function(response){
-      $scope.timesheet = response;
+    $scope.prior = function() {
+      year = $scope.timesheet.year;
+      week = ($scope.timesheet.weekNumber - 1);
+
+      base.get({"year": year, "week": week}).then(function(response){
+        $scope.timesheet = response;
+      })
+    }
+
+    $scope.next = function() {
+      year = $scope.timesheet.year;
+      week = ($scope.timesheet.weekNumber + 1);
+
+      base.get({"year": year, "week": week}).then(function(response){
+        $scope.timesheet = response;
+      });
+    }
+
+    base.get({"filter":"current"}).then(function(response){
+      currentTimesheet = response;
+      $scope.timesheet = currentTimesheet;
     });
 
     $scope.save = function() {  
