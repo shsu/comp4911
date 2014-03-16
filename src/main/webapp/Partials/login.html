@@ -1,7 +1,10 @@
 <content>
     <div ng-controller="LoginController">
-        <input type="text" class="form-control" ng-model="username" />
-        <input type="text" class="form-control" ng-model="password" /><br />
-        <input type="submit" class="btn btn-primary" ng-click="login()" value="Submit" />
+        <h1>Project Management System</h1>
+        <label for="userName">User Name:</label>
+        <input type="text" class="form-control" ng-model="username" id = "userName" placeholder="Enter user name" required />
+        <label for="userName">Password:</label>
+        <input type="text" class="form-control" ng-model="password" id = "password" placeholder="Password" required /><br />
+        <input type="submit" class="btn btn-primary" ng-click="login()" value="Login" />
     </div>
 </content>
