@@ -46,10 +46,10 @@ public class Timesheet implements Serializable {
     private int overTime;
 
     @Column
-    private boolean isApproved;
+    private boolean approved;
 
     @Column
-    private boolean isSigned;
+    private boolean signed;
 
     @Column
     private int userId;
@@ -63,19 +63,17 @@ public class Timesheet implements Serializable {
     }
 
     public boolean isApproved() {
-        return isApproved;
+        return approved;
     }
 
-    public void setApproved(boolean isApproved) {
-        this.isApproved = isApproved;
-    }
+    public void setApproved(boolean approved) { this.approved = approved; }
 
     public boolean isSigned() {
-        return isSigned;
+        return signed;
     }
 
-    public void setSigned(boolean isSigned) {
-        this.isSigned = isSigned;
+    public void setSigned(boolean signed) {
+        this.signed = signed;
     }
 
     public Integer getId() {
@@ -126,14 +124,6 @@ public class Timesheet implements Serializable {
         this.year = year;
     }
 
-    public boolean getIsApproved() {
-        return this.isApproved;
-    }
-
-    public void setIsApproved(final boolean isApproved) {
-        this.isApproved = isApproved;
-    }
-
     public int getUserId() {
         return userId;
     }
@@ -173,8 +163,8 @@ public class Timesheet implements Serializable {
         this.year = year;
         this.flexTime = flexTime;
         this.overTime = overTime;
-        this.isApproved = isApproved;
-        this.isSigned = isSigned;
+        this.approved = isApproved;
+        this.signed = isSigned;
         timesheetRows = new ArrayList<TimesheetRow>();
     }
 
@@ -184,8 +174,8 @@ public class Timesheet implements Serializable {
         this.year = year;
         this.flexTime = flexTime;
         this.overTime = overTime;
-        this.isApproved = isApproved;
-        this.isSigned = isSigned;
+        this.approved = isApproved;
+        this.signed = isSigned;
         timesheetRows = rows;
     }
 
@@ -202,8 +192,8 @@ public class Timesheet implements Serializable {
         result += ", year: " + year;
         result += ", flexTime: " + flexTime;
         result += ", overTime: " + overTime;
-        result += ", isApproved: " + isApproved;
-        result += ", isSigned: " + isSigned;
+        result += ", approved: " + approved;
+        result += ", signed: " + signed;
         return result;
     }
 }

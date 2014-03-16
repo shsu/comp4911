@@ -52,15 +52,15 @@ public class SampleData {
         generateProjectAssignments();
         generateWorkPackages();
         //generateWorkPackageAssignments();
-        //generateTimesheets();
+        generateTimesheets();
     }
 
     private void generateUsers() {
         userDao.create(new User(
-          "username0@example.com","password","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
+                "q","q","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
         ));
         userDao.create(new User(
-                "q","q","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
+          "username0@example.com","password","Bruce","Link",new Date(),true,"MIA",40,0,0,0,0,0,0, PLevel.P5
         ));
         
         Date startDate = setDate(1, 1, 2000);
@@ -156,7 +156,7 @@ public class SampleData {
         
         issueDate = setDate(11, 10, 2013);
         endDate = setDate(11, 28, 2013);
-        
+
         workPackageDao.create(new WorkPackage(
         		"A3334444", "Design Database", issueDate, "100", endDate, 55522, 25000));
         
@@ -222,7 +222,7 @@ public class SampleData {
                 true
         ));
     }
-    /**
+
     private void generateTimesheets() {
 
         Timesheet timesheet;
@@ -235,17 +235,13 @@ public class SampleData {
             List<TimesheetRow> rows = timesheet.getTimesheetRows();
             for(int i = 0; i < 5; i++)
             {
-                TimesheetRow temp = new TimesheetRow(i, i, i, i, i, i, i, i, i, "hi" + i);
+                TimesheetRow temp = new TimesheetRow(i, "" + i, i, i, i, i, i, i, i, "hi" + i);
                 timesheetRowDao.create(temp);
-                temp.setTimesheet(timesheet);
                 rows.add(temp);
             }
         }
-
-        }
-
     }
-    */
+
     
     private Date setDate(int month, int day, int year)
     {

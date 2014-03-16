@@ -245,9 +245,35 @@ cascadiaControllers.controller('IndexController', ['$scope', 'CascadiaService', 
 */
 cascadiaControllers.controller('TimesheetController', ['$scope', 'CascadiaService', '$location', 'Restangular',
   function($scope, CascadiaService, $location, Restangular) {
-    Restangular.all('timesheets').getList().then(function(response) {
-      $scope.timesheets = response;
+    
+    $scope.workPackageNumbers = {};
+    $scope.projectNumbers = [];
+
+    Restangular.one('user/projects/managed').getList().then(function(response){
+      projects = response;
+      for(var i = 0; i < projects.length; ++i) {
+        $scope.projectNumbers.push(projects[i].projectNumber);
+      }
     });
+
+    $scope.listWP = function(p) {
+      Restangular.one('work_packages/project', p).getList().then(function(response){
+        workPackages = response;
+        $scope.workPackageNumbers[p] = []
+
+        for(var i = 0; i < workPackages.length; ++i) {
+          $scope.workPackageNumbers[p].push(workPackages[i].workPackageNumber);
+        }
+      });
+    } 
+
+    Restangular.one('timesheets', 18).get().then(function(response){
+      $scope.timesheet = response;
+    });
+
+    $scope.save = function() {  
+      $scope.timesheet.put();
+    }
   }
 ]);
 

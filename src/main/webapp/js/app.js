@@ -24,7 +24,8 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/manage-approver', {controller: 'ManageApproverController', templateUrl:'Partials/manage-approver.html'}).
     when('/manage-project', {controller: 'ManageProjectController', templateUrl:'Partials/manage-project.html'}).
     when('/project', {controller: 'ProjectManagementController', templateUrl:'Partials/project-management.html'}).
-    when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
+    when('/timesheet-management', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
+    when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet.html'}).
     when('/user-management-hr', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
     when('/user-management-super', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-super.html'}).
     when('/user-profile/:id', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
