@@ -15,7 +15,6 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/assign-supervisor', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
     when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
     when('/create-project', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html'}).
-    when('/manage-wp', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html'}).
     when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
     when('/edit-pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html'}).
     when('/engineer-budget', {controller: 'EngineerBudgetController', templateUrl:'Partials/engineer-budget.html'}).
@@ -23,7 +22,15 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/logout', {controller: 'LogoutController'}).
     when('/manage-approver', {controller: 'ManageApproverController', templateUrl:'Partials/manage-approver.html'}).
     when('/manage-project', {controller: 'ManageProjectController', templateUrl:'Partials/manage-project.html'}).
+    when('/manage-wp', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html'}).
+    when('/monthly-wp', {controller: 'MonthlyWPController', templateUrl:'Partials/monthly-wp.html'}).
+    when('/pcbac', {controller: 'PCBACController', templateUrl:'Partials/pcbac.html'}).
+    when('/pcpr', {controller: 'PCPRController', templateUrl:'Partials/pcpr.html'}).
     when('/project', {controller: 'ProjectManagementController', templateUrl:'Partials/project-management.html'}).
+    when('/project-summary', {controller: 'ProjectSummaryController', templateUrl:'Partials/project-summary.html'}).
+    when('/rate-sheet', {controller: 'RateSheetController', templateUrl:'Partials/rate-sheet.html'}).
+    when('/search-project', {controller: 'SearchProjectController', templateUrl:'Partials/search-project.html'}).
+    when('/timesheet-approval', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-approval.html'}).
     when('/timesheet-management', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
     when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet.html'}).
     when('/user-management-hr', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
