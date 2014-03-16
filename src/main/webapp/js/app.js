@@ -55,11 +55,6 @@ cascadia.config(['$routeProvider', function($routeProvider) {
 });
 
 cascadia.config(function(RestangularProvider) {
-  RestangularProvider.setBaseUrl('http://localhost:8080/comp4911/api');
-});
-
-/*
-cascadia.config(function(RestangularProvider) {
     var xhr = new XMLHttpRequest();
     xhr.open('HEAD', "http://localhost:8080/comp4911/api", false);
     try {
@@ -73,7 +68,6 @@ cascadia.config(function(RestangularProvider) {
         RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
     }
 });
-*/
 
 cascadia.directive('content', function() {
   return  {
