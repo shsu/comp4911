@@ -1,12 +1,14 @@
 <content>
 <div ng-controller="UsersManagementController">
-  <h1 class="secondary">User Management</h1>
+  <h1 class="secondary">User Management - HR</h1><br />
   <div class="row">
     <form action="" class="form-inline col-xs-8">
       <p>Search Employees: <input type="text" placeholder="search" class="form-control" ng-model="query.id" /></p>
     </form>
-    <a href="#/edit-pay-rates" id="edit" data-toggle="modal" data-target="#editModal" class="pull-right">Edit Pay Rates</a>
-  </div>
+<!--    <a href="#/edit-pay-rates" id="edit" data-toggle="modal" data-target="#editModal" class="pull-right">Edit Pay Rates</a> -->
+    <a href="#/edit-pay-rates" id="edit" class="pull-right">Edit Pay Rates</a>
+
+    </div>
   <div class="row usertable">
     <div class="table-responsive">
       <table class="table table-striped table-hover table-bordered">
@@ -44,6 +46,8 @@
     <button class="btn btn-primary pull-right" ng-click="edit()">Save</button>
   </div>
 
+    
+    
   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">

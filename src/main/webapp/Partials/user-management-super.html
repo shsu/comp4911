@@ -1,9 +1,12 @@
 <content>
+  <h1 class="secondary">User Management - Supervisor</h1><br /> 
   <div class="row">
     <form action="" class="form-inline col-xs-8">
       <p>Search WP Number:  <input type="text" placeholder="search" class="form-control" /></p>
     </form>
-    <a href="#" id="edit" data-toggle="modal" data-target="#editModal" class="pull-right">Edit Pay Rates</a>
+    <!-- <a id="edit" data-toggle="modal" data-target="#editModal" class="pull-right">Edit Pay Rates</a> -->
+    <a href="#/edit-pay-rates" id="edit" class="pull-right">Edit Pay Rates</a>
+      
   </div>
   <div class="row">
     <div class="table-responsive">
@@ -29,8 +32,8 @@
             <td></td>
             <td><select name="" id=""><option value="">P5</option></select></td>
             <td><select name="" id=""><option value=""></option></select></td>
-            <td><a href="/assign-project.shtml">Assign</a></td>
-            <td><a href="/assign-project.shtml">Assign</a></td>
+            <td><a href="#/assign-project">Assign</a></td>
+            <td><a href="#/assign-wp">Assign</a></td>
             <td><select name="" id=""><option value="">Active</option></select></td>
           </tr>
           <tr>
@@ -104,6 +107,7 @@
     <button class="btn btn-primary pull-right">Save</button>
   </div>
 
+    
   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
