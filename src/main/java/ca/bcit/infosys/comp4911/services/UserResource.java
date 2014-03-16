@@ -1,11 +1,9 @@
 package ca.bcit.infosys.comp4911.services;
 
-import ca.bcit.infosys.comp4911.access.ProjectDao;
-import ca.bcit.infosys.comp4911.access.TimesheetDao;
-import ca.bcit.infosys.comp4911.access.UserDao;
-import ca.bcit.infosys.comp4911.access.WorkPackageDao;
+import ca.bcit.infosys.comp4911.access.*;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.Timesheet;
+import ca.bcit.infosys.comp4911.domain.TimesheetRow;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
 import com.google.common.base.Charsets;
@@ -28,6 +26,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("/user")
 public class UserResource {
@@ -46,6 +46,9 @@ public class UserResource {
 
     @EJB
     private TimesheetDao timesheetDao;
+
+    @EJB
+    private TimesheetRowDao timesheetRowDao;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -155,43 +158,6 @@ public class UserResource {
         return SH.responseWithEntity(200, workPackageDao.getAllByUser(userId));
     }
 
-    @Path("/timesheets")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAllTimesheetsForUser(
-            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-            @QueryParam(SH.TOKEN_STRING) final String queryToken,
-            @QueryParam(SH.FILTER) final String filter) {
-        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
-
-        if (filter != null) {
-            if (filter.equals("current")) {
-                Timesheet timesheet = timesheetDao.getByDate(SH.getCurrentWeek(), SH.getCurrentYear(), userId);
-                return SH.responseWithEntity(200, timesheet);
-            }
-            if (filter.equals("default")) {
-                Timesheet timesheet = timesheetDao.getByDate(0, 0, userId);
-                return SH.responseWithEntity(200, timesheet);
-            }
-        }
-
-        return SH.responseWithEntity(200, timesheetDao.getAllByUser(userId));
-    }
-
-    // Create Timesheet for Authenticated User
-    @Path("/timesheets")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createTimesheet(
-        @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-        @QueryParam(SH.TOKEN_STRING) final String queryToken,
-        final Timesheet timesheet) {
-            int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
-
-            timesheetDao.create(timesheet);
-            return SH.response(201);
-    }
-
     @Path("/timesheets/to_approve")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -227,4 +193,5 @@ public class UserResource {
         jsonObject.put("token", userTokens.generateToken(authenticatedUser.get().getId()));
         return jsonObject.toString();
     }
+
 }

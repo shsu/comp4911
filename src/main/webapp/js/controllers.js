@@ -267,7 +267,7 @@ cascadiaControllers.controller('TimesheetController', ['$scope', 'CascadiaServic
       });
     } 
 
-    Restangular.one('timesheets', 18).get().then(function(response){
+    Restangular.one('user/timesheets').get({"filter":"current"}).then(function(response){
       $scope.timesheet = response;
     });
 

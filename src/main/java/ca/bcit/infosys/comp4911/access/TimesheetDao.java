@@ -47,13 +47,15 @@ public class TimesheetDao {
         return query.getResultList();
     }
 
-    public Timesheet getByDate(final int weekNumber, final int year, final int userId) {
+    public List<Timesheet> getByDate(final int weekNumber, final int year, final int userId) {
+        System.out.println("" + weekNumber + " " + year + " " + userId);
         TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t" +
-            " where t.weekNumber = :week and t.userId = :userId and t.year = :year", Timesheet.class);
+            " where t.weekNumber = :week and t.userId = :userId and t.year = :year",
+                Timesheet.class);
         query.setParameter("week", weekNumber);
         query.setParameter("userId", userId);
         query.setParameter("year", year);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     public List<Timesheet> getRejected(final Integer userId) {
