@@ -45,6 +45,7 @@ public class ProjectReport {
 
     @EJB
     private PayRateDao payRateDao;
+
     @GET
     @Path("{id}")
     public Response getProjectReport(
@@ -82,6 +83,26 @@ public class ProjectReport {
         report.append("report", reportHelper);
 
         return SH.responseWithEntity(200, report);
+    }
+
+    /**
+     * This method is used to access the current PayRate for the work packages year. Once the PayRate for the given
+     * year has been found, the rate for each Pay Level is used to calculate the total Labour dollars. It is then
+     * stored in the ReportHelperRow.
+     * @param reportHelperRow
+     * @param year
+     */
+    public void calculateTotalLabourDollars(ReportHelperRow reportHelperRow, int year){
+        List<PayRate> yearPayRate = payRateDao.getPayRateByYear(year);
+        double totalLabourDollars = 0;
+        totalLabourDollars += yearPayRate.get(0).getRate().doubleValue()*reportHelperRow.getDS();
+        totalLabourDollars += yearPayRate.get(1).getRate().doubleValue()*reportHelperRow.getP1();
+        totalLabourDollars += yearPayRate.get(2).getRate().doubleValue()*reportHelperRow.getP2();
+        totalLabourDollars += yearPayRate.get(3).getRate().doubleValue()*reportHelperRow.getP3();
+        totalLabourDollars += yearPayRate.get(4).getRate().doubleValue()*reportHelperRow.getP4();
+        totalLabourDollars += yearPayRate.get(5).getRate().doubleValue()*reportHelperRow.getP5();
+        totalLabourDollars += yearPayRate.get(6).getRate().doubleValue()*reportHelperRow.getSS();
+        reportHelperRow.setLabourDollars(totalLabourDollars);
     }
 
     /**
@@ -172,18 +193,5 @@ public class ProjectReport {
         }
 
         return reportHelperRow;
-    }
-
-    public void calculateTotalLabourDollars(ReportHelperRow reportHelperRow, int year){
-        List<PayRate> yearPayRate = payRateDao.getPayRateByYear(year);
-        double totalLabourDollars = 0;
-        totalLabourDollars += yearPayRate.get(0).getRate().doubleValue()*reportHelperRow.getDS();
-        totalLabourDollars += yearPayRate.get(1).getRate().doubleValue()*reportHelperRow.getP1();
-        totalLabourDollars += yearPayRate.get(2).getRate().doubleValue()*reportHelperRow.getP2();
-        totalLabourDollars += yearPayRate.get(3).getRate().doubleValue()*reportHelperRow.getP3();
-        totalLabourDollars += yearPayRate.get(4).getRate().doubleValue()*reportHelperRow.getP4();
-        totalLabourDollars += yearPayRate.get(5).getRate().doubleValue()*reportHelperRow.getP5();
-        totalLabourDollars += yearPayRate.get(6).getRate().doubleValue()*reportHelperRow.getSS();
-        reportHelperRow.setLabourDollars(totalLabourDollars);
     }
 }
