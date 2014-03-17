@@ -466,8 +466,11 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
           $location.path('/dashboard');
         });
       },function handleError(response){
-              if(response.status == 401){
-                  $.growl.error({title: "Error!", message: "Sorry, your credentials are incorrect."})
+              if(response.status == 400){
+                  $.growl.error({title: "Error!", message: "Missing username or password."})
+              }
+              else if(response.status == 401){
+                  $.growl.error({title: "Error!", message: "Authentication failed, please check your credentials again."})
               } else {
                   $.growl.error({title: "Error!", message: "Status Code "+ response.status})
               }
