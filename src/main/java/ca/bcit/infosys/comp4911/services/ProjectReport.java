@@ -168,25 +168,25 @@ public class ProjectReport {
             }
             switch(plevel){
                 case P1:
-                    reportHelperRow.incrementP1(tsr.getTotal());
+                    reportHelperRow.incrementP1(tsr.calculateTotal());
                     break;
                 case P2:
-                    reportHelperRow.incrementP2(tsr.getTotal());
+                    reportHelperRow.incrementP2(tsr.calculateTotal());
                     break;
                 case P3:
-                    reportHelperRow.incrementP3(tsr.getTotal());
+                    reportHelperRow.incrementP3(tsr.calculateTotal());
                     break;
                 case P4:
-                    reportHelperRow.incrementP4(tsr.getTotal());
+                    reportHelperRow.incrementP4(tsr.calculateTotal());
                     break;
                 case P5:
-                    reportHelperRow.incrementP5(tsr.getTotal());
+                    reportHelperRow.incrementP5(tsr.calculateTotal());
                     break;
                 case SS:
-                    reportHelperRow.incrementSS(tsr.getTotal());
+                    reportHelperRow.incrementSS(tsr.calculateTotal());
                     break;
                 case DS:
-                    reportHelperRow.incrementDS(tsr.getTotal());
+                    reportHelperRow.incrementDS(tsr.calculateTotal());
                     break;
             }
 

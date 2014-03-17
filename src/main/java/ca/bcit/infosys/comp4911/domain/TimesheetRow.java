@@ -56,8 +56,6 @@ public class TimesheetRow implements Serializable
    @Column
    private int projectNumber;
 
-   private int total;
-
    public Integer getId()
    {
       return this.id;
@@ -168,9 +166,7 @@ public class TimesheetRow implements Serializable
       this.note = note;
    }
 
-   public void setTotal(int total ) { this.total = total; }
-
-   public int getTotal(){
+   public int calculateTotal(){
         return monday + tuesday + wednesday + thursday + friday + saturday + sunday;
    }
 
