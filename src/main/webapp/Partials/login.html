@@ -1,12 +1,23 @@
 <content>
-    <div ng-controller="LoginController" class="col-lg-6 col-lg-offset-2 well" id="login">
-        <h1>Project Management System</h1>
-        <form>
-            <label for="userName">User Name:</label>
-            <input type="text" class="form-control" ng-model="username" id = "userName" placeholder="Enter user name" required /><br />
-            <label for="userName">Password:</label>
-            <input type="text" class="form-control" ng-model="password" id = "password" placeholder="Password" required /><br />
-            <input type="submit" class="btn btn-primary" ng-click="login()" value="Login" /><br /><br />
-        </form>
-    </div>
+	<div ng-controller="LoginController" id="login" class="center-block well" style="max-width:444px">
+		<h2>Project Management System</h2><br />
+		<form>
+			<div class="input-group input-group-lg">
+				<span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
+				<input type="text" class="form-control" ng-model="username" id ="userName" placeholder="Username" required>
+			</div>
+			<br />
+			<div class="input-group input-group-lg">
+				<span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+				<input type="text" class="form-control" ng-model="password" id ="password" placeholder="Password" required>
+			</div>
+			<br />
+			<input type="submit" class="btn btn-primary btn-lg btn-block" ng-click="login()" value="Log In" /><br /><br />
+		</form>
+	</div>
+	<style type="text/css">
+	body {
+		overflow:hidden;
+	}
+	</style>
 </content>
