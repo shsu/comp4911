@@ -2,6 +2,7 @@ package ca.bcit.infosys.comp4911.application;
 
 import ca.bcit.infosys.comp4911.access.*;
 import ca.bcit.infosys.comp4911.domain.*;
+import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -227,10 +228,10 @@ public class SampleData {
 
         Timesheet timesheet;
 
-        for(int j = 0; j < 2; j++)
-        {
-            timesheet = new Timesheet(j, j, j, j, j, false, false);
 
+        for(int j = 0; j < 12; j++)
+        {
+            timesheet = new Timesheet(1, j, 2014, j, j, false, false);
             timesheetDao.create(timesheet);
             List<TimesheetRow> rows = timesheet.getTimesheetRows();
             for(int i = 0; i < 5; i++)
