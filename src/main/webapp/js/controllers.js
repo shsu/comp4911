@@ -710,6 +710,12 @@ cascadiaControllers.controller('TimesheetController', ['$scope', 'CascadiaServic
     $scope.delete = function($index) {
       $scope.timesheet.timesheetRows.splice($index, 1);
     }
+
+    $scope.add = function() {
+      $scope.timesheet.timesheetRows.push(
+         { workPackageNumber: "", projectNumber: "", saturday: 0, sunday: 0, monday: 0, tuesday: 0, wednesday: 0,
+          thursday: 0, friday: 0, total: 0, note: ""});
+    }
   }
 ]);
 
