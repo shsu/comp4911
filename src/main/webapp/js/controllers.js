@@ -465,7 +465,14 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
           localStorage.setItem('user', JSON.stringify(response));
           $location.path('/dashboard');
         });
-      });
+      },function handleError(response){
+              if(response.status == 401){
+                  $.growl.error({title: "Error!", message: "Sorry, your credentials are incorrect."})
+              } else {
+                  $.growl.error({title: "Error!", message: "Status Code "+ response.status})
+              }
+          }
+      );
     };
   }
 ]);
