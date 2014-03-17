@@ -706,6 +706,10 @@ cascadiaControllers.controller('TimesheetController', ['$scope', 'CascadiaServic
     $scope.save = function() {  
       $scope.timesheet.put();
     }
+
+    $scope.delete = function($index) {
+      $scope.timesheet.timesheetRows.splice($index, 1);
+    }
   }
 ]);
 
