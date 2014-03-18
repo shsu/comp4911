@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/user/timesheets")
@@ -124,18 +125,18 @@ public class UserTimesheetsResource {
 
     private Timesheet createCurrentWeekTimesheet(int userId) {
         User user = userDao.read(userId);
-        Timesheet defaultSheet = timesheetDao.read(user.getDefaultTimesheetID());
-        Timesheet newTimesheet = new Timesheet(
-                userId,
-                SH.getCurrentWeek(),
-                SH.getCurrentYear(),
-                defaultSheet.getFlexTime(),
-                defaultSheet.getOverTime(),
-                defaultSheet.isApproved(),
-                defaultSheet.isSigned()
-        );
-        timesheetDao.create(newTimesheet);
-        List<TimesheetRow> rows = newTimesheet.getTimesheetRows();
+
+        if(user.getDefaultTimesheetID() != -1) {
+            Timesheet defaultSheet = timesheetDao.read(user.getDefaultTimesheetID());
+            return createDefaultTimesheet(defaultSheet, userId);
+        } else {
+            return createBlankTimesheet(userId);
+        }
+    }
+
+    private Timesheet createDefaultTimesheet(Timesheet defaultSheet, int userId) {
+        List<TimesheetRow> rows = new ArrayList<TimesheetRow>();
+
         for (TimesheetRow row : defaultSheet.getTimesheetRows()) {
             TimesheetRow temp = new TimesheetRow(
                     row.getProjectNumber(),
@@ -152,7 +153,37 @@ public class UserTimesheetsResource {
             timesheetRowDao.create(temp);
             rows.add(temp);
         }
+        Timesheet newTimesheet = new Timesheet(
+                userId,
+                rows,
+                SH.getCurrentWeek(),
+                SH.getCurrentYear(),
+                defaultSheet.getFlexTime(),
+                defaultSheet.getOverTime(),
+                defaultSheet.isApproved(),
+                defaultSheet.isSigned()
+        );
+        timesheetDao.create(newTimesheet);
+        return newTimesheet;
+    }
 
+    private Timesheet createBlankTimesheet(int userId) {
+        List<TimesheetRow> rows = new ArrayList<TimesheetRow>();
+
+        for (int i = 0; i < 5; ++i) {
+            TimesheetRow temp = new TimesheetRow(
+                    0, "", 0, 0, 0, 0, 0, 0, 0, ""
+            );
+            rows.add(temp);
+        }
+        Timesheet newTimesheet = new Timesheet(
+                userId,
+                rows,
+                SH.getCurrentWeek(),
+                SH.getCurrentYear(),
+                0 ,0, false, false
+        );
+        timesheetDao.create(newTimesheet);
         return newTimesheet;
     }
 

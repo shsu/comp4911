@@ -157,17 +157,6 @@ public class Timesheet implements Serializable {
         return super.hashCode();
     }
 
-    public Timesheet(int userId, int weekNumber, int year, int flexTime, int overTime, boolean isApproved, boolean isSigned) {
-        this.userId = userId;
-        this.weekNumber = weekNumber;
-        this.year = year;
-        this.flexTime = flexTime;
-        this.overTime = overTime;
-        this.approved = isApproved;
-        this.signed = isSigned;
-        timesheetRows = new ArrayList<TimesheetRow>();
-    }
-
     public Timesheet(int userId, List<TimesheetRow> rows, int weekNumber, int year, int flexTime, int overTime, boolean isApproved, boolean isSigned) {
         this.userId = userId;
         this.weekNumber = weekNumber;

@@ -57,7 +57,7 @@ public class SampleData {
 
     private void generateUsers() {
         userDao.create(new User(
-                "q", "q", "Bruce", "Link", new Date(), true, "MIA", 40, 0, 0, 0, 24, 0, 0, PLevel.P5));
+                "q", "q", "Bruce", "Link", new Date(), true, "MIA", 40, 0, 0, 0, -1, 0, 0, PLevel.P5));
         
         userDao.create(new User(
         		"username0@example.com", "password", "Bruce", "Link", new Date(), true, "MIA", 40, 0, 0,
