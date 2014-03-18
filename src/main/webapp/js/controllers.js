@@ -1,7 +1,7 @@
-var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular', 'ngStorage']);
+var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular']);
 
 cascadiaControllers.service('CascadiaService', function($rootScope) {
-  $rootScope.user = JSON.parse(localStorage.getItem('ngStorage-user'));
+  $rootScope.user = JSON.parse(localStorage.getItem('user'));
 
   this.initMapOfUsers = function(listOfUsers) {
     var worker = new Worker('js/web-worker.js');
@@ -445,8 +445,8 @@ cascadiaControllers.controller('IndexController', ['$scope', 'CascadiaService', 
 /*
     LOGIN CONTROLLER
 */
-cascadiaControllers.controller('LoginController', ['$scope', '$base64', '$localStorage', 'Restangular', '$rootScope', '$location', 'CascadiaService',
-  function($scope, $base64, $localStorage, Restangular, $rootScope, $location, CascadiaService) {
+cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restangular', '$rootScope', '$location', 'CascadiaService',
+  function($scope, $base64, Restangular, $rootScope, $location, CascadiaService) {
     $scope.login = function() {
       var data = {
         'username': $scope.username,
@@ -462,7 +462,7 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', '$localS
 
         Restangular.one('user').get().then(function(response) {
           localStorage.setItem('user', JSON.stringify(response));
-            $rootScope.user = response;
+            $rootScope.user = response
           $location.path('/dashboard');
         });
       },function handleError(response){
@@ -658,13 +658,12 @@ cascadiaControllers.controller('SearchProjectController', ['$scope', 'Restangula
 /*
     TIMESHEET CONTROLLER
 */
-cascadiaControllers.controller('TimesheetController', ['$scope', '$localStorage', '$rootScope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, $rootScope, $localStorage, CascadiaService, $location, Restangular) {
+cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', 'CascadiaService', '$location', 'Restangular',
+  function($scope, $rootScope, CascadiaService, $location, Restangular) {
     var base = Restangular.one('user/timesheets');
 
     $scope.workPackageNumbers = {};
     $scope.projectNumbers = [];
-    $scope.$storage = $localStorage;
 
     Restangular.one('user/projects/managed').getList().then(function(response){
       projects = response;
@@ -708,9 +707,9 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$localStorage'
     });
 
     $scope.save = function() {  
-      if($scope.default && ($scope.$storage.ngStorage-user.defaultTimesheetID != $scope.timesheet.id)) {
-        $scope.$storage.ngStorage-user.defaultTimesheetID = $scope.timesheet.id;
-        $scope.$storage.ngStorage-user.put();
+      if($scope.default && ($rootScope.user.defaultTimesheetID != $scope.timesheet.id)) {
+        $rootScope.user.defaultTimesheetID = $scope.timesheet.id;
+        $rootScope.user.put();
       }
       $scope.timesheet.put();
     }
