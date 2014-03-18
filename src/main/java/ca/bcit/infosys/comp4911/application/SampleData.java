@@ -57,40 +57,40 @@ public class SampleData {
 
     private void generateUsers() {
         userDao.create(new User(
-                "q", "q", "Bruce", "Link", new Date(), true, "MIA", 40, 0, 0, 0, -1, 0, 0, PLevel.P5));
+                "q", "q", "Bruce", "Link", new Date(), true, "MIA", 40, 50, 0, -1, 0, 0, PLevel.P5));
         
         userDao.create(new User(
-        		"username0@example.com", "password", "Bruce", "Link", new Date(), true, "MIA", 40, 0, 0,
+        		"username0@example.com", "password", "Bruce", "Link", new Date(), true, "MIA", 40, 0,
         		0, 0, 0, 0, PLevel.P5));
         
         Date startDate = setDate(1, 1, 2000);
         
         userDao.create(new User(
-        		"jedward", "q", "John", "Edward", startDate, false, "Active", 40, 0, 0, 14,
+        		"jedward", "q", "John", "Edward", startDate, false, "Active", 40, 0, 14,
         		12345678, 56789012, 56789012, PLevel.P1));
         
         userDao.create(new User(
-                "awong", "q", "Alice", "Wong", startDate, false, "Active", 40, 0, 0, 14,
+                "awong", "q", "Alice", "Wong", startDate, false, "Active", 40, 0, 14,
                 23456789, 56789012, 56789012, PLevel.P2));
         
         userDao.create(new User(
-                "bnelson", "q", "Bob", "Nelson", startDate, false, "Active", 40, 0, 0, 14,
+                "bnelson", "q", "Bob", "Nelson", startDate, false, "Active", 40, 0, 14,
                 34567890, 56789012, 56789012, PLevel.P3));
         
         userDao.create(new User(
-                "csandhu", "q", "Christine", "Sandhu", startDate, true, "Active", 40, 0, 0, 14,
+                "csandhu", "q", "Christine", "Sandhu", startDate, true, "Active", 40, 0, 14,
                 45678901, 56789012, 56789012, PLevel.P4));
         
         userDao.create(new User(
-                "zcantwell", "q", "Zamir", "Cantwell", startDate, false, "Active", 40, 0, 0, 14,
+                "zcantwell", "q", "Zamir", "Cantwell", startDate, false, "Active", 40, 0, 14,
                 56789012, 0, 0, PLevel.P5));
         
         userDao.create(new User(
-                "cpark", "q", "Chi-En", "Park", startDate, false, "Active", 40, 0, 0, 14,
+                "cpark", "q", "Chi-En", "Park", startDate, false, "Active", 40, 0, 14,
                 67890123, 56789012, 56789012, PLevel.SS));
         
         userDao.create(new User(
-                "gsmith", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 0, 14,
+                "gsmith", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 14,
                 78901234, 56789012, 56789012, PLevel.DS));
     }
 
@@ -245,7 +245,7 @@ public class SampleData {
         
         rowCollection.add(wp1Row1);
         timesheetRowDao.create(wp1Row1);
-        tempTimesheet = new Timesheet(0, rowCollection, 1, 2014, 0, 40, true, true);
+        tempTimesheet = new Timesheet(0, rowCollection, 1, 2014, 40, true, true);
         timesheetDao.create(tempTimesheet);
         rowCollection.clear();
         
@@ -253,7 +253,7 @@ public class SampleData {
         rowCollection.add(wp1Row3);
         timesheetRowDao.create(wp1Row2);
         timesheetRowDao.create(wp1Row3);
-        tempTimesheet = new Timesheet(0, rowCollection, 12, 2014, -90, 0, false, true);
+        tempTimesheet = new Timesheet(0, rowCollection, 12, 2014, 0, false, true);
         rowCollection.clear();
         
         rowCollection.add(wp2Row1);
@@ -262,14 +262,14 @@ public class SampleData {
         timesheetRowDao.create(wp2Row1);
         timesheetRowDao.create(wp2Row2);
         timesheetRowDao.create(wp2Row3);
-        tempTimesheet = new Timesheet(0, rowCollection, 47, 2013, 0, 0, true, true);
+        tempTimesheet = new Timesheet(0, rowCollection, 47, 2013, 0, true, true);
         rowCollection.clear();
         
         rowCollection.add(wp3Row1);
         rowCollection.add(wp3Row2);
         timesheetRowDao.create(wp3Row1);
         timesheetRowDao.create(wp3Row2);
-        tempTimesheet = new Timesheet(0, rowCollection, 11, 2014, 45, 0, true, true);
+        tempTimesheet = new Timesheet(0, rowCollection, 11, 2014, 0, true, true);
         rowCollection.clear();
     }
     
