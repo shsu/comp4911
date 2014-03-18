@@ -461,8 +461,8 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', '$localS
         });
 
         Restangular.one('user').get().then(function(response) {
-          $scope.$storage = $localStorage;
-          $scope.$storage.user = response;
+          localStorage.setItem('user', JSON.stringify(response));
+            $rootScope.user = response;
           $location.path('/dashboard');
         });
       },function handleError(response){
