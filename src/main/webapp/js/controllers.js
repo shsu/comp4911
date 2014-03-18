@@ -356,7 +356,15 @@ cascadiaControllers.controller('CreateProjectsController', ['$scope', 'CascadiaS
 */
 cascadiaControllers.controller('CreateWPController', ['$scope', 'CascadiaService', '$location', 'Restangular',
   function($scope, CascadiaService, $location, Restangular){
-    
+    Restangular.all('projects').getList().then(function(response){
+      $scope.projects = response;
+    });
+
+    $scope.listWP = function(p) {
+      Restangular.all('work_packages/project/' + p).getList().then(function(response){
+        $scope.packages = response;
+      });
+    }
   }
 ]);
 
