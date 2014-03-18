@@ -158,7 +158,6 @@ public class UserTimesheetsResource {
                 rows,
                 SH.getCurrentWeek(),
                 SH.getCurrentYear(),
-                defaultSheet.getFlexTime(),
                 defaultSheet.getOverTime(),
                 defaultSheet.isApproved(),
                 defaultSheet.isSigned()
@@ -181,7 +180,7 @@ public class UserTimesheetsResource {
                 rows,
                 SH.getCurrentWeek(),
                 SH.getCurrentYear(),
-                0 ,0, false, false
+                0, false, false
         );
         timesheetDao.create(newTimesheet);
         return newTimesheet;
