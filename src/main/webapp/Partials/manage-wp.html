@@ -21,8 +21,8 @@
           <tr>
             <th>WP Number</th>
             <th>WP Title</th>
-            <th>Responsible Engineer</th>
-            <th>Add Engineer</th>
+            <th>Assign Responsible Engineer</th>
+            <th>Assign Employees</th>
             <th>Issue Date</th>
             <th>Budget</th>
             <th>Status</th>
@@ -30,8 +30,8 @@
           <tr ng-repeat="wp in workPackages | filter: query">
             <td>{{wp.workPackageNumber}}</td>
             <td>{{wp.workPackageName}}</td>
-            <td><select name="" id=""><option value="">Name</option></select></td>
-            <td><a href="#/add-engineer">Add Engineer</a></td>
+            <td><a href="#/add-engineer">Assign Responsible Engineer</a></td>
+            <td><a href="#/assign-employee-wp">Assign Employees</a></td>
             <td>{{wp.issueDate}}</td>
             <!-- Figure this out later -->
             <td>TBD</td>
