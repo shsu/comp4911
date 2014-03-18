@@ -40,9 +40,6 @@ public class Timesheet implements Serializable {
     private int year;
 
     @Column
-    private int flexTime;
-
-    @Column
     private int overTime;
 
     @Column
@@ -90,14 +87,6 @@ public class Timesheet implements Serializable {
 
     public void setVersion(final int version) {
         this.version = version;
-    }
-
-    public int getFlexTime() {
-        return flexTime;
-    }
-
-    public void setFlexTime(int flexTime) {
-        this.flexTime = flexTime;
     }
 
     public int getOverTime() {
@@ -157,11 +146,10 @@ public class Timesheet implements Serializable {
         return super.hashCode();
     }
 
-    public Timesheet(int userId, List<TimesheetRow> rows, int weekNumber, int year, int flexTime, int overTime, boolean isApproved, boolean isSigned) {
+    public Timesheet(int userId, List<TimesheetRow> rows, int weekNumber, int year, int overTime, boolean isApproved, boolean isSigned) {
         this.userId = userId;
         this.weekNumber = weekNumber;
         this.year = year;
-        this.flexTime = flexTime;
         this.overTime = overTime;
         this.approved = isApproved;
         this.signed = isSigned;
@@ -179,7 +167,6 @@ public class Timesheet implements Serializable {
             result += "id: " + id;
         result += ", weekNumber: " + weekNumber;
         result += ", year: " + year;
-        result += ", flexTime: " + flexTime;
         result += ", overTime: " + overTime;
         result += ", approved: " + approved;
         result += ", signed: " + signed;

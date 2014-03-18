@@ -64,10 +64,6 @@ public class User implements Serializable
 
    @Column
    @Min(0)
-   private int totalOvertime;
-
-   @Column
-   @Min(0)
    private int vacationDays;
 
    @Column
@@ -192,16 +188,6 @@ public class User implements Serializable
       this.totalFlexTime = totalFlexTime;
    }
 
-   public int getTotalOvertime()
-   {
-      return totalOvertime;
-   }
-
-   public void setTotalOvertime(int totalOvertime)
-   {
-      this.totalOvertime = totalOvertime;
-   }
-
    public int getVacationDays()
    {
       return vacationDays;
@@ -218,7 +204,7 @@ public class User implements Serializable
 
     public User(final String username, final String password, final String firstName, final String lastName,
                 final Date startDate, final boolean isHR, final String status, final int paidHoursPerWeek,
-                final int totalFlexTime, final int totalOvertime, final int vacationDays, final int defaultTimesheetID,
+                final int totalFlexTime, final int vacationDays, final int defaultTimesheetID,
                 final int supervisorUserID, final int timesheetApproverUserID, final PLevel pLevel) {
         this.username = username;
         this.password = password;
@@ -229,7 +215,6 @@ public class User implements Serializable
         this.status = status;
         this.paidHoursPerWeek = paidHoursPerWeek;
         this.totalFlexTime = totalFlexTime;
-        this.totalOvertime = totalOvertime;
         this.vacationDays = vacationDays;
         this.defaultTimesheetID = defaultTimesheetID;
         this.supervisorUserID = supervisorUserID;
@@ -323,7 +308,6 @@ public class User implements Serializable
          result += ", status: " + status;
       result += ", paidHoursPerWeek: " + paidHoursPerWeek;
       result += ", totalFlexTime: " + totalFlexTime;
-      result += ", totalOvertime: " + totalOvertime;
       result += ", vacationDays: " + vacationDays;
       result += ", defaultTimesheetID: " + defaultTimesheetID;
       result += ", supervisorUserID: " + supervisorUserID;
