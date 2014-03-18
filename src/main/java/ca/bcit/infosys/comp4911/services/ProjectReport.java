@@ -140,7 +140,8 @@ public class ProjectReport {
             plevel = getUserPLevel(currentTimesheet.getUserId(),
                     currentTimesheet.getYear(), currentTimesheet.getWeekNumber());
             timesheetRowList = currentTimesheet.getTimesheetRows();
-            reportHelperRow = incrementPLevelHours(plevel, timesheetRowList, wpNumber, reportHelperRow);
+            reportHelperRow = incrementPLevelHours(plevel, timesheetRowList, wpNumber, reportHelperRow,
+                    currentTimesheet.getOverTime());
         }
 
         return reportHelperRow;
@@ -157,7 +158,7 @@ public class ProjectReport {
      * @return
      */
     private ReportHelperRow incrementPLevelHours(PLevel plevel, List<TimesheetRow> timesheetRowList, String wpNumber,
-                                                 ReportHelperRow reportHelperRow){
+                                                 ReportHelperRow reportHelperRow, int overtime){
         Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
         TimesheetRow tsr;
         while(timesheetRowIterator.hasNext()){
@@ -166,32 +167,41 @@ public class ProjectReport {
             {
                 continue;
             }
-            switch(plevel){
-                case P1:
-                    reportHelperRow.incrementP1(tsr.calculateTotal());
-                    break;
-                case P2:
-                    reportHelperRow.incrementP2(tsr.calculateTotal());
-                    break;
-                case P3:
-                    reportHelperRow.incrementP3(tsr.calculateTotal());
-                    break;
-                case P4:
-                    reportHelperRow.incrementP4(tsr.calculateTotal());
-                    break;
-                case P5:
-                    reportHelperRow.incrementP5(tsr.calculateTotal());
-                    break;
-                case SS:
-                    reportHelperRow.incrementSS(tsr.calculateTotal());
-                    break;
-                case DS:
-                    reportHelperRow.incrementDS(tsr.calculateTotal());
-                    break;
-            }
-
+            addTotalHoursPerRow(reportHelperRow, plevel, tsr.calculateTotal());
         }
+        /**
+         * This method is called is used to take into account the overtime accumulated per Timesheet.
+         */
+        addTotalHoursPerRow(reportHelperRow, plevel, overtime*15);
 
         return reportHelperRow;
     }
+    
+    private void addTotalHoursPerRow(ReportHelperRow reportHelperRow, PLevel plevel, int hours) {
+        
+        switch(plevel){
+            case P1:
+                reportHelperRow.incrementP1(hours);
+                break;
+            case P2:
+                reportHelperRow.incrementP2(hours);
+                break;
+            case P3:
+                reportHelperRow.incrementP3(hours);
+                break;
+            case P4:
+                reportHelperRow.incrementP4(hours);
+                break;
+            case P5:
+                reportHelperRow.incrementP5(hours);
+                break;
+            case SS:
+                reportHelperRow.incrementSS(hours);
+                break;
+            case DS:
+                reportHelperRow.incrementDS(hours);
+                break;
+        }
+    }
+    
 }
