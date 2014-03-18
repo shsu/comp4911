@@ -13,6 +13,8 @@ import java.util.List;
 @Stateless
 public class WorkPackageStatusReportDao {
 
+    final public static int MAX_SIZE = 20;
+
     @PersistenceContext
     private EntityManager em;
 
@@ -57,8 +59,7 @@ public class WorkPackageStatusReportDao {
             + " WHERE p.projectNumber = :projectNumber"
             + " ORDER BY r.reportDate", WorkPackageStatusReport.class);
         query.setParameter("projectNumber", projectNumber);
-        List<WorkPackageStatusReport> sublist = query.getResultList();
-        sublist = sublist.subList(0, 19);
-        return sublist;
+        query.setMaxResults(MAX_SIZE);
+        return query.getResultList();
     }
 }
