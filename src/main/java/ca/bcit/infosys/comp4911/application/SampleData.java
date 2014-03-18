@@ -96,25 +96,157 @@ public class SampleData {
 
     private void generatePayRates() {
         payRateDao.create(new PayRate(
-            2014, new BigDecimal(70), PLevel.P1));
+            2017, new BigDecimal(80), PLevel.P1));
         
+        payRateDao.create(new PayRate(
+            2017, new BigDecimal(100), PLevel.P2));
+        
+        payRateDao.create(new PayRate(
+            2017, new BigDecimal(125), PLevel.P3));
+        
+        payRateDao.create(new PayRate(
+            2017, new BigDecimal(175), PLevel.P4));
+        
+        payRateDao.create(new PayRate(
+            2017, new BigDecimal(215), PLevel.P5));
+        
+        payRateDao.create(new PayRate(
+            2017, new BigDecimal(115), PLevel.DS));
+        
+        payRateDao.create(new PayRate(
+            2017, new BigDecimal(115), PLevel.SS));
+        
+        
+        payRateDao.create(new PayRate(
+            2016, new BigDecimal(76), PLevel.P1));
+            
+        payRateDao.create(new PayRate(
+            2016, new BigDecimal(96), PLevel.P2));
+            
+        payRateDao.create(new PayRate(
+            2016, new BigDecimal(120), PLevel.P3));
+            
+        payRateDao.create(new PayRate(
+            2016, new BigDecimal(170), PLevel.P4));
+            
+        payRateDao.create(new PayRate(
+            2016, new BigDecimal(210), PLevel.P5));
+            
+        payRateDao.create(new PayRate(
+            2016, new BigDecimal(110), PLevel.DS));
+            
+        payRateDao.create(new PayRate(
+            2016, new BigDecimal(110), PLevel.SS));
+        
+        
+        payRateDao.create(new PayRate(
+            2015, new BigDecimal(73), PLevel.P1));
+            
+        payRateDao.create(new PayRate(
+            2015, new BigDecimal(93), PLevel.P2));
+            
+        payRateDao.create(new PayRate(
+            2015, new BigDecimal(115), PLevel.P3));
+            
+        payRateDao.create(new PayRate(
+            2015, new BigDecimal(165), PLevel.P4));
+            
+        payRateDao.create(new PayRate(
+            2015, new BigDecimal(205), PLevel.P5));
+            
+        payRateDao.create(new PayRate(
+            2015, new BigDecimal(105), PLevel.DS));
+            
+        payRateDao.create(new PayRate(
+            2015, new BigDecimal(105), PLevel.SS));
+        
+        
+        payRateDao.create(new PayRate(
+            2014, new BigDecimal(70), PLevel.P1));
+            
         payRateDao.create(new PayRate(
             2014, new BigDecimal(90), PLevel.P2));
-        
+            
         payRateDao.create(new PayRate(
             2014, new BigDecimal(110), PLevel.P3));
-        
+            
         payRateDao.create(new PayRate(
             2014, new BigDecimal(160), PLevel.P4));
-        
+            
         payRateDao.create(new PayRate(
             2014, new BigDecimal(200), PLevel.P5));
-        
+            
         payRateDao.create(new PayRate(
             2014, new BigDecimal(100), PLevel.DS));
-        
+            
         payRateDao.create(new PayRate(
             2014, new BigDecimal(100), PLevel.SS));
+        
+        
+        payRateDao.create(new PayRate(
+            2013, new BigDecimal(67), PLevel.P1));
+            
+        payRateDao.create(new PayRate(
+            2013, new BigDecimal(87), PLevel.P2));
+            
+        payRateDao.create(new PayRate(
+            2013, new BigDecimal(105), PLevel.P3));
+            
+        payRateDao.create(new PayRate(
+            2013, new BigDecimal(155), PLevel.P4));
+            
+        payRateDao.create(new PayRate(
+            2013, new BigDecimal(195), PLevel.P5));
+            
+        payRateDao.create(new PayRate(
+            2013, new BigDecimal(95), PLevel.DS));
+            
+        payRateDao.create(new PayRate(
+            2013, new BigDecimal(95), PLevel.SS));
+        
+        
+        payRateDao.create(new PayRate(
+            2012, new BigDecimal(65), PLevel.P1));
+            
+        payRateDao.create(new PayRate(
+            2012, new BigDecimal(85), PLevel.P2));
+            
+        payRateDao.create(new PayRate(
+            2012, new BigDecimal(102), PLevel.P3));
+            
+        payRateDao.create(new PayRate(
+            2012, new BigDecimal(150), PLevel.P4));
+            
+        payRateDao.create(new PayRate(
+            2012, new BigDecimal(190), PLevel.P5));
+            
+        payRateDao.create(new PayRate(
+            2012, new BigDecimal(93), PLevel.DS));
+            
+        payRateDao.create(new PayRate(
+            2012, new BigDecimal(93), PLevel.SS));
+        
+        
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(60), PLevel.P1));
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(80), PLevel.P2));
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(100), PLevel.P3));
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(145), PLevel.P4));
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(185), PLevel.P5));
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(90), PLevel.DS));
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(90), PLevel.SS));
     }
 
     private void generateProjects() {
