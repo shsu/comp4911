@@ -352,6 +352,17 @@ cascadiaControllers.controller('CreateProjectsController', ['$scope', 'CascadiaS
 
 
 /*
+    CREATE WP CONTROLLER
+*/
+cascadiaControllers.controller('CreateWPController', ['$scope', 'CascadiaService', '$location', 'Restangular',
+  function($scope, CascadiaService, $location, Restangular){
+    
+  }
+]);
+
+
+
+/*
     DASHBOARD CONTROLLER
 */
 cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'CascadiaService',

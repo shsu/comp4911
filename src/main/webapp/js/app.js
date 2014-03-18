@@ -15,6 +15,7 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/assign-supervisor', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
     when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
     when('/create-project', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html'}).
+    when('/create-wp', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html'}).
     when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
     when('/edit-pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html'}).
     when('/engineer-budget', {controller: 'EngineerBudgetController', templateUrl:'Partials/engineer-budget.html'}).
