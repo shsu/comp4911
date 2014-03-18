@@ -638,7 +638,9 @@ cascadiaControllers.controller('ProjectSummaryController', ['$scope', 'Restangul
 */
 cascadiaControllers.controller('RateSheetController', ['$scope', 'Restangular',
   function($scope, Restangular){
-
+    Restangular.all('users').getList().then(function(response){
+      $scope.users = response;
+    });
   }
 ]);
 
