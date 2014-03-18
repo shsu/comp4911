@@ -1,5 +1,6 @@
 package ca.bcit.infosys.comp4911.access;
 
+import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.domain.WorkPackageAssignment;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,6 +54,14 @@ public class WorkPackageAssignmentDao {
         TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from WorkPackageAssignment w where w.userId = :userId",
                 WorkPackageAssignment.class);
         query.setParameter("userId", userId);
+        return query.getResultList();
+    }
+
+    public List<User> getAllByWorkPackageNumber(final String workPackageNumber){
+        TypedQuery<User> query = em.createQuery("SELECT u from User u" +
+                " JOIN WorkPackageAssignment wpa ON u.id = wpa.userId" +
+                " WHERE wpa.workPackageNumber = :workPackageNumber", User.class);
+        query.setParameter("workPackageNumber", workPackageNumber);
         return query.getResultList();
     }
 

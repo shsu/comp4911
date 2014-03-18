@@ -44,10 +44,11 @@ public class WorkPackageAssignmentResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllWorkPackageAssignments(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
+      @PathParam("id") String id) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.responseWithEntity(200, workPackageAssignmentDao.getAll());
+        return SH.responseWithEntity(200, workPackageAssignmentDao.getAllByWorkPackageNumber(id));
     }
 
     @POST
