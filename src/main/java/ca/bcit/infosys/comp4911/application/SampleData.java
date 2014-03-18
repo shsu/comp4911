@@ -245,7 +245,7 @@ public class SampleData {
         
         rowCollection.add(wp1Row1);
         timesheetRowDao.create(wp1Row1);
-        tempTimesheet = new Timesheet(24, rowCollection, 1, 2014, 0, 40, true, true);
+        tempTimesheet = new Timesheet(0, rowCollection, 1, 2014, 0, 40, true, true);
         timesheetDao.create(tempTimesheet);
         rowCollection.clear();
         
@@ -253,7 +253,7 @@ public class SampleData {
         rowCollection.add(wp1Row3);
         timesheetRowDao.create(wp1Row2);
         timesheetRowDao.create(wp1Row3);
-        tempTimesheet = new Timesheet(24, rowCollection, 12, 2014, -90, 0, false, true);
+        tempTimesheet = new Timesheet(0, rowCollection, 12, 2014, -90, 0, false, true);
         rowCollection.clear();
         
         rowCollection.add(wp2Row1);
@@ -262,14 +262,14 @@ public class SampleData {
         timesheetRowDao.create(wp2Row1);
         timesheetRowDao.create(wp2Row2);
         timesheetRowDao.create(wp2Row3);
-        tempTimesheet = new Timesheet(24, rowCollection, 47, 2013, 0, 0, true, true);
+        tempTimesheet = new Timesheet(0, rowCollection, 47, 2013, 0, 0, true, true);
         rowCollection.clear();
         
         rowCollection.add(wp3Row1);
         rowCollection.add(wp3Row2);
         timesheetRowDao.create(wp3Row1);
         timesheetRowDao.create(wp3Row2);
-        tempTimesheet = new Timesheet(24, rowCollection, 11, 2014, 45, 0, true, true);
+        tempTimesheet = new Timesheet(0, rowCollection, 11, 2014, 45, 0, true, true);
         rowCollection.clear();
     }
     
