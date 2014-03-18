@@ -68,6 +68,25 @@ public class PayRateResource {
         return SH.responseWithEntity(200, payRates);
     }
 
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updatePayRate(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("id") int payRateId,
+            final PayRate payRate) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        PayRate check = payRateDao.read(payRate);
+        if (check == null) {
+            return SH.response(404);
+        }
+
+        payRateDao.update(payRate);
+        return SH.response(200);
+    }
+
     /**
      * Not sure if we need this endpoint actually
      */

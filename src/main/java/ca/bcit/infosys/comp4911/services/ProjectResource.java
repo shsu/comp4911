@@ -85,7 +85,7 @@ public class ProjectResource {
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("project_number") int projectNumber,
-      final Project Project) {
+      final Project project) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         Project check = projectDao.read(projectNumber);
@@ -93,7 +93,7 @@ public class ProjectResource {
             return SH.response(404);
         }
 
-        projectDao.update(Project);
+        projectDao.update(project);
         return SH.response(200);
     }
 
