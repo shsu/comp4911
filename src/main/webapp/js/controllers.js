@@ -404,10 +404,33 @@ cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', '
 cascadiaControllers.controller('EditPayRatesController', ['$scope', 'CascadiaService', '$location', 'Restangular',
   function($scope, CascadiaService, $location, Restangular) {
     var base = Restangular.all('pay_rates');
+    $scope.payRatesMap = {}
+    $scope.payRates = []
 
     base.getList().then(function(response){
       $scope.payRates = response;
+
+      for(var i = 0; i < $scope.payRates.length; ++i) {
+        $scope.payRatesMap[$scope.payRates[i].year] = []
+      }
+
+      for(var i = 0; i < $scope.payRates.length; ++i){
+        $scope.payRatesMap[$scope.payRates[i].year].push($scope.payRates[i]);
+      }
     });
+
+    /*
+    for (var i = 0; i < 2; ++i) {
+      var year = $scope.payRates[i].year;
+      $scope.payRatesMap[year].push({'year': year});
+    };
+  */
+    /*
+    for(var i = 0; i < $scope.payRates.length; ++i ) {
+      $scope.payRatesMap[i] = $scope.payRates[i];
+    }
+    */
+    $scope.index = 2014;
 
     payRatesChanged = [];
 

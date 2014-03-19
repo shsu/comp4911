@@ -4,9 +4,23 @@
     <div class="table-responsive">
       <table class="table table-hover">
         <tbody>
-          <tr ng-repeat="p in payRates">
-            <td>{{p.pLevel}}</td>
-            <td><input type="text" ng-change="change(p)" ng-model="p.rate"/></td>
+          <tr ng-repeat="pp in payRatesMap[(index - 1)]">
+            <td>{{pp.pLevel}}</td>
+            <td><input type="text" ng-readonly="" ng-change="change(pp)" ng-model="pp.rate"/></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-hover">
+        <tbody>
+          <tr ng-repeat="pc in payRatesMap[index]">
+            <td><input type="text" ng-readonly="" ng-change="change(pc)" ng-model="pc.rate"/></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-hover">
+        <tbody>
+          <tr ng-repeat="pn in payRatesMap[(index + 1)]">
+            <td><input type="text" ng-readonly="" ng-change="change(pn)" ng-model="pn.rate"/></td>
           </tr>
         </tbody>
       </table>
