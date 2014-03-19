@@ -1,31 +1,60 @@
 <content>
   <div ng-controller="EditPayRatesController" class="col-lg-6 col-lg-offset-2">
     <h1 class="secondary">Edit Pay Rates</h1>
-    <div class="table-responsive">
-      <table class="table table-hover">
-        <tbody>
-          <tr ng-repeat="pp in payRatesMap[(index - 1)]">
-            <td>{{pp.pLevel}}</td>
-            <td><input type="text" ng-readonly="" ng-change="change(pp)" ng-model="pp.rate"/></td>
-          </tr>
-        </tbody>
-      </table>
-      <table class="table table-hover">
-        <tbody>
-          <tr ng-repeat="pc in payRatesMap[index]">
-            <td><input type="text" ng-readonly="" ng-change="change(pc)" ng-model="pc.rate"/></td>
-          </tr>
-        </tbody>
-      </table>
-      <table class="table table-hover">
-        <tbody>
-          <tr ng-repeat="pn in payRatesMap[(index + 1)]">
-            <td><input type="text" ng-readonly="" ng-change="change(pn)" ng-model="pn.rate"/></td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <button class="btn btn-primary" ng-click="edit()">Save</button>
-   </div>  
+    <div class="row">
+
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="table-responsive">
+          <ul class="list-inline timesheet-nav">
+            <li class="cursor-hand" ng-click="prior()">&lt; Previous</li>
+            <li class="bg-tertiary">Today</li>
+            <li class="cursor-hand" ng-click="next()">Next &gt;</li>
+          </ul>
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th>{{(index - 1)}}</th>
+              </tr>
+              <tr ng-repeat="pp in payRatesMap[(index - 1)]">
+                <td>{{pp.pLevel}}</td>
+                <td><input type="text" ng-readonly="" ng-change="change(pp)" ng-model="pp.rate"/></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <tbody>
+            <tr>
+              <th>{{(index)}}</th>
+            </tr>
+              <tr ng-repeat="pc in payRatesMap[index]">
+                <td><input type="text" ng-readonly="" ng-change="change(pc)" ng-model="pc.rate"/></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <tbody>
+              <tr> 
+                <th>{{(index + 1)}}</th>
+              </tr>
+              <tr ng-repeat="pn in payRatesMap[(index + 1)]">
+                <td><input type="text" ng-readonly="" ng-change="change(pn)" ng-model="pn.rate"/></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          <br />
+          <button class="btn btn-primary" ng-click="edit()">Save</button>
+        </div>
+    </div>  
   </div>
 </content>

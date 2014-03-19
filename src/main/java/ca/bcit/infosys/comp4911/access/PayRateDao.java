@@ -20,7 +20,7 @@ public class PayRateDao {
         em.persist(payRate);
     }
 
-    public PayRate read ( final PayRate payRateID)
+    public PayRate read ( final int payRateID)
     {
         return em.find(PayRate.class, payRateID);
     }

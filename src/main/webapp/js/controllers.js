@@ -419,17 +419,6 @@ cascadiaControllers.controller('EditPayRatesController', ['$scope', 'CascadiaSer
       }
     });
 
-    /*
-    for (var i = 0; i < 2; ++i) {
-      var year = $scope.payRates[i].year;
-      $scope.payRatesMap[year].push({'year': year});
-    };
-  */
-    /*
-    for(var i = 0; i < $scope.payRates.length; ++i ) {
-      $scope.payRatesMap[i] = $scope.payRates[i];
-    }
-    */
     $scope.index = 2014;
 
     payRatesChanged = [];
@@ -451,6 +440,20 @@ cascadiaControllers.controller('EditPayRatesController', ['$scope', 'CascadiaSer
     $scope.edit = function() {
       for(var i = 0; i < payRatesChanged.length; i++) {
         payRatesChanged[i].put();
+      }
+    }
+
+    $scope.prior = function() {
+      if($scope.payRatesMap[($scope.index - 2)])
+      {
+        $scope.index--;
+      }
+    }
+
+    $scope.next = function() {
+      if($scope.payRatesMap[($scope.index + 2)])
+      {
+        $scope.index++;
       }
     }
   }

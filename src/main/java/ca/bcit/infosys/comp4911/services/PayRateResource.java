@@ -78,7 +78,7 @@ public class PayRateResource {
             final PayRate payRate) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        PayRate check = payRateDao.read(payRate);
+        PayRate check = payRateDao.read(payRateId);
         if (check == null) {
             return SH.response(404);
         }
