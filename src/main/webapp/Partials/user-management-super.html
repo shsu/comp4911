@@ -2,7 +2,7 @@
   <h1 class="secondary">User Management - Supervisor</h1><br /> 
   <div class="row">
     <form action="" class="form-inline col-xs-8">
-      <p>Search WP Number:  <input type="text" placeholder="search" class="form-control" /></p>
+      <p>Search WP Number:  <input type="text" ng-model="query" placeholder="search" class="form-control" /></p>
     </form>
     <!-- <a id="edit" data-toggle="modal" data-target="#editModal" class="pull-right">Edit Pay Rates</a> -->
     <a href="#/edit-pay-rates" id="edit" class="pull-right">Edit Pay Rates</a>
@@ -16,7 +16,6 @@
             <th>Emp ID</th>
             <th>Emp Name</th>
             <th>User Name</th>
-            <th>Password</th>
             <th>E-Mail</th>
             <th>Labour Grade</th>
             <th>Assign to Supervisor</th>
@@ -24,7 +23,7 @@
             <th>Assign to WP</th>
             <th>Status</th>
           </tr>
-          <tr>
+          <tr ng-repeat="user in users | filter: query" ng-hide="!query || query.id == ''">
             <td></td>
             <td></td>
             <td></td>
@@ -35,66 +34,6 @@
             <td><a href="#/assign-project">Assign</a></td>
             <td><a href="#/assign-wp">Assign</a></td>
             <td><select name="" id=""><option value="">Active</option></select></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
           </tr>
         </tbody>
       </table>

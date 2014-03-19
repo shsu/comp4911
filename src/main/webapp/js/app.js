@@ -43,9 +43,10 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/wp-status-report', {controller: 'WPStatusReportController', templateUrl:'Partials/wp-status-report.html'}).
     otherwise({redirectTo:'/'});
 }])
-.run(function($rootScope, authenticateUser) {
+.run(function($rootScope, authenticateUser, initUserMap) {
   $rootScope.$on('$routeChangeSuccess', function() {
      authenticateUser($rootScope);
+     initUserMap($rootScope);
   })
 })
 // Runs every time page is reloaded or routed, ensures authentication and headers are set appropriately
@@ -60,6 +61,21 @@ cascadia.config(['$routeProvider', function($routeProvider) {
       });
     }
   }
+})
+// Ensures we have a collection of users at our disposal at all times
+.factory('initUserMap', function(Restangular) {
+    return function(scope){
+        if(!scope.userMap || scope.userMap.length == 0) {
+            scope.userMap = {}
+
+            Restangular.one('users').getList().then(function(response){
+                scope.userList = response;
+                for(var i = 0; i < scope.userList.length; ++i) {
+                  scope.userMap[scope.userList[i].id] = scope.userList[i];
+                }
+            });
+        }
+    }
 });
 
 cascadia.config(function(RestangularProvider) {

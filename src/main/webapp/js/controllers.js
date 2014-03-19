@@ -3,6 +3,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'rest
 cascadiaControllers.service('CascadiaService', function($rootScope) {
   $rootScope.user = JSON.parse(localStorage.getItem('user'));
 
+  /*
   this.initMapOfUsers = function(listOfUsers) {
     var worker = new Worker('js/web-worker.js');
     worker.addEventListener('message', function(e){
@@ -10,6 +11,7 @@ cascadiaControllers.service('CascadiaService', function($rootScope) {
     }, false);
     worker.postMessage(JSON.stringify(listOfUsers));
   };
+  */
 });
 
 
@@ -115,6 +117,7 @@ cascadiaControllers.controller('EngineerController', ['$scope',
 */
 cascadiaControllers.controller('AEPController', ['$scope', 'CascadiaService', '$location', 'Restangular',
   function($scope, CascadiaService, $location, Restangular){
+
     Restangular.all('projects').getList().then(function(response){
       $scope.projects = response;
     });
@@ -197,6 +200,10 @@ cascadiaControllers.controller('ManagerController', ['$scope',
 cascadiaControllers.controller('APController', ['$scope', 'CascadiaService', '$location', 'Restangular',
   function($scope, CascadiaService, $location, Restangular){
 
+    Restangular.one('users', 3).get().then(function(response){
+      $scope.manUser = response;
+    });
+
     Restangular.all('projects').getList().then(function(response){
       $scope.projects = response;
     });
@@ -231,14 +238,28 @@ cascadiaControllers.controller('ARController', ['$scope', 'CascadiaService', '$l
 /*
     ASSIGN SUPERVISOR CONTROLLER
 */
-cascadiaControllers.controller('ASController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
-
-    Restangular.all('users').getList().then(function(response){
-      $scope.projects = response;
-    });
-
+cascadiaControllers.controller('ASController', ['$scope', '$rootScope', 'CascadiaService', '$location', 'Restangular',
+  function($scope, $rootScope, CascadiaService, $location, Restangular){
     // code for supervisor assignment
+    $scope.selectedEngineer;
+
+    $scope.selectM = function (s) {
+      $scope.selectedEngineer= s;
+    };
+
+    $scope.search = function (s) {
+      if (s.id.toString().indexOf($scope.query) != -1 || s.firstName.indexOf($scope.query) != -1 
+          || s.lastName.indexOf($scope.query) != -1){
+        return true;
+      }
+      return false;
+    };
+
+    $scope.save = function () {
+      var user = $rootScope.userMap[$rootScope.user.id];
+      user.supervisorUserID = $scope.selectedEngineer.id;
+      Restangular.one('users', user.id).customPUT(user);
+    };
   }
 ]);
 
@@ -507,7 +528,7 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
 
         Restangular.one('user').get().then(function(response) {
           localStorage.setItem('user', JSON.stringify(response));
-            $rootScope.user = response
+          $rootScope.user = response
           $location.path('/dashboard');
         });
       },function handleError(response){

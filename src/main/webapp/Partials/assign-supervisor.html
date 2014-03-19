@@ -2,8 +2,8 @@
   <h1 class="secondary">Assign To Supervisor</h1>
   <div ng-controller="ASController">
     <div class="row">
-      <p class="col-xs-3">Emp ID: {{user.id}}</p>
-      <p class="col-xs-9">Emp Name: {{user.username}}</p>
+      <p class="col-xs-3">Emp ID: {{cUser.id}}</p>
+      <p class="col-xs-9">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p>
     </div>
     <div class="row">
       <form action="" class="form-inline">
@@ -19,10 +19,10 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="selectM($index)" class="{{supervisor.selected}}" ng-hide="!query" ng-repeat="supervisor in supervisors | filter:query">
+            <tr ng-click="selectM(supervisor)" class="{{supervisor.selected}}" ng-hide="!query" ng-repeat="supervisor in userList | filter: search">
               <td>{{supervisor.id}}</td> 
-              <td>{{supervisor.name}}</td>
-              <td>{{supervisor.paygrade}}</td>
+              <td>{{supervisor.firstName}} {{supervisor.lastName}}</td>
+              <td>{{supervisor.pLevel}}</td>
             </tr>
           </tbody>
         </table>
@@ -39,12 +39,12 @@
           <div class="modal-body">
             <p>Do you want to assign this Supervisor to this employee?</p>
             <div ng-model="selectedEngineer">
-              <span style="margin-right: 20px;"><strong>Name:</strong> {{selectedEngineer.name}}</span>
-              <span><strong>Pay Grade:</strong> {{selectedEngineer.paygrade}}</span>
+              <span style="margin-right: 20px;"><strong>Name: {{selectedEngineer.firstName}} {{selectedEngineer.lastName}}</strong></span>
+              <span><strong>Pay Grade:</strong> {{selectedEngineer.pLevel}}</span>
             </div>
           </div>
           <div class="modal-footer">
-            <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cancel()">Add</button>
+            <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save()">Add</button>
             <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cancel()">Cancel</button>
           </div>
         </div>
