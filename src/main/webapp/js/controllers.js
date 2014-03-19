@@ -1,6 +1,6 @@
 var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular']);
 
-cascadiaControllers.service('CascadiaService', function($rootScope) {
+cascadiaControllers.service('CascadiaService', function ($rootScope) {
   $rootScope.user = JSON.parse(localStorage.getItem('user'));
 
   /*
@@ -113,7 +113,7 @@ cascadiaControllers.controller('EngineerController', ['$scope',
 
 
 /*
-    ASSIGN EMPLOYEE TO PROJECT CONTROLLER
+    ASSIGN EMPLOYEE TO PROJECT W
 */
 cascadiaControllers.controller('AEPController', ['$scope', 'CascadiaService', '$location', 'Restangular',
   function($scope, CascadiaService, $location, Restangular){
@@ -583,8 +583,8 @@ cascadiaControllers.controller('ManageProjectController', ['$scope', 'CascadiaSe
 /*
    MANAGE WP CONTROLLER
 */
-cascadiaControllers.controller('WPManagementController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
+cascadiaControllers.controller('WPManagementController', ['$scope', 'CascadiaService', 'Restangular',
+  function($scope, CascadiaService, Restangular){
     $scope.statuses = [ 'Open', 'Closed'];
     $scope.project = {};
     mapOfWP = {};
@@ -721,13 +721,53 @@ cascadiaControllers.controller('SearchProjectController', ['$scope', 'Restangula
   }
 ]);
 
+/*
+    TIMESHEET DETAILS FOR APPROVAL CONTROLLER
+*/
+
+cascadiaControllers.controller('TADetailsController', ['$scope', '$location', 'Restangular', '$routeParams',
+  function($scope, $location, rest, $params){
+    $scope.param = $params.id;
+
+    rest.one('timesheets', $scope.param).get().then(function(response){
+      $scope.timesheet = response;
+    });
+  }
+]);
+
+/*
+    TIMESHEET APPROVAL CONTROLLER
+*/
+
+cascadiaControllers.controller('TAController', ['$scope', '$location', 'Restangular',
+  function($scope, $location, Restangular){
+    /*
+    Restangular.one('timesheets', $rootScope.userId).getList('needApproval').then(function(response){
+      $scope.timeshets = response;
+    });
+
+*/
+    $scope.timesheets = []
+
+    Restangular.all('timesheets').getList().then(function(response){
+      $scope.timesheets = response;
+    })
+
+    $scope.select = function($index) {
+      var ndx = $index;
+      var str = "/timesheet/";
+      var path = str.concat($scope.timesheets[ndx].id);
+      $location.path(path);
+    }
+  }
+]);
 
 
 /*
     TIMESHEET CONTROLLER
 */
-cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, $rootScope, CascadiaService, $location, Restangular) {
+cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', 'CascadiaService', '$location', 'Restangular', '$routeParams',
+  function($scope, $rootScope, CascadiaService, $location, Restangular, $params) {
     var base = Restangular.one('user/timesheets');
 
     $scope.workPackageNumbers = {};
