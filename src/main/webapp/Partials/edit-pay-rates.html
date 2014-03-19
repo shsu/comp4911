@@ -1,60 +1,63 @@
 <content>
-  <div ng-controller="EditPayRatesController" class="col-lg-6 col-lg-offset-2">
-    <h1 class="secondary">Edit Pay Rates</h1>
+  <div ng-controller="EditPayRatesController">
+    <h1 class="secondary">Edit Pay Rates</h1><br />
     <div class="row">
-
+        <div class="col-lg-9 col-lg-offset-2">
+            <div class="btn-group btn-group-justified">
+                <div class="btn-group">
+                    <button class="btn btn-info btn-lg btn-block" ng-click="prior()"><span class="glyphicon glyphicon-chevron-left"></span> Previous</button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-info btn-lg btn-block"  ng-click="current()">Current</button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-info btn-lg btn-block" ng-click="next()">Next <span class="glyphicon glyphicon-chevron-right"></span></button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
-      <div class="col-lg-4">
-        <div class="table-responsive">
-          <ul class="list-inline timesheet-nav">
-            <li class="cursor-hand" ng-click="prior()">&lt; Previous</li>
-            <li class="bg-tertiary">Today</li>
-            <li class="cursor-hand" ng-click="next()">Next &gt;</li>
-          </ul>
-          <table class="table table-hover">
-            <tbody>
+    <div class="row paytable">
+      <div class="col-lg-4 col-lg-offset-2 nopadding">
+          <table class="table table-hover table-bordered table-condensed">
               <tr>
-                <th>{{(index - 1)}}</th>
+                <th class="alignCenter">Pay Level</th>
+                <th class ="alignCenter">{{(index - 1)}}</th>
               </tr>
               <tr ng-repeat="pp in payRatesMap[(index - 1)]">
-                <td>{{pp.pLevel}}</td>
-                <td><input type="text" ng-readonly="" ng-change="change(pp)" ng-model="pp.rate"/></td>
+                <td class="alignCenter"><strong>{{pp.pLevel}}</strong></td>
+                <td><input class="alignCenter" type="text" ng-readonly="" ng-change="change(pp)" ng-model="pp.rate"/></td>
               </tr>
-            </tbody>
           </table>
-        </div>
       </div>
-      <div class="col-lg-4">
-        <div class="table-responsive">
-          <table class="table table-hover">
+      <div class="col-lg-2 nopadding">
+          <table class="table table-hover table-condensed">
             <tbody>
             <tr>
-              <th>{{(index)}}</th>
+              <th class="alignCenter">{{(index)}}</th>
             </tr>
               <tr ng-repeat="pc in payRatesMap[index]">
-                <td><input type="text" ng-readonly="" ng-change="change(pc)" ng-model="pc.rate"/></td>
+                <td><input class="alignCenter" type="text" ng-readonly="" ng-change="change(pc)" ng-model="pc.rate"/></td>
               </tr>
             </tbody>
           </table>
-        </div>
       </div>
-      <div class="col-lg-4">
-        <div class="table-responsive">
-          <table class="table table-hover">
+      <div class="col-lg-2 nopaddingL">
+          <table class="table table-hover table-condensed">
             <tbody>
               <tr> 
-                <th>{{(index + 1)}}</th>
+                <th class="alignCenter">{{(index + 1)}}</th>
               </tr>
               <tr ng-repeat="pn in payRatesMap[(index + 1)]">
-                <td><input type="text" ng-readonly="" ng-change="change(pn)" ng-model="pn.rate"/></td>
+                <td><input class="alignCenter" type="text" ng-readonly="" ng-change="change(pn)" ng-model="pn.rate"/></td>
               </tr>
             </tbody>
           </table>
+      </div>
+    </div> 
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-5">
+            <button class="btn btn-primary btn-lg btn-block" ng-click="edit()">Save</button>
         </div>
-          <br />
-          <button class="btn btn-primary" ng-click="edit()">Save</button>
-        </div>
-    </div>  
+    </div>
   </div>
 </content>

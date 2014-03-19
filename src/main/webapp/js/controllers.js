@@ -477,7 +477,12 @@ cascadiaControllers.controller('EditPayRatesController', ['$scope', 'CascadiaSer
         $scope.index++;
       }
     }
+    $scope.current = function() {
+        $scope.index=2014;
+    }
+    
   }
+                                                          
 ]);
 
 
