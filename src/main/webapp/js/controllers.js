@@ -386,6 +386,11 @@ cascadiaControllers.controller('CreateWPController', ['$scope', 'CascadiaService
         $scope.packages = response;
       });
     }
+
+    $scope.addNew = function() {
+      $scope.packages.push(
+         {workPackageNumber: "", issueDate: "", completeDate: "", startDate: "", description: "", progressStatus: "", endDate: "", estimateToCompletion: "", estimateAtStart: "", projectNumber: ""});
+    }
   }
 ]);
 
@@ -880,6 +885,11 @@ cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', 
 
     base.get().then(function(response){
       $scope.package = response;
+    });
+
+    Restangular.all('work_packages/' + $scope.param + '/assignments').getList().then(function(response){
+      $scope.assignments = response;
+      
     });
   }
 ]);

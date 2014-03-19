@@ -1,5 +1,6 @@
 <content>
   <h1 class="secondary">Work Package Details</h1><br />
+  <h2>{{assignments}}</h2>
   <div ng-controller="WPDetailsController">
     <!-- <p>{{package}}</p> -->
     <div class="panel panel-default">
@@ -33,12 +34,13 @@
                   <th>Pay Grade</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
+                  <tr ng-repeat="assignment in assignments">
+                    <td>{{assignment.userId}}</td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
+
             </div>
           </div>            
         </div>        

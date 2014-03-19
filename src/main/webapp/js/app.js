@@ -37,7 +37,7 @@ cascadia.config(['$routeProvider', function($routeProvider) {
     when('/timesheet/:id', {controller: 'TADetailsController', templateUrl:'Partials/single-timesheet.html'}).
     when('/user-management-hr', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
     when('/user-management-super', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-super.html'}).
-    when('/user-profile/:id', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
+    when('/user-profile/', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
     when('/weekly-project', {controller: 'WeeklyProjectController', templateUrl:'Partials/weekly-project.html'}).
     when('/wp-details', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).
     when('/wp-details/:id', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).

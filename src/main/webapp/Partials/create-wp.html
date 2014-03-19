@@ -27,12 +27,12 @@
             <th>Status</th>
           </tr>
           <tr ng-repeat="package in packages | filter: query">
-            <td>{{package.workPackageNumber}}</td>
-            <td>{{package.workPackageName}}</td>
+            <td><input type="text" placeholder="{{package.workPackageNumber}}"></td>
+            <td><input type="text" placeholder="{{package.workPackageName}}"></td>
             <td></td>
-            <td>{{package.issueDate}}</td>
+            <td><input type="text" placeholder="{{package.issueDate}}"></td>
             <td></td>
-            <td>{{package.projectStatus}}</td>
+            <td><input type="text" placeholder="{{package.projectStatus}}"></td>
           </tr>
         </tbody>
       </table>
@@ -40,7 +40,7 @@
   </div>
   <div class="row">
     <button class="pull-right btn btn-primary">Save</button>
-    <button class="pull-right btn btn-primary">Add New Row</button>
+    <button class="pull-right btn btn-primary" ng-click="addNew()">Add New Row</button>
   </div>
 </div>
 </content>
