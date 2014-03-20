@@ -402,6 +402,18 @@ Use query parameter of: filter=current to limit the results to only the current 
 
 + Response 401
 
+## User Timesheets [/user/timesheets_to_approve]
+### Retrieve all timesheets the authenticated user is responsible for checking [GET]
++ Resonse 200
+    + Body
+
+        [
+            {
+            }
+        ]
+
++ Response 401
+
 ### Create a timesheet for authenticated user [POST]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
