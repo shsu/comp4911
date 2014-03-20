@@ -8,10 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Singleton
 @Startup
@@ -39,6 +36,9 @@ public class SampleData {
     private WorkPackageAssignmentDao workPackageAssignmentDao;
 
     @EJB
+    private WorkPackageStatusReportDao workPackageStatusReportDao;
+
+    @EJB
     private WorkPackageDao workPackageDao;
 
     public SampleData() {
@@ -53,6 +53,7 @@ public class SampleData {
         generateWorkPackages();
         generateWorkPackageAssignments();
         generateTimesheets();
+        generateWorkPackageStatusReports();
     }
 
     private void generateUsers() {
@@ -407,7 +408,15 @@ public class SampleData {
         timesheetDao.create(tempTimesheet);
         rowCollection.clear();
     }
-    
+
+    private void generateWorkPackageStatusReports(){
+        Date date = setDate(1, 1, 2014);
+        Set<Effort> effort = new HashSet<Effort>();
+        WorkPackageStatusReport wpsr = new WorkPackageStatusReport(new Integer(1), 1, 2014, date, "new wpsr", "Lots of work accomplished",
+                "none", "approve timesheets", effort, "none", "A1112222");
+        workPackageStatusReportDao.create(wpsr);
+    }
+
     private Date setDate(int month, int day, int year)
     {
     	Calendar c = Calendar.getInstance();
