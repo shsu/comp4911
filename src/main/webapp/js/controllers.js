@@ -853,7 +853,7 @@ cascadiaControllers.controller('UserProfileController', ['$scope', 'CascadiaServ
   function($scope, CascadiaService, $params, Restangular) {
     $scope.param = $params.id;
 
-    var base = Restangular.one('users' + $params.id);
+    var base = Restangular.one('users', $params.id);
 
     base.get().then(function(response){
       $scope.user = response;
