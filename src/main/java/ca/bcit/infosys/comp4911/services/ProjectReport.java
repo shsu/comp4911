@@ -23,9 +23,6 @@ public class ProjectReport {
     private UserTokens userTokens;
 
     @EJB
-    private WorkPackageStatusReport workPackageStatusReport;
-
-    @EJB
     private WorkPackageStatusReportDao wpsrDao;
 
     @EJB

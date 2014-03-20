@@ -60,11 +60,11 @@ public class WorkPackageAssignmentDao {
     }
 
     public List<User> getAllByWorkPackageNumber(final String workPackageNumber){
-        Query query = em.createNativeQuery("SELECT * FROM User u" +
-                " JOIN WorkPackageAssignment wpa ON u.id = wpa.userId" +
-                " WHERE wpa.workPackageNumber = :workPackageNumber", User.class);
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u" +
+                " WHERE u.id IN (SELECT wpa.userId FROM WorkPackageAssignment wpa " +
+                " WHERE wpa.workPackageNumber = :workPackageNumber)", User.class);
         query.setParameter("workPackageNumber", workPackageNumber);
-        return (List<User>)query.getResultList();
+        return query.getResultList();
     }
 
 }

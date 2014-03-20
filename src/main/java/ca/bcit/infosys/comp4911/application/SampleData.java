@@ -51,7 +51,7 @@ public class SampleData {
         generatePayRates();
         generateProjectAssignments();
         generateWorkPackages();
-        //generateWorkPackageAssignments();
+        generateWorkPackageAssignments();
         generateTimesheets();
     }
 
