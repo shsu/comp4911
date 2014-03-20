@@ -7,7 +7,7 @@ var cascadia = angular.module('cascadiaApp', [
 cascadia.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/add-engineer', {controller: 'EngineerController', templateUrl:'Partials/add-engineer.html'}).
-    when('/assign-employee-project', {controller: 'AEPController', templateUrl:'Partials/assign-employee-project.html'}).
+    when('/assign-employee-project/:id', {controller: 'AEPController', templateUrl:'Partials/assign-employee-project.html'}).
     when('/assign-employee-wp', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html'}).
     when('/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/assign-manager.html'}).
     when('/assign-project', {controller: 'PackageController', templateUrl:'Partials/assign-project.html'}).

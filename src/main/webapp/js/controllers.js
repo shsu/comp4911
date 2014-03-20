@@ -849,15 +849,11 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
 /*
     USER PROFILE CONTROLLER
 */
-cascadiaControllers.controller('UserProfileController', ['$scope', 'CascadiaService', '$routeParams', 'Restangular',
-  function($scope, CascadiaService, $params, Restangular) {
+cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope', 'CascadiaService', '$routeParams', 'Restangular',
+  function($scope, $rootScope, CascadiaService, $params, Restangular) {
     $scope.param = $params.id;
 
-    var base = Restangular.one('users', $params.id);
-
-    base.get().then(function(response){
-      $scope.user = response;
-    });
+    $scope.mUser = $rootScope.userMap[$scope.param];
   }
 ]);
 

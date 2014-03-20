@@ -9,15 +9,15 @@
           <tbody>
             <tr>
               <td>Employee ID</td>
-              <td>{{user.id}}</td>
+              <td>{{mUser.id}}</td>
             </tr>
             <tr>
               <td>Name</td>
-              <td>{{user.firstName}} {{user.lastName}}</td>
+              <td>{{mUser.firstName}} {{mUser.lastName}}</td>
             </tr>
             <tr>
               <td>User Name</td>
-              <td>{{user.username}}</td>
+              <td>{{mUser.username}}</td>
             </tr>
             <tr>
               <td>Password</td>
@@ -31,26 +31,26 @@
           <tbody>
             <tr>
               <td>Labor Grade</td>
-              <td>{{user.pLevel}}</td>
+              <td>{{mUser.pLevel}}</td>
             </tr>
             <tr>
               <td>Assigned Manager</td>
-              <td>{{user.supervisorUserID}}</td>
+              <td>{{mUser.supervisorUserID}}</td>
             </tr>
             <tr>
               <td>Timesheet Approver</td>
-              <td>{{user.timesheetApproverUserID}}</td>
+              <td>{{mUser.timesheetApproverUserID}}</td>
             </tr>
-            <tr>
+            <tr> 
               <td>Status</td>
-              <td>{{user.status}} Active/Non-Active</td>
+              <td>{{mUser.status}} Active/Non-Active</td>
             </tr>
           </tbody>
         </table>
       </div>    
     </div>
     <div class="row">
-      <button class="btn btn-primary pull-left">Add to Project</button>
+      <a href="#/assign-employee-project/{{mUser.Id}}" ng-hide=""class="btn btn-primary pull-left">Add to Project</a>
       <button class="btn btn-primary pull-right">Save</button>
     </div>
     <div class="row">
