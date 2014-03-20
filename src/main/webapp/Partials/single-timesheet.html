@@ -3,8 +3,8 @@
     <div class="row">
       <h1 class="secondary col-xs-4">TimeSheet</h1>
       <ul class="list-inline col-xs-8 emp-info">
-        <li>Emp ID: {{user.id}}</li>
-        <li>Emp Name: {{user.firstName}} {{user.lastName}}</li>
+        <li>Emp ID: {{timesheet.userId}}</li>
+        <li>Emp Name: {{userMap[timesheet.userId].firstName}} {{userMap[timesheet.userId].lastName}}</li>
       </ul>
     </div>
     <div class="row">
@@ -46,7 +46,7 @@
         </table>
         <footer>
           <p class="col-xs-4">Overtime: {{timesheet.overTime}} </p>
-          <p class="col-xs-4">Flextime: User Flextime </p>
+          <p class="col-xs-4">Flextime: {{userMap[timesheet.userId].totalFlexTime}} </p>
           <button class="btn btn-primary" ng-click="add()">Add new row</button>
         </footer>
       </div>

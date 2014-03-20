@@ -759,7 +759,7 @@ cascadiaControllers.controller('TAController', ['$scope', '$location', 'Restangu
 */
     $scope.timesheets = []
 
-    Restangular.all('timesheets').getList().then(function(response){
+    Restangular.all('user/timesheets/to_approve').getList().then(function(response){
       $scope.timesheets = response;
     })
 
