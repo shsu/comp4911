@@ -152,9 +152,13 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllWorkPackagesAssignedToUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-      @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+      @QueryParam(SH.TOKEN_STRING) final String queryToken,
+      @QueryParam("filter") final String filter) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
+        if(filter != null && filter.equals("responsibleEngineer")) {
+            return SH.responseWithEntity(200, workPackageDao.getAllByEngineer(userId));
+        }
         return SH.responseWithEntity(200, workPackageDao.getAllByUser(userId));
     }
 

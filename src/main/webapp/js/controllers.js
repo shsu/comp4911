@@ -367,6 +367,7 @@ cascadiaControllers.controller('PackageController', ['$scope',
 cascadiaControllers.controller('CreateProjectsController', ['$scope', 'CascadiaService', '$location', 'Restangular',
   function($scope, CascadiaService, $location, Restangular){
     // Restangular.one('project').post() ...
+    $scope.project;
   }
 ]);
 
@@ -506,13 +507,43 @@ cascadiaControllers.controller('EngineerBudgetController', ['$scope', 'CascadiaS
 /*
     INDEX CONTROLLER
 */
-cascadiaControllers.controller('IndexController', ['$scope', 'CascadiaService', '$location',
+cascadiaControllers.controller('NavigationController', ['$scope', 'CascadiaService', '$location',
   function($scope, CascadiaService, $location) {
     $scope.logout = function() {
       localStorage.clear();
       $location.path('/login');
       $.growl.notice({ title: "Success!", message: "You have been logged out." });
     }
+
+    $scope.IsAdmin = function() {
+      return ($scope.IsHr() || $scope.IsSupervisor() );
+    }
+
+    $scope.IsHr = function() {
+      return $rootScope.user.isHR;
+    }
+
+    $scope.IsSupervisor = function() {
+      Restangular.all('user/peons').getlist().then(function(response) {
+        var peons = response;
+        return peons.length;
+      });
+    }
+
+    $scope.IsTimesheetApprover = function() {
+      for (var i = 0; i < $rootScope.userList.length; ++i) {
+        if($rootScope.user.id == $rootScope.userlist[i].timesheetApproverUserId) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    $scope.IsResponsibleEngineer = function() {
+      // Need to implement this
+    }
+
+
   }
 ]);
 

@@ -15,7 +15,7 @@
     
 </head>
 <body class="body">
-  <nav class="navbar navbar-inverse bg-primary" ng-controller="IndexController" ng-show="isAuthenticated" role="navigation">
+  <nav class="navbar navbar-inverse bg-primary" ng-controller="NavigationController" ng-show="isAuthenticated" role="navigation">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
@@ -27,7 +27,7 @@
     </div>
     <div class="navbar-collapse collapse in">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
+        <li class="dropdown" ng-if="IsProjectManager()">
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">Project <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#/create-project">Create</a></li>
@@ -38,7 +38,6 @@
         <li class="dropdown">
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">WP Management<b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#/create-wp">Create</a></li>
             <li><a href="#/manage-wp">Manage</a></li>
           </ul>
         </li>          
@@ -46,7 +45,7 @@
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">TimeSheet<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#/timesheet">Manage</a></li>
-            <li><a href="#/timesheet-approval">Approve</a></li>
+            <li><a href="#/timesheet-approval" ng-if="IsTimesheetApprover()">Approve</a></li>
           </ul>
         </li>          
           
@@ -63,11 +62,12 @@
           </ul>
         </li>          
           
-        <li class="dropdown">
+        <li class="dropdown" ng-if="IsAdmin()">
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">User Management<b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#/user-management-hr">Manage User - HR</a></li>
-            <li><a href="#/user-management-super">Manage User - Supervisor</a></li>
+            <!-- ng-if is apparently better performance than ng-show, isn't compiled if evaluates to false -->
+            <li><a href="#/user-management-hr" ng-if="IsHr()">Manage User - HR</a></li>
+            <li><a href="#/user-management-super" ng-if="IsSupervisor()">Manage User - Supervisor</a></li>
             <li class="divider"></li>
             <li><a href="#/edit-pay-rates">Edit Pay Rates - HR</a></li>
             <li class="divider"></li>
@@ -75,15 +75,15 @@
           </ul>
         </li>          
       </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-                <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-user"></i> {{user.firstName}}  {{user.lastName}}<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#/profile">Profile</a></li>
-                    <li><a href="#" ng-click="logout()">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+              <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-user"></i> {{user.firstName}}  {{user.lastName}}<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                  <li><a href="#/profile">Profile</a></li>
+                  <li><a href="#" ng-click="logout()">Logout</a></li>
+              </ul>
+          </li>
+      </ul>
     </div><!--/.nav-collapse -->
   </nav>
   <div class="container">

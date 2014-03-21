@@ -333,11 +333,12 @@ public class SampleData {
             workPackageAssignmentDao.create(new WorkPackageAssignment(
                     packages.get(0).getWorkPackageNumber(),
                     users.get(i).getId(),
-                    false,
+                    true,
                     new Date(),
                     new Date()
             ));
         }
+
     }
     private void generateProjectAssignments()
     {

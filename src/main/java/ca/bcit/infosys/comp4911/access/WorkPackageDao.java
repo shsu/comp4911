@@ -45,6 +45,16 @@ public class WorkPackageDao {
         return query.getResultList();
     }
 
+    public List<WorkPackage> getAllByEngineer(int userId) {
+        TypedQuery<WorkPackage> query = em.createQuery("select w from WorkPackage w "
+                + "where w.workPackageNumber = (SELECT i.workPackageNumber from WorkPackageAssignment i"
+                + " where i.userId = :userId and i.isResponsibleEngineer = :isEngineer)",
+                WorkPackage.class);
+        query.setParameter("userId", userId);
+        query.setParameter("isEngineer", true);
+        return query.getResultList();
+    }
+
     public List<WorkPackage> getAllByProject(int projectNumber) {
         TypedQuery<WorkPackage> query = em.createQuery("select wp from WorkPackage wp"
                 + " where wp.projectNumber = :projectNumber",
