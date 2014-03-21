@@ -1,18 +1,32 @@
 var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular']);
 
-cascadiaControllers.service('CascadiaService', function ($rootScope) {
-  $rootScope.user = JSON.parse(localStorage.getItem('user'));
+cascadiaControllers.service('CascadiaService', ['$rootScope', 'Restangular',
+ function ($rootScope, Restangular) {
+    $rootScope.user = JSON.parse(localStorage.getItem('user'));
 
-  /*
-  this.initMapOfUsers = function(listOfUsers) {
-    var worker = new Worker('js/web-worker.js');
-    worker.addEventListener('message', function(e){
-      $rootScope.mapOfUsers = JSON.parse(e.data);
-    }, false);
-    worker.postMessage(JSON.stringify(listOfUsers));
-  };
-  */
-});
+    this.IsSupervisor = function() {
+      Restangular.all('user/peons').getList().then(function(response) {
+        var peons = response;
+        return peons.length;
+      });
+    }
+
+    this.IsResponsibleEngineer = function() {
+      var path = 'user/work_packages/?filter=responsibleEngineer';
+      Restangular.all(path).getList().then(function(response) {
+        var list = response;
+        return list.length;
+      });
+    }  
+
+    this.IsProjectManager = function() {
+      var path = 'user/projects/managed'
+      Restangular.all(path).getList().then(function(response) {
+        var list = response;
+        return list.length;
+      });
+    }
+}]);
 
 
 
@@ -507,8 +521,15 @@ cascadiaControllers.controller('EngineerBudgetController', ['$scope', 'CascadiaS
 /*
     INDEX CONTROLLER
 */
-cascadiaControllers.controller('NavigationController', ['$scope', 'CascadiaService', '$location',
-  function($scope, CascadiaService, $location) {
+cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', 'CascadiaService', '$location', 'Restangular',
+  function($scope, $rootScope, CascadiaService, $location, Restangular) {
+    var base = Restangular.all('user');
+
+    $scope.IsEngineer = CascadiaService.IsResponsibleEngineer();
+    $scope.IsProjectManager = CascadiaService.IsProjectManager();
+    $scope.IsSupervisor = CascadiaService.IsSupervisor();
+
+
     $scope.logout = function() {
       localStorage.clear();
       $location.path('/login');
@@ -516,34 +537,21 @@ cascadiaControllers.controller('NavigationController', ['$scope', 'CascadiaServi
     }
 
     $scope.IsAdmin = function() {
-      return ($scope.IsHr() || $scope.IsSupervisor() );
+      return ($scope.IsHr() || $scope.IsSupervisor || $scope.IsProjectManager);
     }
 
     $scope.IsHr = function() {
       return $rootScope.user.isHR;
     }
 
-    $scope.IsSupervisor = function() {
-      Restangular.all('user/peons').getlist().then(function(response) {
-        var peons = response;
-        return peons.length;
-      });
-    }
-
     $scope.IsTimesheetApprover = function() {
-      for (var i = 0; i < $rootScope.userList.length; ++i) {
-        if($rootScope.user.id == $rootScope.userlist[i].timesheetApproverUserId) {
+      for (var id in $rootScope.userMap) {
+        if($rootScope.user.id == $rootScope.userMap[id].timesheetApproverUserID) {
           return true;
         }
       }
       return false;
     }
-
-    $scope.IsResponsibleEngineer = function() {
-      // Need to implement this
-    }
-
-
   }
 ]);
 

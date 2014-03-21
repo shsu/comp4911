@@ -27,7 +27,7 @@
     </div>
     <div class="navbar-collapse collapse in">
       <ul class="nav navbar-nav">
-        <li class="dropdown" ng-if="IsProjectManager()">
+        <li class="dropdown" ng-if="IsProjectManager">
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">Project <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#/create-project">Create</a></li>
@@ -62,15 +62,15 @@
           </ul>
         </li>          
           
-        <li class="dropdown" ng-if="IsAdmin()">
+        <li class="dropdown">
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">User Management<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <!-- ng-if is apparently better performance than ng-show, isn't compiled if evaluates to false -->
-            <li><a href="#/user-management-hr" ng-if="IsHr()">Manage User - HR</a></li>
-            <li><a href="#/user-management-super" ng-if="IsSupervisor()">Manage User - Supervisor</a></li>
-            <li class="divider"></li>
-            <li><a href="#/edit-pay-rates">Edit Pay Rates - HR</a></li>
-            <li class="divider"></li>
+            <li><a href="#/user-management-hr" ng-if="IsHr()">Manage User</a></li>
+            <li><a href="#/user-management-super" ng-if="IsSupervisor">Manage User</a></li>
+            <li class="divider" ng-if="IsSupervisor"></li>
+            <li><a href="#/edit-pay-rates" ng-if="IsHr()">Edit Pay Rates</a></li>
+            <li class="divider" ng-if="IsHr()"></li>
             <li><a href="#/user-profile/{{user.id}}">User Profile</a></li>
           </ul>
         </li>          
