@@ -53,7 +53,7 @@ public class SampleData {
         generateWorkPackages();
         generateWorkPackageAssignments();
         generateTimesheets();
-        generateWorkPackageStatusReports();
+        //generateWorkPackageStatusReports();
     }
 
     private void generateUsers() {
@@ -62,17 +62,17 @@ public class SampleData {
         
         userDao.create(new User(
         		"username0@example.com", "password", "Bruce", "Link", new Date(), true, "MIA", 40, 0,
-        		0, 0, 0, 1, PLevel.P5));
+        		0, 0, 1, 1, PLevel.P5));
         
         Date startDate = setDate(1, 1, 2000);
         
         userDao.create(new User(
         		"jedward", "q", "John", "Edward", startDate, false, "Active", 40, 0, 14,
-        		12345678, 56789012, 1, PLevel.P1));
+        		12345678, 1, 1, PLevel.P1));
         
         userDao.create(new User(
                 "awong", "q", "Alice", "Wong", startDate, false, "Active", 40, 0, 14,
-                23456789, 56789012, 56789012, PLevel.P2));
+                23456789, 1, 1, PLevel.P2));
         
         userDao.create(new User(
                 "bnelson", "q", "Bob", "Nelson", startDate, false, "Active", 40, 0, 14,
@@ -413,9 +413,8 @@ public class SampleData {
     private void generateWorkPackageStatusReports(){
         Date date = setDate(1, 1, 2014);
         Set<Effort> effort = new HashSet<Effort>();
-        WorkPackageStatusReport wpsr = new WorkPackageStatusReport(new Integer(1), 1, 2014, date, "new wpsr", "Lots of work accomplished",
-                "none", "approve timesheets", effort, "none", "A1112222");
-        workPackageStatusReportDao.create(wpsr);
+        workPackageStatusReportDao.create(new WorkPackageStatusReport(new Integer(1), 1, 2014, date, "new wpsr", "Lots of work accomplished",
+                "none", "approve timesheets", effort, "none", "A1112222"));
     }
 
     private Date setDate(int month, int day, int year)
