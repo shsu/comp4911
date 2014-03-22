@@ -57,7 +57,7 @@ public class ProjectResource {
       final Project project) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        projectDao.create(project);
+        projectDao.create(project,true);
         return SH.response(201);
     }
 

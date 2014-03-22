@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.User;
+import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import org.mindrot.jbcrypt.BCrypt;
@@ -17,9 +18,11 @@ public class UserDao {
     @PersistenceContext(unitName = "comp4911")
     private EntityManager em;
 
-    public void create(final User user) {
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-        em.persist(user);
+    public void create(final User user, final boolean validate) {
+        if (!validate || ValidationHelper.validateEntity(user)) {
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            em.persist(user);
+        }
     }
 
     public User read(final int id) {
@@ -27,7 +30,9 @@ public class UserDao {
     }
 
     public void update(final User user) {
-        em.merge(user);
+        if(ValidationHelper.validateEntity(user)){
+            em.merge(user);
+        }
     }
 
     public void delete(final User user) {

@@ -56,7 +56,7 @@ public class ProjectAssignmentResource {
       final ProjectAssignment projectAssignment) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        projectAssignmentDao.create(projectAssignment);
+        projectAssignmentDao.create(projectAssignment,true);
         return SH.response(201);
     }
 

@@ -44,7 +44,7 @@ public class UsersResource {
       User user) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        userDao.create(user);
+        userDao.create(user, true);
         return SH.response(201);
     }
 

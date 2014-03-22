@@ -48,7 +48,7 @@ public class TimesheetResource {
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
       final Timesheet timesheet) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
-        timesheetDao.create(timesheet);
+        timesheetDao.create(timesheet,true);
 
         return SH.response(201);
     }

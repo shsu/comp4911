@@ -2,6 +2,8 @@ package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.Project;
 import ca.bcit.infosys.comp4911.domain.User;
+import ca.bcit.infosys.comp4911.helper.ValidationHelper;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -14,9 +16,11 @@ public class ProjectDao {
     @PersistenceContext(unitName = "comp4911")
     private EntityManager em;
 
-    public void create (final Project project)
+    public void create (final Project project, final boolean validate)
     {
-        em.persist(project);
+        if (!validate || ValidationHelper.validateEntity(project)) {
+            em.persist(project);
+        }
     }
 
     public Project read ( final int projectNumber)
@@ -26,7 +30,9 @@ public class ProjectDao {
 
     public void update (final Project project)
     {
-        em.merge(project);
+        if(ValidationHelper.validateEntity(project)){
+            em.merge(project);
+        }
     }
 
     public void delete (final Project project)

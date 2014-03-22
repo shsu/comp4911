@@ -150,7 +150,7 @@ public class UserTimesheetsResource {
                     row.getSunday(),
                     row.getNote()
             );
-            timesheetRowDao.create(temp);
+            timesheetRowDao.create(temp,true);
             rows.add(temp);
         }
         Timesheet newTimesheet = new Timesheet(
@@ -162,7 +162,7 @@ public class UserTimesheetsResource {
                 defaultSheet.isApproved(),
                 defaultSheet.isSigned()
         );
-        timesheetDao.create(newTimesheet);
+        timesheetDao.create(newTimesheet,true);
         return newTimesheet;
     }
 
@@ -182,7 +182,7 @@ public class UserTimesheetsResource {
                 SH.getCurrentYear(),
                 0, false, false
         );
-        timesheetDao.create(newTimesheet);
+        timesheetDao.create(newTimesheet,true);
         return newTimesheet;
     }
 

@@ -1,8 +1,7 @@
 package ca.bcit.infosys.comp4911.access;
 
-import ca.bcit.infosys.comp4911.domain.Project;
-import ca.bcit.infosys.comp4911.domain.WorkPackage;
 import ca.bcit.infosys.comp4911.domain.WorkPackageStatusReport;
+import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,9 +17,11 @@ public class WorkPackageStatusReportDao {
     @PersistenceContext
     private EntityManager em;
 
-    public void create (final WorkPackageStatusReport workPackageStatusReport)
+    public void create (final WorkPackageStatusReport workPackageStatusReport, final boolean validate)
     {
-        em.persist(workPackageStatusReport);
+        if (!validate || ValidationHelper.validateEntity(workPackageStatusReport)) {
+            em.persist(workPackageStatusReport);
+        }
     }
 
     public WorkPackageStatusReport read ( final int workPackageStatusReportID)
@@ -30,7 +31,9 @@ public class WorkPackageStatusReportDao {
 
     public void update (final WorkPackageStatusReport workPackageStatusReport)
     {
-        em.merge(workPackageStatusReport);
+        if(ValidationHelper.validateEntity(workPackageStatusReport)){
+            em.merge(workPackageStatusReport);
+        }
     }
 
     public void delete (final WorkPackageStatusReport workPackageStatusReport)

@@ -65,7 +65,7 @@ public class StatusReportResource {
             return SH.response(404);
         }
 
-        workPackageStatusReportDao.create(workPackageStatusReport);
+        workPackageStatusReportDao.create(workPackageStatusReport,true);
         return SH.response(201);
     }
 

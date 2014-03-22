@@ -2,6 +2,7 @@ package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.PLevel;
 import ca.bcit.infosys.comp4911.domain.PayRate;
+import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,9 +16,11 @@ public class PayRateDao {
     @PersistenceContext(unitName = "comp4911")
     private EntityManager em;
 
-    public void create (final PayRate payRate)
+    public void create (final PayRate payRate, final boolean validate)
     {
-        em.persist(payRate);
+        if (!validate || ValidationHelper.validateEntity(payRate)) {
+            em.persist(payRate);
+        }
     }
 
     public PayRate read ( final int payRateID)
@@ -27,7 +30,9 @@ public class PayRateDao {
 
     public void update (final PayRate payRate)
     {
-        em.merge(payRate);
+        if(ValidationHelper.validateEntity(payRate)){
+            em.merge(payRate);
+        }
     }
 
     public List<PayRate> getAllPayRates() {

@@ -65,7 +65,7 @@ public class WorkPackageAssignmentResource {
             return SH.response(404);
         }
 
-        workPackageAssignmentDao.create(workPackageAssignment);
+        workPackageAssignmentDao.create(workPackageAssignment,true);
         return SH.response(201);
     }
 
