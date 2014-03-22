@@ -97,179 +97,179 @@ public class SampleData {
 
     private void generatePayRates() {
         payRateDao.create(new PayRate(
-            2017, new BigDecimal(80), PLevel.P1));
+            2017, new BigDecimal(80), PLevel.P1),false);
         
         payRateDao.create(new PayRate(
-            2017, new BigDecimal(100), PLevel.P2));
+            2017, new BigDecimal(100), PLevel.P2),false);
         
         payRateDao.create(new PayRate(
-            2017, new BigDecimal(125), PLevel.P3));
+            2017, new BigDecimal(125), PLevel.P3),false);
         
         payRateDao.create(new PayRate(
-            2017, new BigDecimal(175), PLevel.P4));
+            2017, new BigDecimal(175), PLevel.P4),false);
         
         payRateDao.create(new PayRate(
-            2017, new BigDecimal(215), PLevel.P5));
+            2017, new BigDecimal(215), PLevel.P5),false);
         
         payRateDao.create(new PayRate(
-            2017, new BigDecimal(115), PLevel.DS));
+            2017, new BigDecimal(115), PLevel.DS),false);
         
         payRateDao.create(new PayRate(
-            2017, new BigDecimal(115), PLevel.SS));
-        
-        
-        payRateDao.create(new PayRate(
-            2016, new BigDecimal(76), PLevel.P1));
-            
-        payRateDao.create(new PayRate(
-            2016, new BigDecimal(96), PLevel.P2));
-            
-        payRateDao.create(new PayRate(
-            2016, new BigDecimal(120), PLevel.P3));
-            
-        payRateDao.create(new PayRate(
-            2016, new BigDecimal(170), PLevel.P4));
-            
-        payRateDao.create(new PayRate(
-            2016, new BigDecimal(210), PLevel.P5));
-            
-        payRateDao.create(new PayRate(
-            2016, new BigDecimal(110), PLevel.DS));
-            
-        payRateDao.create(new PayRate(
-            2016, new BigDecimal(110), PLevel.SS));
+            2017, new BigDecimal(115), PLevel.SS),false);
         
         
         payRateDao.create(new PayRate(
-            2015, new BigDecimal(73), PLevel.P1));
+            2016, new BigDecimal(76), PLevel.P1),false);
             
         payRateDao.create(new PayRate(
-            2015, new BigDecimal(93), PLevel.P2));
+            2016, new BigDecimal(96), PLevel.P2),false);
             
         payRateDao.create(new PayRate(
-            2015, new BigDecimal(115), PLevel.P3));
+            2016, new BigDecimal(120), PLevel.P3),false);
             
         payRateDao.create(new PayRate(
-            2015, new BigDecimal(165), PLevel.P4));
+            2016, new BigDecimal(170), PLevel.P4),false);
             
         payRateDao.create(new PayRate(
-            2015, new BigDecimal(205), PLevel.P5));
+            2016, new BigDecimal(210), PLevel.P5),false);
             
         payRateDao.create(new PayRate(
-            2015, new BigDecimal(105), PLevel.DS));
+            2016, new BigDecimal(110), PLevel.DS),false);
             
         payRateDao.create(new PayRate(
-            2015, new BigDecimal(105), PLevel.SS));
+            2016, new BigDecimal(110), PLevel.SS),false);
         
         
         payRateDao.create(new PayRate(
-            2014, new BigDecimal(70), PLevel.P1));
+            2015, new BigDecimal(73), PLevel.P1),false);
             
         payRateDao.create(new PayRate(
-            2014, new BigDecimal(90), PLevel.P2));
+            2015, new BigDecimal(93), PLevel.P2),false);
             
         payRateDao.create(new PayRate(
-            2014, new BigDecimal(110), PLevel.P3));
+            2015, new BigDecimal(115), PLevel.P3),false);
             
         payRateDao.create(new PayRate(
-            2014, new BigDecimal(160), PLevel.P4));
+            2015, new BigDecimal(165), PLevel.P4),false);
             
         payRateDao.create(new PayRate(
-            2014, new BigDecimal(200), PLevel.P5));
+            2015, new BigDecimal(205), PLevel.P5),false);
             
         payRateDao.create(new PayRate(
-            2014, new BigDecimal(100), PLevel.DS));
+            2015, new BigDecimal(105), PLevel.DS),false);
             
         payRateDao.create(new PayRate(
-            2014, new BigDecimal(100), PLevel.SS));
+            2015, new BigDecimal(105), PLevel.SS),false);
         
         
         payRateDao.create(new PayRate(
-            2013, new BigDecimal(67), PLevel.P1));
+            2014, new BigDecimal(70), PLevel.P1),false);
             
         payRateDao.create(new PayRate(
-            2013, new BigDecimal(87), PLevel.P2));
+            2014, new BigDecimal(90), PLevel.P2),false);
             
         payRateDao.create(new PayRate(
-            2013, new BigDecimal(105), PLevel.P3));
+            2014, new BigDecimal(110), PLevel.P3),false);
             
         payRateDao.create(new PayRate(
-            2013, new BigDecimal(155), PLevel.P4));
+            2014, new BigDecimal(160), PLevel.P4),false);
             
         payRateDao.create(new PayRate(
-            2013, new BigDecimal(195), PLevel.P5));
+            2014, new BigDecimal(200), PLevel.P5),false);
             
         payRateDao.create(new PayRate(
-            2013, new BigDecimal(95), PLevel.DS));
+            2014, new BigDecimal(100), PLevel.DS),false);
             
         payRateDao.create(new PayRate(
-            2013, new BigDecimal(95), PLevel.SS));
+            2014, new BigDecimal(100), PLevel.SS),false);
         
         
         payRateDao.create(new PayRate(
-            2012, new BigDecimal(65), PLevel.P1));
+            2013, new BigDecimal(67), PLevel.P1),false);
             
         payRateDao.create(new PayRate(
-            2012, new BigDecimal(85), PLevel.P2));
+            2013, new BigDecimal(87), PLevel.P2),false);
             
         payRateDao.create(new PayRate(
-            2012, new BigDecimal(102), PLevel.P3));
+            2013, new BigDecimal(105), PLevel.P3),false);
             
         payRateDao.create(new PayRate(
-            2012, new BigDecimal(150), PLevel.P4));
+            2013, new BigDecimal(155), PLevel.P4),false);
             
         payRateDao.create(new PayRate(
-            2012, new BigDecimal(190), PLevel.P5));
+            2013, new BigDecimal(195), PLevel.P5),false);
             
         payRateDao.create(new PayRate(
-            2012, new BigDecimal(93), PLevel.DS));
+            2013, new BigDecimal(95), PLevel.DS),false);
             
         payRateDao.create(new PayRate(
-            2012, new BigDecimal(93), PLevel.SS));
+            2013, new BigDecimal(95), PLevel.SS),false);
         
         
         payRateDao.create(new PayRate(
-            2011, new BigDecimal(60), PLevel.P1));
+            2012, new BigDecimal(65), PLevel.P1),false);
             
         payRateDao.create(new PayRate(
-            2011, new BigDecimal(80), PLevel.P2));
+            2012, new BigDecimal(85), PLevel.P2),false);
             
         payRateDao.create(new PayRate(
-            2011, new BigDecimal(100), PLevel.P3));
+            2012, new BigDecimal(102), PLevel.P3),false);
             
         payRateDao.create(new PayRate(
-            2011, new BigDecimal(145), PLevel.P4));
+            2012, new BigDecimal(150), PLevel.P4),false);
             
         payRateDao.create(new PayRate(
-            2011, new BigDecimal(185), PLevel.P5));
+            2012, new BigDecimal(190), PLevel.P5),false);
             
         payRateDao.create(new PayRate(
-            2011, new BigDecimal(90), PLevel.DS));
+            2012, new BigDecimal(93), PLevel.DS),false);
             
         payRateDao.create(new PayRate(
-            2011, new BigDecimal(90), PLevel.SS));
+            2012, new BigDecimal(93), PLevel.SS),false);
+        
+        
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(60), PLevel.P1),false);
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(80), PLevel.P2),false);
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(100), PLevel.P3),false);
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(145), PLevel.P4),false);
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(185), PLevel.P5),false);
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(90), PLevel.DS),false);
+            
+        payRateDao.create(new PayRate(
+            2011, new BigDecimal(90), PLevel.SS),false);
     }
 
     private void generateProjects() {
         Date issueDate = setDate(1, 1, 2014);
         
         projectDao.create(new Project(
-        		12345, "Apollo", issueDate, null, new BigDecimal(1000), new BigDecimal(0), new BigDecimal(500000)));
+        		12345, "Apollo", issueDate, null, new BigDecimal(1000), new BigDecimal(0), new BigDecimal(500000)),false);
         
         issueDate = setDate(11, 1, 2013);
         
         projectDao.create(new Project(
-        		55522, "Barbosa", issueDate, null, new BigDecimal(2000), new BigDecimal(250000), new BigDecimal(1500000)));
+        		55522, "Barbosa", issueDate, null, new BigDecimal(2000), new BigDecimal(250000), new BigDecimal(1500000)),false);
         
         issueDate = setDate(7, 31, 2012);
         
         projectDao.create(new Project(
-        		99777, "Carolina", issueDate, null, new BigDecimal(2000), new BigDecimal(10000000), new BigDecimal(40000000)));
+        		99777, "Carolina", issueDate, null, new BigDecimal(2000), new BigDecimal(10000000), new BigDecimal(40000000)),false);
         
         issueDate = setDate(2, 1, 2014);
         
         projectDao.create(new Project(
-        		88999, "Davenport", issueDate, null, new BigDecimal(2000), new BigDecimal(30000), new BigDecimal(3000000)));
+        		88999, "Davenport", issueDate, null, new BigDecimal(2000), new BigDecimal(30000), new BigDecimal(3000000)),false);
     }
 
     private void generateWorkPackages() {
@@ -278,49 +278,49 @@ public class SampleData {
         Date endDate = setDate(1, 10, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, 100000));
+        		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, 100000),false);
         
         issueDate = setDate(2, 5, 2014);
         endDate = setDate(4, 12, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"B3332222", "Write tests", issueDate, "100", endDate, 12345, 50000));
+        		"B3332222", "Write tests", issueDate, "100", endDate, 12345, 50000),false);
         
         issueDate = setDate(1, 14, 2014);
         endDate = setDate(4, 17, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"B3332223", "Something important", issueDate, "0", endDate, 12345, 350000));
+        		"B3332223", "Something important", issueDate, "0", endDate, 12345, 350000),false);
         
         issueDate = setDate(11, 10, 2013);
         endDate = setDate(11, 28, 2013);
 
         workPackageDao.create(new WorkPackage(
-        		"A3334444", "Design Database", issueDate, "100", endDate, 55522, 25000));
+        		"A3334444", "Design Database", issueDate, "100", endDate, 55522, 25000),false);
         
         issueDate = setDate(11, 12, 2013);
         endDate = setDate(12, 8, 2013);
         
         workPackageDao.create(new WorkPackage(
-        		"C3332222", "Preliminary front end design", issueDate, "100", endDate, 55522, 100000));
+        		"C3332222", "Preliminary front end design", issueDate, "100", endDate, 55522, 100000),false);
         
         issueDate = setDate(11, 15, 2013);
         endDate = setDate(2, 5, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"A3334452", "Implement login logic", issueDate, "100", endDate, 55522, 45000));
+        		"A3334452", "Implement login logic", issueDate, "100", endDate, 55522, 45000),false);
         
         issueDate = setDate(8, 2, 2012);
         endDate = setDate(3, 27, 2013);
         
         workPackageDao.create(new WorkPackage(
-        		"ZZ334222", "Research technologies", issueDate, "0", endDate, 99977, 5000000));
+        		"ZZ334222", "Research technologies", issueDate, "0", endDate, 99977, 5000000),false);
         
         issueDate = setDate(3, 15, 2013);
         endDate = setDate(6, 23, 2017);
         
         workPackageDao.create(new WorkPackage(
-        		"ZZ334225", "Solve world hunger", issueDate, "0", endDate, 99977, 25000000));
+        		"ZZ334225", "Solve world hunger", issueDate, "0", endDate, 99977, 25000000),false);
     }
 
     private void generateWorkPackageAssignments() {
@@ -336,7 +336,7 @@ public class SampleData {
                     true,
                     new Date(),
                     new Date()
-            ));
+            ),false);
         }
 
     }
@@ -359,7 +359,7 @@ public class SampleData {
                 projects.get(0).getProjectNumber(),
                 users.get(0).getId(),
                 true
-        ));
+        ),false);
     }
     
     private void generateTimesheets() {
@@ -378,35 +378,35 @@ public class SampleData {
         Timesheet tempTimesheet;
         
         rowCollection.add(wp1Row1);
-        timesheetRowDao.create(wp1Row1);
+        timesheetRowDao.create(wp1Row1,false);
         tempTimesheet = new Timesheet(1, rowCollection, 1, 2014, 40, false, true);
-        timesheetDao.create(tempTimesheet);
+        timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
         
         rowCollection.add(wp1Row2);
         rowCollection.add(wp1Row3);
-        timesheetRowDao.create(wp1Row2);
-        timesheetRowDao.create(wp1Row3);
+        timesheetRowDao.create(wp1Row2,false);
+        timesheetRowDao.create(wp1Row3,false);
         tempTimesheet = new Timesheet(2, rowCollection, 12, 2014, 0, false, true);
-        timesheetDao.create(tempTimesheet);
+        timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
         
         rowCollection.add(wp2Row1);
         rowCollection.add(wp2Row2);
         rowCollection.add(wp2Row3);
-        timesheetRowDao.create(wp2Row1);
-        timesheetRowDao.create(wp2Row2);
-        timesheetRowDao.create(wp2Row3);
+        timesheetRowDao.create(wp2Row1,false);
+        timesheetRowDao.create(wp2Row2,false);
+        timesheetRowDao.create(wp2Row3,false);
         tempTimesheet = new Timesheet(1, rowCollection, 47, 2013, 0, true, true);
-        timesheetDao.create(tempTimesheet);
+        timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
         
         rowCollection.add(wp3Row1);
         rowCollection.add(wp3Row2);
-        timesheetRowDao.create(wp3Row1);
-        timesheetRowDao.create(wp3Row2);
+        timesheetRowDao.create(wp3Row1,false);
+        timesheetRowDao.create(wp3Row2,false);
         tempTimesheet = new Timesheet(2, rowCollection, 11, 2014, 0, true, true);
-        timesheetDao.create(tempTimesheet);
+        timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
     }
 
@@ -414,7 +414,7 @@ public class SampleData {
         Date date = setDate(1, 1, 2014);
         Set<Effort> effort = new HashSet<Effort>();
         workPackageStatusReportDao.create(new WorkPackageStatusReport(new Integer(1), 1, 2014, date, "new wpsr", "Lots of work accomplished",
-                "none", "approve timesheets", effort, "none", "A1112222"));
+                "none", "approve timesheets", effort, "none", "A1112222"),false);
     }
 
     private Date setDate(int month, int day, int year)
