@@ -58,41 +58,41 @@ public class SampleData {
 
     private void generateUsers() {
         userDao.create(new User(
-                "q", "q", "Bruce", "Link", new Date(), true, "MIA", 40, 50, 0, -1, 0, 0, PLevel.P5));
+                "q", "q", "Bruce", "Link", new Date(), true, "MIA", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
         
         userDao.create(new User(
         		"username0@example.com", "password", "Bruce", "Link", new Date(), true, "MIA", 40, 0,
-        		0, 0, 1, 1, PLevel.P5));
+        		0, 0, 1, 1, PLevel.P5),false);
         
         Date startDate = setDate(1, 1, 2000);
         
         userDao.create(new User(
         		"jedward", "q", "John", "Edward", startDate, false, "Active", 40, 0, 14,
-        		12345678, 1, 1, PLevel.P1));
+        		12345678, 1, 1, PLevel.P1),false);
         
         userDao.create(new User(
                 "awong", "q", "Alice", "Wong", startDate, false, "Active", 40, 0, 14,
-                23456789, 1, 1, PLevel.P2));
+                23456789, 1, 1, PLevel.P2),false);
         
         userDao.create(new User(
                 "bnelson", "q", "Bob", "Nelson", startDate, false, "Active", 40, 0, 14,
-                34567890, 56789012, 56789012, PLevel.P3));
+                34567890, 56789012, 56789012, PLevel.P3),false);
         
         userDao.create(new User(
                 "csandhu", "q", "Christine", "Sandhu", startDate, true, "Active", 40, 0, 14,
-                45678901, 56789012, 56789012, PLevel.P4));
+                45678901, 56789012, 56789012, PLevel.P4),false);
         
         userDao.create(new User(
                 "zcantwell", "q", "Zamir", "Cantwell", startDate, false, "Active", 40, 0, 14,
-                56789012, 0, 0, PLevel.P5));
+                56789012, 0, 0, PLevel.P5),false);
         
         userDao.create(new User(
                 "cpark", "q", "Chi-En", "Park", startDate, false, "Active", 40, 0, 14,
-                67890123, 56789012, 56789012, PLevel.SS));
+                67890123, 56789012, 56789012, PLevel.SS),false);
         
         userDao.create(new User(
                 "gsmith", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 14,
-                78901234, 56789012, 56789012, PLevel.DS));
+                78901234, 56789012, 56789012, PLevel.DS),false);
     }
 
     private void generatePayRates() {
