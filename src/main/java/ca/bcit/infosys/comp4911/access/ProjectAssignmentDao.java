@@ -2,6 +2,7 @@ package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
 import ca.bcit.infosys.comp4911.domain.User;
+import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,8 +16,10 @@ public class ProjectAssignmentDao {
     @PersistenceContext(unitName = "comp4911")
     private EntityManager em;
 
-    public void create(final ProjectAssignment projectAssignment) {
-        em.persist(projectAssignment);
+    public void create(final ProjectAssignment projectAssignment,final boolean validate) {
+        if (!validate || ValidationHelper.validateEntity(projectAssignment)) {
+            em.persist(projectAssignment);
+        }
     }
 
     public ProjectAssignment read(final int projectAssignmentID) {
@@ -24,7 +27,9 @@ public class ProjectAssignmentDao {
     }
 
     public void update(final ProjectAssignment projectAssignment) {
-        em.merge(projectAssignment);
+        if(ValidationHelper.validateEntity(projectAssignment)){
+            em.merge(projectAssignment);
+        }
     }
 
     public void updateIsProjectManager(final ProjectAssignment projectAssignment, boolean isProjectManager) {

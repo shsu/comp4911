@@ -50,7 +50,7 @@ public class WorkPackageResource {
             final WorkPackage workPackage) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        workPackageDao.create(workPackage);
+        workPackageDao.create(workPackage,true);
         return SH.response(201);
     }
 

@@ -1,6 +1,8 @@
 package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.Timesheet;
+import ca.bcit.infosys.comp4911.helper.ValidationHelper;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,9 +15,11 @@ public class TimesheetDao {
     @PersistenceContext (unitName = "comp4911")
     private EntityManager em;
 
-    public void create (final Timesheet ts)
+    public void create (final Timesheet ts, final boolean validate)
     {
-        em.persist(ts);
+        if (!validate || ValidationHelper.validateEntity(ts)) {
+            em.persist(ts);
+        }
     }
 
     public Timesheet read ( final int tsID)
@@ -25,7 +29,9 @@ public class TimesheetDao {
 
     public void update (final Timesheet ts)
     {
-        em.merge(ts);
+        if(ValidationHelper.validateEntity(ts)){
+            em.merge(ts);
+        }
     }
 
     public void delete (final Timesheet ts)

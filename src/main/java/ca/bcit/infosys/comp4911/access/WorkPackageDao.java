@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.WorkPackage;
+import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,8 +15,10 @@ public class WorkPackageDao {
     @PersistenceContext(unitName = "comp4911")
     private EntityManager em;
 
-    public void create(final WorkPackage workPackage) {
-        em.persist(workPackage);
+    public void create(final WorkPackage workPackage, final boolean validate) {
+        if (!validate || ValidationHelper.validateEntity(workPackage)) {
+            em.persist(workPackage);
+        }
     }
 
     public WorkPackage read(final String workPackageNumber) {
@@ -23,7 +26,9 @@ public class WorkPackageDao {
     }
 
     public void update(final WorkPackage workPackage) {
-        em.merge(workPackage);
+        if(ValidationHelper.validateEntity(workPackage)){
+            em.merge(workPackage);
+        }
     }
 
     public void delete(final WorkPackage workPackage) {

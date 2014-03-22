@@ -47,7 +47,7 @@ public class PayRateResource {
       final PayRate payRate) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        payRateDao.create(payRate);
+        payRateDao.create(payRate,true);
         return SH.response(201);
     }
 

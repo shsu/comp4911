@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.UserPayRateHistory;
+import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,9 +16,11 @@ public class UserPayRateHistoryDao {
     @PersistenceContext(unitName = "comp4911")
     private EntityManager em;
 
-    public void create (final UserPayRateHistory payRateHistory)
+    public void create (final UserPayRateHistory payRateHistory, final boolean validate)
     {
-        em.persist(payRateHistory);
+        if (!validate || ValidationHelper.validateEntity(payRateHistory)) {
+            em.persist(payRateHistory);
+        }
     }
 
     public UserPayRateHistory read ( final int payRateHistoryID)
@@ -27,7 +30,9 @@ public class UserPayRateHistoryDao {
 
     public void update (final UserPayRateHistory payRateHistory)
     {
-        em.merge(payRateHistory);
+        if(ValidationHelper.validateEntity(payRateHistory)){
+            em.merge(payRateHistory);
+        }
     }
 
     public void delete (final UserPayRateHistory payRateHistory)
