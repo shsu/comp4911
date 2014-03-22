@@ -1,40 +1,10 @@
-var cascadiaControllers = angular.module('cascadiaControllers', ['base64', 'restangular']);
-
-cascadiaControllers.service('CascadiaService', ['$rootScope', 'Restangular',
- function ($rootScope, Restangular) {
-    $rootScope.user = JSON.parse(localStorage.getItem('user'));
-
-    this.IsSupervisor = function() {
-      Restangular.all('user/peons').getList().then(function(response) {
-        var peons = response;
-        return peons.length;
-      });
-    }
-
-    this.IsResponsibleEngineer = function() {
-      var path = 'user/work_packages/?filter=responsibleEngineer';
-      Restangular.all(path).getList().then(function(response) {
-        var list = response;
-        return list.length;
-      });
-    }  
-
-    this.IsProjectManager = function() {
-      var path = 'user/projects/managed'
-      Restangular.all(path).getList().then(function(response) {
-        var list = response;
-        return list.length;
-      });
-    }
-}]);
-
-
+var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
 
 /*
     ADD ENGINEER CONTROLLER
 */
-cascadiaControllers.controller('EngineerController', ['$scope',
-  function($scope) {
+cascadiaControllers.controller('EngineerController', ['$scope', 'GrowlResponse',
+  function($scope, GrowlResponse) {
     $scope.engineers = [{
       number: 'A1111',
       name: 'Javier Olson',
@@ -129,8 +99,8 @@ cascadiaControllers.controller('EngineerController', ['$scope',
 /*
     ASSIGN EMPLOYEE TO PROJECT W
 */
-cascadiaControllers.controller('AEPController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
+cascadiaControllers.controller('AEPController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $location, Restangular, GrowlResponse){
 
     Restangular.all('projects').getList().then(function(response){
       $scope.projects = response;
@@ -143,8 +113,8 @@ cascadiaControllers.controller('AEPController', ['$scope', 'CascadiaService', '$
 /*
     ASSIGN EMPLOYEE TO WORK PACKAGE CONTROLLER
 */
-cascadiaControllers.controller('AEWPController', ['$scope', 'CascadiaService', '$location', 'Restangular', '$routeParams',
-  function($scope, CascadiaService, $location, Restangular, $params){
+cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
+  function($scope, $location, Restangular, $params, GrowlResponse){
     $scope.param = $params.id;
 
     Restangular.all('work_packages/' + $scope.param).getList().then(function(response){
@@ -160,8 +130,8 @@ cascadiaControllers.controller('AEWPController', ['$scope', 'CascadiaService', '
 /*
     ASSIGN MANAGER CONTROLLER
 */
-cascadiaControllers.controller('ManagerController', ['$scope',
-  function($scope) {
+cascadiaControllers.controller('ManagerController', ['$scope', 'GrowlResponse',
+  function($scope, GrowlResponse) {
     $scope.managers = [{
       id: 'A1111',
       name: 'Javier Olson',
@@ -211,8 +181,8 @@ cascadiaControllers.controller('ManagerController', ['$scope',
 /*
     ASSIGN TO PROJECTS CONTROLLER
 */
-cascadiaControllers.controller('APController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
+cascadiaControllers.controller('APController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $location, Restangular, GrowlResponse){
 
     Restangular.one('users', 3).get().then(function(response){
       $scope.manUser = response;
@@ -231,8 +201,8 @@ cascadiaControllers.controller('APController', ['$scope', 'CascadiaService', '$l
 /*
     ASSIGN RESPONSIBLE ENGINEER CONTROLLER
 */
-cascadiaControllers.controller('ARController', ['$scope', 'CascadiaService', '$location', 'Restangular', '$routeParams',
-  function($scope, CascadiaService, $location, Restangular, $params){
+cascadiaControllers.controller('ARController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
+  function($scope, $location, Restangular, $params, GrowlResponse){
     $scope.param = $params.id;
 
     Restangular.one('work_packages/' + $scope.param).get().then(function(response){
@@ -252,8 +222,8 @@ cascadiaControllers.controller('ARController', ['$scope', 'CascadiaService', '$l
 /*
     ASSIGN SUPERVISOR CONTROLLER
 */
-cascadiaControllers.controller('ASController', ['$scope', '$rootScope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, $rootScope, CascadiaService, $location, Restangular){
+cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $rootScope, $location, Restangular, GrowlResponse){
     // code for supervisor assignment
     $scope.selectedEngineer;
 
@@ -282,8 +252,8 @@ cascadiaControllers.controller('ASController', ['$scope', '$rootScope', 'Cascadi
 /*
     ASSIGN WP CONTROLLER
 */
-cascadiaControllers.controller('PackageController', ['$scope',
-  function($scope) {
+cascadiaControllers.controller('PackageController', ['$scope', 'GrowlResponse',
+  function($scope, GrowlResponse) {
     $scope.packages = [{
       number: 'B1111',
       title: 'Project Setup',
@@ -378,8 +348,8 @@ cascadiaControllers.controller('PackageController', ['$scope',
 /*
     CREATE PROJECTS CONTROLLER
 */
-cascadiaControllers.controller('CreateProjectsController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
+cascadiaControllers.controller('CreateProjectsController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $location, Restangular, GrowlResponse){
     // Restangular.one('project').post() ...
     $scope.project;
   }
@@ -390,8 +360,8 @@ cascadiaControllers.controller('CreateProjectsController', ['$scope', 'CascadiaS
 /*
     CREATE WP CONTROLLER
 */
-cascadiaControllers.controller('CreateWPController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
+cascadiaControllers.controller('CreateWPController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $location, Restangular, GrowlResponse){
     Restangular.all('projects').getList().then(function(response){
       $scope.projects = response;
     });
@@ -414,8 +384,8 @@ cascadiaControllers.controller('CreateWPController', ['$scope', 'CascadiaService
 /*
     DASHBOARD CONTROLLER
 */
-cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'CascadiaService',
-  function($scope, $rootScope, Restangular, CascadiaService) {
+cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'GrowlResponse',
+  function($scope, $rootScope, Restangular, GrowlResponse) {
     Restangular.one('user/timesheets').get().then(function(response) {
       $scope.timesheets = response;
     });
@@ -442,8 +412,8 @@ cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', '
 /*
     EDIT PAY RATES CONTROLLER
 */
-cascadiaControllers.controller('EditPayRatesController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular) {
+cascadiaControllers.controller('EditPayRatesController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $location, Restangular, GrowlResponse) {
     var base = Restangular.all('pay_rates');
     $scope.payRatesMap = {}
     $scope.payRates = []
@@ -510,8 +480,8 @@ cascadiaControllers.controller('EditPayRatesController', ['$scope', 'CascadiaSer
 /*
     ENGINEER BUDGET CONTROLLER
 */
-cascadiaControllers.controller('EngineerBudgetController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
+cascadiaControllers.controller('EngineerBudgetController', ['$scope', '$location', 'Restangular',
+  function($scope, $location, Restangular){
     
   }
 ]);
@@ -519,38 +489,18 @@ cascadiaControllers.controller('EngineerBudgetController', ['$scope', 'CascadiaS
 
 
 /*
-    INDEX CONTROLLER
+    NAVIGATION CONTROLLER
 */
-cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, $rootScope, CascadiaService, $location, Restangular) {
+cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $rootScope, $location, Restangular, GrowlResponse) {
     var base = Restangular.all('user');
 
-    $scope.IsEngineer = CascadiaService.IsResponsibleEngineer();
-    $scope.IsProjectManager = CascadiaService.IsProjectManager();
-    $scope.IsSupervisor = CascadiaService.IsSupervisor();
-
+    var user = localStorage.getItem('user');
 
     $scope.logout = function() {
       localStorage.clear();
       $location.path('/login');
       $.growl.notice({ title: "Success!", message: "You have been logged out." });
-    }
-
-    $scope.IsAdmin = function() {
-      return ($scope.IsHr() || $scope.IsSupervisor || $scope.IsProjectManager);
-    }
-
-    $scope.IsHr = function() {
-      return $rootScope.user.isHR;
-    }
-
-    $scope.IsTimesheetApprover = function() {
-      for (var id in $rootScope.userMap) {
-        if($rootScope.user.id == $rootScope.userMap[id].timesheetApproverUserID) {
-          return true;
-        }
-      }
-      return false;
     }
   }
 ]);
@@ -560,8 +510,8 @@ cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', 
 /*
     LOGIN CONTROLLER
 */
-cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restangular', '$rootScope', '$location', 'CascadiaService',
-  function($scope, $base64, Restangular, $rootScope, $location, CascadiaService) {
+cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restangular', '$rootScope', '$location', 'GrowlResponse', 'permissions',
+  function($scope, $base64, Restangular, $rootScope, $location, GrowlResponse, permissions) {
     $scope.login = function() {
       var data = {
         'username': $scope.username,
@@ -577,20 +527,19 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
 
         Restangular.one('user').get().then(function(response) {
           localStorage.setItem('user', JSON.stringify(response));
-          $rootScope.user = response
+          $rootScope.user = response;
+
+          Restangular.one('user/permissions').get().then(function(response) {
+            permissions.setPermissions(response.data)
+          }, function(response){
+            permissions.setPermissions([{Name: 'ProjectManager'}, {Name: 'Supervisor'}, {Name: 'Hr'}, {Name: 'TimesheetApprover'}])
+          });
+
           $location.path('/dashboard');
         });
-      },function handleError(response){
-              if(response.status == 400){
-                  $.growl.error({title: "Error!", message: "Missing username or password."})
-              }
-              else if(response.status == 401){
-                  $.growl.error({title: "Error!", message: "Authentication failed, please check your credentials again."})
-              } else {
-                  $.growl.error({title: "Error!", message: "Status Code "+ response.status})
-              }
-          }
-      );
+      },function (response){
+           GrowlResponse(response);
+      });
     };
   }
 ]);
@@ -610,8 +559,8 @@ cascadiaControllers.controller('LogoutController', ['$scope', 'Restangular',
 /*
     MANAGE APPROVER CONTROLLER
 */
-cascadiaControllers.controller('ManageApproverController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
+cascadiaControllers.controller('ManageApproverController', ['$scope', '$location', 'Restangular',
+  function($scope, $location, Restangular){
     
   }
 ]);
@@ -621,8 +570,8 @@ cascadiaControllers.controller('ManageApproverController', ['$scope', 'CascadiaS
 /*
     MANAGE PROJECT CONTROLLER
 */
-cascadiaControllers.controller('ManageProjectController', ['$scope', 'CascadiaService', '$location', 'Restangular',
-  function($scope, CascadiaService, $location, Restangular){
+cascadiaControllers.controller('ManageProjectController', ['$scope', '$location', 'Restangular',
+  function($scope, $location, Restangular){
     
   }
 ]);
@@ -632,8 +581,8 @@ cascadiaControllers.controller('ManageProjectController', ['$scope', 'CascadiaSe
 /*
    MANAGE WP CONTROLLER
 */
-cascadiaControllers.controller('WPManagementController', ['$scope', 'CascadiaService', 'Restangular',
-  function($scope, CascadiaService, Restangular){
+cascadiaControllers.controller('WPManagementController', ['$scope', 'Restangular', 'GrowlResponse',
+  function($scope, Restangular, GrowlResponse){
     $scope.statuses = [ 'Open', 'Closed'];
     $scope.project = {};
     mapOfWP = {};
@@ -712,8 +661,8 @@ cascadiaControllers.controller('PCPRController', ['$scope', 'Restangular',
 /*
     PROJECT MANAGEMENT CONTROLLER
 */
-cascadiaControllers.controller('ProjectManagementController', ['$scope', 'CascadiaService', 'Restangular',
-  function($scope, CascadiaService, Restangular) {
+cascadiaControllers.controller('ProjectManagementController', ['$scope', 'Restangular', 'GrowlResponse',
+  function($scope, Restangular, GrowlResponse) {
     var base = Restangular.all('projects');
 
     Restangular.one('user/projects/managed').getList().then(function(response){
@@ -751,8 +700,8 @@ cascadiaControllers.controller('ProjectSummaryController', ['$scope', 'Restangul
 /*
     RATE SHEET CONTROLLER
 */
-cascadiaControllers.controller('RateSheetController', ['$scope', 'Restangular',
-  function($scope, Restangular){
+cascadiaControllers.controller('RateSheetController', ['$scope', 'Restangular', 'GrowlResponse',
+  function($scope, Restangular, GrowlResponse){
     Restangular.all('users').getList().then(function(response){
       $scope.users = response;
     });
@@ -774,8 +723,8 @@ cascadiaControllers.controller('SearchProjectController', ['$scope', 'Restangula
     TIMESHEET DETAILS FOR APPROVAL CONTROLLER
 */
 
-cascadiaControllers.controller('TADetailsController', ['$scope', '$location', 'Restangular', '$routeParams',
-  function($scope, $location, rest, $params){
+cascadiaControllers.controller('TADetailsController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
+  function($scope, $location, rest, $params, GrowlResponse){
     $scope.param = $params.id;
 
     rest.one('timesheets', $scope.param).get().then(function(response){
@@ -788,8 +737,8 @@ cascadiaControllers.controller('TADetailsController', ['$scope', '$location', 'R
     TIMESHEET APPROVAL CONTROLLER
 */
 
-cascadiaControllers.controller('TAController', ['$scope', '$location', 'Restangular',
-  function($scope, $location, Restangular){
+cascadiaControllers.controller('TAController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $location, Restangular, GrowlResponse){
     /*
     Restangular.one('timesheets', $rootScope.userId).getList('needApproval').then(function(response){
       $scope.timeshets = response;
@@ -815,8 +764,8 @@ cascadiaControllers.controller('TAController', ['$scope', '$location', 'Restangu
 /*
     TIMESHEET CONTROLLER
 */
-cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', 'CascadiaService', '$location', 'Restangular', '$routeParams',
-  function($scope, $rootScope, CascadiaService, $location, Restangular, $params) {
+cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
+  function($scope, $rootScope, $location, Restangular, $params, GrowlResponse) {
     var base = Restangular.one('user/timesheets');
 
     $scope.workPackageNumbers = {};
@@ -827,6 +776,8 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
       for(var i = 0; i < projects.length; ++i) {
         $scope.projectNumbers.push(projects[i].projectNumber);
       }
+    }, function(response){
+      GrowlResponse(response);
     });
 
     $scope.listWP = function(p) {
@@ -837,6 +788,8 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
         for(var i = 0; i < workPackages.length; ++i) {
           $scope.workPackageNumbers[p].push(workPackages[i].workPackageNumber);
         }
+      }, function(response){
+        GrowlResponse(response);
       });
     } 
 
@@ -846,6 +799,8 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
 
       base.get({"year": year, "week": week}).then(function(response){
         $scope.timesheet = response;
+      }, function(response){
+        GrowlResponse(response);
       })
     }
 
@@ -855,12 +810,16 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
 
       base.get({"year": year, "week": week}).then(function(response){
         $scope.timesheet = response;
+      }, function(response){
+        GrowlResponse(response);
       });
     }
 
     base.get({"filter":"current"}).then(function(response){
       currentTimesheet = response;
       $scope.timesheet = currentTimesheet;
+    }, function(response){
+      GrowlResponse(response);
     });
 
     $scope.save = function() {  
@@ -888,8 +847,8 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
 /*
     USER PROFILE CONTROLLER
 */
-cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope', 'CascadiaService', '$routeParams', 'Restangular',
-  function($scope, $rootScope, CascadiaService, $params, Restangular) {
+cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope', '$routeParams', 'Restangular',
+  function($scope, $rootScope, $params, Restangular) {
     $scope.param = $params.id;
 
     $scope.mUser = $rootScope.userMap[$scope.param];
@@ -912,8 +871,8 @@ cascadiaControllers.controller('WeeklyProjectController', ['$scope', 'Restangula
 /*
     WORK PACKAGE DETAILS CONTROLLER
 */
-cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', '$routeParams',
-  function($scope, Restangular, $params){
+cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', '$routeParams', 'GrowlResponse',
+  function($scope, Restangular, $params, GrowlResponse){
     $scope.param = $params.id;
 
     var base = Restangular.one('work_packages/' + $scope.param);
@@ -954,8 +913,8 @@ cascadiaControllers.controller('WPStatusReportController', ['$scope', 'Restangul
       GET /users/:user_id
       PUT /users/:user_id  
 */
-cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootScope', 'Restangular', 'CascadiaService',
-  function($scope, $rootScope, Restangular, CascadiaService) {
+cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootScope', 'Restangular', 'GrowlResponse',
+  function($scope, $rootScope, Restangular, GrowlResponse) {
     var base = Restangular.all('users');
 
     $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
@@ -966,8 +925,9 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootSco
 
     base.getList().then(function(response) {
       $scope.users = response;
-      CascadiaService.initMapOfUsers($scope.users);
-    })
+    }, function(response){
+      GrowlRespone(response);
+    });
 
     $scope.change = function(user) {
       unique = true;
@@ -1007,6 +967,8 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootSco
 
       base.post(newuser).then(function(response) {
         $scope.add_user = false;
+      }, function(response){
+        GrowlResponse(response);
       });
     }
   }
