@@ -1,5 +1,7 @@
 package ca.bcit.infosys.comp4911.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,21 +30,23 @@ public class User implements Serializable
    private int version = 0;
 
    @Column
-   @NotNull
+   @NotBlank
+   @Size(max=250)
    private String username;
 
    @Column
-   @NotNull
+   @NotBlank
+   @Size(max=250)
    private String password;
 
    @Column
-   @NotNull
-   @Size(min=1)
+   @NotBlank
+   @Size(max=250)
    private String firstName;
 
    @Column
-   @NotNull
-   @Size(min=1)
+   @NotBlank
+   @Size(max=250)
    private String lastName;
 
    @Temporal(TemporalType.DATE)
@@ -52,6 +56,8 @@ public class User implements Serializable
    private boolean isHR;
 
    @Column
+   @NotNull
+   @Size(max=250)
    private String status;
 
    @Column
@@ -67,12 +73,15 @@ public class User implements Serializable
    private int vacationDays;
 
    @Column
+   @Min(0)
    private int defaultTimesheetID;
 
    @Column
+   @Min(0)
    private int supervisorUserID;
 
    @Column
+   @Min(0)
    private int timesheetApproverUserID;
 
    @Column
