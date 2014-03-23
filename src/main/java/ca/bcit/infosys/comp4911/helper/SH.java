@@ -6,7 +6,6 @@ import org.json.JSONObject;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import java.util.Set;
 
 /**
  * Services Helper
@@ -30,18 +29,8 @@ public class SH {
         return javax.ws.rs.core.Response.status(code).entity(entity).build();
     }
 
-    public static void responseBadRequest(String errorMessage){
-        if (errorMessage!= null) {
-            JSONArray errors = new JSONArray();
-            JSONObject error = new JSONObject().put("error",errorMessage);
-            errors.put(error);
-            JSONObject jsonObject = new JSONObject().put("errors",errors);
-            throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity(jsonObject.toString()).build());
-        }
-    }
-
-    public static void responseBadRequest(Set<String> errorMessages){
-        if (errorMessages!= null && errorMessages.size() > 0) {
+    public static void responseBadRequest(String...errorMessages){
+        if (errorMessages!= null) {
             JSONArray errors = new JSONArray();
 
             for(String errorMessage:errorMessages){
