@@ -2,8 +2,6 @@ package ca.bcit.infosys.comp4911.services;
 
 import ca.bcit.infosys.comp4911.access.*;
 import ca.bcit.infosys.comp4911.application.UserTokens;
-import ca.bcit.infosys.comp4911.domain.Timesheet;
-import ca.bcit.infosys.comp4911.domain.TimesheetRow;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
 import com.google.common.base.Charsets;
@@ -20,14 +18,13 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Path("/user")
 public class UserResource {
@@ -86,12 +83,12 @@ public class UserResource {
         String[] credentials = decodedCredentials.split(":");
 
         if (credentials.length != 2) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            SH.responseBadRequest("Username/Password Missing.");
         }
 
         for (String credential : credentials) {
             if (Strings.isNullOrEmpty(credential)) {
-                throw new WebApplicationException(Response.Status.BAD_REQUEST);
+                SH.responseBadRequest("Username/Password Missing.");
             }
         }
 
@@ -106,7 +103,7 @@ public class UserResource {
     public Response retrieveToken(User user) {
         if (user == null || Strings.isNullOrEmpty(user.getUsername()) ||
           Strings.isNullOrEmpty(user.getPassword())) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            SH.responseBadRequest("Username/Password Missing.");
         }
 
         return SH.responseWithEntity(200, performLoginAndGenerateTokenInJSON(user.getUsername(), user.getPassword()));

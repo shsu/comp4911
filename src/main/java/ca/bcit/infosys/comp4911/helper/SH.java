@@ -1,9 +1,12 @@
 package ca.bcit.infosys.comp4911.helper;
 
-import com.google.common.base.Charsets;
-import com.google.common.base.Strings;
-import com.google.common.io.BaseEncoding;
 import org.joda.time.DateTime;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import java.util.Set;
 
 /**
  * Services Helper
@@ -25,6 +28,31 @@ public class SH {
         }
 
         return javax.ws.rs.core.Response.status(code).entity(entity).build();
+    }
+
+    public static void responseBadRequest(String errorMessage){
+        if (errorMessage!= null) {
+            JSONArray errors = new JSONArray();
+            JSONObject error = new JSONObject().put("error",errorMessage);
+            errors.put(error);
+            JSONObject jsonObject = new JSONObject().put("errors",errors);
+            throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity(jsonObject.toString()).build());
+        }
+    }
+
+    public static void responseBadRequest(Set<String> errorMessages){
+        if (errorMessages!= null && errorMessages.size() > 0) {
+            JSONArray errors = new JSONArray();
+
+            for(String errorMessage:errorMessages){
+                JSONObject error = new JSONObject().
+                  put("error",errorMessage);
+                errors.put(error);
+            }
+
+            JSONObject jsonObject = new JSONObject().put("errors",errors);
+            throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST).entity(jsonObject.toString()).build());
+        }
     }
 
     public static Integer getCurrentWeek() {
