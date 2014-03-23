@@ -47,12 +47,15 @@ cascadia.config(['$routeProvider',
         when('/wp-status-report', {controller: 'WPStatusReportController', templateUrl:'Partials/wp-status-report.html'}).
         otherwise({redirectTo:'/'});
     }])
-    .run(function($rootScope, $location, permissions, AuthenticateUser, InitUserMap) {
+    .run(function($rootScope, $location, permissions, AuthenticateUser, InitUserMap, permissions) {
         $rootScope.$on('$routeChangeSuccess',
             function() {
+                if(localStorage.getItem('permissions')){
+                    permissions.setPermissions(JSON.parse(localStorage.getItem('permissions')));
+                }
                 AuthenticateUser($rootScope);
                 InitUserMap($rootScope);
-        })
+            })
     });
 // Runs every time page is reloaded or routed, ensures authentication and headers are set appropriately
 

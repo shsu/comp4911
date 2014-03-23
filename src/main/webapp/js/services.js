@@ -63,7 +63,7 @@ cascadiaServices.factory('GrowlResponse', [
           $.growl.error({title: "Error!", message: "Missing username or password."})
       }
       else if(response.status == 401){
-          $.growl.error({title: "Error!", message: response.error})
+          $.growl.error({title: "Error!", message: response.errors[0]})
       }
       else if(response.status == 403){
         $.growl.error({title: "Error!", message: "Forbidden."})

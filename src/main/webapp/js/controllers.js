@@ -495,7 +495,7 @@ cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', 
   function($scope, $rootScope, $location, Restangular, GrowlResponse) {
     var base = Restangular.all('user');
 
-    var user = localStorage.getItem('user');
+    $scope.user = JSON.parse(localStorage.getItem('user'));
 
     $scope.logout = function() {
       localStorage.clear();
@@ -530,9 +530,12 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
           $rootScope.user = response;
 
           Restangular.one('user/permissions').get().then(function(response) {
-            permissions.setPermissions(response.data)
+            permissions.setPermissions(response);
+            localStorage.setItem('permissions', JSON.stringify(response))
           }, function(response){
-            permissions.setPermissions([{Name: 'ProjectManager'}, {Name: 'Supervisor'}, {Name: 'Hr'}, {Name: 'TimesheetApprover'}])
+            var per = [{Name: 'ProjectManager'}, {Name: 'Supervisor'}, {Name: 'Hr'}, {Name: 'TimesheetApprover'}];
+            localStorage.setItem('permissions', JSON.stringify(per));
+            permissions.setPermissions(per)
           });
 
           $location.path('/dashboard');
