@@ -78,7 +78,7 @@ public class ProjectAssignmentDao {
     }
 
     public boolean isProjectManager(final int userId) {
-        TypedQuery<ProjectAssignment> query = em.createQuery("select pa.isProjectManager from ProjectAssignment pa" +
+        TypedQuery<ProjectAssignment> query = em.createQuery("select pa from ProjectAssignment pa " +
                 "where pa.userId = :userId", ProjectAssignment.class);
         query.setParameter("userId", userId);
         ArrayList<ProjectAssignment> projectAssignments = (ArrayList)query.getResultList();

@@ -23,6 +23,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Path("/user")
 public class UserResource {
@@ -132,13 +135,27 @@ public class UserResource {
 
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
+
         JSONObject permissions = new JSONObject();
-        permissions.append("HR", userDao.read(userId).isHR());
-        permissions.append("ProjectManager", projectAssignmentDao.isProjectManager(userId));
-        permissions.append("Supervisor", userDao.isSupervisor(userId));
-        permissions.append("TimsheetApprover", userDao.isTimesheetApprover(userId));
-        permissions.append("ResponsibleEngineer", workPackageAssignmentDao.isResponsibleEngineer(userId));
-        return SH.responseWithEntity(200, permissions);
+        if(userDao.read(userId).isHR()){
+            permissions.append("name", "HR");
+        }
+        if(projectAssignmentDao.isProjectManager(userId)) {
+            permissions.append("name", "ProjectManager");
+        }
+        if(userDao.isSupervisor(userId)) {
+            permissions.append("name", "Supervisor");
+        }
+        if(userDao.isTimesheetApprover(userId)){
+            permissions.append("name", "TimsheetApprover");
+
+        }
+        if(workPackageAssignmentDao.isResponsibleEngineer(userId)) {
+            permissions.append("name", "ResponsibleEngineer");
+        }
+
+        return SH.responseWithEntity(200, permissions.toString());
+
     }
 
     @Path("/projects")
