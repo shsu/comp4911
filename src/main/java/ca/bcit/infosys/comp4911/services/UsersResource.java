@@ -41,10 +41,10 @@ public class UsersResource {
     public Response createUser(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      User user) {
+      final User user) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        userDao.create(user, true);
+        userDao.create(user, false);
         return SH.response(201);
     }
 

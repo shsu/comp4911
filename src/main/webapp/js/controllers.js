@@ -888,9 +888,30 @@ cascadiaControllers.controller('WPStatusReportController', ['$scope', 'Restangul
   }
 ]);
 
+/*
+    CREATE USER CONTROLLER
+*/
+cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular', 'GrowlResponse',
+  function($scope, Restangular, GrowlResponse){
+
+    $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
+    $scope.statuses = [ 'Active', 'Inactive' ];
+
+    $scope.save = function() {
+      user = $scope.cUser;
+
+      Restangular.one('users').customPOST(user).then(function(response){
+        $.growl.notice("Success", "Object Created");
+      }, function(response){
+        GrowlResponse(response);
+      })
+    }
+  }
+]);
 
 
 ///////////////   API TESTING   ///////////////
+
 
 
 /*
