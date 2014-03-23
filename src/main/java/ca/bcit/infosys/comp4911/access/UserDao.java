@@ -79,4 +79,22 @@ public class UserDao {
         return query.getResultList();
     }
 
+    public boolean isSupervisor(int userId) {
+        TypedQuery<User> query = em.createQuery("select u from User u " +
+                "where u.supervisorId = :userId", User.class);
+        query.setParameter("userId", userId);
+        List<User> peons = query.getResultList();
+        if(peons.size() > 0) { return true; }
+        return false;
+    }
+
+    public boolean isTimesheetApprover(int userId) {
+        TypedQuery<User> query = em.createQuery("select u from User u " +
+                "where u.timesheetApproverUserId = :userId", User.class);
+        query.setParameter("userId", userId);
+        List<User> peons = query.getResultList();
+        if(peons.size() > 0) { return true; }
+        return false;
+    }
+
 }

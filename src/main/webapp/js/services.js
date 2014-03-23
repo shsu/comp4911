@@ -53,11 +53,8 @@ cascadiaServices.factory('permissions',
 cascadiaServices.factory('GrowlResponse', [
   function() {
     return function(response) {
-      if(response.status == 200) {
-        $.growl.notice({ title: "Success!", message: "Successful HTTP operation"});
-      }
-      else if(response.status == 201) {
-        $.growl.notice({title: "Sucess!", message: "Object created"})
+      if(response.status >= 200 && response.status <=304) {
+        $.growl.notice({ title: "Success!"});
       }
       else if(response.status == 400){
           var errorMessage = response.errors[0].error;
@@ -70,7 +67,7 @@ cascadiaServices.factory('GrowlResponse', [
           $.growl.error({title: "Error!", message: "Unauthorized. Check your username and password."})
       }
       else if(response.status == 403){
-        $.growl.error({title: "Error!", message: "Forbidden."})
+        $.growl.error({title: "Error!", message: "Forbidden"})
       }
       else if(response.status == 404){
         $.growl.error({title: "Error!", message: "Not found. You may be pointing to the wrong endpoint."})

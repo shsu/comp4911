@@ -7,7 +7,9 @@ import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -73,6 +75,20 @@ public class ProjectAssignmentDao {
           User.class);
         query.setParameter("projectNumber", projectNumber);
         return query.getResultList();
+    }
+
+    public boolean isProjectManager(final int userId) {
+        TypedQuery<ProjectAssignment> query = em.createQuery("select pa.isProjectManager from ProjectAssignment pa" +
+                "where pa.userId = :userId", ProjectAssignment.class);
+        query.setParameter("userId", userId);
+        ArrayList<ProjectAssignment> projectAssignments = (ArrayList)query.getResultList();
+        int length = projectAssignments.size();
+        for(int i = 0; i < length; i++) {
+            if (projectAssignments.get(i).isProjectManager()) { return true; }
+        }
+
+        return false;
+
     }
 
 }

@@ -23,8 +23,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.HashSet;
-import java.util.Set;
 
 @Path("/user")
 public class UserResource {
@@ -42,10 +40,15 @@ public class UserResource {
     private WorkPackageDao workPackageDao;
 
     @EJB
+    private WorkPackageAssignmentDao workPackageAssignmentDao;
+    @EJB
     private TimesheetDao timesheetDao;
 
     @EJB
     private TimesheetRowDao timesheetRowDao;
+
+    @EJB
+    private ProjectAssignmentDao projectAssignmentDao;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -118,6 +121,24 @@ public class UserResource {
         userTokens.clearToken(headerToken, queryToken);
 
         return SH.response(204);
+    }
+
+    @Path("/permissions")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserPermissions(
+        @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+        @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        JSONObject permissions = new JSONObject();
+        permissions.append("HR", userDao.read(userId).isHR());
+        permissions.append("ProjectManager", projectAssignmentDao.isProjectManager(userId));
+        permissions.append("Supervisor", userDao.isSupervisor(userId));
+        permissions.append("TimsheetApprover", userDao.isTimesheetApprover(userId));
+        permissions.append("ResponsibleEngineer", workPackageAssignmentDao.isResponsibleEngineer(userId));
+        return SH.responseWithEntity(200, permissions);
     }
 
     @Path("/projects")

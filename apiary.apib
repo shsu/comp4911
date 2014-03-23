@@ -346,6 +346,16 @@ Use HTTP Basic Auth for username/password
 + Response 204
 + Response 401
 
+## User Permissions [/user/permissions]
++ Response 200
+    + Body
+            [
+                {
+                }
+            ]
+
++ Response 401
+
 ## User Projects [/user/projects]
 ### Retrieve all projects assigned to authenticated user [GET]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
