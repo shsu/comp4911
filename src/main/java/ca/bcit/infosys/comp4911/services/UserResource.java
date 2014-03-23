@@ -8,6 +8,7 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.io.BaseEncoding;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
@@ -135,27 +136,34 @@ public class UserResource {
 
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
+        JSONArray permissionArray = new JSONArray();
+        JSONObject temp = new JSONObject();
 
-        JSONObject permissions = new JSONObject();
         if(userDao.read(userId).isHR()){
-            permissions.append("name", "HR");
+            temp.put("name", "Hr");
+            permissionArray.put(temp);
         }
         if(projectAssignmentDao.isProjectManager(userId)) {
-            permissions.append("name", "ProjectManager");
+            temp = new JSONObject();
+            temp.put("name", "ProjectManager");
+            permissionArray.put(temp);
         }
         if(userDao.isSupervisor(userId)) {
-            permissions.append("name", "Supervisor");
+            temp = new JSONObject();
+            temp.put("name", "Supervisor");
+            permissionArray.put(temp);
         }
         if(userDao.isTimesheetApprover(userId)){
-            permissions.append("name", "TimsheetApprover");
-
+            temp = new JSONObject();
+            temp.put("name", "TimesheetApprover");
+            permissionArray.put(temp);
         }
         if(workPackageAssignmentDao.isResponsibleEngineer(userId)) {
-            permissions.append("name", "ResponsibleEngineer");
+            temp = new JSONObject();
+            temp.put("name", "ResponsibleEngineer");
+            permissionArray.put(temp);
         }
-
-        return SH.responseWithEntity(200, permissions.toString());
-
+        return SH.responseWithEntity(200, permissionArray.toString());
     }
 
     @Path("/projects")
