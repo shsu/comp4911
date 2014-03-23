@@ -53,7 +53,7 @@ cascadiaServices.factory('GrowlResponse', [
   function() {
     return function(response) {
       if(response.status >= 200 && response.status <=304) {
-        $.growl.notice({ title: "Success!"});
+        $.growl.notice({ title: "Success!", message:"Operation Successful"});
       }
       else if(response.status == 400){
           var errorMessage = response.errors[0].error;
