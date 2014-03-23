@@ -4,26 +4,30 @@
     <div class="row">
         <div class = "col-lg-12">
         <div class="col-lg-2">Start Date:</div>
-        <div class="col-lg-3"><input type="date" class="form-control"></div>
+        <div class="col-lg-3"><input type="date" ng-model="project.issueDate" class="form-control"></div>
         </div>
     </div>
     <div class="well">
         <div class="row">
             <div class="col-lg-2"><p>Project No: </p></div>
-            <div class="col-lg-4"><input type="text" ng-model="project.projectNumber" class="form-control"></div>
+            <div class="col-lg-4"><input type="text" ng-model="project.projectNumber" max="5" min="5" maxlength="5" class="form-control"></div>
             <div class="col-lg-2"><p>Project Name: </p></div>
             <div class="col-lg-4"><input type="text" ng-model="project.projectName" class="form-control"></div>
             <div class="col-lg-12"><br /> </div>
             <div class="col-lg-2"><p>Budget: </p></div>
-            <div class="col-lg-4"><input type="text" ng-model="{{(project.unallocatedBudget + project.allocatedBudget)}}" class="form-control"></div>
+            <div class="col-lg-4"><input type="text" ng-model="project.unallocatedBudget" class="form-control"></div>
             <div class="col-lg-2"><p>Estimate at Completion:</p></div> 
-            <div class="col-lg-4"><input type="text" ng-model="" class="form-control"></div>
+            <div class="col-lg-4"><input type="text" class="form-control"></div>
             <div class="col-lg-12"><br /> </div>
-            <div class="col-lg-6"><a href="#/assign-manager" >Assigned Manager</a></div>
-            <div class="col-lg-6"><a href="#/rate-sheet" >Client Rate</a></div>        
+            <div class="col-lg-6"><a href="#/assign-manager">Assigned Manager</a></div>
+            <div class="col-lg-6">
+                Client Rate: 
+                <select ng-model="project.clientRate" ng-options="rate.rate for rate in rates">
+                </select>
+            </div>       
         </div>
         <div class="row">
-            <div class = "col-lg-12"><button class="btn btn-primary pull-right">Save</button></div>
+            <div class = "col-lg-12"><button ng-click="save()" class="btn btn-primary pull-right">Save</button></div>
         </div>
     </div>
   </div>

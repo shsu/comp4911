@@ -132,28 +132,6 @@ cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restan
 */
 cascadiaControllers.controller('ManagerController', ['$scope', 'GrowlResponse',
   function($scope, GrowlResponse) {
-    $scope.managers = [{
-      id: 'A1111',
-      name: 'Javier Olson',
-      paygrade: 'P4',
-      selected: false
-    }, {
-      id: 'A1112',
-      name: 'Nancy Garcia',
-      paygrade: 'P2',
-      selected: false
-    }, {
-      id: 'A1113',
-      name: 'David Bowden',
-      paygrade: 'P5',
-      selected: false
-    }, {
-      id: 'A1114',
-      name: 'Juan Burdine',
-      paygrade: 'SS',
-      selected: false
-    }];
-
     $scope.selectedManager = {};
 
     $scope.selectM = function($index) {
@@ -350,8 +328,16 @@ cascadiaControllers.controller('PackageController', ['$scope', 'GrowlResponse',
 */
 cascadiaControllers.controller('CreateProjectsController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
   function($scope, $location, Restangular, GrowlResponse){
-    // Restangular.one('project').post() ...
-    $scope.project;
+    var base = Restangular.all('projects');
+    $scope.rates = [{rate: 1.2}, {rate: 1.6}]
+    
+    $scope.save = function() {
+      base.post($scope.project).then(function(response) {
+        $.growl.notice("Success", "Object Created");
+      }, function(response) {
+        GrowlResponse(response);
+      });
+    }
   }
 ]);
 
