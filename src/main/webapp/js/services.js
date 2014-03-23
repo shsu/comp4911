@@ -7,14 +7,13 @@ cascadiaServices.factory('InitUserMap', ['Restangular',
         if(scope.isAuthenticated && (!scope.userMap || scope.userMap.length == 0)) {
             scope.userMap = {}
 
-            Restangular.one('users').getList().then(function(response){
+            Restangular.all('users').getList().then(function(response){
                 scope.userList = response;
                 for(var i = 0; i < scope.userList.length; ++i) {
                   scope.userMap[scope.userList[i].id] = scope.userList[i];
                 }
             });
-        
-      }
+        }
     }
 }]);
 
