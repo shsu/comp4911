@@ -27,30 +27,29 @@
     </div>
     <div class="navbar-collapse collapse in">
       <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-fw fa-calendar"></i> Timesheets <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#/timesheet">Manage</a></li>
+            <li><a href="#/timesheet-approval" has-permission='TimesheetApprover'>Approve</a></li>
+          </ul>
+        </li>
         <li class="dropdown" has-permission='ProjectManager'>
-          <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">Project <b class="caret"></b></a>
+          <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-fw fa-list-ol"></i> Projects <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#/create-project">Create</a></li>
             <li><a href="#/manage-project">Manage</a></li>
             <li><a href="#/search-project">Search</a></li>
           </ul>
-        </li>          
+        </li>
         <li class="dropdown">
-          <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">WP Management<b class="caret"></b></a>
+          <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-fw fa-list-ul"></i> Work Packages <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#/manage-wp">Manage</a></li>
           </ul>
-        </li>          
+        </li>
         <li class="dropdown">
-          <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">TimeSheet<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#/timesheet">Manage</a></li>
-            <li><a href="#/timesheet-approval" has-permission='TimesheetApprover'>Approve</a></li>
-          </ul>
-        </li>          
-          
-        <li class="dropdown">
-          <a class="dropdown-toggle cursor-hand" data-toggle="dropdown" has-permission='ProjectManager'>Report<b class="caret"></b></a>
+          <a class="dropdown-toggle cursor-hand" data-toggle="dropdown" has-permission='ProjectManager'><i class="fa fa-fw fa-table"></i> Reports <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#/wp-status-report">WP Status Report</a></li>
             <li><a href="#/weekly-project">Weekly Project Report</a></li>
@@ -60,25 +59,22 @@
             <li><a href="#/pcbac">PCBAC</a></li>
             <li><a href="#">Earned Value Report</a></li>
           </ul>
-        </li>          
-          
-        <li class="dropdown">
-          <a class="dropdown-toggle cursor-hand" data-toggle="dropdown">User Management<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#/user-management-hr" has-permission='Hr'>Manage User</a></li>
-            <li><a href="#/user-management-super" has-permission='Supervisors'>Manage User</a></li>
-            <li class="divider" has-permission='Supervisor'></li>
-            <li><a href="#/edit-pay-rates" has-permission='Hr'>Edit Pay Rates</a></li>
-            <li class="divider" has-permission='Hr'></li>
-            <li><a href="#/user-profile/{{user.id}}">User Profile</a></li>
-          </ul>
-        </li>          
+        </li>
+          <li class="dropdown">
+              <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-fw fa-users"></i> Users <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                  <li><a href="#/user-management-hr" has-permission='Hr'>Manage</a></li>
+                  <li><a href="#/user-management-super" has-permission='Supervisors'>Manage</a></li>
+                  <li class="divider" has-permission='Hr'></li>
+                  <li><a href="#/edit-pay-rates" has-permission='Hr'>Edit Pay Rates</a></li>
+              </ul>
+          </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
-              <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-user"></i> {{user.firstName}}  {{user.lastName}}<b class="caret"></b></a>
+              <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i> {{user.firstName}}  {{user.lastName}}<b class="caret"></b></a>
               <ul class="dropdown-menu">
-                  <li><a href="#/user-profile/{{user.id}}">Profile</a></li>
+                  <li><a href="#/user-profile/{{user.id}}">User Profile</a></li>
                   <li><a href="#" ng-click="logout()">Logout</a></li>
               </ul>
           </li>

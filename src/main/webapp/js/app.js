@@ -60,19 +60,29 @@ cascadia.config(['$routeProvider',
 // Runs every time page is reloaded or routed, ensures authentication and headers are set appropriately
 
 cascadia.config(function(RestangularProvider) {
+    if(checkServerStatus("http://localhost:8080/comp4911/api")){
+        RestangularProvider.setBaseUrl('http://localhost:8080/comp4911/api');
+    } else if(checkServerStatus("http://www.comp4911.com/api")){
+        RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
+    } else {
+        $.growl.warning({ message: "Unable to make connection to an API" });
+    }
+});
+
+function checkServerStatus(url){
     var xhr = new XMLHttpRequest();
-    xhr.open('HEAD', "http://localhost:8080/comp4911/api", false);
+    xhr.open('HEAD', url, false);
     try {
         xhr.send();
         if (xhr.status >= 200 && xhr.status < 304) {
-            RestangularProvider.setBaseUrl('http://localhost:8080/comp4911/api');
+            return true;
         } else {
-            RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
+            return false;
         }
     } catch (e) {
-        RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
+       return false;
     }
-});
+}
 
 cascadia.directive('content', function() {
   return  {
