@@ -58,6 +58,7 @@ public class SampleData {
 
     private void generateUsers() {
         // KEEP THIS AS FIRST
+        // Keep the default timesheet id as -1
         userDao.create(new User(
           "username0@example.com", "password", "Bruce", "Link", new Date(), true, "MIA", 40, 0,
           0, 0, 1, 1, PLevel.P5),false);
@@ -376,37 +377,30 @@ public class SampleData {
         TimesheetRow wp3Row2 = new TimesheetRow(99777, "ZZ334229", 70, 20, 5, 0, 40, 30, 60, null);
         
         List<TimesheetRow> rowCollection = new ArrayList<TimesheetRow>();
+
         Timesheet tempTimesheet;
         
         rowCollection.add(wp1Row1);
-        timesheetRowDao.create(wp1Row1,false);
-        tempTimesheet = new Timesheet(1, rowCollection, 1, 2014, 40, false, true);
-        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 11, 2014, 40, false, true);
+        timesheetDao.create(tempTimesheet,true);
         rowCollection.clear();
         
         rowCollection.add(wp1Row2);
         rowCollection.add(wp1Row3);
-        timesheetRowDao.create(wp1Row2,false);
-        timesheetRowDao.create(wp1Row3,false);
-        tempTimesheet = new Timesheet(2, rowCollection, 12, 2014, 0, false, true);
-        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 12, 2014, 0, false, true);
+        timesheetDao.create(tempTimesheet,true);
         rowCollection.clear();
         
         rowCollection.add(wp2Row1);
         rowCollection.add(wp2Row2);
         rowCollection.add(wp2Row3);
-        timesheetRowDao.create(wp2Row1,false);
-        timesheetRowDao.create(wp2Row2,false);
-        timesheetRowDao.create(wp2Row3,false);
-        tempTimesheet = new Timesheet(1, rowCollection, 47, 2013, 0, true, true);
+        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 47, 2013, 0, true, true);
         timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
         
         rowCollection.add(wp3Row1);
         rowCollection.add(wp3Row2);
-        timesheetRowDao.create(wp3Row1,false);
-        timesheetRowDao.create(wp3Row2,false);
-        tempTimesheet = new Timesheet(2, rowCollection, 11, 2014, 0, true, true);
+        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 11, 2014, 0, true, true);
         timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
     }

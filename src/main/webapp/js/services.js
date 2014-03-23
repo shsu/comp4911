@@ -60,10 +60,14 @@ cascadiaServices.factory('GrowlResponse', [
         $.growl.notice({title: "Sucess!", message: "Object created"})
       }
       else if(response.status == 400){
-          $.growl.error({title: "Error!", message: "Missing username or password."})
+          var errorMessage = response.errors[0].error;
+          for(var i = 1; i < response.errors.length; ++i) {
+            errorMessage += ('\n' + response.errors[i].error);
+          } 
+          $.growl.error({title: "Error! Invalid Values", message: errorMessage})
       }
       else if(response.status == 401){
-          $.growl.error({title: "Error!", message: response.errors[0]})
+          $.growl.error({title: "Error!", message: "Unauthorized. Check your username and password."})
       }
       else if(response.status == 403){
         $.growl.error({title: "Error!", message: "Forbidden."})

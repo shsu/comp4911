@@ -774,6 +774,13 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
     $scope.workPackageNumbers = {};
     $scope.projectNumbers = [];
 
+    base.get({"filter":"current"}).then(function(response){
+      currentTimesheet = response;
+      $scope.timesheet = currentTimesheet;
+    }, function(response){
+      GrowlResponse(response);
+    });
+
     Restangular.one('user/projects/managed').getList().then(function(response){
       projects = response;
       for(var i = 0; i < projects.length; ++i) {
@@ -817,13 +824,6 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
         GrowlResponse(response);
       });
     }
-
-    base.get({"filter":"current"}).then(function(response){
-      currentTimesheet = response;
-      $scope.timesheet = currentTimesheet;
-    }, function(response){
-      GrowlResponse(response);
-    });
 
     $scope.save = function() {  
       if($scope.default && ($rootScope.user.defaultTimesheetID != $scope.timesheet.id)) {

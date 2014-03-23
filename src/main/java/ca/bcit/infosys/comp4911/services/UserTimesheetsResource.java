@@ -126,7 +126,7 @@ public class UserTimesheetsResource {
     private Timesheet createCurrentWeekTimesheet(int userId) {
         User user = userDao.read(userId);
 
-        if(user.getDefaultTimesheetID() != -1) {
+        if(user.getDefaultTimesheetID() != 0) {
             Timesheet defaultSheet = timesheetDao.read(user.getDefaultTimesheetID());
             return createDefaultTimesheet(defaultSheet, userId);
         } else {
