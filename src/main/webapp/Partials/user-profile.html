@@ -1,8 +1,6 @@
 <content>
   <div ng-controller="UserProfileController">
-    <div class="row">
-      <h1 class="secondary">User Profile</h1>
-    </div>
+    <h1 class="secondary">User Profile</h1><br />
     <div class="row">
       <div class="table-responsive col-sm-6">
         <table class="table table-striped table-hover table-bordered">
@@ -50,8 +48,12 @@
       </div>    
     </div>
     <div class="row">
-      <a href="#/assign-employee-project/{{mUser.Id}}" ng-hide=""class="btn btn-primary pull-left">Add to Project</a>
-      <button class="btn btn-primary pull-right">Save</button>
+        <div class="col-sm-2">
+            <a href="#/assign-employee-project/{{mUser.Id}}" ng-hide=""class="btn btn-success btn-block">Add to Project</a>
+        </div>
+        <div class="col-sm-2 col-sm-offset-8">
+            <button class="btn btn-primary btn-block">Save</button>
+        </div>
     </div>
     <div class="row">
       <h1>Assigned Projects and WPs</h1>

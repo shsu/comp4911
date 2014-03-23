@@ -31,8 +31,12 @@
       </div>
     </div>
     <div class="row">
-      <a href="#" data-toggle="modal" data-target="#addModal" class="pull-right btn btn-primary">Select</a>
-      <button ng-click="cancel()" class="pull-right btn btn-primary">Cancel</button>
+        <div class="col-lg-2 col-lg-offset-8 ">
+            <a data-toggle="modal" data-target="#addModal" class="pull-right btn btn-primary btn-block">Select</a>
+        </div>
+        <div class="col-lg-2 ">
+            <button ng-click="cancel()" class="pull-right btn btn-primary btn-block">Cancel</button>
+        </div>
     </div>
   
   <div class="modal manager fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">

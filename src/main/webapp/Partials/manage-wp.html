@@ -1,6 +1,6 @@
 <content>
 <div ng-controller="WPManagementController">
-  <h1 class="secondary">Manage WP</h1><br />
+  <h1 class="secondary">Manage Work Package</h1><br />
   <div class="row">
         <p class="col-lg-3">Project No. 
           <select ng-model="project" ng-change="listWP(project)" ng-options="p.projectNumber for p in projects">
@@ -45,8 +45,14 @@
     </div>
   </div>
   <div class="row">
-    <button class="pull-right btn btn-primary" ng-click="edit()">Save</button>
-    <button class="pull-right btn btn-primary">Create Work Package</button>
+    <div class="col-lg-2 col-lg-offset-10 ">
+        <button class="btn-block btn btn-success">Create Work Package</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 col-lg-offset-10 ">
+        <button class="btn btn-primary btn-block" ng-click="edit()">Save</button>
+    </div>  
   </div>
 </div>
 </content>
