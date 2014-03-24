@@ -40,6 +40,17 @@ div.ng-scope {
 
 .body {
   min-height: 1000px;
+  font-family: "Lato";
+  font-weight: 300;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+  padding-top: 70px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway";
+  font-weight: 300;
 }
 
 .row {
@@ -76,6 +87,14 @@ div.ng-scope {
 
 .no-pl {
   padding-left: 0;
+}
+
+.adj-margin {
+  margin-left: 16px;
+}
+
+.cursor-hand {
+  cursor: pointer;
 }
 
 .navbar {
@@ -138,6 +157,10 @@ div.ng-scope {
   padding-top: 37px;
 }
 
+.col-min-width {
+  min-width: 90px;
+}
+
 .timesheet {
   padding: 20px;
   border: 1px solid #dddddd;
@@ -145,7 +168,6 @@ div.ng-scope {
 .timesheet footer {
   margin-top: 20px;
   clear: both;
-  height: 40px;
 }
 .timesheet footer button {
   float: right;

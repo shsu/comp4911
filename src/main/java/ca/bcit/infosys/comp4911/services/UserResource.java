@@ -205,17 +205,6 @@ public class UserResource {
         return SH.responseWithEntity(200, workPackageDao.getAllByUser(userId));
     }
 
-    @Path("/timesheets/to_approve")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllTimesheetsToApprove(
-         @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-         @QueryParam(SH.TOKEN_STRING) final String queryToken) {
-            int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
-
-            return SH.responseWithEntity(200,timesheetDao.getAllTimesheetsToApprove(userId));
-    }
-
     @Path("/peons")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

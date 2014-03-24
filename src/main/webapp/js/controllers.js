@@ -714,21 +714,24 @@ cascadiaControllers.controller('SearchProjectController', ['$scope', 'Restangula
 */
 
 cascadiaControllers.controller('TADetailsController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
-  function($scope, $location, rest, $params, GrowlResponse){
+  function($scope, $location, Restangular, $params, GrowlResponse){
     $scope.param = $params.id;
 
-    rest.one('timesheets', $scope.param).get().then(function(response){
+    Restangular.one('timesheets', $scope.param).get().then(function(response){
       $scope.timesheet = response;
     });
 
     $scope.approve = function() {
       $scope.timesheet.approved = true;
+      $scope.timesheet.pending = false;
       $scope.timesheet.put();
-      $location.put('/timesheet-approval');
+      $location.path('/timesheet-approval');
     }
 
     $scope.reject = function() {
-
+      $scope.timeshet.pending = false;
+      $scope.timesheet.put();
+      $location.path('/timesheet-approval');
     }
   }
 ]);
@@ -739,12 +742,7 @@ cascadiaControllers.controller('TADetailsController', ['$scope', '$location', 'R
 
 cascadiaControllers.controller('TAController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
   function($scope, $location, Restangular, GrowlResponse){
-    /*
-    Restangular.one('timesheets', $rootScope.userId).getList('needApproval').then(function(response){
-      $scope.timeshets = response;
-    });
 
-*/
     $scope.timesheets = []
 
     Restangular.all('user/timesheets/to_approve').getList().then(function(response){
@@ -828,6 +826,10 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
         $rootScope.user.put();
       }
       $scope.timesheet.put();
+    }
+
+    $scope.submit = function() {
+      $scope.timsheet.pending = true;
     }
 
     $scope.delete = function($index) {

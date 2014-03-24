@@ -100,6 +100,17 @@ public class UserTimesheetsResource {
         return SH.response(200);
     }
 
+    @Path("/to_approve")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllTimesheetsToApprove(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        return SH.responseWithEntity(200,timesheetDao.getAllTimesheetsToApprove(userId));
+    }
+
     @Path("/rejected")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -160,7 +171,8 @@ public class UserTimesheetsResource {
                 SH.getCurrentYear(),
                 defaultSheet.getOverTime(),
                 defaultSheet.isApproved(),
-                defaultSheet.isSigned()
+                defaultSheet.isSigned(),
+                defaultSheet.isPending()
         );
         timesheetDao.create(newTimesheet,true);
         return newTimesheet;
@@ -180,7 +192,7 @@ public class UserTimesheetsResource {
                 rows,
                 SH.getCurrentWeek(),
                 SH.getCurrentYear(),
-                0, false, false
+                0, false, false, false
         );
         timesheetDao.create(newTimesheet,true);
         return newTimesheet;

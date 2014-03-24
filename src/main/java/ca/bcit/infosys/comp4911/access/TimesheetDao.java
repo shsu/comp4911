@@ -76,10 +76,11 @@ public class TimesheetDao {
     public List<Timesheet> getAllTimesheetsToApprove(final int userId) {
         TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.userId" +
                 " IN (select u.id from User u where u.timesheetApproverUserID = :userId) AND t.approved = :approved" +
-                " AND t.signed = :signed", Timesheet.class);
+                " AND t.signed = :signed AND t.pending = :pending", Timesheet.class);
         query.setParameter("signed", true);
         query.setParameter("approved", false);
         query.setParameter("userId", userId);
+        query.setParameter("pending", true);
         return query.getResultList();
     }
 

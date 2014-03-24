@@ -381,26 +381,26 @@ public class SampleData {
         Timesheet tempTimesheet;
         
         rowCollection.add(wp1Row1);
-        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 11, 2014, 40, false, true);
+        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 11, 2014, 40, false, true, true);
         timesheetDao.create(tempTimesheet,true);
         rowCollection.clear();
         
         rowCollection.add(wp1Row2);
         rowCollection.add(wp1Row3);
-        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 12, 2014, 0, false, true);
+        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
         timesheetDao.create(tempTimesheet,true);
         rowCollection.clear();
         
         rowCollection.add(wp2Row1);
         rowCollection.add(wp2Row2);
         rowCollection.add(wp2Row3);
-        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 47, 2013, 0, true, true);
+        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 47, 2013, 0, true, true, true);
         timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
         
         rowCollection.add(wp3Row1);
         rowCollection.add(wp3Row2);
-        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 11, 2014, 0, true, true);
+        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 11, 2014, 0, true, true, true);
         timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
     }
