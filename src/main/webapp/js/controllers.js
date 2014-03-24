@@ -373,7 +373,8 @@ cascadiaControllers.controller('CreateWPController', ['$scope', '$location', 'Re
 */
 cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'GrowlResponse',
   function($scope, $rootScope, Restangular, GrowlResponse) {
-    Restangular.one('user/timesheets').get().then(function(response) {
+    
+    Restangular.all('user/timesheets').getList().then(function(response) {
       $scope.timesheets = response;
     });
 
