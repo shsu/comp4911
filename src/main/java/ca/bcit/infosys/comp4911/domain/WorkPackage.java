@@ -172,7 +172,7 @@ public class WorkPackage implements Serializable
 
    public WorkPackage(String workPackageNumber, String workPackageName,
          Date issueDate, String progressStatus, Date endDate,
-         int projectNumber, int estimateAtStart)
+         int projectNumber, int estimateAtStart, int estimateToCompletion)
    {
       super();
       this.workPackageNumber = workPackageNumber;
@@ -182,9 +182,14 @@ public class WorkPackage implements Serializable
       this.endDate = endDate;
       this.projectNumber = projectNumber;
       this.estimateAtStart = estimateAtStart;
+      this.estimateToCompletion = estimateToCompletion;
+
+      this.description = "";
+      this.completeDate = issueDate;
+      this.startDate = issueDate;
    }
 
-   public WorkPackage()
+    public WorkPackage()
    {
    }
 
