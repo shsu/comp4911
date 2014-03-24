@@ -12,6 +12,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -29,7 +31,7 @@ public class WorkPackageAssignment implements Serializable {
     private int version = 0;
 
     @Column
-    @NotNull
+    @NotBlank
     @Size(max = 250)
     private String workPackageNumber;
 

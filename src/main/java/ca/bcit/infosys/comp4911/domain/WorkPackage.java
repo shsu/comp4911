@@ -30,7 +30,7 @@ public class WorkPackage implements Serializable
    private int version = 0;
 
    @Column
-   @NotNull
+   @NotBlank
    @Size(max=250)
    private String workPackageName;
 
