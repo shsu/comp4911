@@ -869,7 +869,7 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
     $scope.hasSupervisor = function() {
       var user = $rootScope.user;
 
-      if(user.supervisorUserID && user.supervisorUserID != -1) {
+      if(user.supervisorUserID && user.supervisorUserID != user.id) {
         return true;
       }
       return false;
@@ -877,7 +877,7 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
 
     $scope.hasTimesheetApprover = function() {
       user = $rootScope.user;
-      if(user.timesheetApproverUserID && user.timesheetApproverUserID != -1) {
+      if(user.timesheetApproverUserID && user.timesheetApproverUserID != user.id) {
         return true;
       }
       return false;
@@ -965,7 +965,7 @@ cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular',
     $scope.statuses = [ 'Active', 'Inactive' ];
     
     $scope.cUser = {}
-    $scope.cUser.supervisorUserID = -1;
+    $scope.cUser.supervisorUserID = $scope.user.id;
 
     $scope.save = function() {
       user = $scope.cUser;
@@ -993,8 +993,8 @@ cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular',
       GET /users/:user_id
       PUT /users/:user_id  
 */
-cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootScope', 'Restangular', 'GrowlResponse',
-  function($scope, $rootScope, Restangular, GrowlResponse) {
+cascadiaControllers.controller('UsersManagementController', ['$scope', '$location', '$rootScope', 'Restangular', 'GrowlResponse',
+  function($scope, $location, $rootScope, Restangular, GrowlResponse) {
     var base = Restangular.all('users');
 
     $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
@@ -1011,10 +1011,14 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootSco
 
     $scope.hasSupervisor = function() {
       user = $scope.cUser;
-      if(user.supervisorUserID && user.supervisorUserID != -1) {
+      if(user.supervisorUserID && user.supervisorUserID != user.id) {
         return false;
       }
       return true;
+    }
+
+    $scope.select = function(u) {
+      $location.path('/user-profile/' + u.id);
     }
 
     $scope.change = function(user) {

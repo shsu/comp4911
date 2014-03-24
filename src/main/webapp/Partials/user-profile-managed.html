@@ -33,16 +33,16 @@
             </tr>
             <tr>
               <td>Assigned Manager</td>
-              <td>{{cUser.supervisorUserID}}
-                <a ng-click="assign()" ng-hide="hasSupervisor()">Assign</a>
-                <a ng-click="assign()" ng-show="hasSupervisor()">Change</a> 
+              <td><span ng-show="hasSupervisor()">{{cUser.supervisorUserID}}</span>
+                <a class="cursor-hand" ng-click="assign()" ng-hide="hasSupervisor()">Assign</a>
+                <a class="cursor-hand" ng-click="assign()" ng-show="hasSupervisor()">Change</a> 
               </td>
             </tr>
             <tr>
               <td>Timesheet Approver</td>
-              <td>{{cUser.timesheetApproverUserID}}
-                <a ng-click="assign()" ng-hide="hasSupervisor()">Assign</a>
-                <a ng-click="assign()" ng-show="hasSupervisor()">Change</a> 
+              <td><span ng-show="hasTimesheetApprover()">{{cUser.timesheetApproverUserID}}</span>
+                <a class="cursor-hand" ng-click="assign()" ng-hide="hasTimesheetApprover()">Assign</a>
+                <a class="cursor-hand" ng-click="assign()" ng-show="hasTimesheetApprover()">Change</a> 
               </td>
             </tr>
             <tr> 

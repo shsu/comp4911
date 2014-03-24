@@ -33,13 +33,13 @@
             </tr>
             <tr>
               <td>Assigned Manager</td>
-              <td>{{user.supervisorUserID}}
+              <td><span ng-show="hasSupervisor()">{{user.supervisorUserID}}</span>
                 <span ng-hide="hasSupervisor()">None Assigned</span>
                </td>
             </tr>
             <tr>
               <td>Timesheet Approver</td>
-              <td>{{user.timesheetApproverUserID}}
+              <td><span ng-show="hasTimesheetApprover()">{{user.timesheetApproverUserID}}</span>
               <span ng-hide="hasTimesheetApprover()">None Assigned</span>
               </td>
             </tr>
