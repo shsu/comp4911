@@ -7,19 +7,19 @@
           <tbody>
             <tr>
               <td>Employee ID</td>
-              <td>{{mUser.id}}</td>
+              <td>{{user.id}}</td>
             </tr>
             <tr>
               <td>Name</td>
-              <td>{{mUser.firstName}} {{mUser.lastName}}</td>
+              <td>{{user.firstName}} {{user.lastName}}</td>
             </tr>
             <tr>
               <td>User Name</td>
-              <td>{{mUser.username}}</td>
+              <td>{{user.username}}</td>
             </tr>
             <tr>
               <td>Password</td>
-              <td><!-- {{user.password}} --> ****</td>
+              <td>*****</td>
             </tr>
          </tbody>
         </table>
@@ -29,34 +29,27 @@
           <tbody>
             <tr>
               <td>P Level</td>
-              <td>{{mUser.pLevel}}</td>
+              <td>{{user.pLevel}}</td>
             </tr>
             <tr>
               <td>Assigned Manager</td>
-              <td>{{mUser.supervisorUserID}}</td>
+              <td>{{user.supervisorUserID}}
+                <span ng-hide="hasSupervisor()">None Assigned</span>
+               </td>
             </tr>
             <tr>
               <td>Timesheet Approver</td>
-              <td>{{mUser.timesheetApproverUserID}}</td>
+              <td>{{user.timesheetApproverUserID}}
+              <span ng-hide="hasTimesheetApprover()">None Assigned</span>
+              </td>
             </tr>
             <tr> 
               <td>Status</td>
-              <td>{{mUser.status}}</td>
+              <td>{{user.status}}</td>
             </tr>
           </tbody>
         </table>
       </div>    
-    </div>
-    <div class="row">
-        <div class="col-sm-2">
-            <a href="#/assign-employee-project/{{mUser.Id}}" ng-hide=""class="btn btn-success btn-block">Add to Project</a>
-        </div>
-        <div class="col-sm-2 col-sm-offset-8">
-            <button class="btn btn-primary btn-block">Save</button>
-        </div>
-    </div>
-    <div class="row">
-      <h1>Assigned Projects and WPs</h1>
     </div>
   </div>
 </content>

@@ -14,7 +14,7 @@ cascadia.config(['$routeProvider',
         when('/assign-employee-wp', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html'}).
         when('/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/assign-manager.html'}).
         when('/assign-project', {controller: 'PackageController', templateUrl:'Partials/assign-project.html'}).
-        when('/assign-re/:id', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
+        when('/assign-re', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
         when('/assign-supervisor', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
         when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
         when('/create-project', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html'}).
@@ -41,7 +41,8 @@ cascadia.config(['$routeProvider',
         when('/timesheet/:id', {controller: 'TADetailsController', templateUrl:'Partials/single-timesheet.html'}).
         when('/user-management-hr', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
         when('/user-management-super', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-super.html'}).
-        when('/user-profile/:id', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
+        when('/user-profile', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
+        when('/user-profile/:id', {controller: 'ManagedUserProfileController', templateUrl:'Partials/user-profile-managed.html'}).
         when('/weekly-project', {controller: 'WeeklyProjectController', templateUrl:'Partials/weekly-project.html'}).
         when('/wp-details', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).
         when('/wp-details/:id', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).

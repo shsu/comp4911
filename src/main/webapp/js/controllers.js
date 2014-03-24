@@ -203,7 +203,8 @@ cascadiaControllers.controller('ARController', ['$scope', '$location', 'Restangu
 cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$location', 'Restangular', 'GrowlResponse',
   function($scope, $rootScope, $location, Restangular, GrowlResponse){
     // code for supervisor assignment
-    $scope.selectedEngineer;
+
+    $scope.cUser = JSON.parse(localStorage.getItem('managedUser'));
 
     $scope.selectM = function (s) {
       $scope.selectedEngineer= s;
@@ -218,7 +219,7 @@ cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$locati
     };
 
     $scope.save = function () {
-      var user = $rootScope.userMap[$rootScope.user.id];
+      var user = $rootScope.userMap[$scope.cUser.id];
       user.supervisorUserID = $scope.selectedEngineer.id;
       Restangular.one('users', user.id).customPUT(user);
     };
@@ -838,12 +839,53 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
 */
 cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope', '$routeParams', 'Restangular',
   function($scope, $rootScope, $params, Restangular) {
-    $scope.param = $params.id;
+    $rootScope.user = JSON.parse(localStorage.getItem('user'));
 
-    $scope.mUser = $rootScope.userMap[$scope.param];
+    $scope.hasSupervisor = function() {
+      var user = $rootScope.user;
+
+      if(user.supervisorUserID && user.supervisorUserID != -1) {
+        return true;
+      }
+      return false;
+    }
+
+    $scope.hasTimesheetApprover = function() {
+      user = $rootScope.user;
+      if(user.timesheetApproverUserID && user.timesheetApproverUserID != -1) {
+        return true;
+      }
+      return false;
+    }
   }
 ]);
 
+/*
+    MANAGED USER PROFILE CONTROLLER
+*/
+cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$rootScope', '$routeParams', 'Restangular',
+  function($scope, $rootScope, $params, Restangular) {
+    $scope.param = $params.id;
+
+    $scope.cUser = $rootScope.userMap[$scope.param];
+
+    $scope.hasSupervisor = function() {
+      user = $scope.cUser;
+      if(user.supervisorUserID && user.supervisorUserID != -1) {
+        return true;
+      }
+      return false;
+    }
+
+    $scope.hasTimesheetApprover = function() {
+      user = $scope.cUser;
+      if(user.timesheetApproverUserID && user.timesheetApproverUserID != -1) {
+        return true;
+      }
+      return false;
+    }
+  }
+]);
 
 
 /*
@@ -891,11 +933,14 @@ cascadiaControllers.controller('WPStatusReportController', ['$scope', 'Restangul
 /*
     CREATE USER CONTROLLER
 */
-cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular', 'GrowlResponse',
-  function($scope, Restangular, GrowlResponse){
+cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular', 'GrowlResponse', '$location',
+  function($scope, Restangular, GrowlResponse, $location){
 
     $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
     $scope.statuses = [ 'Active', 'Inactive' ];
+    
+    $scope.cUser = {}
+    $scope.cUser.supervisorUserID = -1;
 
     $scope.save = function() {
       user = $scope.cUser;
@@ -929,7 +974,7 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootSco
 
     $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
     $scope.statuses = [ 'Active', 'Inactive' ];
-
+    $scope.cUser = {}
 
     usersChanged = [];
 
@@ -938,6 +983,14 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$rootSco
     }, function(response){
       GrowlRespone(response);
     });
+
+    $scope.hasSupervisor = function() {
+      user = $scope.cUser;
+      if(user.supervisorUserID && user.supervisorUserID != -1) {
+        return false;
+      }
+      return true;
+    }
 
     $scope.change = function(user) {
       unique = true;

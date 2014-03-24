@@ -1,0 +1,68 @@
+<content>
+  <div ng-controller="ManagedUserProfileController">
+    <h1 class="secondary">User Profile</h1><br />
+    <div class="row">
+      <div class="table-responsive col-sm-6">
+        <table class="table table-striped table-hover table-bordered">
+          <tbody>
+            <tr>
+              <td>Employee ID</td>
+              <td>{{cUser.id}}</td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td>{{cUser.firstName}} {{cUser.lastName}}</td>
+            </tr>
+            <tr>
+              <td>User Name</td>
+              <td>{{cUser.username}}</td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><!-- {{user.password}} --> ****</td>
+            </tr>
+         </tbody>
+        </table>
+      </div>
+      <div class="table-responsive col-sm-6">
+        <table class="table table-striped table-hover table-bordered">
+          <tbody>
+            <tr>
+              <td>P Level</td>
+              <td>{{cUser.pLevel}}</td>
+            </tr>
+            <tr>
+              <td>Assigned Manager</td>
+              <td>{{cUser.supervisorUserID}}
+                <a ng-click="assign()" ng-hide="hasSupervisor()">Assign</a>
+                <a ng-click="assign()" ng-show="hasSupervisor()">Change</a> 
+              </td>
+            </tr>
+            <tr>
+              <td>Timesheet Approver</td>
+              <td>{{cUser.timesheetApproverUserID}}
+                <a ng-click="assign()" ng-hide="hasSupervisor()">Assign</a>
+                <a ng-click="assign()" ng-show="hasSupervisor()">Change</a> 
+              </td>
+            </tr>
+            <tr> 
+              <td>Status</td>
+              <td>{{cUser.status}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>    
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <a href="#/assign-employee-project/{{cUser.Id}}" ng-hide=""class="btn btn-success btn-block">Add to Project</a>
+        </div>
+        <div class="col-sm-2 col-sm-offset-8">
+            <button class="btn btn-primary btn-block">Save</button>
+        </div>
+    </div>
+    <div class="row">
+      <h1>Assigned Projects and WPs</h1>
+    </div>
+  </div>
+</content>
