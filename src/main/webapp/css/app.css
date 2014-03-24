@@ -1,22 +1,3 @@
-body {
-	font-family: "Lato";
-	font-weight: 300;
-	font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    -webkit-overflow-scrolling: touch;
-    padding-top: 70px;
-}
-
-/* Titles */
-h1, h2, h3, h4, h5, h6 {
-    font-family: "Raleway";
-    font-weight: 300;
-}
-
-#login{
-    margin-top: 50px;
-}
-
 .html .body .bg-primary {
   background: #1b325f; }
 
@@ -48,7 +29,17 @@ div.ng-scope {
   padding: 0 20px; }
 
 .body {
-  min-height: 1000px; }
+  min-height: 1000px;
+  font-family: "Lato";
+  font-weight: 300;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+  padding-top: 70px; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway";
+  font-weight: 300; }
 
 .row {
   margin-bottom: 20px; }
@@ -77,6 +68,12 @@ div.ng-scope {
 
 .no-pl {
   padding-left: 0; }
+
+.adj-margin {
+  margin-left: 16px; }
+
+.cursor-hand {
+  cursor: pointer; }
 
 .navbar {
   border-radius: 0; }
@@ -124,14 +121,15 @@ div.ng-scope {
 .emp-info {
   padding-top: 37px; }
 
+.col-min-width {
+  min-width: 90px; }
+
 .timesheet {
-  overflow:auto;
   padding: 20px;
   border: 1px solid #dddddd; }
   .timesheet footer {
     margin-top: 20px;
-    clear: both;
-    height: 40px; }
+    clear: both; }
     .timesheet footer button {
       float: right; }
 
@@ -189,7 +187,8 @@ time {
 .manager .modal-dialog {
   width: 500px; }
 
-
+.usertable {
+  font-family: monospace; }
 
 .body .usertable table.table tr .th-narrow {
   width: 15%; }
@@ -206,20 +205,3 @@ time {
   background: #dddddd;
   border-radius: 5px;
   margin-bottom: 10px; }
-
-.cursor-hand {
-  cursor: pointer;
-}
-.col-min-width{
-    min-width: 90px;
-}
-.alignCenter{
-    text-align: center;
-}
-.nopadding {
-   padding: 0 !important;
-   
-}
-.nopaddingL {
-   margin-left: 16px !important;
-}
