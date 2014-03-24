@@ -330,7 +330,7 @@ cascadiaControllers.controller('PackageController', ['$scope', 'GrowlResponse',
 cascadiaControllers.controller('CreateProjectsController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
   function($scope, $location, Restangular, GrowlResponse){
     var base = Restangular.all('projects');
-    $scope.rates = [{rate: 1.2}, {rate: 1.6}]
+    $scope.rates = [1.2, 1.6, 2.0]
     
     $scope.save = function() {
       base.post($scope.project).then(function(response) {
@@ -373,7 +373,7 @@ cascadiaControllers.controller('CreateWPController', ['$scope', '$location', 'Re
 */
 cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'GrowlResponse',
   function($scope, $rootScope, Restangular, GrowlResponse) {
-    
+
     Restangular.all('user/timesheets').getList().then(function(response) {
       $scope.timesheets = response;
     });

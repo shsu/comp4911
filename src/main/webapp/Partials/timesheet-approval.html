@@ -11,6 +11,9 @@
               <th>Week No</th>
               <th>Timesheet</th>
             </tr>
+            <tr>
+             <td ng-hide="timesheet.length">No Timesheets to manage at the moment</td>
+            </tr>
             <tr ng-repeat="timesheet in timesheets">
               <td>{{timesheet.userId}}</td>
               <td>{{userMap[timesheet.userId].firstName}} {{userMap[timesheet.userId].lastName}}</td>
