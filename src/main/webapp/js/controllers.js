@@ -720,6 +720,16 @@ cascadiaControllers.controller('TADetailsController', ['$scope', '$location', 'R
     rest.one('timesheets', $scope.param).get().then(function(response){
       $scope.timesheet = response;
     });
+
+    $scope.approve = function() {
+      $scope.timesheet.approved = true;
+      $scope.timesheet.put();
+      $location.put('/timesheet-approval');
+    }
+
+    $scope.reject = function() {
+
+    }
   }
 ]);
 
