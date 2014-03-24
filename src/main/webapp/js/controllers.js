@@ -347,21 +347,33 @@ cascadiaControllers.controller('CreateProjectsController', ['$scope', '$location
 /*
     CREATE WP CONTROLLER
 */
-cascadiaControllers.controller('CreateWPController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
-  function($scope, $location, Restangular, GrowlResponse){
-    Restangular.all('projects').getList().then(function(response){
-      $scope.projects = response;
-    });
+cascadiaControllers.controller('CreateWPController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
+  function($scope, $location, Restangular, $params, GrowlResponse){
+    var param = $params.id;
+    $scope.workPackage = {}
+    $scope.project = {}
 
-    $scope.listWP = function(p) {
-      Restangular.all('work_packages/project/' + p).getList().then(function(response){
-        $scope.packages = response;
+    $scope.loadCurrentProject = function() {
+      Restangular.all('projects').getList().then(function(response){
+        $scope.projects = response;
+      });
+
+      Restangular.one('projects', param).get().then(function(response){
+        $scope.project = response;
       });
     }
 
-    $scope.addNew = function() {
-      $scope.packages.push(
-         {workPackageNumber: "", issueDate: "", completeDate: "", startDate: "", description: "", progressStatus: "", endDate: "", estimateToCompletion: "", estimateAtStart: "", projectNumber: ""});
+    $scope.statuses = [ 'Open', 'Closed'];
+
+    $scope.save = function() {
+      workPackage = $scope.workPackage;
+      workPackage.projectNumber = $scope.project.projectNumber;
+
+      Restangular.one('work_packages').customPOST(workPackage).then(function(response){
+        $.growl.notice("Success", "Object Created");
+      }, function(response){
+        GrowlResponse(response);
+      })
     }
   }
 ]);

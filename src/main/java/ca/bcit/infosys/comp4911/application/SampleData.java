@@ -50,8 +50,8 @@ public class SampleData {
         generateProjects();
         generatePayRates();
         generateProjectAssignments();
-        generateWorkPackages();
-        generateWorkPackageAssignments();
+        //generateWorkPackages();
+        //generateWorkPackageAssignments();
         generateTimesheets();
         //generateWorkPackageStatusReports();
     }
