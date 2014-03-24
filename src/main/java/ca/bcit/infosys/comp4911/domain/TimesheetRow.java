@@ -7,6 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.lang.Override;
@@ -19,6 +24,7 @@ public class TimesheetRow implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "ROW_ID", updatable = false, nullable = false)
+   @Min(0) 
    private Integer id = null;
 
    @Version
@@ -26,34 +32,46 @@ public class TimesheetRow implements Serializable
    private int version = 0;
 
    @Column
+   @NotBlank  
+   @Size(max=250) 
    private String workPackageNumber;
 
    // All these values are now in tenths
    @Column
+   @Min(0)
    private int monday;
 
    @Column
+   @Min(0)
    private int tuesday;
 
    @Column
+   @Min(0)
    private int wednesday;
 
    @Column
+   @Min(0)
    private int thursday;
 
    @Column
+   @Min(0)
    private int friday;
 
    @Column
+   @Min(0)
    private int saturday;
 
    @Column
+   @Min(0)
    private int sunday;
 
    @Column
+   @NotNull
+   @Size(max=250) 
    private String note;
 
    @Column
+   @Min(0)
    private int projectNumber;
 
    public Integer getId()

@@ -9,6 +9,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,6 +28,7 @@ public class WorkPackageStatusReport implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", updatable = false, nullable = false)
+   @Min(0) 
    private Integer id = null;
 
    @Version
@@ -30,21 +36,29 @@ public class WorkPackageStatusReport implements Serializable
    private int version = 0;
 
    @Column
+   @Min(0)
    private int weekNumber;
 
    @Column
+   @Min(0)
    private int year;
 
    @Temporal(TemporalType.DATE)
    private Date reportDate;
 
    @Column
+   @NotNull
+   @Size(max=250)
    private String comment;
 
    @Column
+   @NotNull
+   @Size(max=250)
    private String workAccomplished;
 
    @Column
+   @NotNull
+   @Size(max=250)
    private String problemEncountered;
 
    @Column
@@ -54,9 +68,13 @@ public class WorkPackageStatusReport implements Serializable
    private Set<Effort> estimatedWorkRemainingInPD = new HashSet<Effort>();
 
    @Column
+   @NotNull
+   @Size(max=250)
    private String problemAnticipated;
 
    @Column
+   @NotBlank
+   @Size(max=250)
    private String workPackageNumber;
 
    public WorkPackageStatusReport(Integer id, int weekNumber, int year,

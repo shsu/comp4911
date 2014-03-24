@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,6 +21,7 @@ public class WorkPackageAssignment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
+    @Min(0) 
     private Integer id = null;
 
     @Version
@@ -24,9 +29,12 @@ public class WorkPackageAssignment implements Serializable {
     private int version = 0;
 
     @Column
+    @NotNull
+    @Size(max = 250)
     private String workPackageNumber;
 
     @Column
+    @Min(0)
     private int userId;
 
     @Column
