@@ -66,7 +66,6 @@ public class TimesheetRow implements Serializable
    private int sunday;
 
    @Column
-   @NotNull
    @Size(max=250) 
    private String note;
 

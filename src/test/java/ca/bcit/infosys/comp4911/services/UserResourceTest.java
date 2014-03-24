@@ -27,7 +27,7 @@ public class UserResourceTest {
         String token = (String) new JSONObject(response.asString()).get("token");
 
         // Token is placed inside the header
-        given().auth().preemptive().basic(token, "").when().get(url + "/user").then().assertThat().body("id", equalTo(1));
+        given().auth().preemptive().basic(token, "").when().get(url + "/user").then().assertThat().body("id", equalTo(2));
     }
 
     @Test
@@ -37,14 +37,14 @@ public class UserResourceTest {
         String token = (String) new JSONObject(response.asString()).get("token");
 
         // Token is placed inside the query
-        when().get(url + "/user?token=" + token).then().assertThat().body("id", equalTo(1));
+        when().get(url + "/user?token=" + token).then().assertThat().body("id", equalTo(2));
     }
 
     @Test
     public void testRetrieveTokenGET() throws Exception {
         // Place user/pass inside the auth header then GET token.
         given().auth().preemptive().basic("username0@example.com", "password").when().
-          get(url + "/user/token").then().assertThat().body("user_id", equalTo(1));
+          get(url + "/user/token").then().assertThat().body("user_id", equalTo(2));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class UserResourceTest {
 
         // Place user/pass inside JSON object then POST to token.
         given().contentType(ContentType.JSON).body(authorizationJSONObject.toString()).when().
-          post(url + "/user/token").then().assertThat().body("user_id", equalTo(1));
+          post(url + "/user/token").then().assertThat().body("user_id", equalTo(2));
     }
 
     @Test

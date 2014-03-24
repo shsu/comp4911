@@ -57,15 +57,14 @@ public class SampleData {
     }
 
     private void generateUsers() {
-        // KEEP THIS AS FIRST
         // Keep the default timesheet id as -1
+        userDao.create(new User(
+                "q", "q", "Bruce", "Link", new Date(), true, "MIA", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
+
         userDao.create(new User(
           "username0@example.com", "password", "Bruce", "Link", new Date(), true, "MIA", 40, 0,
           0, 0, 1, 1, PLevel.P5),false);
 
-        userDao.create(new User(
-                "q", "q", "Bruce", "Link", new Date(), true, "MIA", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
-        
         Date startDate = setDate(1, 1, 2000);
         
         userDao.create(new User(
@@ -382,13 +381,13 @@ public class SampleData {
         
         rowCollection.add(wp1Row1);
         tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 11, 2014, 40, false, true, true);
-        timesheetDao.create(tempTimesheet,true);
+        timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
         
         rowCollection.add(wp1Row2);
         rowCollection.add(wp1Row3);
         tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,true);
+        timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
         
         rowCollection.add(wp2Row1);
