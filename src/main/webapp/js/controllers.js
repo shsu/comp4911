@@ -888,8 +888,8 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
 /*
     MANAGED USER PROFILE CONTROLLER
 */
-cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$rootScope', '$routeParams', 'Restangular',
-  function($scope, $rootScope, $params, Restangular) {
+cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$location', '$rootScope', '$routeParams', 'Restangular',
+  function($scope, $location, $rootScope, $params, Restangular) {
     $scope.param = $params.id;
 
     $scope.cUser = $rootScope.userMap[$scope.param];
@@ -908,6 +908,10 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$root
         return true;
       }
       return false;
+    }
+
+    $scope.assign = function() {
+      $location.path('/assign-supervisor/' + $scope.cUser.id);
     }
   }
 ]);
