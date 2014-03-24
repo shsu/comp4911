@@ -16,6 +16,7 @@ public class UserPayRateHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
+    @Min(0) 
     private Integer id = null;
 
     @Version

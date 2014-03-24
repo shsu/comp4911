@@ -6,6 +6,10 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,6 +22,7 @@ public class Project implements Serializable
 
    @Id
    @Column(updatable = false, nullable = false)
+   @Min(0) 
    private Integer projectNumber;
    
    @Version
@@ -25,6 +30,8 @@ public class Project implements Serializable
    private int version = 0;
 
    @Column(nullable = false)
+   @NotBlank
+   @Size(max=250)
    private String projectName;
 
    @Temporal(TemporalType.DATE)
@@ -35,12 +42,15 @@ public class Project implements Serializable
    private Date completeDate;
 
    @Column
+   @Min(0)
    private BigDecimal clientRate;
 
    @Column
+   @Min(0)
    private BigDecimal UnAllocatedBudget;
 
    @Column
+   @Min(0)
    private BigDecimal AllocatedBudget;
 
     public Integer getProjectNumber()

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class Timesheet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TIMESHEET_ID", updatable = false, nullable = false)
+    @Min(0) 
     private Integer id = null;
 
     @Version
@@ -34,12 +37,15 @@ public class Timesheet implements Serializable {
     private List<TimesheetRow> timesheetRows;
 
     @Column
+    @Min(0)
     private int weekNumber;
 
     @Column
+    @Min(0)
     private int year;
 
     @Column
+    @Min(0)
     private int overTime;
 
     @Column
@@ -49,6 +55,7 @@ public class Timesheet implements Serializable {
     private boolean signed;
 
     @Column
+    @Min(0)
     private int userId;
 
     @Column

@@ -19,6 +19,7 @@ public class PayRate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
+    @Min(0)
     private Integer id = null;
 
     @Version
@@ -30,6 +31,7 @@ public class PayRate implements Serializable {
     private int year;
 
     @Column
+    @Min(0)
     private BigDecimal rate;
 
     @Enumerated(EnumType.STRING)

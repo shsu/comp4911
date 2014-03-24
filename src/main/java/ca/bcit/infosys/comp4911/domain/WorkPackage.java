@@ -7,7 +7,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,7 +21,8 @@ public class WorkPackage implements Serializable
 {
    @Id
    @Column(updatable = false, nullable = false)
-   @Size(min = 7)
+   @Size(min = 7, max = 250)
+   @NotBlank
    private String workPackageNumber;
 
    @Version
@@ -26,6 +30,8 @@ public class WorkPackage implements Serializable
    private int version = 0;
 
    @Column
+   @NotNull
+   @Size(max=250)
    private String workPackageName;
 
    @Temporal(TemporalType.DATE)
@@ -38,9 +44,13 @@ public class WorkPackage implements Serializable
    private Date startDate;
 
    @Column
+   @NotNull
+   @Size(max=250)
    private String description;
 
    @Column
+   @NotNull
+   @Size(max=250)
    private String progressStatus;
 
    @Temporal(TemporalType.DATE)
@@ -55,6 +65,7 @@ public class WorkPackage implements Serializable
    private int estimateAtStart;
 
    @Column
+   @Min(0)
    private int projectNumber;
 
    public String getWorkPackageNumber()

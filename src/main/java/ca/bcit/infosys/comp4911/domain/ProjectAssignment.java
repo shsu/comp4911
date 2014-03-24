@@ -18,6 +18,7 @@ public class ProjectAssignment implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", updatable = false, nullable = false)
+   @Min(0) 
    private Integer id = null;
 
    @Version
@@ -32,6 +33,7 @@ public class ProjectAssignment implements Serializable
    private boolean isProjectManager;
 
    @Column
+   @Min(0)
    private int projectNumber;
 
    public Integer getId()
