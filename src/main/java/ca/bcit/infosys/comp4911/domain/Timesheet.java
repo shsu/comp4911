@@ -51,6 +51,9 @@ public class Timesheet implements Serializable {
     @Column
     private int userId;
 
+    @Column
+    private boolean pending;
+
     public List<TimesheetRow> getTimesheetRows() {
         return timesheetRows;
     }
@@ -120,6 +123,10 @@ public class Timesheet implements Serializable {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    public boolean isPending() { return pending; }
+
+    public void setPending(boolean pending) { this.pending = pending; }
 
     @Override
     public boolean equals(Object that) {
