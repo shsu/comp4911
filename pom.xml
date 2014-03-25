@@ -116,12 +116,21 @@
             <artifactId>cors-filter</artifactId>
             <version>1.9.2</version>
         </dependency>
+        <dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.8.5</version>
+		</dependency>
     </dependencies>
     <repositories>
         <repository>
             <id>JBOSS_NEXUS</id>
             <url>http://repository.jboss.org/nexus/content/groups/public</url>
         </repository>
+        <repository>
+			<id>codehaus</id>
+			<url>http://repository.codehaus.org/org/codehaus</url>
+		</repository>
     </repositories>
     <build>
         <finalName>${project.artifactId}</finalName>
