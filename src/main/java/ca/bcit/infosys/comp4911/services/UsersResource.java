@@ -99,7 +99,7 @@ public class UsersResource {
 
     @GET
     @Path("{id}/projects")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getUserProjects(
         @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
         @QueryParam(SH.TOKEN_STRING) final String queryToken,
