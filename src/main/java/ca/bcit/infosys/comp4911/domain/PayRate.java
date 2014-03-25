@@ -19,7 +19,7 @@ public class PayRate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
-    @Min(0)
+    @Min(value = 0, message="ID can not be smaller than 0.")
     private Integer id = null;
 
     @Version
@@ -27,11 +27,11 @@ public class PayRate implements Serializable {
     private int version = 0;
 
     @Column
-    @Min(0)
+    @Min(value = 0, message="Year can not be smaller than 0.")
     private int year;
 
     @Column
-    @Min(0)
+    @Min(value=0, message="Rate can not be smaller than 0.")
     private BigDecimal rate;
 
     @Enumerated(EnumType.STRING)

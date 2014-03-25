@@ -23,7 +23,7 @@ public class Timesheet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TIMESHEET_ID", updatable = false, nullable = false)
-    @Min(0) 
+    @Min(value=0,message="ID can not be smaller than 0.") 
     private Integer id = null;
 
     @Version
@@ -37,15 +37,15 @@ public class Timesheet implements Serializable {
     private List<TimesheetRow> timesheetRows;
 
     @Column
-    @Min(0)
+    @Min(value=0,message="WeekNumber can not be smaller than 0.")
     private int weekNumber;
 
     @Column
-    @Min(0)
+    @Min(value=0,message="Year can not be smaller than 0.")
     private int year;
 
     @Column
-    @Min(0)
+    @Min(value=0, message="OverTime can not be less than 0.")
     private int overTime;
 
     @Column
@@ -55,7 +55,7 @@ public class Timesheet implements Serializable {
     private boolean signed;
 
     @Column
-    @Min(0)
+    @Min(value=0, message="UserID can not be smaller than 0.")
     private int userId;
 
     @Column

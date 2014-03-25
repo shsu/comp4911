@@ -21,8 +21,8 @@ public class WorkPackage implements Serializable
 {
    @Id
    @Column(updatable = false, nullable = false)
-   @Size(min = 7, max = 250)
-   @NotBlank
+   @Size(min = 7, max = 250,message="WorkPackageNumber size must be between 7 and 250.")
+   @NotBlank(message="WorkPackageNumber can not be blank.")
    private String workPackageNumber;
 
    @Version
@@ -30,8 +30,8 @@ public class WorkPackage implements Serializable
    private int version = 0;
 
    @Column
-   @NotBlank
-   @Size(max=250)
+   @NotBlank(message="WorkPackageName can not be blank.")
+   @Size(max=250,message="WorkPackageName can not contain more than 250 characters.")
    private String workPackageName;
 
    @Temporal(TemporalType.DATE)
@@ -44,28 +44,28 @@ public class WorkPackage implements Serializable
    private Date startDate;
 
    @Column
-   @NotNull
-   @Size(max=250)
+   @NotNull(message="Description can not be null.")
+   @Size(max=250,message="Description can not contain more than 250 characters.")
    private String description;
 
    @Column
-   @NotNull
-   @Size(max=250)
+   @NotNull(message="ProgressStatus can not be null.")
+   @Size(max=250,message="ProgressStatus can not contain more than 250 characters.")
    private String progressStatus;
 
    @Temporal(TemporalType.DATE)
    private Date endDate;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="EstimateToCompletion can not be less than 0.")
    private int estimateToCompletion;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="EstimateAtStart can not be less than 0.")
    private int estimateAtStart;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="ProjectNumber can not be smaller than 0.")
    private int projectNumber;
 
    public String getWorkPackageNumber()

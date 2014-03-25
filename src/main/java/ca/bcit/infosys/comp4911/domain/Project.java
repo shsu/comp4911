@@ -22,7 +22,7 @@ public class Project implements Serializable
 
    @Id
    @Column(updatable = false, nullable = false)
-   @Min(0) 
+   @Min(value=0, message="ID can not be smaller than 0.") 
    private Integer projectNumber;
    
    @Version
@@ -30,8 +30,8 @@ public class Project implements Serializable
    private int version = 0;
 
    @Column(nullable = false)
-   @NotBlank
-   @Size(max=250)
+   @NotBlank(message="ProjectName can not be blank.")
+   @Size(max=250,message="ProjectName can not contain more than 250 characters.")
    private String projectName;
 
    @Temporal(TemporalType.DATE)
@@ -42,15 +42,15 @@ public class Project implements Serializable
    private Date completeDate;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="ClientRate can not be less than 0.")
    private BigDecimal clientRate;
 
    @Column
-   @Min(0)
+   @Min(value = 0,message="UnAllocatedBudget can not be less than 0.")
    private BigDecimal UnAllocatedBudget;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="AllocatedBudget can not be less than 0.")
    private BigDecimal AllocatedBudget;
 
     public Integer getProjectNumber()
