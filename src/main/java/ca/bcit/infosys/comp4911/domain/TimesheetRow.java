@@ -24,7 +24,7 @@ public class TimesheetRow implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "ROW_ID", updatable = false, nullable = false)
-   @Min(0) 
+   @Min(value=0,message="ID can not be smaller than 0.") 
    private Integer id = null;
 
    @Version
@@ -32,45 +32,45 @@ public class TimesheetRow implements Serializable
    private int version = 0;
 
    @Column
-   @NotBlank  
-   @Size(max=250) 
+   @NotBlank(message="WorkPackageNumber can not be blank.")  
+   @Size(max=250,message="WorkPackageNumber can not contain more than 250 charaters.") 
    private String workPackageNumber;
 
    // All these values are now in tenths
    @Column
-   @Min(0)
+   @Min(value=0,message="Attribute monday can not be less than 0.")
    private int monday;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="Attribute tuesday can not be less than 0.")
    private int tuesday;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="Attribute wednesday can not be less than 0.")
    private int wednesday;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="Attribute thursday can not be less than 0.")
    private int thursday;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="Attribute friday can not be less than 0.")
    private int friday;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="Attribute saturday can not be less than 0.")
    private int saturday;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="Attribute sunday can not be less than 0.")
    private int sunday;
 
    @Column
-   @Size(max=250) 
+   @Size(max=250,message="Note can not contain more than 250 characters.") 
    private String note;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="ProjectNumber can not be smaller than 0.")
    private int projectNumber;
 
    public Integer getId()

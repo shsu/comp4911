@@ -458,7 +458,7 @@ public class SampleData {
     private void generateWorkPackageStatusReports(){
         Date date = setDate(1, 1, 2014);
         Set<Effort> effort = new HashSet<Effort>();
-        workPackageStatusReportDao.create(new WorkPackageStatusReport(new Integer(1), 1, 2014, date, "new wpsr", "Lots of work accomplished",
+        workPackageStatusReportDao.create(new WorkPackageStatusReport(1, 2014, date, "new wpsr", "Lots of work accomplished",
                 "none", "approve timesheets", effort, "none", "A1112222"),false);
     }
 
