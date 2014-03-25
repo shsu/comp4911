@@ -200,13 +200,13 @@ cascadiaControllers.controller('ARController', ['$scope', '$location', 'Restangu
 /*
     ASSIGN SUPERVISOR CONTROLLER
 */
-cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$location', 'Restangular', 'GrowlResponse',
-  function($scope, $rootScope, $location, Restangular, GrowlResponse){
-    // code for supervisor assignment
+cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $rootScope, $params, $location, Restangular, GrowlResponse){
+    $scope.param = $params.id;
 
-    $scope.cUser = JSON.parse(localStorage.getItem('managedUser'));
+    $scope.cUser = $rootScope.userMap[$scope.param];
 
-    $scope.selectM = function (s) {
+    $scope.select = function (s) {
       $scope.selectedEngineer= s;
     };
 

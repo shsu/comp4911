@@ -11,7 +11,6 @@
           Search Supervisor:  <input ng-model="query" type="text" placeholder="Search" class="form-control" />
           <input ng-model="timesheetApprover" type="checkbox" /> Also make TimesheetApprover
         </p>
-
       </form>
     </div>
     <div class="row table-wrapper">
@@ -23,10 +22,10 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="selectM(supervisor)" class="{{supervisor.selected}}" ng-hide="!query" ng-repeat="supervisor in userList | filter: search">
-              <td>{{supervisor.id}}</td> 
-              <td>{{supervisor.firstName}} {{supervisor.lastName}}</td>
-              <td>{{supervisor.pLevel}}</td>
+            <tr ng-click="select(sup)" class="{{sup.selected}}" ng-repeat="sup in userList | filter: search">
+              <td>{{sup.id}}</td> 
+              <td>{{sup.firstName}} {{sup.lastName}}</td>
+              <td>{{sup.pLevel}}</td>
             </tr>
           </tbody>
         </table>
