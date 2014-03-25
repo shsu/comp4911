@@ -19,9 +19,9 @@ cascadia.config(['$routeProvider',
         when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
         when('/create-project', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html'}).
         when('/create-wp/:id', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html'}).
-        when('/create-user', {controller: 'CreateUserController', templateUrl:'Partials/create-user.html'}).
+        when('/users/new', {controller: 'CreateUserController', templateUrl:'Partials/create-user.html'}).
         when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
-        when('/edit-pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html'}).
+        when('/users/pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html'}).
         when('/engineer-budget', {controller: 'EngineerBudgetController', templateUrl:'Partials/engineer-budget.html'}).
         when('/login', {controller: 'LoginController', templateUrl:'Partials/login.html'}).
         when('/logout', {controller: 'LogoutController'}).
@@ -39,10 +39,10 @@ cascadia.config(['$routeProvider',
         when('/timesheet-management', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
         when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet.html'}).
         when('/timesheet/:id', {controller: 'TADetailsController', templateUrl:'Partials/single-timesheet.html'}).
-        when('/user-management-hr', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
-        when('/user-management-super', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-super.html'}).
-        when('/user-profile', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
-        when('/user-profile/:id', {controller: 'ManagedUserProfileController', templateUrl:'Partials/user-profile-managed.html'}).
+        when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
+        when('/users-super', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-super.html'}).
+        when('/user', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
+        when('/users/:id', {controller: 'ManagedUserProfileController', templateUrl:'Partials/user-profile-managed.html'}).
         when('/weekly-project', {controller: 'WeeklyProjectController', templateUrl:'Partials/weekly-project.html'}).
         when('/wp-details', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).
         when('/wp-details/:id', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).
