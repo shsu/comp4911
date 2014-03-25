@@ -1112,7 +1112,8 @@ cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular',
       user = $scope.cUser;
 
       Restangular.one('users').customPOST(user).then(function(response){
-        $.growl.notice({title: "Success", message: "Object Created"});
+        $location.path('/users');
+        $.growl.notice({title: "Success", message: "User Created"});
       }, function(response){
         GrowlResponse(response);
       })
