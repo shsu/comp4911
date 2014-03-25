@@ -75,7 +75,7 @@ public class WorkPackageAssignmentDao {
 
     public boolean isResponsibleEngineer(final int userId){
         TypedQuery<WorkPackageAssignment> query = em.createQuery("Select wpa from WorkPackageAssignment wpa" +
-                " where wpa.userId = :userId and wpa.isResponsibleEngineer = true",
+                " where wpa.userId = :userId and wpa.responsibleEngineer = true",
                 WorkPackageAssignment.class);
         query.setParameter("userId", userId);
         List<WorkPackageAssignment> responsibleEngineerList = query.getResultList();
