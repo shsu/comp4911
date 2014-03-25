@@ -42,6 +42,9 @@ public class WorkPackageAssignment implements Serializable {
     @Column
     private boolean isResponsibleEngineer;
 
+    @Column
+    private boolean isActive;
+
     @Temporal(TemporalType.DATE)
     private Date activateDate;
 
@@ -111,6 +114,10 @@ public class WorkPackageAssignment implements Serializable {
     public void setIsResponsibleEngineer(final boolean isResponsibleEngineer) {
         this.isResponsibleEngineer = isResponsibleEngineer;
     }
+
+    public boolean isActive() { return isActive; }
+
+    public void setActive(boolean isActive) { this.isActive = isActive; }
 
     public WorkPackageAssignment(String workPackageNumber, int userId, boolean isResponsibleEngineer, Date activateDate, Date deactivateDate) {
         this.version = version;
