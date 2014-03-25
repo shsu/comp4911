@@ -275,12 +275,23 @@ public class SampleData {
 
     private void generateWorkPackages() {
         
+        String workPackageNumber = "";
+        String wpName = "Lots'o Packages";
+        String appendNumber = "";
         Date issueDate = setDate(1, 2, 2014);
         Date endDate = setDate(1, 10, 2014);
         
         workPackageDao.create(new WorkPackage(
         		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, 100000,0),false);
-        
+
+        for(int i = 0; i < 1000; i++) {
+            if(i < 10) { workPackageNumber = "A111100" + i;}
+            if(i >= 10 && i < 100) { workPackageNumber = "A11110" + i; }
+            if(i >= 100) { workPackageNumber = "A1111" + i; }
+            workPackageDao.create(new WorkPackage(
+                workPackageNumber, wpName, issueDate, "100", endDate, 55522, 100000,0),false);
+        }
+
         issueDate = setDate(2, 5, 2014);
         endDate = setDate(4, 12, 2014);
         
