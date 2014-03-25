@@ -123,7 +123,7 @@ public class UsersResource {
         List<Integer> projectIds = new ArrayList<Integer>();
 
         for(int i = 0; i < numOfProjectAssignmentsReturned; i++){
-            projectIds.set(i, projectsAssignedToSelectedUser.get(i).getProjectNumber());
+            projectIds.add(i, projectsAssignedToSelectedUser.get(i).getProjectNumber());
         }
 
         return SH.responseWithEntity(200, projectDao.getProjectsByIds(projectIds));
@@ -150,7 +150,7 @@ public class UsersResource {
         List<String> wpNumbers = new ArrayList<String>();
 
         for(int i = 0; i < numOfWPsAssignmentsReturned; i++){
-            wpNumbers.set(i, wpsAssignedToSelectedUser.get(i).getWorkPackageNumber());
+            wpNumbers.add(i, wpsAssignedToSelectedUser.get(i).getWorkPackageNumber());
         }
 
         return SH.responseWithEntity(200, workPackageDao.getWPsByWorkPackageNumbers(wpNumbers));
