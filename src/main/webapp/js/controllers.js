@@ -290,14 +290,15 @@ cascadiaControllers.controller('ARController', ['$scope', '$location', 'Restangu
 */
 cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
   function($scope, $rootScope, $params, $location, Restangular, GrowlResponse){
-    $scope.param = $params.id;
+    var param = $params.id;
 
-    $scope.cUser = $rootScope.userMap[$scope.param];
+    $scope.cUser = $rootScope.userMap[param];
 
     $scope.select = function (s) {
       $scope.selectedEngineer= s;
     };
 
+    
     $scope.search = function (s) {
       if (s.id.toString().indexOf($scope.query) != -1 || s.firstName.indexOf($scope.query) != -1 
           || s.lastName.indexOf($scope.query) != -1){
@@ -306,10 +307,13 @@ cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$routeP
       return false;
     };
 
+  
     $scope.save = function () {
       var user = $rootScope.userMap[$scope.cUser.id];
       user.supervisorUserID = $scope.selectedEngineer.id;
-      Restangular.one('users', user.id).customPUT(user);
+      Restangular.one('users', user.id).customPUT(user).then(function(response){
+        $location.path('users/' + user.id);
+      })
     };
   }
 ]);

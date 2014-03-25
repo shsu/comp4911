@@ -6,21 +6,18 @@
       <strong><p class="col-xs-6">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p></strong>
     </div>
     <div class="row">
-      <form action="" class="form">
-        <div class="form-group">
-          <label class="col-xs-2" for="supervisor">Search Supervisor: </label>
-          <div class="col-xs-4">
-            <input ng-model="query" type="text" placeholder="Search" class="form-control" id="supervisor" />
-          </div>
-        </div>          
-        <div class="checkbox col-xs-6">
-          <label>
-            <input ng-model="timesheetApprover" type="checkbox" /> Also make Timesheet Approver
-          </label>
-        </div>            
-      </form>
-      </div>
-  </div>
+      <div class="form-group">
+        <label class="col-xs-2" for="supervisor">Search Supervisor: </label>
+        <div class="col-xs-4">
+          <input type="text" placeholder="Search" class="form-control" id="supervisor" ng-model="query" />
+        </div>
+      </div>          
+      <div class="checkbox col-xs-6">
+        <label>
+          <input ng-model="timesheetApprover" type="checkbox" /> Also make Timesheet Approver
+        </label>
+      </div>            
+    </div>
   <div class="row">
     <div class="row table-wrapper">
       <div class="table-responsive">
@@ -31,7 +28,7 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="select(sup)" data-toggle="modal" data-target="#addModal" class="{{sup.selected}}" ng-repeat="sup in userList | filter: search">
+            <tr ng-click="select(sup)" data-toggle="modal" data-target="#addModal" class="{{sup.selected}}" ng-repeat="sup in userList | filter: search" >
               <td>{{sup.id}}</td> 
               <td>{{sup.firstName}} {{sup.lastName}}</td>
               <td>{{sup.pLevel}}</td>
