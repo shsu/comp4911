@@ -3,8 +3,7 @@
     <h1 class="secondary">Create Work Package</h1><br />      
   <div class="row">
       <p class="col-lg-3">Project No. 
-        <select ng-init="loadCurrentProject()" ng-model="project" ng-options="p.projectNumber for p in projects">
-        </select>
+        {{project.projectNumber}}
       </p>
       <p class="col-lg-4">Project Name: {{project.projectName}}</p>
       <p class="col-lg-4">Budget: {{project.allocatedBudget | currency: amount: symbol}}</p>

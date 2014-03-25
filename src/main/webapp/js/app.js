@@ -10,8 +10,10 @@ cascadia.config(['$routeProvider',
     function($routeProvider) {
       $routeProvider.
         when('/add-engineer', {controller: 'EngineerController', templateUrl:'Partials/add-engineer.html'}).
+        when('/add-engineer/:id', {controller: 'EngineerController', templateUrl:'Partials/add-engineer.html'}).
         when('/assign-employee-project/:id', {controller: 'AEPController', templateUrl:'Partials/assign-employee-project.html'}).
         when('/assign-employee-wp', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html'}).
+        when('/assign-employee-wp/:id', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html'}).
         when('/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/assign-manager.html'}).
         when('/assign-project', {controller: 'PackageController', templateUrl:'Partials/assign-project.html'}).
         when('/assign-re', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
@@ -27,6 +29,7 @@ cascadia.config(['$routeProvider',
         when('/logout', {controller: 'LogoutController'}).
         when('/manage-approver', {controller: 'ManageApproverController', templateUrl:'Partials/manage-approver.html'}).
         when('/manage-project', {controller: 'ManageProjectController', templateUrl:'Partials/manage-project.html'}).
+        when('/manage-project/:id', {controller: 'ManageProjectController', templateUrl:'Partials/manage-project.html'}).
         when('/manage-wp', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html'}).
         when('/monthly-wp', {controller: 'MonthlyWPController', templateUrl:'Partials/monthly-wp.html'}).
         when('/pcbac', {controller: 'PCBACController', templateUrl:'Partials/pcbac.html'}).

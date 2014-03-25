@@ -1,13 +1,12 @@
 <content>
   <h1 class="secondary">Work Package Details</h1><br />
-  <h2>{{assignments}}</h2>
   <div ng-controller="WPDetailsController">
     <!-- <p>{{package}}</p> -->
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="row">
           <p class="col-sm-3">Project No: {{package.projectNumber}}</p>
-          <p class="col-sm-3">Project Name: </p>
+          <p class="col-sm-3">Project Name: {{project.projectName}}</p>
           <p class="col-sm-3">Budget: </p>
           <p class="col-sm-3">Remaining Budget: </p>
         </div>
@@ -34,9 +33,9 @@
                   <th>Pay Grade</th>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="assignment in assignments">
-                    <td>{{assignment.userId}}</td>
-                    <td></td>
+                  <tr ng-repeat="user in assignedUsers">
+                    <td>{{user.username}}</td>
+                    <td>{{user.pLevel}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -63,7 +62,7 @@
       </div>
     </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-sm-5">
             <div class="panel panel-default">
               <div class="panel-heading">Future Assigned Employees:</div>
@@ -84,7 +83,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
       <div class="col-sm-7">
         <div class="panel panel-default">
           <div class="panel-heading">Budget & Cost:</div>
