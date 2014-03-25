@@ -969,9 +969,9 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
 */
 cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$location', '$rootScope', '$routeParams', 'Restangular',
   function($scope, $location, $rootScope, $params, Restangular) {
-    $scope.param = $params.id;
+    var param = $params.id;
 
-    $scope.cUser = $rootScope.userMap[$scope.param];
+    $scope.cUser = $rootScope.userMap[param];
 
     $scope.hasSupervisor = function() {
       user = $scope.cUser;
