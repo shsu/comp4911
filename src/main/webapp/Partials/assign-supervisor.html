@@ -1,18 +1,27 @@
 <content>
-  <h1 class="secondary">Assign To Supervisor</h1>
+  <h1 class="secondary">Assign To Supervisor</h1><br />
   <div ng-controller="ASController">
     <div class="row">
-      <p class="col-xs-3">Emp ID: {{cUser.id}}</p>
-      <p class="col-xs-9">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p>
+      <strong><p class="col-xs-6">Emp ID: {{cUser.id}}</p></strong>
+      <strong><p class="col-xs-6">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p></strong>
     </div>
     <div class="row">
-      <form action="" class="form-inline">
-        <p>
-          Search Supervisor:  <input ng-model="query" type="text" placeholder="Search" class="form-control" />
-          <input ng-model="timesheetApprover" type="checkbox" /> Also make TimesheetApprover
-        </p>
+      <form action="" class="form">
+        <div class="form-group">
+          <label class="col-xs-2" for="supervisor">Search Supervisor: </label>
+          <div class="col-xs-4">
+            <input ng-model="query" type="text" placeholder="Search" class="form-control" id="supervisor" />
+          </div>
+        </div>          
+        <div class="checkbox col-xs-6">
+          <label>
+            <input ng-model="timesheetApprover" type="checkbox" /> Also make Timesheet Approver
+          </label>
+        </div>            
       </form>
-    </div>
+      </div>
+  </div>
+  <div class="row">
     <div class="row table-wrapper">
       <div class="table-responsive">
         <table class="table table-hover table-bordered">
@@ -31,6 +40,7 @@
         </table>
       </div>
     </div>
+  </div>
     <!--
     <div class="row">
       <a href="" data-toggle="modal" data-target="#addModal" class="pull-right btn btn-primary">Select</a>
@@ -48,8 +58,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save()">Add</button>
-            <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cancel()">Cancel</button>
+            <button  class="btn btn-primary" data-dismiss="modal" ng-click="save()">Add</button>
+            <button  class="btn btn-primary" data-dismiss="modal" ng-click="cancel()">Cancel</button>
           </div>
         </div>
       </div>
