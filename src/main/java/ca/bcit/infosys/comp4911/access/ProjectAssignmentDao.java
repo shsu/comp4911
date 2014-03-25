@@ -84,6 +84,12 @@ public class ProjectAssignmentDao {
         return query.getResultList();
     }
 
+    /**
+     * Used to check if a user is a Project Manager for any projects. If they are a manager for a project then the
+     * method returns true. This method is used to gather a users permissions.
+     * @param userId
+     * @return
+     */
     public boolean isProjectManager(final int userId) {
         TypedQuery<ProjectAssignment> query = em.createQuery("select pa from ProjectAssignment pa" +
                 " where pa.userId = :userId", ProjectAssignment.class);
