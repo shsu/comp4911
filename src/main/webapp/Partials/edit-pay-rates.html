@@ -1,55 +1,55 @@
 <content>
   <div ng-controller="EditPayRatesController">
-    <h1 class="secondary">Edit Pay Rates</h1><br />
     <div class="row">
-        <div class="col-lg-4 col-lg-offset-2 nopadding">
-            <button class="btn btn-info btn-lg btn-block" ng-click="prior()"><span class="glyphicon glyphicon-chevron-left"></span> Previous</button>
-        </div>
-        <div class="col-lg-3 nopadding">
-            <button class="btn btn-info btn-lg btn-block"  ng-click="current()">Current</button>
-        </div>
-        <div class="col-lg-3 nopadding">
-            <button class="btn btn-info btn-lg btn-block" ng-click="next()">Next <span class="glyphicon glyphicon-chevron-right"></span></button>
-        </div>
-      <div class="col-lg-4 col-lg-offset-2 nopadding">
+      <h1 class="secondary">Edit Pay Rates</h1><br />
+      <div class="col-lg-4 no-padding">
+          <button class="btn btn-primary btn-lg btn-block" ng-click="prior()"><span class="glyphicon glyphicon-chevron-left"></span> Previous</button>
+      </div>
+      <div class="col-lg-3 no-padding">
+          <button class="btn btn-primary btn-lg btn-block"  ng-click="current()">Current</button>
+      </div>
+      <div class="col-lg-3 no-padding">
+          <button class="btn btn-primary btn-lg btn-block" ng-click="next()">Next <span class="glyphicon glyphicon-chevron-right"></span></button>
+      </div>
+      <div class="col-lg-4 no-padding">
           <table class="table table-hover table-bordered">
               <tr>
-                <th class="alignCenter">Pay Level</th>
-                <th class ="alignCenter">{{(index - 1)}}</th>
+                <th class="center">Pay Level</th>
+                <th class ="center">{{(index - 1)}}</th>
               </tr>
               <tr ng-repeat="pp in payRatesMap[(index - 1)]">
-                <td class="alignCenter"><strong>{{pp.pLevel}}</strong></td>
-                <td><input class="alignCenter" type="text" ng-readonly="" ng-change="change(pp)" ng-model="pp.rate"/></td>
+                <td class="center"><strong>{{pp.pLevel}}</strong></td>
+                <td><input class="center" type="text" ng-readonly="" ng-change="change(pp)" ng-model="pp.rate"/></td>
               </tr>
           </table>
       </div>
-      <div class="col-lg-3 nopadding">
+      <div class="col-lg-3 no-padding">
           <table class="table table-hover ">
             <tbody>
             <tr>
-              <th class="alignCenter">{{(index)}}</th>
+              <th class="center">{{(index)}}</th>
             </tr>
               <tr ng-repeat="pc in payRatesMap[index]">
-                <td><input class="alignCenter" type="text" ng-readonly="" ng-change="change(pc)" ng-model="pc.rate"/></td>
+                <td><input class="center" type="text" ng-readonly="" ng-change="change(pc)" ng-model="pc.rate"/></td>
               </tr>
             </tbody>
           </table>
       </div>
-      <div class="col-lg-3 nopadding">
+      <div class="col-lg-3 no-padding">
           <table class="table table-hover ">
             <tbody>
               <tr> 
-                <th class="alignCenter">{{(index + 1)}}</th>
+                <th class="center">{{(index + 1)}}</th>
               </tr>
               <tr ng-repeat="pn in payRatesMap[(index + 1)]">
-                <td><input class="alignCenter" type="text" ng-readonly="" ng-change="change(pn)" ng-model="pn.rate"/></td>
+                <td><input class="center" type="text" ng-readonly="" ng-change="change(pn)" ng-model="pn.rate"/></td>
               </tr>
             </tbody>
           </table>
       </div>
     </div> 
     <div class="row">
-        <div class="col-lg-3 col-lg-offset-6 nopadding">
+        <div class="col-lg-3 col-lg-offset-4 no-padding">
             <button class="btn btn-primary btn-lg btn-block" ng-click="edit()">Save</button>
         </div>
     </div>
