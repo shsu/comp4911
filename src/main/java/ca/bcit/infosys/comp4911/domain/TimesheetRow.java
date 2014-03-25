@@ -32,8 +32,9 @@ public class TimesheetRow implements Serializable
    private int version = 0;
 
    @Column
-   @NotBlank(message="WorkPackageNumber can not be blank.")  
+   //@NotBlank(message="WorkPackageNumber can not be blank.")  
    @Size(max=250,message="WorkPackageNumber can not contain more than 250 charaters.") 
+   @NotNull(message="WorkPackageNumber can not be null.")
    private String workPackageNumber;
 
    // All these values are now in tenths
