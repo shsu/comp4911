@@ -79,7 +79,7 @@ public class ProjectAssignmentDao {
 
     public List<ProjectAssignment> getAllByUserId(final int userId){
         TypedQuery<ProjectAssignment> query = em.createQuery("select pa from ProjectAssignment pa" +
-                " where pa.userId = :userId", ProjectAssignment.class);
+                " where pa.userId = :userId and pa.active = true", ProjectAssignment.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }

@@ -1,11 +1,11 @@
 package ca.bcit.infosys.comp4911.services;
 
-import ca.bcit.infosys.comp4911.access.ProjectAssignmentDao;
-import ca.bcit.infosys.comp4911.access.ProjectDao;
-import ca.bcit.infosys.comp4911.access.UserDao;
+import ca.bcit.infosys.comp4911.access.*;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
 import ca.bcit.infosys.comp4911.domain.User;
+import ca.bcit.infosys.comp4911.domain.WorkPackage;
+import ca.bcit.infosys.comp4911.domain.WorkPackageAssignment;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
@@ -38,6 +38,12 @@ public class UsersResource {
 
     @EJB
     private ProjectDao projectDao;
+
+    @EJB
+    private WorkPackageAssignmentDao workPackageAssignmentDao;
+
+    @EJB
+    private WorkPackageDao workPackageDao;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -122,6 +128,32 @@ public class UsersResource {
 
         return SH.responseWithEntity(200, projectDao.getProjectsByIds(projectIds));
 
+    }
+
+    @GET
+    @Path("{id}/workpackages")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserWorkPackages(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("id") final Integer id) {
+
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        User check = userDao.read(id);
+        if(check == null){
+            return SH.response(404);
+        }
+
+        List<WorkPackageAssignment> wpsAssignedToSelectedUser = workPackageAssignmentDao.getAllByUserId(id);
+        int numOfWPsAssignmentsReturned = wpsAssignedToSelectedUser.size();
+        List<String> wpNumbers = new ArrayList<String>();
+
+        for(int i = 0; i < numOfWPsAssignmentsReturned; i++){
+            wpNumbers.set(i, wpsAssignedToSelectedUser.get(i).getWorkPackageNumber());
+        }
+
+        return SH.responseWithEntity(200, workPackageDao.getWPsByWorkPackageNumbers(wpNumbers));
 
     }
 
