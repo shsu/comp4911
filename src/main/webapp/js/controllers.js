@@ -161,19 +161,28 @@ cascadiaControllers.controller('AEPController', ['$rootScope', '$scope', '$locat
       var length = $scope.selectedProjects.length;
 
       for (var i = 0; i < length;) {
-        if (!removeFromSelectedE($scope.selectedProjects[i]))
+        if (!removeFromSelectedP($scope.selectedProjects[i]))
           i++;
       };
     }
 
     function removeFromSelectedP(obj) {
       if (obj !== undefined && obj.selected === true) {
-        var num = obj.number;
+        var num = obj.projectNumber;
         for (var i = 0; i < $scope.projects.length; i++) {
-          if ($scope.projects[i].number == num) {
+          if ($scope.projects[i].projectNumber == num) {
             $scope.projects[i].disabled = false;
           }
         }
+        /*
+        var data = {
+          userId: $scope.cUser.id,
+          projectNumber: obj.projectNumber,
+          active: false
+        }
+        Restangular.one('projects/' + obj.projectNumber + '/assignments').customPUT(data).then(function(response){
+          $.growl.notice("Success", "Object Created");
+        });*/
 
         var index = $scope.selectedProjects.indexOf(obj);
 
@@ -974,7 +983,8 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
     $scope.cUser = $rootScope.userMap[param];
 
     $scope.hasSupervisor = function() {
-      user = $scope.cUser;
+      user = $rootScope.userMap[param];
+
       if(user.supervisorUserID && user.supervisorUserID != user.id) {
         return true;
       }
@@ -982,7 +992,8 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
     }
 
     $scope.hasTimesheetApprover = function() {
-      user = $scope.cUser;
+      user = $rootScope.userMap[param];
+
       if(user.timesheetApproverUserID && user.timesheetApproverUserID != user.id) {
         return true;
       }
