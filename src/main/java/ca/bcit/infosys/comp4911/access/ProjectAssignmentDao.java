@@ -78,15 +78,15 @@ public class ProjectAssignmentDao {
     }
 
     public List<ProjectAssignment> getAllByUserId(final int userId){
-        TypedQuery<ProjectAssignment> query = em.createQuery("select pa from ProjectAssignment" +
+        TypedQuery<ProjectAssignment> query = em.createQuery("select pa from ProjectAssignment pa" +
                 " where pa.userId = :userId", ProjectAssignment.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }
 
     public boolean isProjectManager(final int userId) {
-        TypedQuery<ProjectAssignment> query = em.createQuery("select pa from ProjectAssignment pa " +
-                "where pa.userId = :userId", ProjectAssignment.class);
+        TypedQuery<ProjectAssignment> query = em.createQuery("select pa from ProjectAssignment pa" +
+                " where pa.userId = :userId", ProjectAssignment.class);
         query.setParameter("userId", userId);
         ArrayList<ProjectAssignment> projectAssignments = (ArrayList)query.getResultList();
         int length = projectAssignments.size();
