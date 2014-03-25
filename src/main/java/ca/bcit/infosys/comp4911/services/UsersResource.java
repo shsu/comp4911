@@ -1,7 +1,10 @@
 package ca.bcit.infosys.comp4911.services;
 
+import ca.bcit.infosys.comp4911.access.ProjectAssignmentDao;
+import ca.bcit.infosys.comp4911.access.ProjectDao;
 import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
+import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
 
@@ -17,6 +20,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Path("/users")
 public class UsersResource {
@@ -26,6 +32,12 @@ public class UsersResource {
 
     @EJB
     private UserTokens userTokens;
+
+    @EJB
+    private ProjectAssignmentDao projectAssignmentDao;
+
+    @EJB
+    private ProjectDao projectDao;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -84,4 +96,33 @@ public class UsersResource {
         userDao.update(user);
         return SH.response(200);
     }
+
+    @GET
+    @Path("{id}/projects")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getUserProjects(
+        @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+        @QueryParam(SH.TOKEN_STRING) final String queryToken,
+        @PathParam("id") final Integer id) {
+
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        User check = userDao.read(id);
+        if(check == null){
+            return SH.response(404);
+        }
+
+        List<ProjectAssignment> projectsAssignedToSelectedUser = projectAssignmentDao.getAllByUserId(id);
+        int numOfProjectAssignmentsReturned = projectsAssignedToSelectedUser.size();
+        List<Integer> projectIds = new ArrayList<Integer>();
+
+        for(int i = 0; i < numOfProjectAssignmentsReturned; i++){
+            projectIds.set(i, projectsAssignedToSelectedUser.get(i).getProjectNumber());
+        }
+
+        return SH.responseWithEntity(200, projectDao.getProjectsByIds(projectIds));
+
+
+    }
+
 }

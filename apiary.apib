@@ -553,6 +553,19 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
 + Response 403
 + Response 404
 
+##  Users [/users/:user_id/projects]
+### Retrieve all Projects a user has been assigned to [GET].
++ Response 200
+    + Body
+        [
+           {
+           }
+        ]
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
 # Group Work Packages Management
 ## Work Packages [/work_packages]
 ### Retrieve all work packages [GET]

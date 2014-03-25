@@ -66,4 +66,11 @@ public class ProjectDao {
         query.setParameter("userId", userId);
         return query.getResultList();
     }
+
+    public List<Project> getProjectsByIds(List<Integer> projectIds){
+        TypedQuery<Project> query = em.createQuery("select p from Project p" +
+                " where p.projectNumber IN (:projectIds)", Project.class);
+        query.setParameter("projectIds", projectIds);
+        return query.getResultList();
+    }
 }
