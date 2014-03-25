@@ -21,6 +21,49 @@ cascadiaControllers.controller('EngineerController', ['$scope', 'GrowlResponse',
   }
 ]);
 
+/*
+    ADD MANAGER CONTROLLER
+*/
+cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$location', 'GrowlResponse', '$routeParams', 'Restangular',
+  function($scope, $rootScope, $location, GrowlResponse, $params, Restangular) {
+    var param = $params.id;
+    $scope.project = {};
+
+    Restangular.one('projects/' + param).get().then(function(response){
+      $scope.project = response;
+    })
+
+    Restangular.all('users').getList().then(function(response){
+      $scope.users = response;
+    });
+
+    $scope.select = function (s) {
+      $scope.selectedManager= s;
+    };
+
+    
+    $scope.search = function (s) {
+      if (s.id.toString().indexOf($scope.query) != -1 || s.firstName.indexOf($scope.query) != -1 
+          || s.lastName.indexOf($scope.query) != -1){
+        return true;
+      }
+      return false;
+    };
+
+    /* Should be checking if user is already assigned to project before updating it */
+    $scope.save = function () {
+      var data = {
+        userId: $scope.selectedManager.id,
+        projectNumber: $scope.project.projectNumber,
+        projectManager: true,
+        active: true
+      }
+      Restangular.one('projects/' + $scope.project.projectNumber + '/assignments').customPOST(data).then(function(response){
+        $location.path('manage-project');
+      })
+    };
+  }
+]);
 
 
 /*
@@ -189,13 +232,11 @@ cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restan
 /*
     ASSIGN MANAGER CONTROLLER
 */
-cascadiaControllers.controller('ManagerController', ['$scope', '$routeParams', 'GrowlResponse',
-  function($scope, $params, GrowlResponse) {
-    var param = $params.id;
-    $scope.project = {}
+cascadiaControllers.controller('ProjectManagementController', ['$scope', '$location', 'GrowlResponse', 'Restangular',
+  function($scope, $location, GrowlResponse, Restangular) {
     
-    Restangular.one('projects', param).get().then(function(response){
-      $scope.project = response;
+    Restangular.all('projects').getList().then(function(response){
+      $scope.projects = response;
     });
 
     $scope.selectedManager = {};
@@ -211,6 +252,10 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$routeParams', '
 
     function setSelectedFalse(obj) {
       obj.selected = false;
+    }
+
+    $scope.select = function(p) {
+      $location.path('project-details/' + p.projectNumber);
     }
 
     $scope.cancel = function() {
@@ -734,7 +779,7 @@ cascadiaControllers.controller('PCPRController', ['$scope', 'Restangular',
 /*
     PROJECT MANAGEMENT CONTROLLER
 */
-cascadiaControllers.controller('ProjectManagementController', ['$scope', 'Restangular', 'GrowlResponse',
+cascadiaControllers.controller('ProjectManagementSupervisorController', ['$scope', 'Restangular', 'GrowlResponse',
   function($scope, Restangular, GrowlResponse) {
     var base = Restangular.all('projects');
 
@@ -758,6 +803,20 @@ cascadiaControllers.controller('ProjectManagementController', ['$scope', 'Restan
 ]);
 
 
+/*
+    PROJECT DETAILS CONTROLLER
+*/
+cascadiaControllers.controller('ProjectDetailsController', ['$scope', '$routeParams', 'Restangular',
+  function($scope, $params, Restangular){
+    var param = $params.id;
+
+    $scope.project = {}
+
+    Restangular.one('projects', param).get().then(function(response){
+      $scope.project = response;
+    })
+  }
+]);
 
 /*
     PROJECT SUMMARY CONTROLLER
@@ -1053,7 +1112,7 @@ cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular',
       user = $scope.cUser;
 
       Restangular.one('users').customPOST(user).then(function(response){
-        $.growl.notice("Success", "Object Created");
+        $.growl.notice({title: "Success", message: "Object Created"});
       }, function(response){
         GrowlResponse(response);
       })
@@ -1088,7 +1147,7 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
     base.getList().then(function(response) {
       $scope.users = response;
     }, function(response){
-      GrowlRespone(response);
+      GrowlResponse(response);
     });
 
     $scope.hasSupervisor = function(u) {

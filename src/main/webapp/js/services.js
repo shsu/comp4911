@@ -17,18 +17,21 @@ cascadiaServices.factory('InitUserMap', ['Restangular',
     }
 }]);
 
-cascadiaServices.factory('AuthenticateUser', ['$location', '$base64', 'Restangular',
- function($location, $base64, Restangular) {
+cascadiaServices.factory('AuthenticateUser', ['$location', 'Restangular',
+ function($location, Restangular) {
   return function(scope) {
     scope.isToken = (localStorage.getItem('token')) ? true : false;
     if(scope.isToken){
-      decodedToken = $base64.decode(localStorage.getItem('token'));
-      Restangular.one('user?token=' + decodedToken).get().then(function(response){
+      Restangular.one('user').head({}, 
+        {'Authorization': 'Basic ' + localStorage.getItem('token')}).then(function(response){
+        $.growl.notice({title: 'Success', message: "Token is valid" });
         scope.isAuthenticated = true;
         Restangular.setDefaultHeaders({
           'Authorization': 'Basic ' + localStorage.getItem('token')
         });
+        console.log(Restangular.defaultHeaders);
       }, function(response){
+        $.growl.notice({title: 'fail', message: 'fail'});
         localStorage.clear();
         scope.isAuthenticated = false;
         $location.path('/login');
