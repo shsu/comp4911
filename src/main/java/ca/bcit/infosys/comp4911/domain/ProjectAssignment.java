@@ -33,7 +33,7 @@ public class ProjectAssignment implements Serializable
    private boolean isProjectManager;
 
    @Column
-   private boolean isActive;
+   private boolean active;
 
    @Column
    @Min(0)
@@ -79,9 +79,9 @@ public class ProjectAssignment implements Serializable
       this.userId = userId;
    }
 
-    public boolean isActive() { return isActive; }
+    public boolean isActive() { return active; }
 
-    public void setActive(boolean isActive) { this.isActive = isActive; }
+    public void setActive(boolean isActive) { this.active = isActive; }
 
     public ProjectAssignment(int projectNumber, int userId, boolean isProjectManager)
    {

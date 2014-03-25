@@ -99,12 +99,91 @@ cascadiaControllers.controller('EngineerController', ['$scope', 'GrowlResponse',
 /*
     ASSIGN EMPLOYEE TO PROJECT W
 */
-cascadiaControllers.controller('AEPController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
-  function($scope, $location, Restangular, GrowlResponse){
+cascadiaControllers.controller('AEPController', ['$rootScope', '$scope', '$location', '$routeParams', 'Restangular', 'GrowlResponse',
+  function($rootScope, $scope, $location, $params, Restangular, GrowlResponse){
+    var param = $params.id;
+    $scope.cUser = $rootScope.userMap[param];
+    $scope.selectedProjects = [];
+
+    Restangular.all('users/' + $scope.cUser.id + '/projects').getList().then(function(response){
+      $scope.selectedProjects = response;
+    });
 
     Restangular.all('projects').getList().then(function(response){
       $scope.projects = response;
     });
+
+    $scope.selectP = function($index) {
+      if ($scope.projects[$index].disabled) {
+        return;
+      }
+
+      if (!$scope.projects[$index].selected) {
+        $scope.projects[$index].selected = true;
+      } else {
+        $scope.projects[$index].selected = false;
+      }
+    }
+
+    $scope.addedSelectP = function($index) {
+      if (!$scope.selectedProjects[$index].selected) {
+        $scope.selectedProjects[$index].selected = true;
+      } else {
+        $scope.selectedProjects[$index].selected = false;
+      }
+    }
+
+    $scope.addP = function() {
+      $scope.projects.forEach(addToSelectedP);
+    }
+
+    function addToSelectedP(obj) {
+      if (obj.selected === true && obj.disabled !== true) {
+        $scope.selectedProjects.push({
+          projectNumber: obj.projectNumber,
+          projectName: obj.projectName,
+          selected: false
+        });
+        obj.disabled = true;
+        obj.selected = false;
+        var data = {
+          userId: $scope.cUser.id,
+          projectNumber: obj.projectNumber,
+          active: true
+        }
+        Restangular.one('projects/' + obj.projectNumber + '/assignments').customPOST(data).then(function(response){
+          $.growl.notice("Success", "Object Created");
+        });
+      }
+    }
+
+    $scope.removeP = function() {
+      var length = $scope.selectedProjects.length;
+
+      for (var i = 0; i < length;) {
+        if (!removeFromSelectedE($scope.selectedProjects[i]))
+          i++;
+      };
+    }
+
+    function removeFromSelectedP(obj) {
+      if (obj !== undefined && obj.selected === true) {
+        var num = obj.number;
+        for (var i = 0; i < $scope.projects.length; i++) {
+          if ($scope.projects[i].number == num) {
+            $scope.projects[i].disabled = false;
+          }
+        }
+
+        var index = $scope.selectedProjects.indexOf(obj);
+
+        if (index > -1) {
+          $scope.selectedProjects.splice(index, 1);
+        }
+        return true;
+      }
+      return false;
+    }
   }
 ]);
 
@@ -1021,7 +1100,7 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
     }
 
     $scope.select = function(u) {
-      $location.path('/user-profile/' + u.id);
+      $location.path('/users/' + u.id);
     }
 
     $scope.change = function(user) {
