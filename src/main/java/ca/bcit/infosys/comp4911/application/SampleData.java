@@ -333,7 +333,7 @@ public class SampleData {
             workPackageAssignmentDao.create(new WorkPackageAssignment(
                     packages.get(0).getWorkPackageNumber(),
                     1,
-                    true,
+                    true, true,
                     new Date(),
                     new Date()
             ),false);
@@ -358,7 +358,7 @@ public class SampleData {
         projectAssignmentDao.create(new ProjectAssignment(
                 projects.get(0).getProjectNumber(),
                 users.get(0).getId(),
-                true
+                true, true
         ),false);
     }
     
