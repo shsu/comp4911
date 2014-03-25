@@ -218,8 +218,15 @@ cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restan
 /*
     ASSIGN MANAGER CONTROLLER
 */
-cascadiaControllers.controller('ManagerController', ['$scope', 'GrowlResponse',
-  function($scope, GrowlResponse) {
+cascadiaControllers.controller('ManagerController', ['$scope', '$routeParams', 'GrowlResponse',
+  function($scope, $params, GrowlResponse) {
+    var param = $params.id;
+    $scope.project = {}
+    
+    Restangular.one('projects', param).get().then(function(response){
+      $scope.project = response;
+    });
+
     $scope.selectedManager = {};
 
     $scope.selectM = function($index) {
