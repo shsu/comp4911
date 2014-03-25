@@ -194,7 +194,7 @@ public class UserTimesheetsResource {
                 SH.getCurrentYear(),
                 0, false, false, false
         );
-        timesheetDao.create(newTimesheet,false);
+        timesheetDao.create(newTimesheet,true);
         return newTimesheet;
     }
 
