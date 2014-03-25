@@ -66,7 +66,7 @@ public class ProjectReport {
         latestTwentyReports = wpsrDao.getLatestByProject(projectId);
         Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
-        while(wpsrIterator.hasNext()){
+        while(wpsrIterator.hasNext()) {
             wpsr = wpsrIterator.next();
             wpTimesheets = tsDao.getTimesheetsByWP(wpsr.getWorkPackageNumber());
             reportHelperRows[i] = getWPPersonHours(wpTimesheets, wpsr.getWorkPackageNumber());
@@ -79,7 +79,7 @@ public class ProjectReport {
         reportHelper.setProjectNumber(project.getProjectNumber());
         report.append("report", reportHelper);
 
-        return SH.responseWithEntity(200, report);
+        return SH.responseWithEntity(200, report.toString());
     }
 
     /**

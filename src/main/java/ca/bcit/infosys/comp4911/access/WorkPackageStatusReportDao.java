@@ -58,7 +58,7 @@ public class WorkPackageStatusReportDao {
     public List<WorkPackageStatusReport> getLatestByProject(final int projectNumber) {
         TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r" +
             " where r.workPackageNumber IN" +
-            " (select w.workPackageNumber from WorkPackage w where w.projectNumber = :projectNumber"  +
+            " (select w.workPackageNumber from WorkPackage w where w.projectNumber = :projectNumber)"  +
             " ORDER BY r.reportDate", WorkPackageStatusReport.class);
         query.setParameter("projectNumber", projectNumber);
         query.setMaxResults(MAX_SIZE);
