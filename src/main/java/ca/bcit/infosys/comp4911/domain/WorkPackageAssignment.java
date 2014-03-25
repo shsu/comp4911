@@ -9,7 +9,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -40,10 +39,10 @@ public class WorkPackageAssignment implements Serializable {
     private int userId;
 
     @Column
-    private boolean isResponsibleEngineer;
+    private boolean responsibleEngineer;
 
     @Column
-    private boolean isActive;
+    private boolean active;
 
     @Temporal(TemporalType.DATE)
     private Date activateDate;
@@ -52,11 +51,11 @@ public class WorkPackageAssignment implements Serializable {
     private Date deactivateDate;
 
     public boolean isResponsibleEngineer() {
-        return isResponsibleEngineer;
+        return responsibleEngineer;
     }
 
-    public void setResponsibleEngineer(boolean isResponsibleEngineer) {
-        this.isResponsibleEngineer = isResponsibleEngineer;
+    public void setResponsibleEngineer(boolean responsibleEngineer) {
+        this.responsibleEngineer = responsibleEngineer;
     }
 
     public Date getActivateDate() {
@@ -107,23 +106,16 @@ public class WorkPackageAssignment implements Serializable {
         this.userId = userId;
     }
 
-    public boolean getIsResponsibleEngineer() {
-        return this.isResponsibleEngineer;
-    }
+    public boolean isActive() { return active; }
 
-    public void setIsResponsibleEngineer(final boolean isResponsibleEngineer) {
-        this.isResponsibleEngineer = isResponsibleEngineer;
-    }
+    public void setActive(boolean isActive) { this.active = isActive; }
 
-    public boolean isActive() { return isActive; }
-
-    public void setActive(boolean isActive) { this.isActive = isActive; }
-
-    public WorkPackageAssignment(String workPackageNumber, int userId, boolean isResponsibleEngineer, Date activateDate, Date deactivateDate) {
-        this.version = version;
+    public WorkPackageAssignment(String workPackageNumber, int userId, boolean responsibleEngineer, boolean active,
+                                 Date activateDate, Date deactivateDate) {
         this.workPackageNumber = workPackageNumber;
         this.userId = userId;
-        this.isResponsibleEngineer = isResponsibleEngineer;
+        this.responsibleEngineer = responsibleEngineer;
+        this.active = active;
         this.activateDate = activateDate;
         this.deactivateDate = deactivateDate;
     }
@@ -160,7 +152,8 @@ public class WorkPackageAssignment implements Serializable {
     @Override
     public String toString() {
         String result = getClass().getSimpleName() + " ";
-        result += "isResponsibleEngineer: " + isResponsibleEngineer;
+        result += "isResponsibleEngineer: " + responsibleEngineer;
+        result += "isActive? " + active;
         return result;
     }
 }

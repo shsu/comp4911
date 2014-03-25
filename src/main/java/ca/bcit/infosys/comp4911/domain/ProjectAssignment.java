@@ -30,7 +30,7 @@ public class ProjectAssignment implements Serializable
    private int userId;
 
    @Column
-   private boolean isProjectManager;
+   private boolean projectManager;
 
    @Column
    private boolean active;
@@ -38,6 +38,16 @@ public class ProjectAssignment implements Serializable
    @Column
    @Min(0)
    private int projectNumber;
+
+   public int getProjectNumber()
+    {
+        return this.projectNumber;
+    }
+
+   public void setProjectNumber(final int projectNumber)
+    {
+        this.projectNumber = projectNumber;
+    }
 
    public Integer getId()
    {
@@ -61,12 +71,12 @@ public class ProjectAssignment implements Serializable
 
    public boolean isProjectManager()
    {
-      return this.isProjectManager;
+      return this.projectManager;
    }
 
-   public void setProjectManager(boolean isProjectManager)
+   public void setProjectManager(boolean projectManager)
    {
-      this.isProjectManager = isProjectManager;
+      this.projectManager = projectManager;
    }
 
    public int getUserId()
@@ -79,15 +89,16 @@ public class ProjectAssignment implements Serializable
       this.userId = userId;
    }
 
-    public boolean isActive() { return active; }
+   public boolean isActive() { return active; }
 
-    public void setActive(boolean isActive) { this.active = isActive; }
+   public void setActive(boolean active) { this.active = active; }
 
-    public ProjectAssignment(int projectNumber, int userId, boolean isProjectManager)
+    public ProjectAssignment(int projectNumber, int userId, boolean projectManager, boolean active)
    {
       this.projectNumber = projectNumber;
       this.userId = userId;
-      this.isProjectManager = isProjectManager;
+      this.projectManager = projectManager;
+      this.active = active;
    }
 
    public ProjectAssignment()
@@ -126,22 +137,13 @@ public class ProjectAssignment implements Serializable
       return super.hashCode();
    }
 
-   public int getProjectNumber()
-   {
-      return this.projectNumber;
-   }
-
-   public void setProjectNumber(final int projectNumber)
-   {
-      this.projectNumber = projectNumber;
-   }
-
    @Override
    public String toString()
    {
       String result = getClass().getSimpleName() + " ";
       result += "userId: " + userId;
-      result += ", isProjectManager: " + isProjectManager;
+      result += ", isProjectManager: " + projectManager;
+      result += ", isActive? " + active;
       result += ", projectNumber: " + projectNumber;
       return result;
    }
