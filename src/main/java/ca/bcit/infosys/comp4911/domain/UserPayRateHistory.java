@@ -16,7 +16,7 @@ public class UserPayRateHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
-    @Min(0) 
+    @Min(value=0,message="ID can not be smaller than 0.") 
     private Integer id = null;
 
     @Version
@@ -33,7 +33,7 @@ public class UserPayRateHistory {
     private PLevel pLevel;
 
     @Column
-    @Min(0)
+    @Min(value=0,message="UserID can not be smaller than 0.")
     private int userId;
 
     public UserPayRateHistory(Date startDate, Date endDate, PLevel pLevel,

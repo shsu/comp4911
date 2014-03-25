@@ -17,7 +17,7 @@ public class Effort implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
-    @Min(0) 
+    @Min(value = 0, message="ID can not be smaller than 0.") 
     private Integer id = null;
     
 	@Version
@@ -29,7 +29,7 @@ public class Effort implements Serializable {
 
     /** Tenths of hours */
     @Column
-    @Min(0)
+    @Min(value = 0, message="PersonDays can not be smaller than 0.")
     private int personDays;
 
     public Effort(PLevel pLevel, int personDays) {

@@ -28,7 +28,7 @@ public class WorkPackageStatusReport implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", updatable = false, nullable = false)
-   @Min(0) 
+   @Min(value=0,message="ID can not be smaller than 0.") 
    private Integer id = null;
 
    @Version
@@ -36,29 +36,29 @@ public class WorkPackageStatusReport implements Serializable
    private int version = 0;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="WeekNumber can not be smaller than 0.")
    private int weekNumber;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="Year can not be less than 0.")
    private int year;
 
    @Temporal(TemporalType.DATE)
    private Date reportDate;
 
    @Column
-   @NotNull
-   @Size(max=250)
+   @NotNull(message="Comment can not be null.")
+   @Size(max=250,message="Comment can not contian more than 250 characters.")
    private String comment;
 
    @Column
-   @NotNull
-   @Size(max=250)
+   @NotNull(message="WorkAccomplished can not be null.")
+   @Size(max=250,message="WorkAccomplished can not contian more than 250 characters.")
    private String workAccomplished;
 
    @Column
-   @NotNull
-   @Size(max=250)
+   @NotNull(message="ProblemEncountered can not be null.")
+   @Size(max=250,message="ProblemEncountered can not contain more than 250 characters.")
    private String problemEncountered;
 
    @Column
@@ -68,13 +68,13 @@ public class WorkPackageStatusReport implements Serializable
    private Set<Effort> estimatedWorkRemainingInPD = new HashSet<Effort>();
 
    @Column
-   @NotNull
-   @Size(max=250)
+   @NotNull(message="ProblemAnticipated can not be null.")
+   @Size(max=250,message="ProblemAnticipated can not contain more than 250 characters.")
    private String problemAnticipated;
 
    @Column
-   @NotBlank
-   @Size(max=250)
+   @NotBlank(message="WorkPackageNumber can not be null.")
+   @Size(max=250,message="WorkPackageNumber can not contain more than 250 characters.")
    private String workPackageNumber;
 
    public WorkPackageStatusReport(int weekNumber, int year,

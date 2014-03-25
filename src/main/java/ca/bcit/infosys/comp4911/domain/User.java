@@ -23,7 +23,7 @@ public class User implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", updatable = false, nullable = false)
-   @Min(0) 
+   @Min(value=0,message="ID can not be smaller than 0.") 
    private Integer id = null;
 
    @Version
@@ -31,23 +31,23 @@ public class User implements Serializable
    private int version = 0;
 
    @Column
-   @NotBlank
-   @Size(max=250)
+   @NotBlank(message="UserName can not be blank.")
+   @Size(max=250,message="UserName can not contain more than 250 characteres.")
    private String username;
 
    @Column
-   @NotBlank
-   @Size(max=250)
+   @NotBlank(message="Password can not be blank.")
+   @Size(max=250,message="Password can not contains more than 250 characters.")
    private String password;
 
    @Column
-   @NotBlank
-   @Size(max=250)
+   @NotBlank(message="FirstName can not be blank.")
+   @Size(max=250,message="FirstName can not contain more than 250 characters.")
    private String firstName;
 
    @Column
-   @NotBlank
-   @Size(max=250)
+   @NotBlank(message="LastName can not be blank.")
+   @Size(max=250,message="LastName can not contain more than 250 characters.")
    private String lastName;
 
    @Temporal(TemporalType.DATE)
@@ -57,32 +57,32 @@ public class User implements Serializable
    private boolean isHR;
 
    @Column
-   @NotNull
-   @Size(max=250)
+   @NotNull(message="Status can not be null.")
+   @Size(max=250,message="Status can not contain more than 250 characters.")
    private String status;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="PaidHourPerWeek can not be less than 0.")
    private int paidHoursPerWeek;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="YotalFlexTime can not be less than 0.")
    private int totalFlexTime;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="VacationDays can not be less than 0.")
    private int vacationDays;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="DefaultTimesheetID can not be smaller than 0.")
    private int defaultTimesheetID;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="SupervisorUserID can not be smaller than 0.")
    private int supervisorUserID;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="TimesheetApproverUserID can not be smaller than 0.")
    private int timesheetApproverUserID;
 
    @Column

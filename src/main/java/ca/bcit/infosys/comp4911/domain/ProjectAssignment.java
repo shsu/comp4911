@@ -18,7 +18,7 @@ public class ProjectAssignment implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", updatable = false, nullable = false)
-   @Min(0) 
+   @Min(value=0,message="ID can not be smaller than 0.") 
    private Integer id = null;
 
    @Version
@@ -26,7 +26,7 @@ public class ProjectAssignment implements Serializable
    private int version = 0;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="UserID can not be smaller than 0.")
    private int userId;
 
    @Column
@@ -36,7 +36,7 @@ public class ProjectAssignment implements Serializable
    private boolean active;
 
    @Column
-   @Min(0)
+   @Min(value=0,message="ProjectNumber can not be smaller than 0.")
    private int projectNumber;
 
    public int getProjectNumber()

@@ -22,7 +22,7 @@ public class WorkPackageAssignment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
-    @Min(0) 
+    @Min(value=0,message="ID can not be smaller than 0.") 
     private Integer id = null;
 
     @Version
@@ -30,12 +30,12 @@ public class WorkPackageAssignment implements Serializable {
     private int version = 0;
 
     @Column
-    @NotBlank
-    @Size(max = 250)
+    @NotBlank(message="WorkPackageNumber can not be blank.")
+    @Size(max = 250,message="WorkPackageNumber can not contain more than 250 characters.")
     private String workPackageNumber;
 
     @Column
-    @Min(0)
+    @Min(value=0,message="UserID can not be smaller than 0.")
     private int userId;
 
     @Column
