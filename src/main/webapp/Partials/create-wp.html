@@ -19,12 +19,14 @@
             <div class="col-lg-2"><p>Estimate At Start: </p></div>
             <div class="col-lg-4"><input type="text" ng-model="workPackage.estimateAtStart" class="form-control"></div>
             <div class="col-lg-2"><p>Estimate at Completion:</p></div> 
-            <div class="col-lg-4"><input type="text" class="form-control"></div>
+            <div class="col-lg-4"><input type="text" ng-model="workPackage.estimateToCompletion" class="form-control"></div>
             <div class="col-lg-2"><p>Status: </p></div>
             <div class="col-lg-4">              
               <select ng-model="workPackage.progressStatus" ng-options="s for s in statuses">
               </select>
             </div>
+            <div class="col-lg-2"><p>Description:</p></div> 
+            <div class="col-lg-4"><input type="text" ng-model="workPackage.description" class="form-control"></div>
             <div class="col-lg-12"><br /> </div>      
         </div>
         <div class="row">

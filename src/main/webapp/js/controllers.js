@@ -896,7 +896,7 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
 
     $scope.hasSupervisor = function() {
       user = $scope.cUser;
-      if(user.supervisorUserID && user.supervisorUserID != -1) {
+      if(user.supervisorUserID && user.supervisorUserID != user.id) {
         return true;
       }
       return false;
@@ -904,7 +904,7 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
 
     $scope.hasTimesheetApprover = function() {
       user = $scope.cUser;
-      if(user.timesheetApproverUserID && user.timesheetApproverUserID != -1) {
+      if(user.timesheetApproverUserID && user.timesheetApproverUserID != user.id) {
         return true;
       }
       return false;
@@ -1013,9 +1013,8 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
       GrowlRespone(response);
     });
 
-    $scope.hasSupervisor = function() {
-      user = $scope.cUser;
-      if(user.supervisorUserID && user.supervisorUserID != user.id) {
+    $scope.hasSupervisor = function(u) {
+      if(u.supervisorUserID && u.supervisorUserID != u.id) {
         return false;
       }
       return true;
