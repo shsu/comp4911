@@ -61,7 +61,7 @@ public class ProjectDao {
         TypedQuery<Project> query = em.createQuery("select p from Project p"
             + " where p.projectNumber = (SELECT pa.projectNumber from ProjectAssignment pa"
                                        + " where pa.userId = :userId AND"
-                                        + " pa.isProjectManager = TRUE)",
+                                        + " pa.projectManager = TRUE)",
                 Project.class);
         query.setParameter("userId", userId);
         return query.getResultList();

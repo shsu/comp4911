@@ -77,13 +77,12 @@ public class WorkPackageStatusReport implements Serializable
    @Size(max=250)
    private String workPackageNumber;
 
-   public WorkPackageStatusReport(Integer id, int weekNumber, int year,
+   public WorkPackageStatusReport(int weekNumber, int year,
 		Date reportDate, String comment, String workAccomplished,
 		String problemEncountered, String workPlanned,
 		Set<Effort> estimatedWorkRemainingInPD, String problemAnticipated,
 		String workPackageNumber) {
 	super();
-	this.id = id;
 	this.weekNumber = weekNumber;
 	this.year = year;
 	this.reportDate = reportDate;
