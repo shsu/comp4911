@@ -2,26 +2,28 @@
   <div ng-controller="AEWPController">
     <div class="row">
       <h1 class="secondary">Assign Employees to Work Package</h1>
-      <h2>(TEST) ID param: {{param}}</h2>
     </div>
     <div class="row">
       <ul class="list-inline">
-        <li class="col-xs-3">Project No: </li>
+        <li class="col-xs-3">Project No: {{package.projectNumber}}</li>
         <li class="col-xs-3">Project Name: </li>
       </ul>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <ul class="list-inline">
         <li class="col-xs-3">Emp ID: {{user.id}}</li>
         <li class="col-xs-3">Emp Name: {{user.username}}</li>
       </ul>
-    </div>
+    </div> -->
     <div class="row">
-      <p>Projects List</p>
+      <p>Users</p>
       <div class="col-xs-5 results">
         <ul class="no-pl">
-          <li ng-click="select($index)" class="{{package.selected}} disabled-{{package.disabled}}" ng-repeat="package in packages">
+          <!-- <li ng-click="select($index)" class="{{package.selected}} disabled-{{package.disabled}}" ng-repeat="package in packages">
           {{package.number}}  {{package.title}}
+          </li> -->
+          <li ng-repeat="user in userList" ng-click="select(user.id)">
+            {{user.username}}
           </li>
         <ul>     
       </div>
@@ -31,8 +33,11 @@
       </div>
       <div class="col-xs-5 results">
         <ul class="no-pl">
-          <li ng-click="addedSelect($index)" class="{{selectedPackage.selected}}" ng-hide="!selectedPackages" ng-repeat="selectedPackage in selectedPackages">
+          <!-- <li ng-click="addedSelect($index)" class="{{selectedPackage.selected}}" ng-hide="!selectedPackages" ng-repeat="selectedPackage in selectedPackages">
           {{selectedPackage.number}}  {{selectedPackage.title}}
+          </li> -->
+          <li ng-repeat="assignedUser in assignedUserList" ng-click="select(assignedUser.id)">
+            {{assignedUser.username}}
           </li>
         <ul> 
       </div>

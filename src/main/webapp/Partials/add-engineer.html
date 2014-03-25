@@ -1,18 +1,18 @@
 <content>
   <h1 class="secondary">Assign Responsible Engineer</h1><br />     
-  <div ng-controller="engineerController">
+  <div ng-controller="EngineerController">
     <div class="row">
       <ul class="list-inline">
-        <li class="col-xs-3">Project No.: PRO0111</li>
+        <li class="col-xs-3">Project No.: <a href="#/manage-project/{{package.projectNumber}}">{{package.projectNumber}}</a></li>
         <li class="col-xs-3">Project Name: Mosaics</li>
-        <li class="col-xs-3">WP No.: B1111</li>
-        <li class="col-xs-3">WP Title: Project Set-up</li>
+        <li class="col-xs-3">WP No.: <a href="#/wp-details/{{package.workPackageNumber}}">{{package.workPackageNumber}}</a></li>
+        <li class="col-xs-3">WP Title: {{package.workPackageName}}</li>
       </ul>
     </div>
     <div class="row">
       <p>Employee</p>
       <p class="col-xs-12 no-pl"><input type="text" ng-model="query" class="col-xs-5" placeholder="Enter Employee Name, number or PayGrade"/></p>
-      <div class="col-xs-5 results">
+      <div class="col-xs-12 results">
         <table class="table table-hover">
           <tbody>
             <tr>
@@ -21,18 +21,21 @@
               <th style="width: 33%;">Pay Grade</th>
             </tr>
             <tr ng-click="selectE($index)" class="{{engineer.selected}} disabled-{{engineer.disabled}}" ng-hide="!query" ng-repeat="engineer in engineers | filter:query">
-              <td>{{engineer.number}}</td> 
-              <td>{{engineer.name}}</td>
-              <td>{{engineer.paygrade}}</td>
+              <td>{{engineer.id}}</td> 
+              <td>{{engineer.firstName}} {{engineer.lastName}}</td>
+              <td>{{engineer.pLevel}}</td>
             </tr>
           </tbody>
         </table>    
       </div>
-      <div class="col-xs-2">
-        <button ng-click="addE()" class="btn btn-primary btn-block">Add</button>
-        <button ng-click="removeE()" class="btn btn-primary btn-block">Remove</button>
+      <div class="row">
+        <div class="col-sm-2 pull-right">
+          <p>&nbsp;</p>
+          <button ng-click="addE()" class="btn btn-primary btn-block">Assign</button>
+          <!-- <button ng-click="removeE()" class="btn btn-primary btn-block">Remove</button> -->
+        </div>
       </div>
-      <div class="col-xs-5 results">
+      <!-- <div class="col-xs-5 results">
         <table class="table table-hover">
           <tbody>
             <tr>
@@ -47,10 +50,8 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> -->
     </div>
-    <div class="row">
-      <button class="col-lg-2 btn btn-primary pull-right">Save</button>
-    </div>
+
   </div>
 </content>
