@@ -327,6 +327,8 @@ public class SampleData {
     private void generateWorkPackageAssignments() {
 
         List<WorkPackage> packages = workPackageDao.getAll();
+        int qUserId = userDao.getAll().get(0).getId();
+        int awongUserId = userDao.getAll().get(2).getId();
 
         for(int i = 0; i < 5; i++)
         {
@@ -337,6 +339,36 @@ public class SampleData {
                     new Date(),
                     new Date()
             ),false);
+            
+            Date activateDate = setDate(1, 2, 2014);
+            Date deactivateDate = setDate(1, 10, 2014);
+            
+            WorkPackageAssignment assignment = new WorkPackageAssignment("A1112222", qUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            activateDate = setDate(2, 6, 2014);
+            deactivateDate = setDate(4, 12, 2014);
+            
+            assignment = new WorkPackageAssignment("B3332222", qUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            activateDate = setDate(1, 14, 2014);
+            deactivateDate = setDate(4, 17, 2014);
+            
+            assignment = new WorkPackageAssignment("B3332223", qUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            activateDate = setDate(11, 10, 2013);
+            deactivateDate = setDate(11, 28, 2013);
+            
+            assignment = new WorkPackageAssignment("A3334444", awongUserId, true, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            activateDate = setDate(11, 12, 2014);
+            deactivateDate = setDate(12, 8, 2014);
+            
+            assignment = new WorkPackageAssignment("C3332222", awongUserId, true, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
         }
 
     }
@@ -360,6 +392,15 @@ public class SampleData {
                 users.get(0).getId(),
                 true, true
         ),false);
+        
+        ProjectAssignment assignment = new ProjectAssignment(12345, users.get(0).getId(), true, true);
+        projectAssignmentDao.create(assignment, false);
+        
+        assignment = new ProjectAssignment(55522, users.get(1).getId(), true, true);
+        projectAssignmentDao.create(assignment, false);
+        
+        assignment = new ProjectAssignment(99777, users.get(1).getId(), false, true);
+        projectAssignmentDao.create(assignment, false);
     }
     
     private void generateTimesheets() {
