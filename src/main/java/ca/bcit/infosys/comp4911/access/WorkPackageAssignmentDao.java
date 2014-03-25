@@ -73,6 +73,14 @@ public class WorkPackageAssignmentDao {
         return query.getResultList();
     }
 
+    public List<WorkPackageAssignment> getAllByUserId(final int userId){
+        TypedQuery<WorkPackageAssignment> query = em.createQuery("select wpa from WorkPackageAssignment wpa" +
+                " where wpa.userId = :userId and wpa.active = true", WorkPackageAssignment.class);
+        query.setParameter("userId", userId);
+
+        return query.getResultList();
+    }
+
     public boolean isResponsibleEngineer(final int userId){
         TypedQuery<WorkPackageAssignment> query = em.createQuery("Select wpa from WorkPackageAssignment wpa" +
                 " where wpa.userId = :userId and wpa.responsibleEngineer = true",

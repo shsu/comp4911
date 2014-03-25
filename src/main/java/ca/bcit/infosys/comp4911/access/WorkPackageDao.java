@@ -60,6 +60,14 @@ public class WorkPackageDao {
         return query.getResultList();
     }
 
+    public List<WorkPackage> getWPsByWorkPackageNumbers(List<String> wpNumbers){
+        TypedQuery<WorkPackage> query = em.createQuery("select w from WorkPackage w" +
+                " where w.workPackageNumber IN (:wpNumebers)", WorkPackage.class);
+        query.setParameter("wpNumbers", wpNumbers);
+
+        return query.getResultList();
+    }
+
     public List<WorkPackage> getAllByProject(int projectNumber) {
         TypedQuery<WorkPackage> query = em.createQuery("select wp from WorkPackage wp"
                 + " where wp.projectNumber = :projectNumber",
