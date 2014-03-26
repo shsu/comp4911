@@ -60,6 +60,7 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$l
       }
       Restangular.one('projects/' + $scope.project.projectNumber + '/assignments').customPOST(data).then(function(response){
         $location.path('manage-project');
+        $.growl.notice("Success", "Project assigned");
       })
     };
   }
@@ -336,6 +337,7 @@ cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$routeP
       user.supervisorUserID = $scope.selectedEngineer.id;
       Restangular.one('users', user.id).customPUT(user).then(function(response){
         $location.path('users/' + user.id);
+        $.growl.notice("Success", "Supervisor assigned");
       })
     };
   }
@@ -452,7 +454,7 @@ cascadiaControllers.controller('CreateProjectsController', ['$scope', '$location
         $.growl.warning({ message: "Invalid Input" });
       } else {
         base.post($scope.project).then(function (response) {
-          $.growl.notice("Success", "Object Created");
+          $.growl.notice("Success", "Project Created");
         }, function (response) {
           GrowlResponse(response);
         });
@@ -566,6 +568,7 @@ cascadiaControllers.controller('EditPayRatesController', ['$scope', '$location',
       for(var i = 0; i < payRatesChanged.length; i++) {
         payRatesChanged[i].put();
       }
+      $.growl.notice("Success", "Pay Rates Saved");
     }
 
     $scope.prior = function() {
@@ -802,6 +805,7 @@ cascadiaControllers.controller('ProjectManagementSupervisorController', ['$scope
       base.post(newproject).then(function(response) {
         $scope.projects.push(newproject);
         $scope.add_project = false;
+        $.growl.notice("Success", "Project Created");
       })
     }
   }
@@ -973,6 +977,7 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
         $rootScope.user.put();
       }
       $scope.timesheet.put();
+      $.growl.notice("Success", "Timesheet saved");
     }
 
     $scope.submit = function() {
