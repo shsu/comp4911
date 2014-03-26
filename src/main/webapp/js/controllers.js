@@ -447,12 +447,17 @@ cascadiaControllers.controller('CreateProjectsController', ['$scope', '$location
     var base = Restangular.all('projects');
     $scope.rates = [1.2, 1.6, 2.0]
     
-    $scope.save = function() {
-      base.post($scope.project).then(function(response) {
-        $.growl.notice("Success", "Object Created");
-      }, function(response) {
-        GrowlResponse(response);
-      });
+    $scope.save = function () {
+      if (!($scope.createProjectForm.$valid)) {
+        $.growl.warning({ message: "Invalid Input" });
+      } else {
+        base.post($scope.project).then(function (response) {
+          $.growl.notice("Success", "Object Created");
+        }, function (response) {
+          GrowlResponse(response);
+        });
+      }
+      
     }
   }
 ]);
