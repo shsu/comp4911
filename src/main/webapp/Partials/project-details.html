@@ -10,15 +10,6 @@
           <p class="col-sm-3">Budget: </p>
           <p class="col-sm-3">Remaining Budget: </p>
         </div>
-        <div class="row">
-          <p class="col-sm-3">WP Number: {{project.workPackageNumber}}</p>
-          <p class="col-sm-8">WP Title: {{project.workPackageName}}</p>
-        </div>
-        <div class="row">
-          <p class="description col-sm-12">
-            WP Description
-          </p>
-        </div>
       </div>
     </div>      
     <div class="row">
@@ -30,7 +21,7 @@
               <table class="table table-hover table-bordered">
                 <thead>
                   <th>Assigned Employees</th>
-                  <th>Pay Grade</th>
+                  <th>P-Level</th>
                 </thead>
                 <tbody>
                   <tr ng-repeat="user in assignedUsers">
@@ -46,12 +37,12 @@
       </div>
       <div class="col-sm-7">
         <div class="panel panel-default">
-          <div class="panel-heading">Pay Grade:</div>
+          <div class="panel-heading">P-Level:</div>
           <div class="panel-body">
             <div class="table-responsive">
               <table class="table table-hover table-bordered">
                 <thead>
-                  <th>Pay Grade</th>
+                  <th>P-Level</th>
                   <th>Person Days for Completion</th>
                   <th>Person Days Spent</th>
                   <th>Estimated Remaining Person Days</th>
