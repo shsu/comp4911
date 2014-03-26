@@ -1072,11 +1072,10 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
   function($scope, $location, $rootScope, $params, Restangular) {
     var param = $params.id;
 
-    $scope.cUser = $rootScope.userMap[param];
+    $scope.cUser = Restangular.one('users', param).get();
 
     $scope.hasSupervisor = function() {
-      user = $rootScope.userMap[param];
-
+      user = $scope.cUser;
       if(user.supervisorUserID && user.supervisorUserID != user.id) {
         return true;
       }
