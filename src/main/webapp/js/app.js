@@ -1,6 +1,7 @@
 var cascadia = angular.module('cascadiaApp', [
     'ngRoute',
     'restangular',
+    'ui.bootstrap',
     'cascadiaControllers',
     'cascadiaServices',
     'cascadiaDirectives'

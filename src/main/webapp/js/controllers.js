@@ -312,11 +312,14 @@ cascadiaControllers.controller('ARController', ['$scope', '$location', 'Restangu
 /*
     ASSIGN SUPERVISOR CONTROLLER
 */
-cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
-  function($scope, $rootScope, $params, $location, Restangular, GrowlResponse){
+cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $modal, $rootScope, $params, $location, Restangular, GrowlResponse){
     var param = $params.id;
+    $scope.cUser = {}
 
-    $scope.cUser = $rootScope.userMap[param];
+    Restangular.one('users', param).get().then(function(response){
+      $scope.cUser = response;
+    });
 
     $scope.select = function (s) {
       $scope.selectedEngineer= s;
@@ -331,19 +334,57 @@ cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$routeP
       return false;
     };
 
-  
-    $scope.save = function () {
-      var user = $rootScope.userMap[$scope.cUser.id];
-      user.supervisorUserID = $scope.selectedEngineer.id;
-      Restangular.one('users', user.id).customPUT(user).then(function(response){
-        $location.path('users/' + user.id);
-        $.growl.notice({ message: "Supervisor Assigned" });
-      })
-    };
+    $scope.open = function () {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: ModalInstanceCtrl,
+        resolve: {
+          item: function () {
+            return $scope.cUser;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        var user = {}
+        Restangular.one('users', $scope.cUser.id).get().then(function(response){
+          user = response;
+          user.supervisorUserID = $scope.selectedEngineer.id;
+          Restangular.one('users', user.id).customPUT(user).then(function(response){
+            $location.path('users/' + user.id);
+          })
+        });
+      }, function(){
+        console.log("dismissed")
+      });
+
+      $scope.save = function () {
+        var user;
+        Restangular.one('users', $scope.cUser.id).get().then(function(response){
+          user = response;
+          user.supervisorUserID = $scope.selectedEngineer.id;
+          Restangular.one('users', user.id).customPUT(user).then(function(response){
+            $location.path('users/' + user.id);
+          })
+        });
+      };
+    }
   }
 ]);
 
+var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
+  $scope.item = item;
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};
 
 /*
     ASSIGN WP CONTROLLER
