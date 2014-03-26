@@ -38,6 +38,16 @@ public class Effort implements Serializable {
 		this.personDays = personDays;
 	}
     
+    /**
+     * Construct an Effort, default personDays to 0
+     * @param pLevel
+     */
+    public Effort(PLevel pLevel) {
+		super();
+		this.pLevel = pLevel;
+		this.personDays = 0;
+	}
+    
     public Effort(){
     	
     }

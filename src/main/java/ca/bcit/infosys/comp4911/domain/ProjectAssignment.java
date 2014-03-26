@@ -93,12 +93,27 @@ public class ProjectAssignment implements Serializable
 
    public void setActive(boolean active) { this.active = active; }
 
-    public ProjectAssignment(int projectNumber, int userId, boolean projectManager, boolean active)
+   public ProjectAssignment(int projectNumber, int userId, boolean projectManager, boolean active)
    {
       this.projectNumber = projectNumber;
       this.userId = userId;
       this.projectManager = projectManager;
       this.active = active;
+   }
+   
+   /**
+    * Project assignment takes only projectNumber and userID,
+    * default projectManager to false, and
+    * default active to true
+    * @param projectNumber
+    * @param userId
+    */
+   public ProjectAssignment(int projectNumber, int userId)
+   {
+      this.projectNumber = projectNumber;
+      this.userId = userId;
+      this.projectManager = false;
+      this.active = true;
    }
 
    public ProjectAssignment()
