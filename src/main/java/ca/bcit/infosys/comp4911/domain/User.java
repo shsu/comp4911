@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.domain;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.DateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -231,6 +233,41 @@ public class User implements Serializable
         this.timesheetApproverUserID = timesheetApproverUserID;
         this.pLevel = pLevel;
     }
+    
+    /**
+     * Constructor of User, take userName, passwordm firstName, lastName and supervisorID,
+     * default startDate to current date,
+     * default isHR o false,
+     * default status to Active,
+     * default paidHoursPerWeek to 0,
+     * default totalFlexTime to 0,
+     * default vacationDays to 0,
+     * default defaultTimesheetID to null,
+     * default timesheetApproverUserID to supervisorUserID, and
+     * default pLevel to P1
+     * @param username
+     * @param password
+     * @param firstName
+     * @param lastName
+     * @param supervisorUserID
+     */
+    public User(final String username, final String password, final String firstName, final String lastName,
+            final int supervisorUserID) {
+    this.username = username;
+    this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.startDate = DateTime.now().toDate();
+    this.isHR = false;
+    this.status = "Active";
+    this.paidHoursPerWeek = 40;
+    this.totalFlexTime = 0;
+    this.vacationDays = 0;
+    this.defaultTimesheetID = (Integer) null;
+    this.supervisorUserID = supervisorUserID;
+    this.timesheetApproverUserID = supervisorUserID;
+    this.pLevel = PLevel.P1;
+}
 
     @Override
    public boolean equals(Object o)

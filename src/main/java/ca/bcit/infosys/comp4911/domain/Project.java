@@ -10,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -145,6 +146,27 @@ public class Project implements Serializable
       UnAllocatedBudget = unAllocatedBudget;
       AllocatedBudget = allocatedBudget;
    }
+   
+   /**
+    * Construct a Project with projectNumber and projectName,
+    * default issueDate to CurrentDate,
+    * default completeDate to null,
+    * default clientRate to 0,
+    * default UnAllocatedBudget to 0, and
+    * default AllocatedBudget to 0.
+    * @param projectNumber
+    * @param projectName
+    */
+   public Project(Integer projectNumber, String projectName)
+	   {
+	      this.projectNumber = projectNumber;
+	      this.projectName = projectName;
+	      this.issueDate = DateTime.now().toDate();
+	      this.completeDate = null;
+	      this.clientRate = BigDecimal.ZERO;
+	      UnAllocatedBudget = BigDecimal.ZERO;
+	      AllocatedBudget = BigDecimal.ZERO;
+	   }
 
    public Project()
    {

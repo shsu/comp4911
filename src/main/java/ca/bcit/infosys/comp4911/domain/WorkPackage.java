@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -66,6 +67,7 @@ public class WorkPackage implements Serializable
 
    @Column
    @Min(value=0,message="ProjectNumber can not be smaller than 0.")
+   @NotNull(message="projectnumber can not be null")
    private int projectNumber;
 
    public String getWorkPackageNumber()
@@ -188,6 +190,37 @@ public class WorkPackage implements Serializable
       this.completeDate = issueDate;
       this.startDate = issueDate;
    }
+   
+   /**
+    * WorkPackage constructor, taking workPackageNumber, workPackageName and projectName,
+    * default issueDate to current date,
+    * default progressStatus to empty string,
+    * default endDate to null,
+    * defaultestimateAtStart to 0,
+    * default 
+    * @param workPackageNumberestimateToCompletion to 0,
+    * default description to empty string,
+    * default coompleteDate to issueDate, and
+    * default startDate to issueDate
+    * @param workPackageName
+    * @param projectNumber
+    */
+   public WorkPackage(String workPackageNumber, String workPackageName, int projectNumber)
+	   {
+	      super();
+	      this.workPackageNumber = workPackageNumber;
+	      this.workPackageName = workPackageName;
+	      this.issueDate = DateTime.now().toDate();
+	      this.progressStatus = "";
+	      this.endDate = null;
+	      this.projectNumber = projectNumber;
+	      this.estimateAtStart = 0;
+	      this.estimateToCompletion = 0;
+
+	      this.description = "";
+	      this.completeDate = issueDate;
+	      this.startDate = issueDate;
+	   }
 
     public WorkPackage()
    {

@@ -12,6 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -119,6 +120,24 @@ public class WorkPackageAssignment implements Serializable {
         this.activateDate = activateDate;
         this.deactivateDate = deactivateDate;
     }
+    
+    /**
+     * WorkPackageAssignment constructor, taking workPackageNumber and userID,
+     * default responsibleEngineer to false,
+     * default active to true,
+     * default activeDate to current date, and
+     * default deactivateDate to null
+     * @param workPackageNumber
+     * @param userId
+     */
+    public WorkPackageAssignment(String workPackageNumber, int userId) {
+		this.workPackageNumber = workPackageNumber;
+		this.userId = userId;
+		this.responsibleEngineer = false;
+		this.active = true;
+		this.activateDate = DateTime.now().toDate();
+		this.deactivateDate = null;
+		}
 
     public WorkPackageAssignment() {
 
