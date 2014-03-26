@@ -24,14 +24,14 @@ cascadiaServices.factory('AuthenticateUser', ['$location', 'Restangular',
     if(scope.isToken){
       Restangular.one('user').head({}, 
         {'Authorization': 'Basic ' + localStorage.getItem('token')}).then(function(response){
-        $.growl.notice({title: 'Success', message: "Token is valid" });
+        $.growl({message: "Token is Valid" });
         scope.isAuthenticated = true;
         Restangular.setDefaultHeaders({
           'Authorization': 'Basic ' + localStorage.getItem('token')
         });
         console.log(Restangular.defaultHeaders);
       }, function(response){
-        $.growl.notice({title: 'fail', message: 'fail'});
+        $.growl({message: 'Token not Valid'});
         localStorage.clear();
         scope.isAuthenticated = false;
         $location.path('/login');
@@ -66,25 +66,25 @@ cascadiaServices.factory('GrowlResponse', [
   function() {
     return function(response) {
       if(response.status >= 200 && response.status <=304) {
-        $.growl.notice({ title: "Success!", message:"Operation Successful"});
+        $.growl.notice({message:"Operation Successful"});
       }
       else if(response.status == 400){
           var errorMessage = response.errors[0].error;
           for(var i = 1; i < response.errors.length; ++i) {
             errorMessage += ('\n' + response.errors[i].error);
           } 
-          $.growl.error({title: "Error! Invalid Values", message: errorMessage})
+          $.growl.error({message: errorMessage})
       }
       else if(response.status == 401){
-          $.growl.error({title: "Error!", message: "Unauthorized. Check your username and password."})
+          $.growl.error({message: "Unauthorized. Check your username and password."})
       }
       else if(response.status == 403){
-        $.growl.error({title: "Error!", message: "Forbidden"})
+        $.growl.error({message: "Forbidden"})
       }
       else if(response.status == 404){
-        $.growl.error({title: "Error!", message: "Not found. You may be pointing to the wrong endpoint."})
+        $.growl.error({message: "Not found. You may be pointing to the wrong endpoint."})
       } else {
-          $.growl.error({title: "Error!", message: "Status Code "+ response.status})
+          $.growl.error({message: "Status Code "+ response.status})
       }
     }
 }]);
