@@ -30,7 +30,6 @@ cascadia.config(['$routeProvider',
         when('/logout', {controller: 'LogoutController'}).
         when('/manage-approver', {controller: 'ManageApproverController', templateUrl:'Partials/manage-approver.html'}).
         when('/manage-project', {controller: 'ProjectManagementController', templateUrl:'Partials/manage-project.html'}).
-        when('/manage-project/:id', {controller: 'ManageProjectController', templateUrl:'Partials/manage-project.html'}).
         when('/manage-wp', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html'}).
         when('/monthly-wp', {controller: 'MonthlyWPController', templateUrl:'Partials/monthly-wp.html'}).
         when('/pcbac', {controller: 'PCBACController', templateUrl:'Partials/pcbac.html'}).

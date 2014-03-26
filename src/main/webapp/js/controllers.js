@@ -1167,19 +1167,14 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
       $location.path('/users/' + u.id);
     }
 
-    $scope.change = function(user) {
-      unique = true;
-      for(var i = 0; i < usersChanged.length; i++) {
-        if(usersChanged[i].id == user.id) {
-          unique = false;
-          break;
-        } 
+    $scope.search = function(item) {
+      if (item.id.toString().indexOf($scope.query) != -1 || item.firstName.indexOf($scope.query) != -1 ||
+                item.lastName.indexOf($scope.query) != -1 || item.username.indexOf($scope.query) != -1 ||
+                item.pLevel == $scope.query || !$scope.query) {
+        return true;
       }
-
-      if(unique) {
-        usersChanged.push(user);
-      }
-    };
+      return false;
+    }
 
     $scope.delete = function(user, $index) {
       user.remove().then(function() {
