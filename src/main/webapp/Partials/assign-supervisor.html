@@ -2,8 +2,9 @@
   <div ng-controller="ASController">
   <h1 class="secondary">Assign To Supervisor</h1><br />
     <div class="row">
-      <strong><p class="col-xs-6">Emp ID: {{cUser.id}}</p></strong>
-      <strong><p class="col-xs-6">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p></strong>
+      <strong><p class="col-xs-4">Emp ID: {{cUser.id}}</p></strong>
+      <strong><p class="col-xs-4">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p></strong>
+      <strong><p class="col-xs-4" ng-show="hasSupervisor()">Current Supervisor: {{supervisor.firstName}} {{supervisor.lastName}}</p></strong>
     </div>
     <div class="row">
       <div class="form-group">
@@ -59,7 +60,7 @@
   </div>-->
     <script type="text/ng-template" id="myModalContent.html">
       <div class="modal-header">
-          <h3>Do you want to assign this Supervisor to this employee?</h3>
+          <h5>Do you want to assign this Supervisor to this employee?</h5>
       </div>
       <div class="modal-body">
           <div>

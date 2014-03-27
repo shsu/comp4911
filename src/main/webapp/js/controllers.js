@@ -314,10 +314,13 @@ cascadiaControllers.controller('ARController', ['$scope', '$location', 'Restangu
 */
 cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
   function($scope, $modal, $rootScope, $params, $location, Restangular, GrowlResponse){
+    var base = Restangular.all('users');
     var param = $params.id;
-    $scope.cUser = {}
+    $scope.supervisorLoaded = false;
+    $scope.cUser = {};
+    $scope.supervisor = {};
 
-    Restangular.all('users').getList().then(function(response) {
+    base.getList().then(function(response) {
       $scope.users = response;
     }, function(response){
       GrowlResponse(response);
@@ -325,16 +328,30 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
 
     Restangular.one('users', param).get().then(function(response){
       $scope.cUser = response;
+      loadSupervisor();
     });
 
     $scope.select = function (s) {
       $scope.selectedEngineer= s;
     };
 
+    var loadSupervisor = function() {
+      Restangular.one('users', $scope.cUser.supervisorUserID).get().then(function(response){
+        $scope.supervisor = response;
+      });
+    }
+
+    $scope.hasSupervisor = function() {
+        var u = $scope.cUser;
+        if(u.supervisorUserID && u.supervisorUserID != u.id) {
+          return true;
+        }
+        return false;
+    }
     
     $scope.search = function (s) {
       if (s.id.toString().indexOf($scope.query) != -1 || s.firstName.indexOf($scope.query) != -1 
-          || s.lastName.indexOf($scope.query) != -1){
+          || s.lastName.indexOf($scope.query) != -1 || !$scope.query){
         return true;
       }
       return false;
@@ -347,7 +364,7 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
         controller: ModalInstanceCtrl,
         resolve: {
           item: function () {
-            return $scope.cUser;
+            return $scope.selectedEngineer;
           }
         }
       });
@@ -365,15 +382,22 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
         console.log("dismissed")
       });
 
+      var persist = function(user) {
+        Restangular.one('users', user.id).customPUT(user).then(function(response){
+          $location.path('users/' + user.id);
+        })
+      }
+
       $scope.save = function () {
-        var user;
-        Restangular.one('users', $scope.cUser.id).get().then(function(response){
-          user = response;
-          user.supervisorUserID = $scope.selectedEngineer.id;
-          Restangular.one('users', user.id).customPUT(user).then(function(response){
-            $location.path('users/' + user.id);
-          })
-        });
+        var user = $scope.cUser;
+        user.supervisorUserID = $scope.selectedEngineer.id;
+        if(user.timesheetApproverUserID == user.id){
+          console.log(user.timesheetApproverUserID == user.id);
+          user.timesheetApproverUserID = $scope.selectedEngineer.id;
+          persist(user);
+        } else{
+          persist(user);
+        }
       };
     }
   }
@@ -656,10 +680,9 @@ cascadiaControllers.controller('EngineerBudgetController', ['$scope', '$location
 /*
     NAVIGATION CONTROLLER
 */
-cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', '$location', 'Restangular', 'GrowlResponse',
-  function($scope, $rootScope, $location, Restangular, GrowlResponse) {
-    var base = Restangular.all('user');
-
+cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', '$location', 'Restangular', 'GrowlResponse', 'AuthenticateUser',
+  function($scope, $rootScope, $location, Restangular, GrowlResponse, AuthenticateUser) {
+    AuthenticateUser($rootScope);
     $scope.user = JSON.parse(localStorage.getItem('user'));
 
     $scope.logout = function() {
@@ -1073,8 +1096,28 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
 cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$location', '$rootScope', '$routeParams', 'Restangular',
   function($scope, $location, $rootScope, $params, Restangular) {
     var param = $params.id;
+    $scope.supervisor = {};
+    $scope.timesheetApprover = {};
 
-    $scope.cUser = Restangular.one('users', param).get();
+    Restangular.one('users', param).get().then(function(response){
+      $scope.cUser = response;
+      loadSupervisor();
+      if($scope.cUser.supervisorUserID != $scope.cUser.timesheetApproverUserID) {
+        loadTimesheetApprover();
+      }
+    });
+
+    var loadSupervisor = function() {
+      Restangular.one('users', $scope.cUser.supervisorUserID).get().then(function(response){
+        $scope.supervisor = response;
+      });
+    }
+
+    var loadTimesheetApprover = function() {
+      Restangular.one('users', $scope.cUser.timesheetApproverUserID).get().then(function(response){
+        $scope.timesheetApprover = response;
+      });
+    }
 
     $scope.hasSupervisor = function() {
       user = $scope.cUser;
@@ -1203,9 +1246,9 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
 
     $scope.hasSupervisor = function(u) {
       if(u.supervisorUserID && u.supervisorUserID != u.id) {
-        return false;
+        return true;
       }
-      return true;
+      return false;
     }
 
     $scope.select = function(u) {

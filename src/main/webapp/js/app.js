@@ -58,17 +58,16 @@ cascadia.config(['$routeProvider',
     }])
     .run(function($rootScope, $location, permissions, AuthenticateUser, InitUserMap) {
         $rootScope.$on('$routeChangeStart', function(scope, next, current) {
+            if(localStorage.getItem('permissions')){
+                permissions.setPermissions(JSON.parse(localStorage.getItem('permissions')));
+            }
             var permission = next.$$route.permission;
             if(_.isString(permission) && !permissions.hasPermission(permission)){
                 $location.path('/unauthorized');
             }
         });
-
         $rootScope.$on('$routeChangeSuccess',
             function() {
-                if(localStorage.getItem('permissions')){
-                    permissions.setPermissions(JSON.parse(localStorage.getItem('permissions')));
-                }
                 AuthenticateUser($rootScope);
                 InitUserMap($rootScope);
             })
