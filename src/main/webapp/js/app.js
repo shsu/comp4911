@@ -81,7 +81,8 @@ cascadia.config(function(RestangularProvider) {
     } else if(checkServerStatus("http://www.comp4911.com/api")){
         RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
     } else {
-        $.growl.warning({ message: "Unable to make connection to an API" });
+        $.growl.warning({ message: "Unable to make connection to an API. " +
+            "If you are using the hosted API, please wait 5 minutes before trying again." });
     }
 });
 
