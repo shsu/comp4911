@@ -59,40 +59,40 @@ public class SampleData {
     private void generateUsers() {
         // Keep the default timesheet id as -1
         userDao.create(new User(
-                "q", "q", "Bruce", "Link", new Date(), true, "MIA", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
+                "q", "q", "FirstName", "LastName", new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
 
         userDao.create(new User(
-          "username0@example.com", "password", "Bruce", "Link", new Date(), true, "MIA", 40, 0,
+          "username0@example.com", "password", "Bruce", "Link", new Date(), true, "Active", 40, 0,
           0, 0, 1, 1, PLevel.P5),false);
 
         Date startDate = setDate(1, 1, 2000);
         
         userDao.create(new User(
-        		"jedward", "q", "John", "Edward", startDate, false, "Active", 40, 0, 14,
+        		"jedward@example.com", "q", "John", "Edward", startDate, false, "Active", 40, 0, 14,
         		12345678, 1, 1, PLevel.P1),false);
         
         userDao.create(new User(
-                "awong", "q", "Alice", "Wong", startDate, false, "Active", 40, 0, 14,
+                "awong@example.com", "q", "Alice", "Wong", startDate, false, "Active", 40, 0, 14,
                 23456789, 1, 1, PLevel.P2),false);
         
         userDao.create(new User(
-                "bnelson", "q", "Bob", "Nelson", startDate, false, "Active", 40, 0, 14,
+                "bnelson@example.com", "q", "Bob", "Nelson", startDate, false, "Active", 40, 0, 14,
                 34567890, 56789012, 56789012, PLevel.P3),false);
         
         userDao.create(new User(
-                "csandhu", "q", "Christine", "Sandhu", startDate, true, "Active", 40, 0, 14,
+                "csandhu@example.com", "q", "Christine", "Sandhu", startDate, true, "Active", 40, 0, 14,
                 45678901, 56789012, 56789012, PLevel.P4),false);
         
         userDao.create(new User(
-                "zcantwell", "q", "Zamir", "Cantwell", startDate, false, "Active", 40, 0, 14,
+                "zcantwell@example.com", "q", "Zamir", "Cantwell", startDate, false, "Active", 40, 0, 14,
                 56789012, 0, 0, PLevel.P5),false);
         
         userDao.create(new User(
-                "cpark", "q", "Chi-En", "Park", startDate, false, "Active", 40, 0, 14,
+                "cpark@example.com", "q", "Chi-En", "Park", startDate, false, "Active", 40, 0, 14,
                 67890123, 56789012, 56789012, PLevel.SS),false);
         
         userDao.create(new User(
-                "gsmith", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 14,
+                "gsmith@example.com", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 14,
                 78901234, 56789012, 56789012, PLevel.DS),false);
     }
 
