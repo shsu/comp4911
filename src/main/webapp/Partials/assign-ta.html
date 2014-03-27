@@ -1,0 +1,76 @@
+<content>
+  <div ng-controller="ATAController">
+  <h1 class="secondary">Assign Timesheet Approver</h1><br />
+    <div class="row">
+      <strong><p class="col-xs-4">Emp ID: {{cUser.id}}</p></strong>
+      <strong><p class="col-xs-4">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p></strong>
+      <strong><p class="col-xs-4" ng-show="hasTimesheetApprover()">Current Timesheet Approver: {{ta.firstName}} {{ta.lastName}}</p></strong>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="col-xs-2" for="ta">Search Timesheet Approver: </label>
+        <div class="col-xs-4">
+          <input type="text" placeholder="Search" class="form-control" id="ta" ng-model="query" />
+        </div>
+      </div>          
+    </div>
+  <div class="row">
+    <div class="row table-wrapper">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <tbody>
+            <tr>
+              <th style="width:20%;">Emp ID</th>
+              <th style="width:40%;">Emp Name</th>
+              <th style="width:40%;">Pay Grade</th>
+            </tr>
+            <tr ng-click="select(ta); open()" class="{{ta.selected}}" ng-repeat="ta in users | filter: search" >
+              <td>{{ta.id}}</td> 
+              <td>{{ta.firstName}} {{ta.lastName}}</td>
+              <td>{{ta.pLevel}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+    <!--
+    <div class="row">
+      <a href="" data-toggle="modal" data-target="#addModal" class="pull-right btn btn-primary">Select</a>
+      <button ng-click="cancel()" class="pull-right btn btn-primary">Cancel</button>
+    </div>-->
+
+ <!-- <div class="modal manager fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>Do you want to assign this Supervisor to this employee?</p>
+            <div ng-model="selectedEngineer">
+              <span style="margin-right: 20px;"><strong>Name: {{selectedEngineer.firstName}} {{selectedEngineer.lastName}}</strong></span>
+              <span><strong>Pay Grade:</strong> {{selectedEngineer.pLevel}}</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button  class="btn btn-primary" data-dismiss="modal" ng-click="save()">Add</button>
+            <button  class="btn btn-primary" data-dismiss="modal" ng-click="cancel()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+    <script type="text/ng-template" id="myModalContent.html">
+      <div class="modal-header">
+          <h5>Do you want to assign this Timesheet Approver to this employee?</h5>
+      </div>
+      <div class="modal-body">
+          <div>
+            <span style="margin-right: 20px;"><strong>Name: {{item.firstName}} {{item.lastName}}</strong></span>
+            <span><strong>Pay Grade:</strong> {{item.pLevel}}</span>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="ok()">OK</button>
+          <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+      </div>
+  </script>  
+</content>

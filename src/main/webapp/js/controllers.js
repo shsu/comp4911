@@ -306,6 +306,83 @@ cascadiaControllers.controller('ARController', ['$scope', '$location', 'Restangu
   }
 ]);
 
+/*
+    ASSIGN TIMESHEET APPROVER CONTROLLER
+*/
+cascadiaControllers.controller('ATAController', ['$scope', '$modal', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $modal, $rootScope, $params, $location, Restangular, GrowlResponse){
+    var base = Restangular.all('users');
+    var param = $params.id;
+    $scope.cUser = {};
+    $scope.ta = {};
+
+    base.getList().then(function(response) {
+      $scope.users = response;
+    }, function(response){
+      GrowlResponse(response);
+    });
+
+    Restangular.one('users', param).get().then(function(response){
+      $scope.cUser = response;
+      if($scope.cUser.timesheetApproverUserID) {
+        loadTimsheetApprover();
+      }
+    });
+
+    $scope.select = function (s) {
+      $scope.ta= s;
+    };
+
+    var loadTimesheetApprover = function() {
+      Restangular.one('users', $scope.cUser.timesheetApproverUserID).get().then(function(response){
+        $scope.ta = response;
+      });
+    }
+
+    $scope.hasTimesheetApprover = function() {
+        var u = $scope.cUser;
+        if(u && u.timesheetApproverUserID) {
+          return true;
+        }
+        return false;
+    }
+    
+    $scope.search = function (s) {
+      if (s.id.toString().indexOf($scope.query) != -1 || s.firstName.indexOf($scope.query) != -1 
+          || s.lastName.indexOf($scope.query) != -1 || !$scope.query){
+        return true;
+      }
+      return false;
+    };
+
+    $scope.open = function () {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: ModalInstanceCtrl,
+        resolve: {
+          item: function () {
+            return $scope.ta;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        var user = $scope.cUser;
+        user.timesheetApproverUserID = $scope.ta.id;
+        persist(user);
+      }, function(){
+        console.log("dismissed")
+      });
+
+      var persist = function(user) {
+        Restangular.one('users', user.id).customPUT(user).then(function(response){
+          $location.path('users/' + user.id);
+        })
+      }
+    }
+  }
+]);
 
 
 /*
@@ -315,7 +392,6 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
   function($scope, $modal, $rootScope, $params, $location, Restangular, GrowlResponse){
     var base = Restangular.all('users');
     var param = $params.id;
-    $scope.supervisorLoaded = false;
     $scope.cUser = {};
     $scope.supervisor = {};
 
@@ -327,7 +403,9 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
 
     Restangular.one('users', param).get().then(function(response){
       $scope.cUser = response;
-      loadSupervisor();
+      if($scope.cUser.supervisorUserID) {
+        loadSupervisor();
+      }
     });
 
     $scope.select = function (s) {
@@ -342,7 +420,7 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
 
     $scope.hasSupervisor = function() {
         var u = $scope.cUser;
-        if(u.supervisorUserID && u.supervisorUserID != u.id) {
+        if(u && u.supervisorUserID) {
           return true;
         }
         return false;
@@ -369,14 +447,14 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
       });
 
       modalInstance.result.then(function () {
-        var user = {}
-        Restangular.one('users', $scope.cUser.id).get().then(function(response){
-          user = response;
-          user.supervisorUserID = $scope.selectedEngineer.id;
-          Restangular.one('users', user.id).customPUT(user).then(function(response){
-            $location.path('users/' + user.id);
-          })
-        });
+        var user = $scope.cUser;
+        user.supervisorUserID = $scope.selectedEngineer.id;
+        if(!user.timesheetApproverUserID){
+          user.timesheetApproverUserID = $scope.selectedEngineer.id;
+          persist(user);
+        } else{
+          persist(user);
+        }
       }, function(){
         console.log("dismissed")
       });
@@ -386,18 +464,6 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
           $location.path('users/' + user.id);
         })
       }
-
-      $scope.save = function () {
-        var user = $scope.cUser;
-        user.supervisorUserID = $scope.selectedEngineer.id;
-        if(user.timesheetApproverUserID == user.id){
-          console.log(user.timesheetApproverUserID == user.id);
-          user.timesheetApproverUserID = $scope.selectedEngineer.id;
-          persist(user);
-        } else{
-          persist(user);
-        }
-      };
     }
   }
 ]);
@@ -1072,8 +1138,7 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
 
     $scope.hasSupervisor = function() {
       var user = $rootScope.user;
-
-      if(user.supervisorUserID && user.supervisorUserID != user.id) {
+      if(user && user.supervisorUserID) {
         return true;
       }
       return false;
@@ -1081,10 +1146,31 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
 
     $scope.hasTimesheetApprover = function() {
       user = $rootScope.user;
-      if(user.timesheetApproverUserID && user.timesheetApproverUserID != user.id) {
+      if(user && user.timesheetApproverUserID) {
         return true;
       }
       return false;
+    }
+
+    if($rootScope.user) {
+      if($rootScope.user.supervisorUserID){
+        loadSupervisor();
+        if($rootScope.user.supervisorUserID != $rootScope.user.timesheetApproverUserID) {
+          loadTimesheetApprover();
+        }
+      }
+    }
+
+    var loadSupervisor = function() {
+      Restangular.one('users', $rootScope.user.supervisorUserID).get().then(function(response){
+        $scope.supervisor = response;
+      });
+    }
+
+    var loadTimesheetApprover = function() {
+      Restangular.one('users', $rootScope.user.timesheetApproverUserID).get().then(function(response){
+        $scope.timesheetApprover = response;
+      });
     }
   }
 ]);
@@ -1100,9 +1186,13 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
 
     Restangular.one('users', param).get().then(function(response){
       $scope.cUser = response;
-      loadSupervisor();
-      if($scope.cUser.supervisorUserID != $scope.cUser.timesheetApproverUserID) {
-        loadTimesheetApprover();
+      if($scope.cUser.supervisorUserID){
+        loadSupervisor();
+        if($scope.cUser.supervisorUserID != $scope.cUser.timesheetApproverUserID) {
+          loadTimesheetApprover();
+        } else if($scope.cUser.timesheetApproverUserID) {
+          $scope.timesheetApprover = $scope.supervisor;
+        }
       }
     });
 
@@ -1120,23 +1210,26 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
 
     $scope.hasSupervisor = function() {
       user = $scope.cUser;
-      if(user.supervisorUserID && user.supervisorUserID != user.id) {
+      if(user && user.supervisorUserID) {
         return true;
       }
       return false;
     }
 
     $scope.hasTimesheetApprover = function() {
-      user = $rootScope.userMap[param];
-
-      if(user.timesheetApproverUserID && user.timesheetApproverUserID != user.id) {
+      user = $scope.cUser;
+      if(user && user.timesheetApproverUserID) {
         return true;
       }
       return false;
     }
 
-    $scope.assign = function() {
+    $scope.assignSupervisor = function() {
       $location.path('/assign-supervisor/' + $scope.cUser.id);
+    }
+
+    $scope.assignTA = function() {
+      $location.path('/assign-ta/' + $scope.cUser.id);
     }
   }
 ]);
@@ -1249,7 +1342,7 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
     });
 
     $scope.hasSupervisor = function(u) {
-      if(u.supervisorUserID && u.supervisorUserID != u.id) {
+      if(u && u.supervisorUserID) {
         return true;
       }
       return false;

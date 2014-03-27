@@ -19,6 +19,7 @@ cascadia.config(['$routeProvider',
         when('/assign-project', {controller: 'PackageController', templateUrl:'Partials/assign-project.html'}).
         when('/assign-re', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
         when('/assign-supervisor/:id', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
+        when('/assign-ta/:id', {controller: 'ATAController', templateUrl:'Partials/assign-ta.html'}).
         when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
         when('/create-wp/:id', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html'}).
         when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
