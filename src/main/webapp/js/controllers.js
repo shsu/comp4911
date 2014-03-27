@@ -496,6 +496,7 @@ cascadiaControllers.controller('CreateProjectsController', ['$scope', '$location
       } else {
         base.post($scope.project).then(function (response) {
             $.growl.notice({ message: "Project Created" });
+            $location.path("/projects");
         }, function (response) {
           GrowlResponse(response);
         });
@@ -837,8 +838,8 @@ cascadiaControllers.controller('PCPRController', ['$scope', 'Restangular',
 /*
     PROJECT MANAGEMENT CONTROLLER
 */
-cascadiaControllers.controller('ProjectManagementSupervisorController', ['$scope', 'Restangular', 'GrowlResponse',
-  function($scope, Restangular, GrowlResponse) {
+cascadiaControllers.controller('ProjectManagementSupervisorController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $location, Restangular, GrowlResponse) {
     var base = Restangular.all('projects');
 
     Restangular.one('user/projects/managed').getList().then(function(response){
@@ -855,6 +856,7 @@ cascadiaControllers.controller('ProjectManagementSupervisorController', ['$scope
       base.post(newproject).then(function(response) {
         $scope.projects.push(newproject);
         $scope.add_project = false;
+          $location.path('/projects');
           $.growl.notice({ message: "Project Created" });
       })
     }
