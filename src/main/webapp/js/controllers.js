@@ -663,7 +663,16 @@ cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', 
   }
 ]);
 
+/*
+    UNAUTHORIZED CONTROLLER
 
+*/
+
+cascadiaControllers.controller('UnauthorizedController', ['$scope', 
+  function($scope) {
+    
+  }
+])
 
 /*
     LOGIN CONTROLLER
