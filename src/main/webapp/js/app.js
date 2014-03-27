@@ -12,7 +12,6 @@ cascadia.config(['$routeProvider',
       $routeProvider.
         when('/add-engineer', {controller: 'EngineerController', templateUrl:'Partials/add-engineer.html'}).
         when('/add-engineer/:id', {controller: 'EngineerController', templateUrl:'Partials/add-engineer.html'}).
-        when('/add-manager/:id', {controller: 'ManagerController', templateUrl:'Partials/add-project-manager.html'}).
         when('/assign-employee-project/:id', {controller: 'AEPController', templateUrl:'Partials/assign-employee-project.html'}).
         when('/assign-employee-wp', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html'}).
         when('/assign-employee-wp/:id', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html'}).
@@ -21,9 +20,7 @@ cascadia.config(['$routeProvider',
         when('/assign-re', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
         when('/assign-supervisor/:id', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
         when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
-        when('/create-project', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html', permission: 'ProjectManager'}).
         when('/create-wp/:id', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html'}).
-        when('/users/new', {controller: 'CreateUserController', templateUrl:'Partials/create-user.html'}).
         when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
         when('/users/pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html'}).
         when('/engineer-budget', {controller: 'EngineerBudgetController', templateUrl:'Partials/engineer-budget.html'}).
@@ -37,17 +34,21 @@ cascadia.config(['$routeProvider',
         when('/pcbac', {controller: 'PCBACController', templateUrl:'Partials/pcbac.html'}).
         when('/pcpr', {controller: 'PCPRController', templateUrl:'Partials/pcpr.html'}).
         when('/project', {controller: 'ProjectManagementController', templateUrl:'Partials/project-management.html'}).
-        when('/project-details/:id', {controller: 'ProjectDetailsController', templateUrl: 'Partials/project-details.html'}).
+        when('/projects', {controller: 'ProjectManagementController', templateUrl:'Partials/manage-project.html', permission: 'ProjectManager'}).
+        when('/projects/new', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html', permission: 'ProjectManager'}).
+        when('/projects/search', {controller: 'SearchProjectController', templateUrl:'Partials/search-project.html'}).
+        when('/projects/:id', {controller: 'ProjectDetailsController', templateUrl: 'Partials/project-details.html'}).
+        when('/projects/:id/add-manager', {controller: 'ManagerController', templateUrl:'Partials/add-project-manager.html'}).
         when('/project-summary', {controller: 'ProjectSummaryController', templateUrl:'Partials/project-summary.html'}).
         when('/rate-sheet', {controller: 'RateSheetController', templateUrl:'Partials/rate-sheet.html'}).
-        when('/search-project', {controller: 'SearchProjectController', templateUrl:'Partials/search-project.html'}).
         when('/timesheet-approval', {controller: 'TAController', templateUrl:'Partials/timesheet-approval.html', permission:'TimesheetApprover'}).
         when('/timesheet-management', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
         when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet.html'}).
         when('/timesheet/:id', {controller: 'TADetailsController', templateUrl:'Partials/single-timesheet.html'}).
         when('/unauthorized', {controller: 'UnauthorizedController', templateUrl:'Partials/unauthorized.html'}).
-        when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management.html', permission: 'Supervisor'}).
         when('/user', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
+        when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management.html', permission: 'Supervisor'}).
+        when('/users/new', {controller: 'CreateUserController', templateUrl:'Partials/create-user.html'}).
         when('/users/:id', {controller: 'ManagedUserProfileController', templateUrl:'Partials/user-profile-managed.html'}).
         when('/weekly-project', {controller: 'WeeklyProjectController', templateUrl:'Partials/weekly-project.html'}).
         when('/wp-details', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).

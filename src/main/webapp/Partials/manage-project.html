@@ -8,7 +8,7 @@
       </form>
     </div>
     <div class="col-lg-6">  
-        <a href="#/create-wp/{{project.projectNumber}}" class="btn btn-success pull-right">Create Project</a>
+        <a href="#/projects/new" class="btn btn-success pull-right">Create Project</a>
     </div>
   </div>
   <div class="row">
@@ -26,9 +26,9 @@
               <th class="th-narrow">Client Rate</th>
           </tr>
           <tr ng-repeat="project in projects | filter: query">
-            <td><a href="#/project-details/{{project.projectNumber}}">{{project.projectNumber}}</a></td>
+            <td><a href="#/projects/{{project.projectNumber}}">{{project.projectNumber}}</a></td>
             <td>{{project.projectName}}</td>
-            <td><a href="#/add-manager/{{project.projectNumber}}">Assign Project Manager</a></td>
+            <td><a href="#/projects/{{project.projectNumber}}/add-manager/">Assign Project Manager</a></td>
             <td>{{project.allocatedBudget}} </td>
             <td>{{project.unAllocatedBudget}} </td>
             <td>{{project.completeDate}}</td>
