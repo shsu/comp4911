@@ -33,9 +33,12 @@
             </tr>
             <tr>
               <td>Assigned Manager</td>
-              <td><span ng-show="hasSupervisor()">{{supervisor.firstName}} {{supervisor.lastName}}</span>
-                <a class="cursor-hand" ng-click="assignSupervisor()" ng-hide="hasSupervisor()">Assign</a>
-                <a class="cursor-hand" ng-click="assignSupervisor()" ng-show="hasSupervisor()">Change</a> 
+              <td>
+                <a class="cursor-hand" ng-click="assignSupervisor()" ng-hide="hasSupervisor(u)">Assign</a>
+                <span ng-show="hasSupervisor(u)">
+                    {{supervisor.firstName}} {{supervisor.lastName}}
+                    (<a class="cursor-hand" ng-click="assignSupervisor()">Change</a>)
+                </span>
               </td>
             </tr>
             <tr>
