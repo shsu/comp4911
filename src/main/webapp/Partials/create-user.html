@@ -1,5 +1,6 @@
 <content>
   <div ng-controller="CreateUserController">
+    <form name="createUserForm">
     <div class="row">
       <h1 class="secondary">Create User</h1>
     </div>
@@ -9,19 +10,19 @@
           <tbody>
             <tr>
               <td>First Name</td>
-              <td><input type="text" ng-model="cUser.firstName" /></td>
+              <td><input type="text" ng-model="cUser.firstName" maxlength="250" required /></td>
             </tr>
             <tr>
               <td>Last Name</td>
-              <td><input type="text" ng-model="cUser.lastName" /></td>
+              <td><input type="text" ng-model="cUser.lastName" maxlength="250" required /></td>
             </tr>
             <tr>
               <td>User Name</td>
-              <td><input type="text" ng-model="cUser.username" /></td>
+              <td><input type="text" ng-model="cUser.username" maxlength="250" required /></td>
             </tr>
             <tr>
               <td>Password</td>
-              <td><input type="text" ng-model="cUser.password" /></td>
+              <td><input type="text" ng-model="cUser.password" maxlength="250" required/></td>
             </tr>
          </tbody>
         </table>
@@ -32,14 +33,14 @@
             <tr>
               <td>P Level</td>
             <td>
-              <select ng-model="cUser.pLevel" ng-options="i for i in items">     
+              <select ng-model="cUser.pLevel" ng-options="i for i in items" required>     
               </select>
             </td>
             </tr>
             <tr> 
               <td>Status</td>
               <td>
-                <select ng-model="cUser.status" ng-options="s for s in statuses">
+                <select ng-model="cUser.status" ng-options="s for s in statuses" required>
                 </select>
               </td>
             </tr>
@@ -50,5 +51,6 @@
     <div class="row">
       <button class="btn btn-primary pull-right" ng-click="save()">Save</button>
     </div>
+    </form>
   </div>
 </content>

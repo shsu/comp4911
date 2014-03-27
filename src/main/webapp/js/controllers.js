@@ -17,7 +17,6 @@ cascadiaControllers.controller('EngineerController', ['$scope', 'GrowlResponse',
       $scope.engineers = response;
     });
 
-   
   }
 ]);
 
@@ -1203,15 +1202,20 @@ cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular',
     $scope.cUser = {}
     $scope.cUser.supervisorUserID = $scope.user.id;
 
-    $scope.save = function() {
-      user = $scope.cUser;
+    $scope.save = function () {
 
-      Restangular.one('users').customPOST(user).then(function(response){
-        $location.path('/users');
-        $.growl.notice({ message: "User Created" });
-      }, function(response){
-        GrowlResponse(response);
-      })
+      if(!($scope.createUserForm.$valid)) {
+        $.growl.warning({ message: "Invalid or Incomplete Input" });
+      } else {
+        user = $scope.cUser;
+
+        Restangular.one('users').customPOST(user).then(function (response) {
+          $location.path('/users');
+          $.growl.notice({ message: "User Created" });
+        }, function (response) {
+          GrowlResponse(response);
+        })
+      }
     }
   }
 ]);
