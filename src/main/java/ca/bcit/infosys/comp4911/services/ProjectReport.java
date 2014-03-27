@@ -6,6 +6,7 @@ import ca.bcit.infosys.comp4911.domain.*;
 import ca.bcit.infosys.comp4911.helper.ReportHelper;
 import ca.bcit.infosys.comp4911.helper.ReportHelperRow;
 import ca.bcit.infosys.comp4911.helper.SH;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
@@ -51,7 +52,7 @@ public class ProjectReport {
             @PathParam("id") final Integer projectId){
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        List<Timesheet> wpTimesheets;
+        List<TimesheetRow> wpTimesheetRows;
         Project project;
         ReportHelper reportHelper;
         ReportHelperRow[] reportHelperRows = new ReportHelperRow[20];
@@ -60,6 +61,7 @@ public class ProjectReport {
 
         // No need for actual Entity because it is not actually stored in DB
         JSONObject report = new JSONObject();
+        JSONArray reportArray = new JSONArray();
         project = projectDao.read(projectId);
         reportHelper = new ReportHelper(project.getProjectNumber(), project.getProjectName());
 
@@ -68,16 +70,17 @@ public class ProjectReport {
         int i = 0;
         while(wpsrIterator.hasNext()) {
             wpsr = wpsrIterator.next();
-            wpTimesheets = tsDao.getTimesheetsByWP(wpsr.getWorkPackageNumber());
-            reportHelperRows[i] = getWPPersonHours(wpTimesheets, wpsr.getWorkPackageNumber());
+            wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
+            reportHelperRows[i] = getWPPersonHours(wpTimesheetRows, wpsr.getWorkPackageNumber());
             calculateTotalLabourDollars(reportHelperRows[i], wpsr.getYear());
+            String key = "WP" + i;
+            report.append(key, reportHelperRows[i].toString());
             i++;
         }
 
-        reportHelper.setRhRows(reportHelperRows);
-        reportHelper.setProjectName(project.getProjectName());
-        reportHelper.setProjectNumber(project.getProjectNumber());
-        report.append("report", reportHelper);
+        report.append("ProjectName", reportHelper.getProjectName());
+        report.append("ProjectNumber", reportHelper.getProjectNumber());
+        report.append("WorkPackages", reportArray);
 
         return SH.responseWithEntity(200, report.toString());
     }
@@ -103,73 +106,20 @@ public class ProjectReport {
     }
 
     /**
-     * This method uses the userId, and the timesheet date to find the user PLevel for a given timesheet.
-     * @param userId, year, weekNumber
-     * @return
-     */
-    private PLevel getUserPLevel (int userId, int year, int weekNumber) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.WEEK_OF_YEAR, 52);
-        Date date = cal.getTime();
-        UserPayRateHistory userPayRateHistory = userPayRateHistoryDao.getByUserIdAndTimesheetDate(userId, date);
-
-        return userPayRateHistory.getpLevel();
-    }
-
-    /**
      * Gets the amount of PLevel days per a list of Timesheets. This iterates through all of the Timesheets associated
      * with a specific Work Package. It then updates the amount of PLevels used per work package.
-     * @param timesheetList, wpNumber
+     * @param timesheetRowList, wpNumber
      * @return - the finished reportHelperRow
      */
-    private ReportHelperRow getWPPersonHours(List<Timesheet> timesheetList, String wpNumber){
-        ReportHelperRow reportHelperRow = new ReportHelperRow();
-        Timesheet currentTimesheet;
-        List<TimesheetRow> timesheetRowList;
-        PLevel plevel;
-        Iterator<Timesheet> timesheetIterator = timesheetList.iterator();
-
-        while(timesheetIterator.hasNext())
-        {
-            currentTimesheet = timesheetIterator.next();
-
-            plevel = getUserPLevel(currentTimesheet.getUserId(),
-                    currentTimesheet.getYear(), currentTimesheet.getWeekNumber());
-            timesheetRowList = currentTimesheet.getTimesheetRows();
-            reportHelperRow = incrementPLevelHours(plevel, timesheetRowList, wpNumber, reportHelperRow,
-                    currentTimesheet.getOverTime());
-        }
-
-        return reportHelperRow;
-    }
-
-    /**
-     * This method is used to update the PLevels. A Timesheet's rows are passed as parameter. The method iterates through
-     * the timesheet rows. If the work package number for Timesheet Row matches the given work package number then
-     * the report row's PLevel hours are updated.
-     * @param plevel
-     * @param timesheetRowList
-     * @param wpNumber
-     * @param reportHelperRow
-     * @return
-     */
-    private ReportHelperRow incrementPLevelHours(PLevel plevel, List<TimesheetRow> timesheetRowList, String wpNumber,
-                                                 ReportHelperRow reportHelperRow, int overtime){
+    private ReportHelperRow getWPPersonHours(List<TimesheetRow> timesheetRowList, String wpNumber){
+        ReportHelperRow reportHelperRow = new ReportHelperRow(wpNumber);
         Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
         TimesheetRow tsr;
-        while(timesheetRowIterator.hasNext()){
+        while(timesheetRowIterator.hasNext())
+        {
             tsr = timesheetRowIterator.next();
-            if(!(tsr.getWorkPackageNumber().equalsIgnoreCase(wpNumber)))
-            {
-                continue;
-            }
-            addTotalHoursPerRow(reportHelperRow, plevel, tsr.calculateTotal());
+            addTotalHoursPerRow(reportHelperRow, tsr.getpLevel(), tsr.calculateTotal());
         }
-        /**
-         * This method is called is used to take into account the overtime accumulated per Timesheet.
-         */
-        addTotalHoursPerRow(reportHelperRow, plevel, overtime*15);
 
         return reportHelperRow;
     }
