@@ -24,14 +24,14 @@ cascadiaServices.factory('AuthenticateUser', ['$location', 'Restangular',
     if(scope.isToken){
       Restangular.one('user').head({}, 
         {'Authorization': 'Basic ' + localStorage.getItem('token')}).then(function(response){
-        $.growl({message: "Token is Valid" });
+        console.log("Token is Valid");
         scope.isAuthenticated = true;
         Restangular.setDefaultHeaders({
           'Authorization': 'Basic ' + localStorage.getItem('token')
         });
         console.log(Restangular.defaultHeaders);
       }, function(response){
-        $.growl({message: 'Token not Valid'});
+        console.log("Token not Valid");
         localStorage.clear();
         scope.isAuthenticated = false;
         $location.path('/login');
