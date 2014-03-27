@@ -1,6 +1,6 @@
 <content>
-  <h1 class="secondary">Assign To Supervisor</h1><br />
   <div ng-controller="ASController">
+  <h1 class="secondary">Assign To Supervisor</h1><br />
     <div class="row">
       <strong><p class="col-xs-6">Emp ID: {{cUser.id}}</p></strong>
       <strong><p class="col-xs-6">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p></strong>
@@ -23,7 +23,7 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="select(sup); open()" class="{{sup.selected}}" ng-repeat="sup in userList | filter: search" >
+            <tr ng-click="select(sup); open()" class="{{sup.selected}}" ng-repeat="sup in users | filter: search" >
               <td>{{sup.id}}</td> 
               <td>{{sup.firstName}} {{sup.lastName}}</td>
               <td>{{sup.pLevel}}</td>

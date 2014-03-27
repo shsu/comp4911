@@ -22,7 +22,7 @@
             <td><a href="#/users/{{u.id}}">{{u.id}}</td>
             <td>{{u.firstName}} {{u.lastName}}</td>
             <td>{{u.username}}</td>
-            <td><span ng-show="hasSupervisor(u)">{{mapOfUsers[u.supervisorUserID].username}}</span>
+            <td>
               <a href="#/assign-supervisor/{{u.id}}" ng-hide="hasSupervisor(u)">Assign</a>
               <a href="#/assign-supervisor/{{u.id}}" ng-show="hasSupervisor(u)">Change</a>
             </td>

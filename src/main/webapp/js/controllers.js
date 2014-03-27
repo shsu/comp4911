@@ -317,6 +317,12 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
     var param = $params.id;
     $scope.cUser = {}
 
+    Restangular.all('users').getList().then(function(response) {
+      $scope.users = response;
+    }, function(response){
+      GrowlResponse(response);
+    });
+
     Restangular.one('users', param).get().then(function(response){
       $scope.cUser = response;
     });
@@ -670,7 +676,7 @@ cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', 
 
 cascadiaControllers.controller('UnauthorizedController', ['$scope', 
   function($scope) {
-    
+
   }
 ])
 
@@ -755,6 +761,7 @@ cascadiaControllers.controller('WPManagementController', ['$scope', 'Restangular
   function($scope, Restangular, GrowlResponse){
     $scope.statuses = [ 'Open', 'Closed'];
     $scope.project = {};
+    $scope.projectChosen = false;
     mapOfWP = {};
     wpChanged = [];
 
@@ -766,6 +773,7 @@ cascadiaControllers.controller('WPManagementController', ['$scope', 'Restangular
 
     $scope.loadWorkPackages = function(projectNumber) {
       Restangular.one('work_packages/project').getList($scope.project.projectNumber).then(function(response){
+        $scope.projectChosen = true;
         $scope.workPackages = response;
       });
     }
@@ -774,28 +782,6 @@ cascadiaControllers.controller('WPManagementController', ['$scope', 'Restangular
       $scope.projects = response;
     });
 
-    $scope.change = function(wp) {
-      unique = true;
-      for(var i = 0; i < wpChanged.length; i++) {
-        if(wpChanged[i].workPackageNumber == wp.workPackageNumber) {
-          unique = false;
-          break;
-        } 
-      }
-
-      if(unique) {
-        wpChanged.push(wp);
-      }
-    };
-    
-    $scope.edit = function() {
-      for(var i = 0; i < wpChanged.length; i++) {
-        el = wpChanged[i];
-        Restangular.one('work_packages', el.workPackageNumber).customPUT(el);
-      }
-      wpChanged = [];
-    }
-    
   }
 ]);
 
@@ -1202,8 +1188,6 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
     $scope.statuses = [ 'Active', 'Inactive' ];
     $scope.cUser = {}
 
-    usersChanged = [];
-
     base.getList().then(function(response) {
       $scope.users = response;
     }, function(response){
@@ -1238,25 +1222,8 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
       console.log("user deleted");
     }
 
-    $scope.edit = function() {
-      for(var i = 0; i < usersChanged.length; i++) {
-        usersChanged[i].put();
-      }
-      usersChanged = [];
-    }
-
     $scope.add = function() {
       $scope.add_user = true;
-    }
-
-    $scope.save = function() {
-      newuser = $scope.newuser;
-
-      base.post(newuser).then(function(response) {
-        $scope.add_user = false;
-      }, function(response){
-        GrowlResponse(response);
-      });
     }
   }
 ]);

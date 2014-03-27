@@ -16,7 +16,7 @@
       </form>
     </div>
     <div class="col-lg-6">
-      <a href="#/create-wp/{{project.projectNumber}}" class="btn btn-success pull-right">Create Work Package</a>
+      <a href="#/create-wp/{{project.projectNumber}}" ng-disabled="!projectChosen" class="btn btn-success pull-right">Create Work Package</a>
     </div>
   </div>
   <div class="row">
@@ -33,7 +33,8 @@
             <th>Status</th>
           </tr>
           <tr ng-repeat="wp in workPackages | filter: query">
-            <td><a href="#/wp-details/{{wp.workPackageNumber}}">{{wp.workPackageNumber}}</a></td>
+            <td><a href="#/wp-details/{{wp.workPackageNumber}}" has-permission="ProjectManager">{{wp.workPackageNumber}}</a></td>
+            <td><a href="#/wp-status-report/{{wp.workPackageNumber}}" has-permission="ResponsibleEngineer">{{wp.workPackageNumber}}</a></td>
             <td>{{wp.workPackageName}}</td>
             <td><a href="#/add-engineer/{{wp.workPackageNumber}}">Assign Responsible Engineer</a></td>
             <td><a href="#/assign-employee-wp/{{wp.workPackageNumber}}">Assign Employees</a></td>
