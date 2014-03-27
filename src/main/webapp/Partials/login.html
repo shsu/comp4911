@@ -4,12 +4,12 @@
 		<form name="loginForm">
 			<div class="input-group input-group-lg">
 				<span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
-				<input type="text" class="form-control" ng-model="username" id ="userName" placeholder="Username" required>
+				<input type="text" class="form-control" ng-model="username" id ="userName" placeholder="Username" maxlength="250" required>
 			</div>
 			<br />
 			<div class="input-group input-group-lg">
 				<span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-				<input type="password" class="form-control" ng-model="password" id ="password" placeholder="Password" required>
+                <input type="password" class="form-control" ng-model="password" id="password" placeholder="Password" maxlength="250" required>
 			</div>
 			<br />
 			<input type="submit" class="btn btn-primary btn-lg btn-block" ng-click="login()" value="Log In" /><br /><br />
