@@ -242,7 +242,7 @@ public class User implements Serializable
      * default paidHoursPerWeek to 0,
      * default totalFlexTime to 0,
      * default vacationDays to 0,
-     * default defaultTimesheetID to null,
+     * default defaultTimesheetID to 0,
      * default timesheetApproverUserID to supervisorUserID, and
      * default pLevel to P1
      * @param username
@@ -263,7 +263,7 @@ public class User implements Serializable
     this.paidHoursPerWeek = 40;
     this.totalFlexTime = 0;
     this.vacationDays = 0;
-    this.defaultTimesheetID = (Integer) null;
+    this.defaultTimesheetID = 0;
     this.supervisorUserID = supervisorUserID;
     this.timesheetApproverUserID = supervisorUserID;
     this.pLevel = PLevel.P1;
