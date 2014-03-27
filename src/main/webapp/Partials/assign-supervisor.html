@@ -23,7 +23,7 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="select(sup)" data-toggle="modal" data-target="#addModal" class="{{sup.selected}}" ng-repeat="sup in userList | filter: search" >
+            <tr ng-click="select(sup); open()" class="{{sup.selected}}" ng-repeat="sup in userList | filter: search" >
               <td>{{sup.id}}</td> 
               <td>{{sup.firstName}} {{sup.lastName}}</td>
               <td>{{sup.pLevel}}</td>
@@ -39,7 +39,7 @@
       <button ng-click="cancel()" class="pull-right btn btn-primary">Cancel</button>
     </div>-->
 
-  <div class="modal manager fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+ <!-- <div class="modal manager fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
@@ -56,5 +56,20 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>-->
+    <script type="text/ng-template" id="myModalContent.html">
+      <div class="modal-header">
+          <h3>Do you want to assign this Supervisor to this employee?</h3>
+      </div>
+      <div class="modal-body">
+          <div>
+            <span style="margin-right: 20px;"><strong>Name: {{item.firstName}} {{item.lastName}}</strong></span>
+            <span><strong>Pay Grade:</strong> {{item.pLevel}}</span>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="ok()">OK</button>
+          <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+      </div>
+  </script>  
 </content>

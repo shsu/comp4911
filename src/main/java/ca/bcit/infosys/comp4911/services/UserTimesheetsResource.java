@@ -159,7 +159,8 @@ public class UserTimesheetsResource {
                     row.getFriday(),
                     row.getSaturday(),
                     row.getSunday(),
-                    row.getNote()
+                    row.getNote(),
+                    userDao.read(userId).getpLevel()
             );
             timesheetRowDao.create(temp,true);
             rows.add(temp);
@@ -183,7 +184,7 @@ public class UserTimesheetsResource {
 
         for (int i = 0; i < 5; ++i) {
             TimesheetRow temp = new TimesheetRow(
-                    0, "", 0, 0, 0, 0, 0, 0, 0, ""
+                    0, "", 0, 0, 0, 0, 0, 0, 0, "", userDao.read(userId).getpLevel()
             );
             rows.add(temp);
         }

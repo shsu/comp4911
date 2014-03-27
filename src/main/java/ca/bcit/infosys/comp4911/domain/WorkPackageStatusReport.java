@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -95,6 +96,33 @@ public class WorkPackageStatusReport implements Serializable
 	this.workPackageNumber = workPackageNumber;
    }
 
+   /**
+    * WorkPackageStatusReport constructor, taking weeknumber, year and workPackageNumber,
+    * default reportDate to current date,
+    * default comment to empty string
+    * default workAccomplished to empty string,
+    * default problemEncountered to empty string,
+    * default workPlanned to empty string,
+    * default problemAnticipated to empty string, and
+    * default estimatedWorkRemainingInPD to empty HashSet<Effort>
+    * @param weekNumber
+    * @param year
+    * @param workPackageNumber
+    */
+   public WorkPackageStatusReport(int weekNumber, int year, String workPackageNumber) {
+		super();
+		this.weekNumber = weekNumber;
+		this.year = year;
+		this.reportDate = DateTime.now().toDate();
+		this.comment = "";
+		this.workAccomplished = "";
+		this.problemEncountered = "";
+		this.workPlanned = "";
+		this.estimatedWorkRemainingInPD = new HashSet<Effort>();
+		this.problemAnticipated = "";
+		this.workPackageNumber = workPackageNumber;
+	   }
+   
    public WorkPackageStatusReport(){
 	   
    }

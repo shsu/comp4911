@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Version;
 import javax.validation.constraints.Min;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 @Entity
@@ -41,6 +43,21 @@ public class UserPayRateHistory {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.pLevel = pLevel;
+		this.userId = userId;
+	}
+    
+    /**
+     * Construct a UserPayRateHistory, taking userID and pLevel
+     * default startDate to current date, and
+     * default endDate to null
+     * @param pLevel
+     * @param userId
+     */
+    public UserPayRateHistory(PLevel pLevel,int userId) {
+		super();
+		this.startDate = DateTime.now().toDate();
+		this.endDate = null;
 		this.pLevel = pLevel;
 		this.userId = userId;
 	}

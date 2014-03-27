@@ -18,7 +18,8 @@ public class ReportHelperRow {
     private String wpNumber;
     private String wpDescription;
 
-    public ReportHelperRow() {
+    public ReportHelperRow(String wpNumber) {
+        this.wpNumber = wpNumber;
         P1 = 0;
         P2 = 0;
         P3 = 0;

@@ -1,6 +1,7 @@
 var cascadia = angular.module('cascadiaApp', [
     'ngRoute',
     'restangular',
+    'ui.bootstrap',
     'cascadiaControllers',
     'cascadiaServices',
     'cascadiaDirectives'
@@ -20,7 +21,7 @@ cascadia.config(['$routeProvider',
         when('/assign-re', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
         when('/assign-supervisor/:id', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
         when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
-        when('/create-project', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html'}).
+        when('/create-project', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html', permission: 'ProjectManager'}).
         when('/create-wp/:id', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html'}).
         when('/users/new', {controller: 'CreateUserController', templateUrl:'Partials/create-user.html'}).
         when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
@@ -29,8 +30,7 @@ cascadia.config(['$routeProvider',
         when('/login', {controller: 'LoginController', templateUrl:'Partials/login.html'}).
         when('/logout', {controller: 'LogoutController'}).
         when('/manage-approver', {controller: 'ManageApproverController', templateUrl:'Partials/manage-approver.html'}).
-        when('/manage-project', {controller: 'ProjectManagementController', templateUrl:'Partials/manage-project.html'}).
-        when('/manage-project/:id', {controller: 'ManageProjectController', templateUrl:'Partials/manage-project.html'}).
+        when('/manage-project', {controller: 'ProjectManagementController', templateUrl:'Partials/manage-project.html', permission: 'ProjectManager'}).
         when('/manage-wp', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html'}).
         when('/monthly-wp', {controller: 'MonthlyWPController', templateUrl:'Partials/monthly-wp.html'}).
         when('/pcbac', {controller: 'PCBACController', templateUrl:'Partials/pcbac.html'}).
@@ -40,12 +40,12 @@ cascadia.config(['$routeProvider',
         when('/project-summary', {controller: 'ProjectSummaryController', templateUrl:'Partials/project-summary.html'}).
         when('/rate-sheet', {controller: 'RateSheetController', templateUrl:'Partials/rate-sheet.html'}).
         when('/search-project', {controller: 'SearchProjectController', templateUrl:'Partials/search-project.html'}).
-        when('/timesheet-approval', {controller: 'TAController', templateUrl:'Partials/timesheet-approval.html'}).
+        when('/timesheet-approval', {controller: 'TAController', templateUrl:'Partials/timesheet-approval.html', permission:'TimesheetApprover'}).
         when('/timesheet-management', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
         when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet.html'}).
         when('/timesheet/:id', {controller: 'TADetailsController', templateUrl:'Partials/single-timesheet.html'}).
-        when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-hr.html'}).
-        when('/users-super', {controller: 'UsersManagementController', templateUrl:'Partials/user-management-super.html'}).
+        when('/unauthorized', {controller: 'UnauthorizedController', templateUrl:'Partials/unauthorized.html'}).
+        when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management.html', permission: 'Supervisor'}).
         when('/user', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
         when('/users/:id', {controller: 'ManagedUserProfileController', templateUrl:'Partials/user-profile-managed.html'}).
         when('/weekly-project', {controller: 'WeeklyProjectController', templateUrl:'Partials/weekly-project.html'}).
@@ -54,7 +54,14 @@ cascadia.config(['$routeProvider',
         when('/wp-status-report', {controller: 'WPStatusReportController', templateUrl:'Partials/wp-status-report.html'}).
         otherwise({redirectTo:'/'});
     }])
-    .run(function($rootScope, $location, permissions, AuthenticateUser, InitUserMap, permissions) {
+    .run(function($rootScope, $location, permissions, AuthenticateUser, InitUserMap) {
+        $rootScope.$on('$routeChangeStart', function(scope, next, current) {
+            var permission = next.$$route.permission;
+            if(_.isString(permission) && !permissions.hasPermission(permission)){
+                $location.path('/unauthorized');
+            }
+        });
+
         $rootScope.$on('$routeChangeSuccess',
             function() {
                 if(localStorage.getItem('permissions')){

@@ -53,7 +53,7 @@ public class SampleData {
         generateWorkPackages();
         generateWorkPackageAssignments();
         generateTimesheets();
-        //generateWorkPackageStatusReports();
+        generateWorkPackageStatusReports();
     }
 
     private void generateUsers() {
@@ -415,16 +415,24 @@ public class SampleData {
     }
     
     private void generateTimesheets() {
-    	TimesheetRow wp1Row1 = new TimesheetRow(12345, "A1112222", 80, 80, 80, 80, 80, 40, 0, null);
-        TimesheetRow wp1Row2 = new TimesheetRow(12345, "B3332222", 80, 0, 0, 0, 0, 0, 0, null);
-        TimesheetRow wp1Row3 = new TimesheetRow(12345, "B3332223", 0, 50, 60, 30, 50, 30, 0, null);
+    	TimesheetRow wp1Row1 = new TimesheetRow(12345, "A1112222", 80, 80, 80, 80, 80, 40, 0, null,
+                userDao.read(1).getpLevel());
+        TimesheetRow wp1Row2 = new TimesheetRow(12345, "B3332222", 80, 0, 0, 0, 0, 0, 0, null,
+                userDao.read(1).getpLevel());
+        TimesheetRow wp1Row3 = new TimesheetRow(12345, "B3332223", 0, 50, 60, 30, 50, 30, 0, null,
+                userDao.read(1).getpLevel());
         
-        TimesheetRow wp2Row1 = new TimesheetRow(55522, "A3334444", 0, 65, 25, 35, 0, 0, 0, null);
-        TimesheetRow wp2Row2 = new TimesheetRow(55522, "C3332222", 50, 0, 0, 25, 80, 0, 0, null);
-        TimesheetRow wp2Row3 = new TimesheetRow(55522, "A3334452", 30, 0, 50, 0, 0, 40, 0, null);
+        TimesheetRow wp2Row1 = new TimesheetRow(55522, "A3334444", 0, 65, 25, 35, 0, 0, 0, null,
+                userDao.read(1).getpLevel());
+        TimesheetRow wp2Row2 = new TimesheetRow(55522, "C3332222", 50, 0, 0, 25, 80, 0, 0, null,
+                userDao.read(1).getpLevel());
+        TimesheetRow wp2Row3 = new TimesheetRow(55522, "A3334452", 30, 0, 50, 0, 0, 40, 0, null,
+                userDao.read(1).getpLevel());
         
-        TimesheetRow wp3Row1 = new TimesheetRow(99777, "ZZ334222", 25, 0, 75, 0, 40, 60, 20, null);
-        TimesheetRow wp3Row2 = new TimesheetRow(99777, "ZZ334229", 70, 20, 5, 0, 40, 30, 60, null);
+        TimesheetRow wp3Row1 = new TimesheetRow(99777, "ZZ334222", 25, 0, 75, 0, 40, 60, 20, null,
+                userDao.read(2).getpLevel());
+        TimesheetRow wp3Row2 = new TimesheetRow(99777, "ZZ334229", 70, 20, 5, 0, 40, 30, 60, null,
+                userDao.read(2).getpLevel());
         
         List<TimesheetRow> rowCollection = new ArrayList<TimesheetRow>();
 

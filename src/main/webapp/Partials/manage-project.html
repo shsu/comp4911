@@ -25,8 +25,8 @@
               <th class="th-narrow">Issue Date</th>
               <th class="th-narrow">Client Rate</th>
           </tr>
-          <tr ng-click="select(project)" ng-repeat="project in projects | filter: query">
-            <td>{{project.projectNumber}}</td>
+          <tr ng-repeat="project in projects | filter: query">
+            <td><a href="#/project-details/{{project.projectNumber}}">{{project.projectNumber}}</a></td>
             <td>{{project.projectName}}</td>
             <td><a href="#/add-manager/{{project.projectNumber}}">Assign Project Manager</a></td>
             <td>{{project.allocatedBudget}} </td>

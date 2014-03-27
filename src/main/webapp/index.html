@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Cascadia Wireframes</title>
+  <title>COMP4911 Project Management System</title>
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
@@ -14,7 +14,7 @@
   <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
     
 </head>
-<body class="body">
+<body class="body" ng-cloak>
   <nav class="navbar navbar-inverse bg-primary navbar-fixed-top" ng-controller="NavigationController" ng-if="isAuthenticated" role="navigation">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,13 +45,12 @@
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-fw fa-list-ul"></i> Work Packages <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#/manage-wp">Manage</a></li>
-            <li><a href="#">Create</a></li>
           </ul>
         </li>
       <li class="dropdown">
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-fw fa-users"></i> Users <b class="caret"></b></a>
           <ul class="dropdown-menu">
-              <li><a href="#/users-super" has-permission='Supervisors'>Manage</a></li>
+              <li><a href="#/users" has-permission="Supervisor">Manage</a></li>
               <li><a href="#/users" has-permission='Hr'>Manage</a></li>
               <li><a href="#/users/new" has-permission='Hr'>Create</a></li>
               <li class="divider" has-permission='Hr'></li>
@@ -95,8 +94,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-resource.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/restangular/1.3.1/restangular.js"></script>
-<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
 <script src="bower_components/angular-base64/angular-base64.js"></script>
 <script src="bower_components/growl/javascripts/jquery.growl.js"></script>
 

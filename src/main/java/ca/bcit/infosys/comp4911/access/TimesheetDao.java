@@ -84,13 +84,4 @@ public class TimesheetDao {
         return query.getResultList();
     }
 
-    public List<Timesheet> getTimesheetsByWP(final String workpackageId){
-        TypedQuery<Timesheet> query = em.createQuery("SELECT DISTINCT t from Timesheet t" +
-                " JOIN TimesheetRow tr ON t.id = tr.TimesheetId" +
-                " WHERE tr.workPackageNumber = :wpId", Timesheet.class);
-        query.setParameter("wpId", workpackageId);
-        return query.getResultList();
-    }
-
-
 }

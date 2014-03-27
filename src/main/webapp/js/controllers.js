@@ -60,6 +60,7 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$l
       }
       Restangular.one('projects/' + $scope.project.projectNumber + '/assignments').customPOST(data).then(function(response){
         $location.path('manage-project');
+        $.growl.notice({ message: "Project Assigned" });
       })
     };
   }
@@ -122,7 +123,7 @@ cascadiaControllers.controller('AEPController', ['$rootScope', '$scope', '$locat
           active: true
         }
         Restangular.one('projects/' + obj.projectNumber + '/assignments').customPOST(data).then(function(response){
-          $.growl.notice("Success", "Object Created");
+            $.growl.notice({ message: "Employee Assigned" });
         });
       }
     }
@@ -311,11 +312,14 @@ cascadiaControllers.controller('ARController', ['$scope', '$location', 'Restangu
 /*
     ASSIGN SUPERVISOR CONTROLLER
 */
-cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
-  function($scope, $rootScope, $params, $location, Restangular, GrowlResponse){
+cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $modal, $rootScope, $params, $location, Restangular, GrowlResponse){
     var param = $params.id;
+    $scope.cUser = {}
 
-    $scope.cUser = $rootScope.userMap[param];
+    Restangular.one('users', param).get().then(function(response){
+      $scope.cUser = response;
+    });
 
     $scope.select = function (s) {
       $scope.selectedEngineer= s;
@@ -330,18 +334,57 @@ cascadiaControllers.controller('ASController', ['$scope', '$rootScope', '$routeP
       return false;
     };
 
-  
-    $scope.save = function () {
-      var user = $rootScope.userMap[$scope.cUser.id];
-      user.supervisorUserID = $scope.selectedEngineer.id;
-      Restangular.one('users', user.id).customPUT(user).then(function(response){
-        $location.path('users/' + user.id);
-      })
-    };
+    $scope.open = function () {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: ModalInstanceCtrl,
+        resolve: {
+          item: function () {
+            return $scope.cUser;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        var user = {}
+        Restangular.one('users', $scope.cUser.id).get().then(function(response){
+          user = response;
+          user.supervisorUserID = $scope.selectedEngineer.id;
+          Restangular.one('users', user.id).customPUT(user).then(function(response){
+            $location.path('users/' + user.id);
+          })
+        });
+      }, function(){
+        console.log("dismissed")
+      });
+
+      $scope.save = function () {
+        var user;
+        Restangular.one('users', $scope.cUser.id).get().then(function(response){
+          user = response;
+          user.supervisorUserID = $scope.selectedEngineer.id;
+          Restangular.one('users', user.id).customPUT(user).then(function(response){
+            $location.path('users/' + user.id);
+          })
+        });
+      };
+    }
   }
 ]);
 
+var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
+  $scope.item = item;
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};
 
 /*
     ASSIGN WP CONTROLLER
@@ -447,12 +490,17 @@ cascadiaControllers.controller('CreateProjectsController', ['$scope', '$location
     var base = Restangular.all('projects');
     $scope.rates = [1.2, 1.6, 2.0]
     
-    $scope.save = function() {
-      base.post($scope.project).then(function(response) {
-        $.growl.notice("Success", "Object Created");
-      }, function(response) {
-        GrowlResponse(response);
-      });
+    $scope.save = function () {
+      if (!($scope.createProjectForm.$valid)) {
+        $.growl.warning({ message: "Invalid Input" });
+      } else {
+        base.post($scope.project).then(function (response) {
+            $.growl.notice({ message: "Project Created" });
+        }, function (response) {
+          GrowlResponse(response);
+        });
+      }
+      
     }
   }
 ]);
@@ -479,7 +527,7 @@ cascadiaControllers.controller('CreateWPController', ['$scope', '$location', 'Re
       workPackage.projectNumber = $scope.project.projectNumber;
 
       Restangular.one('work_packages').customPOST(workPackage).then(function(response){
-        $.growl.notice("Success", "Object Created");
+        $.growl.notice({ message: "Work Package Created" });
       }, function(response){
         GrowlResponse(response);
       })
@@ -561,6 +609,7 @@ cascadiaControllers.controller('EditPayRatesController', ['$scope', '$location',
       for(var i = 0; i < payRatesChanged.length; i++) {
         payRatesChanged[i].put();
       }
+      $.growl.notice({ message: "Pay Rates Saved" });
     }
 
     $scope.prior = function() {
@@ -609,12 +658,21 @@ cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', 
     $scope.logout = function() {
       localStorage.clear();
       $location.path('/login');
-      $.growl.notice({ title: "Success!", message: "You have been logged out." });
+      $.growl.notice({ message: "You Have Been Logged Out" });
     }
   }
 ]);
 
+/*
+    UNAUTHORIZED CONTROLLER
 
+*/
+
+cascadiaControllers.controller('UnauthorizedController', ['$scope', 
+  function($scope) {
+    
+  }
+])
 
 /*
     LOGIN CONTROLLER
@@ -797,6 +855,7 @@ cascadiaControllers.controller('ProjectManagementSupervisorController', ['$scope
       base.post(newproject).then(function(response) {
         $scope.projects.push(newproject);
         $scope.add_project = false;
+          $.growl.notice({ message: "Project Created" });
       })
     }
   }
@@ -968,6 +1027,7 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
         $rootScope.user.put();
       }
       $scope.timesheet.put();
+      $.growl.notice({ message: "TimeSheet Saved" });
     }
 
     $scope.submit = function() {
@@ -1021,11 +1081,10 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
   function($scope, $location, $rootScope, $params, Restangular) {
     var param = $params.id;
 
-    $scope.cUser = $rootScope.userMap[param];
+    $scope.cUser = Restangular.one('users', param).get();
 
     $scope.hasSupervisor = function() {
-      user = $rootScope.userMap[param];
-
+      user = $scope.cUser;
       if(user.supervisorUserID && user.supervisorUserID != user.id) {
         return true;
       }
@@ -1113,7 +1172,7 @@ cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular',
 
       Restangular.one('users').customPOST(user).then(function(response){
         $location.path('/users');
-        $.growl.notice({title: "Success", message: "User Created"});
+        $.growl.notice({ message: "User Created" });
       }, function(response){
         GrowlResponse(response);
       })
@@ -1162,19 +1221,14 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
       $location.path('/users/' + u.id);
     }
 
-    $scope.change = function(user) {
-      unique = true;
-      for(var i = 0; i < usersChanged.length; i++) {
-        if(usersChanged[i].id == user.id) {
-          unique = false;
-          break;
-        } 
+    $scope.search = function(item) {
+      if (item.id.toString().indexOf($scope.query) != -1 || item.firstName.indexOf($scope.query) != -1 ||
+                item.lastName.indexOf($scope.query) != -1 || item.username.indexOf($scope.query) != -1 ||
+                item.pLevel == $scope.query || !$scope.query) {
+        return true;
       }
-
-      if(unique) {
-        usersChanged.push(user);
-      }
-    };
+      return false;
+    }
 
     $scope.delete = function(user, $index) {
       user.remove().then(function() {

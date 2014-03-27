@@ -66,4 +66,11 @@ public class TimesheetRowDao {
     query.setParameter("projectNumber", projectNumber);
     return query.getResultList();
     }
+
+    public List<TimesheetRow> getTimesheetRowsByWP(final String workpackageId){
+        TypedQuery<TimesheetRow> query = em.createQuery("SELECT tsr from TimesheetRow tsr" +
+                " WHERE tsr.workPackageNumber LIKE :workpackageId", TimesheetRow.class);
+        query.setParameter("workpackageId", workpackageId);
+        return query.getResultList();
+    }
 }

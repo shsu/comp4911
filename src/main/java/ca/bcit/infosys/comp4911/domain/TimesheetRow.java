@@ -74,6 +74,9 @@ public class TimesheetRow implements Serializable
    @Min(value=0,message="ProjectNumber can not be smaller than 0.")
    private int projectNumber;
 
+    @Column
+   private PLevel pLevel;
+
    public Integer getId()
    {
       return this.id;
@@ -184,7 +187,11 @@ public class TimesheetRow implements Serializable
       this.note = note;
    }
 
-   public int calculateTotal(){
+    public PLevel getpLevel() { return pLevel; }
+
+    public void setpLevel(PLevel pLevel) { this.pLevel = pLevel; }
+
+    public int calculateTotal(){
         return monday + tuesday + wednesday + thursday + friday + saturday + sunday;
    }
 
@@ -220,7 +227,8 @@ public class TimesheetRow implements Serializable
       return super.hashCode();
    }
 
-   public TimesheetRow(int projectNumber, String workPackageNumber, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note)
+   public TimesheetRow(int projectNumber, String workPackageNumber, int monday, int tuesday, int wednesday, int thursday,
+                       int friday, int saturday, int sunday, String note, PLevel pLevel)
    {
       this.projectNumber = projectNumber;
       this.workPackageNumber = workPackageNumber;
@@ -232,6 +240,35 @@ public class TimesheetRow implements Serializable
       this.saturday = saturday;
       this.sunday = sunday;
       this.note = note;
+      this.pLevel = pLevel;
+   }
+   
+   /**
+    * Construct a TimesheetRow with projectnumber and workPackagenumber,
+    * default monday to 0,
+    * default tuesday to 0,
+    * default wednesday to 0,
+    * default thursday to 0,
+    * default friday to 0,
+    * default saturday to 0,
+    * defaut suday to 0, and
+    * default note to blank string.
+    * @param projectNumber
+    * @param workPackageNumber
+    */
+   public TimesheetRow(int projectNumber, String workPackageNumber, PLevel pLevel)
+   {
+      this.projectNumber = projectNumber;
+      this.workPackageNumber = workPackageNumber;
+      this.monday = 0;
+      this.tuesday = 0;
+      this.wednesday = 0;
+      this.thursday = 0;
+      this.friday = 0;
+      this.saturday = 0;
+      this.sunday = 0;
+      this.note = "";
+      this.pLevel = pLevel;
    }
 
    public TimesheetRow()

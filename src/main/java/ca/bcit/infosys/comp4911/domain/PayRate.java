@@ -44,6 +44,18 @@ public class PayRate implements Serializable {
 		this.pLevel = pLevel;
 	}
     
+    /**
+     * Construct a PayRate of a pLevel of a year, default the rate to 0.
+     * @param year
+     * @param pLevel
+     */
+    public PayRate(int year, PLevel pLevel) {
+		super();
+		this.year = year;
+		this.rate = BigDecimal.ZERO;
+		this.pLevel = pLevel;
+	}
+    
     public PayRate(){
     	
     }

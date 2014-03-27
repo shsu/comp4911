@@ -170,6 +170,28 @@ public class Timesheet implements Serializable {
         this.timesheetRows = rows;
         this.pending = pending;
     }
+    
+    /**
+     * Construct a Timesheet with userID, weekNumber and year,
+     * default overTime to 0,
+     * default approve to false,
+     * default signed to false,
+     * default pending to false, and 
+     * default timesheetRows to empty ArrayList<TimesheetRow>.
+     * @param userId
+     * @param weekNumber
+     * @param year
+     */
+    public Timesheet(int userId, int weekNumber, int year) {
+        this.userId = userId;
+        this.weekNumber = weekNumber;
+        this.year = year;
+        this.overTime = 0;
+        this.approved = false;
+        this.signed = false;
+		this.timesheetRows = new ArrayList<TimesheetRow>();
+        this.pending = false;
+    }
 
     public Timesheet(int userId, int weekNumber, int year, int overTime, boolean isApproved, boolean isSigned) {
         this.userId = userId;

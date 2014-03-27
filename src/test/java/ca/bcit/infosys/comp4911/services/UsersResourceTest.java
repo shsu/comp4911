@@ -3,7 +3,6 @@ package ca.bcit.infosys.comp4911.services;
 import ca.bcit.infosys.comp4911.domain.PLevel;
 import ca.bcit.infosys.comp4911.domain.User;
 import com.google.common.base.Strings;
-import com.google.gson.Gson;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -39,7 +38,7 @@ public class UsersResourceTest {
     @Test
     public void testRetrieveAll() throws Exception {
 
-        given().when().get(url + "/users?token=" + token).then().statusCode(200);
+        given().when().get(url + "/user?token=" + token).then().statusCode(200);
 
         User[] users = given().when().get(url + "/users?token=" + token).as(User[].class);
 
@@ -51,43 +50,56 @@ public class UsersResourceTest {
     @Test
     public void testCreateUser() throws Exception {
 
+        //Creating new user for inserting.
         Date startDate = setDate(1, 1, 2010);
 
         final User newUser = new User(
-                "newGrad", "newGrad", "FName", "Lname", startDate, false, "Active", 40, 0, 14,
+                "newGrad", "newGrad", "FName2", "Lname2", startDate, false, "Active", 40, 0, 14,
                 67890123, 56789012, 56789012, PLevel.SS);
 
+        //Loging in as user q.
         Response response = given().auth().preemptive().basic("q", "q").when().get(url + "/user/token");
         response.then().statusCode(200);
         String token2 = (String) new JSONObject(response.asString()).get("token");
 
+        //Serializing the new user object into Jason.
         ObjectMapper mapper = new ObjectMapper();
         StringWriter writer = new StringWriter();
         mapper.writeValue(writer, newUser);
 
-        given().auth().preemptive().basic(token2, "").contentType(ContentType.JSON).body(writer.toString()).when().post(url + "/users");
-
-        response = given().auth().preemptive().basic("newGrad", "newGrad").when().get(url + "/user/token");
+        //Inserting the new user object and check the status code returned 201 == created.
+        response = given().auth().preemptive().basic(token2, "").contentType(ContentType.JSON).body(writer.toString()).when().post(url + "/users");
         response.then().statusCode(201);
+
+        //Checking if new user persisted by loging in as the new user.
+        response = given().auth().preemptive().basic("newGrad", "newGrad").when().get(url + "/user/token");
         token2 = (String) new JSONObject(response.asString()).get("token");
         given().auth().preemptive().basic(token2, "").when().get(url + "/user").then().assertThat().body("username", equalTo("newGrad"));
-
     }
 
     @Test
     public void testRetrieveUser() throws Exception {
+/*
+        //Testing unauthorized user retrieving a record.
+        Response response = given().when().get(url + "/user?token=" + token + "/1");
+        response.then().statusCode(401);
 
-        Response response = given().when().get(url + "/users?token=" + token + "/1");
+        //Loging in as user q.
+        response = given().auth().preemptive().basic("q", "q").when().get(url + "/user/token");
         response.then().statusCode(200);
+        String token2 = (String) new JSONObject(response.asString()).get("token");
 
-        JSONObject obj = new JSONObject(response.asString());
+        response = given().when().get(url + "/user?token=" + token2 + "/2");
+        response.then().statusCode(200);
 
         Gson gson = new Gson();
 
+        User retrievedUser = gson.fromJson(response.asString(), User.class);
 
+        assertEquals(retrievedUser.getUsername(), "username0@example.com");*/
     }
 
-    @Test
+    //@Test
     public void testUpdateUser() throws Exception {
 
     }
