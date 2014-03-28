@@ -1,10 +1,12 @@
 var cascadia = angular.module('cascadiaApp', [
     'ngRoute',
+    'ngAnimate',
     'restangular',
     'ui.bootstrap',
     'cascadiaControllers',
     'cascadiaServices',
-    'cascadiaDirectives'
+    'cascadiaDirectives',
+    'chieffancypants.loadingBar'
 ]);
 
 cascadia.config(['$routeProvider',
