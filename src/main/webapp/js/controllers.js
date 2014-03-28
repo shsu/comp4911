@@ -1152,25 +1152,25 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
       return false;
     }
 
-    if($rootScope.user) {
-      if($rootScope.user.supervisorUserID){
-        loadSupervisor();
-        if($rootScope.user.supervisorUserID != $rootScope.user.timesheetApproverUserID) {
-          loadTimesheetApprover();
-        }
-      }
-    }
-
-    var loadSupervisor = function() {
+    $scope.loadSupervisor = function() {
       Restangular.one('users', $rootScope.user.supervisorUserID).get().then(function(response){
         $scope.supervisor = response;
       });
     }
 
-    var loadTimesheetApprover = function() {
+    $scope.loadTimesheetApprover = function() {
       Restangular.one('users', $rootScope.user.timesheetApproverUserID).get().then(function(response){
         $scope.timesheetApprover = response;
       });
+    }
+
+    if($rootScope.user) {
+      if($rootScope.user.supervisorUserID){
+        $scope.loadSupervisor();
+        if($rootScope.user.supervisorUserID != $rootScope.user.timesheetApproverUserID) {
+          $scope.loadTimesheetApprover();
+        }
+      }
     }
   }
 ]);
