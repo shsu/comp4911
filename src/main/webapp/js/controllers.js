@@ -27,6 +27,7 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$l
   function($scope, $rootScope, $location, GrowlResponse, $params, Restangular) {
     var param = $params.id;
     $scope.project = {};
+    $scope.quantity = 20;
 
     Restangular.one('projects/' + param).get().then(function(response){
       $scope.project = response;
@@ -72,8 +73,12 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$l
 cascadiaControllers.controller('AEPController', ['$rootScope', '$scope', '$location', '$routeParams', 'Restangular', 'GrowlResponse',
   function($rootScope, $scope, $location, $params, Restangular, GrowlResponse){
     var param = $params.id;
-    $scope.cUser = $rootScope.userMap[param];
+    Restangular.one('users', param).get().then(function(response){
+      $scope.cUser = response;
+    });
+
     $scope.selectedProjects = [];
+    $scope.quantity = 20;
 
     Restangular.all('users/' + $scope.cUser.id + '/projects').getList().then(function(response){
       $scope.selectedProjects = response;
@@ -173,59 +178,7 @@ cascadiaControllers.controller('AEPController', ['$rootScope', '$scope', '$locat
 */
 cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
   function($scope, $location, Restangular, $params, GrowlResponse){
-    $scope.param = $params.id;
-
-    $scope.userList = [];
-    $scope.assignedUserList = [];
-
-    var base = Restangular.one('work_packages/' + $scope.param);
-
-    base.get().then(function(response){
-      $scope.package = response;
-    });
-
-    base.getList("assignments").then(function(response){
-      $scope.assignedUsers = response;
-
-      angular.forEach($scope.assignedUsers, function(obj){
-        //console.log(obj.id);
-
-        if (obj !== undefined){
-          $scope.assignedUserList.push({
-            id: obj.id,
-            username: obj.username
-          });
-        }  
-      });
-    });
-
-    var userBase = Restangular.all('users');
-
-    userBase.getList().then(function(response){
-      $scope.users = response;
-
-      angular.forEach($scope.users, function(obj){
-        if (obj !== undefined){
-          $scope.userList.push({
-            id: obj.id,
-            username: obj.username
-          });
-        }   
-      });   
-    });
-
-    console.log($scope.userList.length);
-      //console.log($scope.assignedUserList);
-
-    
-
-    $scope.select = function(id){
-      alert(id);
-    }
-
-    // code for work package assignment - /work_packages/$scope.param/assignments?
-  }
-]);
+  }]);
 
 
 
@@ -235,6 +188,8 @@ cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restan
 cascadiaControllers.controller('ProjectManagementController', ['$scope', '$location', 'GrowlResponse', 'Restangular',
   function($scope, $location, GrowlResponse, Restangular) {
     
+    $scope.quantity = 20;
+
     Restangular.all('projects').getList().then(function(response){
       $scope.projects = response;
     });
@@ -858,6 +813,7 @@ cascadiaControllers.controller('WPManagementController', ['$scope', 'Restangular
     $scope.statuses = [ 'Open', 'Closed'];
     $scope.project = {};
     $scope.projectChosen = false;
+    $scope.quantity = 20;
     mapOfWP = {};
     wpChanged = [];
 
@@ -1332,6 +1288,7 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
     $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
     $scope.statuses = [ 'Active', 'Inactive' ];
     $scope.cUser = {}
+    $scope.quantity = 20;
 
     base.getList().then(function(response) {
       $scope.users = response;
