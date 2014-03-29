@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-lg-6">
       <form action="" class="form-inline">
-        <p>Search Project Number:  <input type="text" ng-model="query.projectNumber" placeholder="search" class="form-control" /></p>
+        <p>Search Projects:  <input type="text" ng-model="query.projectNumber" placeholder="Search by # or Name" class="form-control" /></p>
       </form>
     </div>
     <div class="col-lg-6">  
@@ -18,22 +18,22 @@
           <tr>
               <th class="th-narrow">Project Number</th>
               <th class="th-narrow">Project Name</th>
-              <th>Assign Project Manager</th>
               <th class="th-narrow">Allocated Budget</th>
-              <th class="th-wide">UnAllocated Budget</th>
+              <th class="th-narrow">UnAllocated Budget</th>
               <th class="th-narrow">Complete Date</th>
               <th class="th-narrow">Issue Date</th>
               <th class="th-narrow">Client Rate</th>
+              <th class="th-narrow">Project Manager</th>
           </tr>
           <tr ng-repeat="project in projects | filter: query">
             <td><a href="#/projects/{{project.projectNumber}}">{{project.projectNumber}}</a></td>
             <td>{{project.projectName}}</td>
-            <td><a href="#/projects/{{project.projectNumber}}/add-manager/">Assign Project Manager</a></td>
             <td>{{project.allocatedBudget}} </td>
             <td>{{project.unAllocatedBudget}} </td>
             <td>{{project.completeDate}}</td>
             <td>{{project.issueDate}}</td>
             <td>{{project.clientRate}}</td>
+            <td><a href="#/projects/{{project.projectNumber}}/add-manager/">Assign</a></td>
             </td>
           </tr>
         </tbody>
