@@ -48,7 +48,7 @@ public class WorkPackageAssignmentResource {
       @PathParam("id") String id) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.responseWithEntity(200, workPackageAssignmentDao.getAllByWorkPackageNumber(id));
+        return SH.responseWithEntity(200, workPackageAssignmentDao.getAllUsersByWorkPackageNumber(id));
     }
 
     @POST
