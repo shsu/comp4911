@@ -284,7 +284,7 @@ public class SampleData {
         workPackageDao.create(new WorkPackage(
         		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, 100000,0),false);
 
-        for(int i = 0; i < 1000; i++) {
+        for(int i = 0; i < 200; i++) {
             if(i < 10) { workPackageNumber = "A111100" + i;}
             if(i >= 10 && i < 100) { workPackageNumber = "A11110" + i; }
             if(i >= 100) { workPackageNumber = "A1111" + i; }
