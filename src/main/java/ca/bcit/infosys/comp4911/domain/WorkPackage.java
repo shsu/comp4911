@@ -1,11 +1,6 @@
 package ca.bcit.infosys.comp4911.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,8 +9,10 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.lang.Override;
+import java.util.List;
 
 @Entity
 public class WorkPackage implements Serializable
@@ -57,13 +54,11 @@ public class WorkPackage implements Serializable
    @Temporal(TemporalType.DATE)
    private Date endDate;
 
-   @Column
-   @Min(value=0,message="EstimateToCompletion can not be less than 0.")
-   private int estimateToCompletion;
+   @OneToMany
+   private List<Effort> estimateToCompletion;
 
-   @Column
-   @Min(value=0,message="EstimateAtStart can not be less than 0.")
-   private int estimateAtStart;
+   @OneToMany
+   private List<Effort> estimateAtStart;
 
    @Column
    @Min(value=0,message="ProjectNumber can not be smaller than 0.")
@@ -174,7 +169,7 @@ public class WorkPackage implements Serializable
 
    public WorkPackage(String workPackageNumber, String workPackageName,
          Date issueDate, String progressStatus, Date endDate,
-         int projectNumber, int estimateAtStart, int estimateToCompletion)
+         int projectNumber, List<Effort> estimateAtStart, List<Effort> estimateToCompletion)
    {
       super();
       this.workPackageNumber = workPackageNumber;
@@ -214,9 +209,8 @@ public class WorkPackage implements Serializable
 	      this.progressStatus = "";
 	      this.endDate = null;
 	      this.projectNumber = projectNumber;
-	      this.estimateAtStart = 0;
-	      this.estimateToCompletion = 0;
-
+	      this.estimateAtStart = new ArrayList<Effort>();
+	      this.estimateToCompletion = new ArrayList<Effort>();
 	      this.description = "";
 	      this.completeDate = issueDate;
 	      this.startDate = issueDate;
@@ -236,22 +230,22 @@ public class WorkPackage implements Serializable
       this.endDate = endDate;
    }
 
-   public int getEstimateToCompletion()
+   public List<Effort> getEstimateToCompletion()
    {
       return this.estimateToCompletion;
    }
 
-   public void setEstimateToCompletion(final int estimateToCompletion)
+   public void setEstimateToCompletion(final List<Effort> estimateToCompletion)
    {
       this.estimateToCompletion = estimateToCompletion;
    }
 
-   public int getEstimateAtStart()
+   public List<Effort> getEstimateAtStart()
    {
       return this.estimateAtStart;
    }
 
-   public void setEstimateAtStart(final int estimateAtStart)
+   public void setEstimateAtStart(final List<Effort> estimateAtStart)
    {
       this.estimateAtStart = estimateAtStart;
    }
