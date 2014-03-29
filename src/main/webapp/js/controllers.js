@@ -378,6 +378,7 @@ cascadiaControllers.controller('ATAController', ['$scope', '$modal', '$rootScope
       var persist = function(user) {
         Restangular.one('users', user.id).customPUT(user).then(function(response){
           $location.path('users/' + user.id);
+          $.growl.notice({message:"Timesheet Approver Assigned"});
         })
       }
     }
@@ -462,6 +463,7 @@ cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope'
       var persist = function(user) {
         Restangular.one('users', user.id).customPUT(user).then(function(response){
           $location.path('users/' + user.id);
+          $.growl.notice({message:"Supervisor Assigned"});
         })
       }
     }
