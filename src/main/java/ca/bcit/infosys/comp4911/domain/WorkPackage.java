@@ -191,9 +191,10 @@ public class WorkPackage implements Serializable
     * default issueDate to current date,
     * default progressStatus to empty string,
     * default endDate to null,
-    * defaultestimateAtStart to 0,
+    * defaultestimateAtStart to an Empty List<Effort>,
     * default 
-    * @param workPackageNumberestimateToCompletion to 0,
+    * @param workPackageNumber
+    * defailt estimateToCompletion to an empty List<Effort>,
     * default description to empty string,
     * default coompleteDate to issueDate, and
     * default startDate to issueDate

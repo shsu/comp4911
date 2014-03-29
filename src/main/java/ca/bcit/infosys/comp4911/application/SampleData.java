@@ -41,6 +41,9 @@ public class SampleData {
     @EJB
     private WorkPackageDao workPackageDao;
 
+    List<Effort> remainingEstimate= new ArrayList<Effort>();
+    List<Effort> beginningEstimate = new ArrayList<Effort>();
+
     public SampleData() {
     }
 
@@ -274,7 +277,17 @@ public class SampleData {
     }
 
     private void generateWorkPackages() {
-        
+        remainingEstimate.add(new Effort(PLevel.P1, 100));
+        remainingEstimate.add(new Effort(PLevel.P2, 100));
+        remainingEstimate.add(new Effort(PLevel.P3, 100));
+        remainingEstimate.add(new Effort(PLevel.P4, 100));
+        remainingEstimate.add(new Effort(PLevel.P5, 100));
+
+        beginningEstimate.add(new Effort(PLevel.P1, 2000));
+        beginningEstimate.add(new Effort(PLevel.P2, 2000));
+        beginningEstimate.add(new Effort(PLevel.P3, 2000));
+        beginningEstimate.add(new Effort(PLevel.P4, 2000));
+        beginningEstimate.add(new Effort(PLevel.P5, 2000));
         String workPackageNumber = "";
         String wpName = "Lots'o Packages";
         String appendNumber = "";
@@ -282,57 +295,66 @@ public class SampleData {
         Date endDate = setDate(1, 10, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, 100000,0),false);
+        		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, beginningEstimate,
+                remainingEstimate),false);
 
         for(int i = 0; i < 200; i++) {
             if(i < 10) { workPackageNumber = "A111100" + i;}
             if(i >= 10 && i < 100) { workPackageNumber = "A11110" + i; }
             if(i >= 100) { workPackageNumber = "A1111" + i; }
             workPackageDao.create(new WorkPackage(
-                workPackageNumber, wpName, issueDate, "100", endDate, 55522, 100000,0),false);
+                workPackageNumber, wpName, issueDate, "100", endDate, 55522, beginningEstimate,
+                    remainingEstimate),false);
         }
 
         issueDate = setDate(2, 5, 2014);
         endDate = setDate(4, 12, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"B3332222", "Write tests", issueDate, "100", endDate, 12345, 50000,0),false);
+        		"B3332222", "Write tests", issueDate, "100", endDate, 12345, beginningEstimate,
+                remainingEstimate),false);
         
         issueDate = setDate(1, 14, 2014);
         endDate = setDate(4, 17, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"B3332223", "Something important", issueDate, "0", endDate, 12345, 350000,0),false);
+        		"B3332223", "Something important", issueDate, "0", endDate, 12345, beginningEstimate,
+                remainingEstimate),false);
         
         issueDate = setDate(11, 10, 2013);
         endDate = setDate(11, 28, 2013);
 
         workPackageDao.create(new WorkPackage(
-        		"A3334444", "Design Database", issueDate, "100", endDate, 55522, 25000,0),false);
+        		"A3334444", "Design Database", issueDate, "100", endDate, 55522, beginningEstimate,
+                remainingEstimate),false);
         
         issueDate = setDate(11, 12, 2013);
         endDate = setDate(12, 8, 2013);
         
         workPackageDao.create(new WorkPackage(
-        		"C3332222", "Preliminary front end design", issueDate, "100", endDate, 55522, 100000,0),false);
+        		"C3332222", "Preliminary front end design", issueDate, "100", endDate, 55522, beginningEstimate,
+                remainingEstimate),false);
         
         issueDate = setDate(11, 15, 2013);
         endDate = setDate(2, 5, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"A3334452", "Implement login logic", issueDate, "100", endDate, 55522, 45000,0),false);
+        		"A3334452", "Implement login logic", issueDate, "100", endDate, 55522, beginningEstimate,
+                remainingEstimate),false);
         
         issueDate = setDate(8, 2, 2012);
         endDate = setDate(3, 27, 2013);
         
         workPackageDao.create(new WorkPackage(
-        		"ZZ334222", "Research technologies", issueDate, "0", endDate, 99977, 5000000,0),false);
+        		"ZZ334222", "Research technologies", issueDate, "0", endDate, 99977, beginningEstimate,
+                remainingEstimate),false);
         
         issueDate = setDate(3, 15, 2013);
         endDate = setDate(6, 23, 2017);
         
         workPackageDao.create(new WorkPackage(
-        		"ZZ334225", "Solve world hunger", issueDate, "0", endDate, 99977, 25000000,0),false);
+        		"ZZ334225", "Solve world hunger", issueDate, "0", endDate, 99977, beginningEstimate,
+                remainingEstimate),false);
     }
 
     private void generateWorkPackageAssignments() {
@@ -464,10 +486,15 @@ public class SampleData {
     }
 
     private void generateWorkPackageStatusReports(){
+        remainingEstimate.clear();
+        remainingEstimate.add(new Effort(PLevel.P1, 50));
+        remainingEstimate.add(new Effort(PLevel.P2, 50));
+        remainingEstimate.add(new Effort(PLevel.P3, 50));
+        remainingEstimate.add(new Effort(PLevel.P4, 50));
+        remainingEstimate.add(new Effort(PLevel.P5, 50));
         Date date = setDate(1, 1, 2014);
-        Set<Effort> effort = new HashSet<Effort>();
         workPackageStatusReportDao.create(new WorkPackageStatusReport(1, 2014, date, "new wpsr", "Lots of work accomplished",
-                "none", "approve timesheets", effort, "none", "A1112222"),false);
+                "none", "approve timesheets", remainingEstimate, "none", "A1112222"),false);
     }
 
     private Date setDate(int month, int day, int year)
