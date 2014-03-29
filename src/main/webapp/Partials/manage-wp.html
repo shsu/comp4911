@@ -33,8 +33,10 @@
             <th>Status</th>
           </tr>
           <tr ng-repeat="wp in workPackages | filter: query">
-            <td><a href="#/wp-details/{{wp.workPackageNumber}}" has-permission="ProjectManager">{{wp.workPackageNumber}}</a></td>
-            <td><a href="#/wp-status-report/{{wp.workPackageNumber}}" has-permission="ResponsibleEngineer">{{wp.workPackageNumber}}</a></td>
+            <td>
+              <a href="#/wp-details/{{wp.workPackageNumber}}" has-permission="ProjectManager">{{wp.workPackageNumber}}</a>
+              <a href="#/wp-status-report/{{wp.workPackageNumber}}" has-permission="ResponsibleEngineer">{{wp.workPackageNumber}}</a>
+            </td>
             <td>{{wp.workPackageName}}</td>
             <td><a href="#/add-engineer/{{wp.workPackageNumber}}">Assign Responsible Engineer</a></td>
             <td><a href="#/assign-employee-wp/{{wp.workPackageNumber}}">Assign Employees</a></td>
