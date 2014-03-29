@@ -254,9 +254,9 @@ cascadiaControllers.controller('ProjectManagementController', ['$scope', '$locat
       obj.selected = false;
     }
 
-    $scope.select = function(p) {
-      $location.path('project-details/' + p.projectNumber);
-    }
+      $scope.select = function (project) {
+          $location.path('/projects/' + project.projectNumber);
+      }
 
     $scope.cancel = function() {
       $scope.selectedManager = {};
@@ -924,6 +924,10 @@ cascadiaControllers.controller('ProjectManagementSupervisorController', ['$scope
     Restangular.one('user/projects/managed').getList().then(function(response){
       $scope.projects = response;
     })
+
+      $scope.select = function (project) {
+          $location.path('/projects/' + project.projectNumber);
+      }
 
     $scope.add = function() {
       $scope.add_project = true;

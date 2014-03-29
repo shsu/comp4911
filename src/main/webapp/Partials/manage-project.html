@@ -25,7 +25,7 @@
               <th class="th-narrow">Client Rate</th>
               <th class="th-narrow">Project Manager</th>
           </tr>
-          <tr ng-repeat="project in projects | filter: query">
+          <tr ng-click="select(project)" ng-repeat="project in projects | filter: query">
             <td><a href="#/projects/{{project.projectNumber}}">{{project.projectNumber}}</a></td>
             <td>{{project.projectName}}</td>
             <td>{{project.allocatedBudget}} </td>
