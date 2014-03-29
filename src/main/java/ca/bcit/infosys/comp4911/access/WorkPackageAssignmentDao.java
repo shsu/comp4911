@@ -24,7 +24,7 @@ public class WorkPackageAssignmentDao {
         }
     }
 
-    public WorkPackageAssignment read ( final int wpAssignmentID)
+    public WorkPackageAssignment read ( final Integer wpAssignmentID)
     {
         return em.find(WorkPackageAssignment.class, wpAssignmentID);
     }

@@ -65,18 +65,6 @@ public class ProjectAssignmentDao {
         return query.getResultList();
     }
 
-    /**
-     * Get all Users by Project Id
-     * /** This doesn't feel right with being in this class, but makes most logical sense I think
-     */
-    public List<User> getAllUsers(final int projectNumber) {
-        TypedQuery<User> query = em.createQuery("select DISTINCT p.userId from ProjectAssignment "
-          + "p where p.projectNumber = :projectNumber",
-          User.class);
-        query.setParameter("projectNumber", projectNumber);
-        return query.getResultList();
-    }
-
     public List<ProjectAssignment> getAllByUserId(final int userId){
         TypedQuery<ProjectAssignment> query = em.createQuery("select pa from ProjectAssignment pa" +
                 " where pa.userId = :userId and pa.active = true", ProjectAssignment.class);

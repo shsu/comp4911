@@ -46,6 +46,18 @@ public class ProjectDao {
         return query.getResultList();
     }
 
+    /**
+     * Get all Users by Project Number
+     */
+    public List<User> getAllUsers(final int projectNumber) {
+        TypedQuery<User> query = em.createQuery("select DISTINCT u from User u"
+                + " where u.id IN (SELECT p.userId from ProjectAssignment p"
+                + " where p.projectNumber = :projectNumber)",
+                User.class);
+        query.setParameter("projectNumber", projectNumber);
+        return query.getResultList();
+    }
+
     public List<Project> getAllByUser(int userId)
     {
         TypedQuery<Project> query = em.createQuery("select p from Project p "
@@ -59,7 +71,7 @@ public class ProjectDao {
     public List<Project> getAllManagedByUser(int userId)
     {
         TypedQuery<Project> query = em.createQuery("select p from Project p"
-            + " where p.projectNumber = (SELECT pa.projectNumber from ProjectAssignment pa"
+            + " where p.projectNumber IN (SELECT pa.projectNumber from ProjectAssignment pa"
                                        + " where pa.userId = :userId AND"
                                         + " pa.projectManager = TRUE)",
                 Project.class);
