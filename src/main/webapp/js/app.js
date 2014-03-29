@@ -20,8 +20,6 @@ cascadia.config(['$routeProvider',
         when('/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/assign-manager.html'}).
         when('/assign-project', {controller: 'PackageController', templateUrl:'Partials/assign-project.html'}).
         when('/assign-re', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
-        when('/assign-supervisor/:id', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
-        when('/assign-ta/:id', {controller: 'ATAController', templateUrl:'Partials/assign-ta.html'}).
         when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
         when('/create-wp/:id', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html'}).
         when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
@@ -53,6 +51,8 @@ cascadia.config(['$routeProvider',
         when('/users/new', {controller: 'CreateUserController', templateUrl:'Partials/create-user.html'}).
         when('/users/pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html'}).
         when('/users/:id', {controller: 'ManagedUserProfileController', templateUrl:'Partials/user-profile-managed.html'}).
+        when('/users/:id/assign-supervisor', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
+        when('/users/:id/assign-ta', {controller: 'ATAController', templateUrl:'Partials/assign-ta.html'}).
         when('/weekly-project', {controller: 'WeeklyProjectController', templateUrl:'Partials/weekly-project.html'}).
         when('/wp-details', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).
         when('/wp-details/:id', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).

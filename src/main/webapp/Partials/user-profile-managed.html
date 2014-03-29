@@ -34,18 +34,21 @@
             <tr>
               <td>Assigned Manager</td>
               <td>
-                <a class="cursor-hand" ng-click="assignSupervisor()" ng-hide="hasSupervisor(u)">Assign</a>
+                <a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor(u)">Assign</a>
                 <span ng-show="hasSupervisor(u)">
                     {{supervisor.firstName}} {{supervisor.lastName}}
-                    (<a class="cursor-hand" ng-click="assignSupervisor()">Change</a>)
+                    (<a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand">Change</a>)
                 </span>
               </td>
             </tr>
             <tr>
               <td>Timesheet Approver</td>
-              <td><span ng-show="hasTimesheetApprover()">{{timesheetApprover.firstName}} {{timesheetApprover.lastName}}</span>
-                <a class="cursor-hand" ng-click="assignTA()" ng-hide="hasTimesheetApprover()">Assign</a>
-                <a class="cursor-hand" ng-click="assignTA()" ng-show="hasTimesheetApprover()">Change</a> 
+              <td>
+                  <a href="#/users/{{cUser.id}}/assign-ta" class="cursor-hand" ng-hide="hasTimesheetApprover()">Assign</a>
+                  <span ng-show="hasTimesheetApprover()">
+                      {{timesheetApprover.firstName}} {{timesheetApprover.lastName}}
+                      (<a href="#/users/{{cUser.id}}/assign-ta" class="cursor-hand">Change</a>)
+                  </span>
               </td>
             </tr>
             <tr> 

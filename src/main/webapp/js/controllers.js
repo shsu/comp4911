@@ -1229,14 +1229,6 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
       }
       return false;
     }
-
-    $scope.assignSupervisor = function() {
-      $location.path('/assign-supervisor/' + $scope.cUser.id);
-    }
-
-    $scope.assignTA = function() {
-      $location.path('/assign-ta/' + $scope.cUser.id);
-    }
   }
 ]);
 

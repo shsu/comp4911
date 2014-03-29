@@ -23,8 +23,8 @@
             <td>{{u.firstName}} {{u.lastName}}</td>
             <td>{{u.username}}</td>
             <td>
-              <a href="#/assign-supervisor/{{u.id}}" ng-hide="hasSupervisor(u)">Assign</a>
-              <a class="cursor-hand" ng-click="assignSupervisor()" ng-show="hasSupervisor(u)">Change</a>
+              <a href="#/users/{{u.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor(u)">Assign</a>
+              <a href="#/users/{{u.id}}/assign-supervisor" class="cursor-hand" ng-show="hasSupervisor(u)">Change</a>
             </td>
             <td>{{u.pLevel}}</td>
           </tr>
