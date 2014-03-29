@@ -38,7 +38,7 @@ cascadia.config(['$routeProvider',
         when('/projects/new', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html', permission: 'ProjectManager'}).
         when('/projects/search', {controller: 'SearchProjectController', templateUrl:'Partials/search-project.html'}).
         when('/projects/:id', {controller: 'ProjectDetailsController', templateUrl: 'Partials/project-details.html'}).
-        when('/projects/:id/add-manager', {controller: 'ManagerController', templateUrl:'Partials/add-project-manager.html'}).
+        when('/projects/:id/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/add-project-manager.html'}).
         when('/project-summary', {controller: 'ProjectSummaryController', templateUrl:'Partials/project-summary.html'}).
         when('/rate-sheet', {controller: 'RateSheetController', templateUrl:'Partials/rate-sheet.html'}).
         when('/timesheet-approval', {controller: 'TAController', templateUrl:'Partials/timesheet-approval.html', permission:'TimesheetApprover'}).
