@@ -18,7 +18,7 @@
             <th class="th-narrow">Supervisor</th>
             <th class="th-narrow">Labour Grade</th>
           </tr>
-          <tr ng-click="select(u)" ng-repeat="u in users | filter: search">
+          <tr ng-click="select(u)" ng-repeat="u in users | filter: search | limitTo: quantity">
             <td><a href="#/users/{{u.id}}">{{u.id}}</a></td>
             <td>{{u.firstName}} {{u.lastName}}</td>
             <td>{{u.username}}</td>

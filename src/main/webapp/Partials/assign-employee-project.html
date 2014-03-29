@@ -17,7 +17,7 @@
               <th style="width: 33%;">Project Number</th>
               <th style="width: 33%;">Project Name</th>
             </tr>
-            <tr ng-click="selectP($index)" class="{{project.selected}} disabled-{{project.disabled}}" ng-repeat="project in projects | filter:query">
+            <tr ng-click="selectP($index)" class="{{project.selected}} disabled-{{project.disabled}}" ng-repeat="project in projects | filter:query | limitTo: quantity">
               <td>{{project.projectNumber}}</td> 
               <td>{{project.projectName}}</td>
             </tr>
