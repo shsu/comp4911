@@ -280,7 +280,8 @@ public class SampleData {
 
     private void generateWorkPackages() {
         List<Effort> beginningEstimate = new ArrayList<Effort>();
-
+        List<Effort> test = new ArrayList<Effort>();
+        test.add(new Effort(PLevel.P1, 20));
         beginningEstimate.add(effortDao.read(1));
         beginningEstimate.add(effortDao.read(2));
         beginningEstimate.add(effortDao.read(3));
@@ -294,7 +295,7 @@ public class SampleData {
         Date endDate = setDate(1, 10, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, beginningEstimate),false);
+        		"A1112222", "Implement domain models", issueDate, "100", endDate, 12345, test),false);
 
         for(int i = 0; i < 200; i++) {
             if(i < 10) { workPackageNumber = "A111100" + i;}

@@ -54,7 +54,8 @@ public class WorkPackage implements Serializable
    @Temporal(TemporalType.DATE)
    private Date endDate;
 
-    @OneToMany(mappedBy="workPackage")
+    @OneToMany(mappedBy="workPackage", cascade = CascadeType.ALL)
+    @Size(min=1, max=7)
     private List<Effort> estimateAtStart;
 
    @Column

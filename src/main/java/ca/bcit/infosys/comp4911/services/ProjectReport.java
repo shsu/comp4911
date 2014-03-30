@@ -3,9 +3,7 @@ package ca.bcit.infosys.comp4911.services;
 import ca.bcit.infosys.comp4911.access.*;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.*;
-import ca.bcit.infosys.comp4911.helper.ReportHelper;
-import ca.bcit.infosys.comp4911.helper.ReportHelperRow;
-import ca.bcit.infosys.comp4911.helper.SH;
+import ca.bcit.infosys.comp4911.helper.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -55,7 +53,7 @@ public class ProjectReport {
         List<TimesheetRow> wpTimesheetRows;
         Project project;
         ReportHelper reportHelper;
-        ReportHelperRow[] reportHelperRows = new ReportHelperRow[20];
+        ReportHelperRow[] reportHelperRows = new WPReportHelperRow[20];
         WorkPackageStatusReport wpsr;
         List<WorkPackageStatusReport> latestTwentyReports;
 
@@ -71,7 +69,8 @@ public class ProjectReport {
         while(wpsrIterator.hasNext()) {
             wpsr = wpsrIterator.next();
             wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
-            reportHelperRows[i] = getWPPersonHours(wpTimesheetRows, wpsr.getWorkPackageNumber());
+            reportHelperRows[i] = getWPPersonHours(wpTimesheetRows);
+            reportHelperRows[i].setWpNumber(wpsr.getWorkPackageNumber());
             calculateTotalLabourDollars(reportHelperRows[i], wpsr.getYear());
             String key = "WP" + i;
             report.append(key, reportHelperRows[i].toString());
@@ -85,6 +84,13 @@ public class ProjectReport {
         return SH.responseWithEntity(200, report.toString());
     }
 
+    /**
+     * Endpoint used to return JSON object representing the PCBAC report
+     * @param headerToken
+     * @param queryToken
+     * @param projectId
+     * @return
+     */
 //    @GET
 //    @Path("/budget/{id}")
 //    public Response getProjectBudgetReport(
@@ -94,8 +100,14 @@ public class ProjectReport {
 //        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 //
 //        ArrayList<WorkPackageStatusReport> mostRecentReports = (ArrayList)wpsrDao.getAllByProject(projectId);
+//        ArrayList<Effort> effort;
+//        ReportHelperRow newHelper = new ReportHelperRow();
+//        ProjectBudgetReport pbr = new ProjectBudgetReport();
+//        ArrayList<WorkPackageStatusReport> oneStatusReportPerWP = getSingleWPSRPerWP(mostRecentReports);
+//        calculateProjectExpectedPLevelTotals(oneStatusReportPerWP, pbr.getExpectedBudget());
 //
-//        HashMap<String, WorkPackageStatusReport> oneStatusReportPerWP = getSingleWPSRPerWP(mostRecentReports);
+//
+//
 //
 //
 //    }
@@ -110,13 +122,13 @@ public class ProjectReport {
     public void calculateTotalLabourDollars(ReportHelperRow reportHelperRow, int year){
         List<PayRate> yearPayRate = payRateDao.getPayRateByYear(year);
         double totalLabourDollars = 0;
-        totalLabourDollars += yearPayRate.get(0).getRate().doubleValue()*reportHelperRow.getDS();
-        totalLabourDollars += yearPayRate.get(1).getRate().doubleValue()*reportHelperRow.getP1();
-        totalLabourDollars += yearPayRate.get(2).getRate().doubleValue()*reportHelperRow.getP2();
-        totalLabourDollars += yearPayRate.get(3).getRate().doubleValue()*reportHelperRow.getP3();
-        totalLabourDollars += yearPayRate.get(4).getRate().doubleValue()*reportHelperRow.getP4();
-        totalLabourDollars += yearPayRate.get(5).getRate().doubleValue()*reportHelperRow.getP5();
-        totalLabourDollars += yearPayRate.get(6).getRate().doubleValue()*reportHelperRow.getSS();
+        totalLabourDollars += yearPayRate.get(0).getRate().doubleValue()*reportHelperRow.getpLevels().get(PLevel.DS);
+        totalLabourDollars += yearPayRate.get(1).getRate().doubleValue()*reportHelperRow.getpLevels().get(PLevel.P1);
+        totalLabourDollars += yearPayRate.get(2).getRate().doubleValue()*reportHelperRow.getpLevels().get(PLevel.P2);
+        totalLabourDollars += yearPayRate.get(3).getRate().doubleValue()*reportHelperRow.getpLevels().get(PLevel.P3);
+        totalLabourDollars += yearPayRate.get(4).getRate().doubleValue()*reportHelperRow.getpLevels().get(PLevel.P4);
+        totalLabourDollars += yearPayRate.get(5).getRate().doubleValue()*reportHelperRow.getpLevels().get(PLevel.P5);
+        totalLabourDollars += yearPayRate.get(6).getRate().doubleValue()*reportHelperRow.getpLevels().get(PLevel.SS);
         reportHelperRow.setLabourDollars(totalLabourDollars);
     }
 
@@ -126,49 +138,27 @@ public class ProjectReport {
      * @param timesheetRowList, wpNumber
      * @return - the finished reportHelperRow
      */
-    private ReportHelperRow getWPPersonHours(List<TimesheetRow> timesheetRowList, String wpNumber){
-        ReportHelperRow reportHelperRow = new ReportHelperRow(wpNumber);
+    private ReportHelperRow getWPPersonHours(List<TimesheetRow> timesheetRowList){
+        ReportHelperRow reportHelperRow = new ReportHelperRow();
         Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
         TimesheetRow tsr;
         while(timesheetRowIterator.hasNext())
         {
             tsr = timesheetRowIterator.next();
-            addTotalHoursPerRow(reportHelperRow, tsr.getpLevel(), tsr.calculateTotal());
+            reportHelperRow.increasePLevel(tsr.getpLevel(), tsr.calculateTotal());
         }
 
         return reportHelperRow;
     }
-    
-    private void addTotalHoursPerRow(ReportHelperRow reportHelperRow, PLevel plevel, int hours) {
-        
-        switch(plevel){
-            case P1:
-                reportHelperRow.incrementP1(hours);
-                break;
-            case P2:
-                reportHelperRow.incrementP2(hours);
-                break;
-            case P3:
-                reportHelperRow.incrementP3(hours);
-                break;
-            case P4:
-                reportHelperRow.incrementP4(hours);
-                break;
-            case P5:
-                reportHelperRow.incrementP5(hours);
-                break;
-            case SS:
-                reportHelperRow.incrementSS(hours);
-                break;
-            case DS:
-                reportHelperRow.incrementDS(hours);
-                break;
-        }
-    }
 
-    private HashMap<String, WorkPackageStatusReport> getSingleWPSRPerWP(List<WorkPackageStatusReport> allWPSR) {
-        HashMap<String, WorkPackageStatusReport> singleWPSRPerWP = new HashMap<String,
-                WorkPackageStatusReport>();
+    private ArrayList<WorkPackageStatusReport> getSingleWPSRPerWP(List<WorkPackageStatusReport> allWPSR) {
+        /**
+         * HashMap is used to check for double WPSRs. Check for double in order to only take the most
+         * recent WPSR.
+         */
+        HashMap<String, Boolean> singleWPSRPerWP = new HashMap<String,
+                Boolean>();
+        ArrayList<WorkPackageStatusReport> mostRecentWPSR = new ArrayList<WorkPackageStatusReport>();
         WorkPackageStatusReport currentWPSR;
         Iterator<WorkPackageStatusReport> wpsrIterator = allWPSR.listIterator();
         while(wpsrIterator.hasNext()){
@@ -177,11 +167,26 @@ public class ProjectReport {
                 continue;
             }
             else {
-                singleWPSRPerWP.put(currentWPSR.getWorkPackageNumber(), currentWPSR);
+                singleWPSRPerWP.put(currentWPSR.getWorkPackageNumber(), true);
+                mostRecentWPSR.add(currentWPSR);
+
             }
 
         }
-        return singleWPSRPerWP;
+        return mostRecentWPSR;
+    }
+
+    private void calculateProjectExpectedPLevelTotals(ArrayList<WorkPackageStatusReport> oneStatusReportPerWP,
+                                                 ReportHelperRow projectBudget){
+        ReportHelperRow newHelper = new ReportHelperRow();
+        int length = oneStatusReportPerWP.size();
+        ArrayList<Effort> effort = new ArrayList<Effort>();
+        for(int i = 0; i < length; i++){
+            effort = (ArrayList)oneStatusReportPerWP.get(i).getEstimatedWorkRemainingInPD();
+            for(int j = 0; j < effort.size(); j++){
+                projectBudget.increasePLevel(effort.get(j).getpLevel(), effort.get(j).getPersonDays());
+            }
+        }
     }
     
 }
