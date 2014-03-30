@@ -1,6 +1,42 @@
 <content>
   <h1 class="secondary">Work Package Status Report</h1>
   <div ng-controller="WPStatusReportController">
-    
-  </div>  
+	  <div class="row">
+	    <p class="col-lg-3">Project No. 
+	      <select ng-init="loadProjects()" ng-change="loadWorkPackages()" ng-model="project" ng-options="p.projectNumber for p in projects">
+	      </select>
+	      Work Package No:
+	      <select ng-model="workpackage" ng-options="wp.workPackageNumber for wp in workpackages">
+	      </select>
+	    </p>
+	    <p class="col-lg-4">Project Name: {{project.projectName}}</p>
+	    <p class="col-lg-4">Budget: {{project.allocatedBudget | currency: amount: symbol}}</p>
+	  </div>
+	  <div class="row">
+	  	<p>
+	  		Report No.
+	  		<input type="text" ng-model="reportNumber" />
+	  	</p>
+	  </div>
+		<div class="row">
+      <div class="col-md-6">
+      		Report Date:
+          <p class="input-group">
+            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+      </div>
+      <div class="col-md-6">
+      	Reporting Period:
+          <p class="input-group">
+            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+      </div>
+    </div>
+	</div>
 </content>

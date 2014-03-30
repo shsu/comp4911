@@ -7,8 +7,8 @@
         <div class="row">
           <p class="col-sm-3">Project No: {{project.projectNumber}}</p>
           <p class="col-sm-3">Project Name: {{project.projectName}}</p>
-          <p class="col-sm-3">Budget: </p>
-          <p class="col-sm-3">Remaining Budget: </p>
+          <p class="col-sm-3">Budget: {{project.unallocatedBudget + project.allocatedBudget}} </p>
+          <p class="col-sm-3">Remaining Budget: {{project.unallocatedBudget}} </p>
         </div>
       </div>
     </div>      
@@ -20,11 +20,13 @@
             <div class="table-responsive">
               <table class="table table-hover table-bordered">
                 <thead>
-                  <th>Assigned Employees</th>
+                  <th>Employee ID</th>
+                  <th>Employee Name</th>
                   <th>P-Level</th>
                 </thead>
                 <tbody>
                   <tr ng-repeat="user in assignedUsers">
+                    <td>{{user.id}}</td>
                     <td>{{user.firstName}} {{user.lastName}}</td>
                     <td>{{user.pLevel}}</td>
                   </tr>
