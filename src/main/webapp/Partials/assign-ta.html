@@ -60,17 +60,17 @@
   </div>-->
     <script type="text/ng-template" id="myModalContent.html">
       <div class="modal-header">
-          <h5>Do you want to assign this Timesheet Approver to this employee?</h5>
+          <h3>Confirm Assignment</h3>
       </div>
-      <div class="modal-body">
-          <div>
-            <span style="margin-right: 20px;"><strong>Name: {{item.firstName}} {{item.lastName}}</strong></span>
-            <span><strong>Pay Grade:</strong> {{item.pLevel}}</span>
-          </div>
+      <div class="modal-body" style="text-align: center">
+          <h5 style="margin: 25px 0;font-weight:bold">{{item.firstName}} {{item.lastName}}</h5>
+          <h4>As The Timesheet Approver</h4>
       </div>
       <div class="modal-footer">
-          <button class="btn btn-primary" ng-click="ok()">OK</button>
-          <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+          <button class="btn btn-lg btn-success" ng-click="ok()">OK
+          </button>
+          <button class="btn btn-lg btn-danger" ng-click="cancel()">Cancel
+          </button>
       </div>
   </script>  
 </content>
