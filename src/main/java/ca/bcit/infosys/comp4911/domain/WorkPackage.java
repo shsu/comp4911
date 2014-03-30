@@ -18,7 +18,7 @@ import java.util.List;
 public class WorkPackage implements Serializable
 {
    @Id
-   @Column(updatable = false, nullable = false)
+   @Column(updatable = false, nullable = false, name = "WORKPACKAGE_NUMBER")
    @Size(min = 7, max = 250,message="WorkPackageNumber size must be between 7 and 250.")
    @NotBlank(message="WorkPackageNumber can not be blank.")
    private String workPackageNumber;
@@ -54,11 +54,8 @@ public class WorkPackage implements Serializable
    @Temporal(TemporalType.DATE)
    private Date endDate;
 
-   @OneToMany
-   private List<Effort> estimateToCompletion;
-
-   @OneToMany
-   private List<Effort> estimateAtStart;
+    @OneToMany(mappedBy="workPackage")
+    private List<Effort> estimateAtStart;
 
    @Column
    @Min(value=0,message="ProjectNumber can not be smaller than 0.")
@@ -169,7 +166,7 @@ public class WorkPackage implements Serializable
 
    public WorkPackage(String workPackageNumber, String workPackageName,
          Date issueDate, String progressStatus, Date endDate,
-         int projectNumber, List<Effort> estimateAtStart, List<Effort> estimateToCompletion)
+         int projectNumber, List<Effort> estimateAtStart)
    {
       super();
       this.workPackageNumber = workPackageNumber;
@@ -179,8 +176,6 @@ public class WorkPackage implements Serializable
       this.endDate = endDate;
       this.projectNumber = projectNumber;
       this.estimateAtStart = estimateAtStart;
-      this.estimateToCompletion = estimateToCompletion;
-
       this.description = "";
       this.completeDate = issueDate;
       this.startDate = issueDate;
@@ -211,7 +206,6 @@ public class WorkPackage implements Serializable
 	      this.endDate = null;
 	      this.projectNumber = projectNumber;
 	      this.estimateAtStart = new ArrayList<Effort>();
-	      this.estimateToCompletion = new ArrayList<Effort>();
 	      this.description = "";
 	      this.completeDate = issueDate;
 	      this.startDate = issueDate;
@@ -229,16 +223,6 @@ public class WorkPackage implements Serializable
    public void setEndDate(final Date endDate)
    {
       this.endDate = endDate;
-   }
-
-   public List<Effort> getEstimateToCompletion()
-   {
-      return this.estimateToCompletion;
-   }
-
-   public void setEstimateToCompletion(final List<Effort> estimateToCompletion)
-   {
-      this.estimateToCompletion = estimateToCompletion;
    }
 
    public List<Effort> getEstimateAtStart()
@@ -273,7 +257,6 @@ public class WorkPackage implements Serializable
          result += ", description: " + description;
       if (progressStatus != null && !progressStatus.trim().isEmpty())
          result += ", progressStatus: " + progressStatus;
-      result += ", estimateToCompletion: " + estimateToCompletion;
       result += ", estimateAtStart: " + estimateAtStart;
       result += ", projectNumber: " + projectNumber;
       return result;

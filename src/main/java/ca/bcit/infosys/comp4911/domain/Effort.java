@@ -1,13 +1,6 @@
 package ca.bcit.infosys.comp4911.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 
 import java.io.Serializable;
@@ -31,6 +24,10 @@ public class Effort implements Serializable {
     @Column
     @Min(value = 0, message="PersonDays can not be smaller than 0.")
     private int personDays;
+
+    @ManyToOne
+    @JoinColumn(name="WP_ID")
+    private WorkPackage workPackage;
 
     public Effort(PLevel pLevel, int personDays) {
 		super();
