@@ -41,8 +41,6 @@ public class SampleData {
     @EJB
     private WorkPackageDao workPackageDao;
 
-    List<Effort> remainingEstimate= new ArrayList<Effort>();
-    List<Effort> beginningEstimate = new ArrayList<Effort>();
 
     public SampleData() {
     }
@@ -53,10 +51,10 @@ public class SampleData {
         generateProjects();
         generatePayRates();
         generateProjectAssignments();
-        generateWorkPackages();
-        generateWorkPackageAssignments();
-        generateTimesheets();
-        generateWorkPackageStatusReports();
+//        generateWorkPackages();
+//        generateWorkPackageAssignments();
+//        generateTimesheets();
+//        generateWorkPackageStatusReports();
     }
 
     private void generateUsers() {
@@ -277,6 +275,9 @@ public class SampleData {
     }
 
     private void generateWorkPackages() {
+
+        List<Effort> remainingEstimate= new ArrayList<Effort>();
+        List<Effort> beginningEstimate = new ArrayList<Effort>();
         remainingEstimate.add(new Effort(PLevel.P1, 100));
         remainingEstimate.add(new Effort(PLevel.P2, 100));
         remainingEstimate.add(new Effort(PLevel.P3, 100));
@@ -486,6 +487,8 @@ public class SampleData {
     }
 
     private void generateWorkPackageStatusReports(){
+
+        List<Effort> remainingEstimate= new ArrayList<Effort>();
         remainingEstimate.clear();
         remainingEstimate.add(new Effort(PLevel.P1, 50));
         remainingEstimate.add(new Effort(PLevel.P2, 50));

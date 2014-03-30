@@ -45,8 +45,8 @@ public class ProjectReport {
     private PayRateDao payRateDao;
 
     @GET
-    @Path("{id}")
-    public Response getProjectReport(
+    @Path("/matrix/{id}")
+    public Response getProjectMatrixReport(
             @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
             @PathParam("id") final Integer projectId){
@@ -65,7 +65,7 @@ public class ProjectReport {
         project = projectDao.read(projectId);
         reportHelper = new ReportHelper(project.getProjectNumber(), project.getProjectName());
 
-        latestTwentyReports = wpsrDao.getLatestByProject(projectId);
+        latestTwentyReports = wpsrDao.getLatestTwentyByProject(projectId);
         Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
         while(wpsrIterator.hasNext()) {
@@ -84,6 +84,21 @@ public class ProjectReport {
 
         return SH.responseWithEntity(200, report.toString());
     }
+
+//    @GET
+//    @Path("/budget/{id}")
+//    public Response getProjectBudgetReport(
+//            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+//            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+//            @PathParam("id") final Integer projectId) {
+//        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+//
+//        ArrayList<WorkPackageStatusReport> mostRecentReports = (ArrayList)wpsrDao.getAllByProject(projectId);
+//
+//        HashMap<String, WorkPackageStatusReport> oneStatusReportPerWP = getSingleWPSRPerWP(mostRecentReports);
+//
+//
+//    }
 
     /**
      * This method is used to access the current PayRate for the work packages year. Once the PayRate for the given
@@ -149,6 +164,24 @@ public class ProjectReport {
                 reportHelperRow.incrementDS(hours);
                 break;
         }
+    }
+
+    private HashMap<String, WorkPackageStatusReport> getSingleWPSRPerWP(List<WorkPackageStatusReport> allWPSR) {
+        HashMap<String, WorkPackageStatusReport> singleWPSRPerWP = new HashMap<String,
+                WorkPackageStatusReport>();
+        WorkPackageStatusReport currentWPSR;
+        Iterator<WorkPackageStatusReport> wpsrIterator = allWPSR.listIterator();
+        while(wpsrIterator.hasNext()){
+            currentWPSR = wpsrIterator.next();
+            if(singleWPSRPerWP.containsKey(currentWPSR.getWorkPackageNumber())){
+                continue;
+            }
+            else {
+                singleWPSRPerWP.put(currentWPSR.getWorkPackageNumber(), currentWPSR);
+            }
+
+        }
+        return singleWPSRPerWP;
     }
     
 }
