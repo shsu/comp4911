@@ -62,6 +62,29 @@ public class WorkPackageAssignmentResource {
             return SH.response(201);
     }
 
+    @GET
+    @Path("{user_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getWorkPackageAssignmentByUserAndWorkPackage(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("user_id") Integer userId,
+            @PathParam("id") String wpNumber) {
+        userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        User user = userDao.read(userId);
+        if (user == null) {
+            return SH.response(404);
+        }
+
+        WorkPackage wp = workPackageDao.read(wpNumber);
+        if (wp == null) {
+            return SH.response(404);
+        }
+
+        return SH.responseWithEntity(200, workPackageAssignmentDao.getByUserAndWorkPackage(wpNumber, userId));
+    }
+
     @PUT
     @Path("{user_id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -69,7 +92,7 @@ public class WorkPackageAssignmentResource {
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("user_id") Integer user_id,
-      @PathParam("wp_id") String wpId,
+      @PathParam("id") String wpId,
       final WorkPackageAssignment workPackageAssignment) {
         userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 

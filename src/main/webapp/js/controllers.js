@@ -3,20 +3,84 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
 /*
     ADD ENGINEER CONTROLLER
 */
-cascadiaControllers.controller('EngineerController', ['$scope', 'GrowlResponse', '$routeParams', 'Restangular',
-  function($scope, GrowlResponse, $params, Restangular) {
+cascadiaControllers.controller('EngineerController', ['$scope', '$modal', 'GrowlResponse', '$routeParams', 'Restangular',
+  function($scope, $modal, GrowlResponse, $params, Restangular) {
     $scope.param = $params.id;
+    $scope.package = {};
+    $scope.quantity = 20;
+    $scope.engineers = [];
+    $scope.selectedEngineer = {};
 
     var base = Restangular.one('work_packages/' + $scope.param);
 
     base.get().then(function(response){
       $scope.package = response;
+      loadProject();
     });
+
+    var loadProject = function() {
+      Restangular.one('projects', $scope.package.projectNumber).get().then(function(response){
+        $scope.project = response;
+      })
+    }
 
     Restangular.all('users').getList().then(function(response){
       $scope.engineers = response;
     });
 
+    $scope.search = function(item) {
+      if (item.id.toString().indexOf($scope.query) != -1 || item.firstName.indexOf($scope.query) != -1 ||
+                item.lastName.indexOf($scope.query) != -1 || item.username.indexOf($scope.query) != -1 ||
+                item.pLevel == $scope.query || !$scope.query) {
+        return true;
+      }
+      return false;
+    }
+
+    $scope.select = function(user) {
+      $scope.selectedEngineer = user;
+    }
+
+    $scope.open = function () {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: ModalInstanceCtrl,
+        resolve: {
+          item: function () {
+            return $scope.selectedEngineer;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        var base = Restangular.one('work_packages', $scope.package.workPackageNumber);
+        base.one('assignments', $scope.selectedEngineer.id).get().then(function(response){
+          if(response.length){
+            wpAssignment = response[0];
+            wpAssignment.responsibleEngineer = true;
+            base.one('assignments', $scope.selectedEngineer.id).customPUT(wpAssignment).then(function(response){
+              GrowlResponse(response)
+            }, function(response){
+              GrowlResponse(response)
+            })
+          } else {
+            var data = {
+              workPackageNumber: $scope.package.workPackageNumber,
+              userId: $scope.selectedEngineer.id,
+              responsibleEngineer: true
+            }
+            base.one('assignments').post(data).then(function(response){
+              GrowlResponse(response)
+            }, function(response){
+              GrowlResponse(response)
+            })
+          }
+        })
+      }, function(){
+          console.log("dismissed")
+      });
+    }
   }
 ]);
 
@@ -240,26 +304,6 @@ cascadiaControllers.controller('APController', ['$scope', '$location', 'Restangu
   }
 ]);
 
-
-
-/*
-    ASSIGN RESPONSIBLE ENGINEER CONTROLLER
-*/
-cascadiaControllers.controller('ARController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
-  function($scope, $location, Restangular, $params, GrowlResponse){
-    $scope.param = $params.id;
-
-    Restangular.one('work_packages/' + $scope.param).get().then(function(response){
-      $scope.package = response;
-    });
-
-    Restangular.all('users').getList().then(function(response){
-      $scope.engineers = response;
-    });
-
-    // code for work package assignment - /work_packages/$scope.param/assignments?
-  }
-]);
 
 /*
     ASSIGN TIMESHEET APPROVER CONTROLLER
@@ -913,10 +957,28 @@ cascadiaControllers.controller('ProjectDetailsController', ['$scope', '$routePar
     var param = $params.id;
 
     $scope.project = {}
+    $scope.assignedUsers = [];
+    $scope.quantity = 20;
 
     Restangular.one('projects', param).get().then(function(response){
       $scope.project = response;
-    })
+      loadUsers();
+    });
+
+    var loadUsers = function() {
+      Restangular.all('projects/' + $scope.project.projectNumber + '/users').getList().then(function(response){
+        $scope.assignedUsers = response;
+      })
+    }
+
+    $scope.search = function(item) {
+      if (item.id.toString().indexOf($scope.query) != -1 || item.firstName.indexOf($scope.query) != -1 ||
+                item.lastName.indexOf($scope.query) != -1 || item.username.indexOf($scope.query) != -1 ||
+                item.pLevel == $scope.query || !$scope.query) {
+        return true;
+      }
+      return false;
+    }
   }
 ]);
 

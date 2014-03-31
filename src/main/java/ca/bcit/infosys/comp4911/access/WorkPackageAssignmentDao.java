@@ -43,7 +43,7 @@ public class WorkPackageAssignmentDao {
 
     // creating a list even though it is a single result, avoids an exception being thrown on no entity found.
     public List<WorkPackageAssignment> getByUserAndWorkPackage(final String workPackageNumber, final int userId) {
-        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from WorkPackageAssignment w"
+        TypedQuery<WorkPackageAssignment> query = em.createQuery("select DISTINCT w from WorkPackageAssignment w"
                 + " where w.workPackageNumber = :workPackageNumber and w.userId = :userId",
                 WorkPackageAssignment.class);
         query.setParameter("workPackageNumber", workPackageNumber);
