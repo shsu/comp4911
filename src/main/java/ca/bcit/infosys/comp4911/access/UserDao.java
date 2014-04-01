@@ -1,6 +1,7 @@
 package ca.bcit.infosys.comp4911.access;
 
 import ca.bcit.infosys.comp4911.domain.User;
+import ca.bcit.infosys.comp4911.helper.SH;
 import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
@@ -20,8 +21,13 @@ public class UserDao {
 
     public void create(final User user, final boolean validate) {
         if (!validate || ValidationHelper.validateEntity(user)) {
-            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-            em.persist(user);
+            if(!doesUsernameExist(user.getUsername())){
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+                em.persist(user);
+            }
+            else {
+                SH.responseBadRequest("Username exists already!");
+            }
         }
     }
 
@@ -88,6 +94,14 @@ public class UserDao {
         query.setParameter("userId", userId);
         List<User> peons = query.getResultList();
         if(peons.size() > 0) { return true; }
+        return false;
+    }
+
+    public boolean doesUsernameExist(String username) {
+        TypedQuery<User> query = em.createQuery("select u from User u" +
+                " where u.username = :username", User.class);
+        query.setParameter("username", username);
+        if(query.getResultList().size() > 0 ) { return true; }
         return false;
     }
 
