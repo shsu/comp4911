@@ -26,7 +26,7 @@ var cascadiaDirectives = angular.module('cascadiaDirectives', []);
 	  }
 	});
 
-	cascadiaDirectives.directive('lowercase', function() {
+	cascadiaDirectives.directive('totenth', function() {
 	    return {
 	        restrict: 'A',
 	        require: 'ngModel',

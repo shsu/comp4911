@@ -1406,15 +1406,14 @@ cascadiaControllers.controller('WPStatusReportController', ['$scope', '$routePar
 /*
     CREATE USER CONTROLLER
 */
-cascadiaControllers.controller('CreateUserController', ['$scope', 'Restangular', 'GrowlResponse', '$location',
-  function($scope, Restangular, GrowlResponse, $location){
+cascadiaControllers.controller('CreateUserController', ['$scope', '$rootScope', 'Restangular', 'GrowlResponse', '$location',
+  function($scope, $rootScope, Restangular, GrowlResponse, $location){
 
     $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
     $scope.statuses = [ 'Active', 'Inactive' ];
     
     $scope.cUser = {}
-    $scope.cUser.supervisorUserID = $scope.user.id;
-
+    
     $scope.save = function () {
 
       if(!($scope.createUserForm.$valid)) {

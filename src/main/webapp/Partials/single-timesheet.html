@@ -33,14 +33,14 @@
                 <select ng-model="r.workPackageNumber" ng-hide="timesheet.signed" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select>
                 <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
               </td>
-              <td>{{r.saturday}}</td>
-              <td>{{r.sunday}}</td>
-              <td>{{r.monday}}</td>
-              <td>{{r.tuesday}}</td>
-              <td>{{r.wednesday}}</td>
-              <td>{{r.thursday}}</td>
-              <td>{{r.friday}}</td>
-              <td>{{r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday}}</td>
+              <td><span ng-bind="r.saturday" totenth /></td>
+              <td><span ng-bind="r.sunday" totenth /></td>
+              <td><span ng-bind="r.monday" totenth /></td>
+              <td><span ng-bind="r.tuesday" totenth /></td>
+              <td><span ng-bind="r.wednesday" totenth /></td>
+              <td><span ng-bind="r.thursday" totenth /></td>
+              <td><span ng-bind="r.friday" totenth /></td>
+              <td>{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10 }}</td>
             </tr>
           </tbody>
         </table>
