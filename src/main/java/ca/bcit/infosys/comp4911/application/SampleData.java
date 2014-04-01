@@ -316,7 +316,7 @@ public class SampleData {
         endDate = setDate(4, 17, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"B333222", "Something important", issueDate, "0", endDate, 12345, beginningEstimate),false);
+        		"B333223", "Something important", issueDate, "0", endDate, 12345, beginningEstimate),false);
         
         issueDate = setDate(11, 10, 2013);
         endDate = setDate(11, 28, 2013);
@@ -346,14 +346,20 @@ public class SampleData {
         endDate = setDate(6, 23, 2017);
         
         workPackageDao.create(new WorkPackage(
-        		"ZZ33422", "Solve world hunger", issueDate, "0", endDate, 99977, beginningEstimate),false);
+        		"ZZ33423", "Solve world hunger", issueDate, "0", endDate, 99977, beginningEstimate),false);
     }
 
     private void generateWorkPackageAssignments() {
 
         List<WorkPackage> packages = workPackageDao.getAll();
         int qUserId = userDao.getAll().get(0).getId();
+        int jedwardUserId = userDao.getAll().get(1).getId();
         int awongUserId = userDao.getAll().get(2).getId();
+        int bnelsonUserId = userDao.getAll().get(3).getId();
+        int csandhuUserId = userDao.getAll().get(4).getId();
+        int zcantwellUserId = userDao.getAll().get(5).getId();
+        int cparkUserId = userDao.getAll().get(6).getId();
+        int gsmithUserId = userDao.getAll().get(7).getId();
 
         for(int i = 0; i < 5; i++)
         {
@@ -368,31 +374,52 @@ public class SampleData {
             Date activateDate = setDate(1, 2, 2014);
             Date deactivateDate = setDate(1, 10, 2014);
             
-            WorkPackageAssignment assignment = new WorkPackageAssignment("A1112222", qUserId, false, true, activateDate, deactivateDate);
+            WorkPackageAssignment assignment = new WorkPackageAssignment("A111222", qUserId, false, true, activateDate, deactivateDate);
             workPackageAssignmentDao.create(assignment, false);
             
             activateDate = setDate(2, 6, 2014);
             deactivateDate = setDate(4, 12, 2014);
             
-            assignment = new WorkPackageAssignment("B3332222", qUserId, false, true, activateDate, deactivateDate);
+            assignment = new WorkPackageAssignment("B333222", qUserId, false, true, activateDate, deactivateDate);
             workPackageAssignmentDao.create(assignment, false);
             
             activateDate = setDate(1, 14, 2014);
             deactivateDate = setDate(4, 17, 2014);
             
-            assignment = new WorkPackageAssignment("B3332223", qUserId, false, true, activateDate, deactivateDate);
+            assignment = new WorkPackageAssignment("B333223", qUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("B333223", jedwardUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("B333223", awongUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("B333223", bnelsonUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("B333223", csandhuUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("B333223", zcantwellUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("B333223", cparkUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("B333223", gsmithUserId, false, true, activateDate, deactivateDate);
             workPackageAssignmentDao.create(assignment, false);
             
             activateDate = setDate(11, 10, 2013);
             deactivateDate = setDate(11, 28, 2013);
             
-            assignment = new WorkPackageAssignment("A3334444", awongUserId, true, true, activateDate, deactivateDate);
+            assignment = new WorkPackageAssignment("A333444", awongUserId, true, true, activateDate, deactivateDate);
             workPackageAssignmentDao.create(assignment, false);
             
             activateDate = setDate(11, 12, 2014);
             deactivateDate = setDate(12, 8, 2014);
             
-            assignment = new WorkPackageAssignment("C3332222", awongUserId, true, true, activateDate, deactivateDate);
+            assignment = new WorkPackageAssignment("C333222", awongUserId, true, true, activateDate, deactivateDate);
             workPackageAssignmentDao.create(assignment, false);
         }
 
@@ -459,7 +486,21 @@ public class SampleData {
         
         rowCollection.add(wp1Row2);
         rowCollection.add(wp1Row3);
-        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(3, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(4, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(5, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(6, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(7, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(8, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
         timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
         
@@ -516,6 +557,5 @@ public class SampleData {
         effortDao.create(new Effort(PLevel.P3, 2500), true);
         effortDao.create(new Effort(PLevel.P4, 2600), true);
         effortDao.create(new Effort(PLevel.P5, 2700), true);
-
     }
 }
