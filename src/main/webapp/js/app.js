@@ -19,7 +19,6 @@ cascadia.config(['$routeProvider',
         when('/assign-employee-wp/:id', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html'}).
         when('/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/assign-manager.html'}).
         when('/assign-project', {controller: 'PackageController', templateUrl:'Partials/assign-project.html'}).
-        when('/assign-re', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
         when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
         when('/create-wp/:id', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html'}).
         when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
@@ -42,9 +41,10 @@ cascadia.config(['$routeProvider',
         when('/project-summary', {controller: 'ProjectSummaryController', templateUrl:'Partials/project-summary.html'}).
         when('/rate-sheet', {controller: 'RateSheetController', templateUrl:'Partials/rate-sheet.html'}).
         when('/timesheet-approval', {controller: 'TAController', templateUrl:'Partials/timesheet-approval.html', permission:'TimesheetApprover'}).
+        when('/timesheet-approval/:id', {controller: 'TADetailsController', templateUrl:'Partials/single-timesheet.html', permission:'TimesheetApprover'}).
         when('/timesheet-management', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html'}).
         when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet.html'}).
-        when('/timesheet/:id', {controller: 'TADetailsController', templateUrl:'Partials/single-timesheet.html'}).
+        when('/timesheet/:id', {controller: 'TimesheetCorrectionController', templateUrl:'Partials/timesheet-correction.html'}).
         when('/unauthorized', {controller: 'UnauthorizedController', templateUrl:'Partials/unauthorized.html'}).
         when('/user', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
         when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management.html', permission: 'Supervisor'}).

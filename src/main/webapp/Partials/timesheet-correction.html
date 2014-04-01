@@ -1,0 +1,68 @@
+<content>
+  <div ng-controller="TimesheetCorrectionController">
+    <div class="row">
+      <h1 class="secondary col-xs-4">TimeSheet</h1>
+      <ul class="list-inline col-xs-8 emp-info">
+        <li>Emp ID: {{user.id}}</li>
+        <li>Emp Name: {{user.firstName}} {{user.lastName}}</li>
+      </ul>
+    </div>
+    <div class="row">
+      <div class="table-responsive timesheet">
+        <table class="table table-hover table-striped table-bordered">
+          <tbody>
+            <tr>
+              <th>Project No</th>
+              <th>WP No</th>
+              <th>Sat</th>
+              <th>Sun</th>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Thu</th>
+              <th>Fri</th>
+              <th>Total</th>
+              <th>Delete</th>
+            </tr>
+            <tr ng-repeat="r in timesheet.timesheetRows">
+              <td>
+                <select ng-model="r.projectNumber" ng-hide="timesheet.signed" ng-change="listWP(r.projectNumber)" ng-options="p for p in projectNumbers"></select>
+                <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
+              </td>
+              <td>
+                <select ng-model="r.workPackageNumber" ng-hide="timesheet.signed" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select>
+                <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
+              </td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.saturday"></input></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.sunday"></input></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.monday"></input></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.tuesday"></input></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.wednesday"></input></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday"></input></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday"></input></td>
+              <td>{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10}}</td>
+              <td><span ng-click="delete($index)" class="cursor-hand">Delete</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <footer>
+          <div class="row"><p class="col-xs-4">Overtime: {{timesheet.overTime}} </p></div>
+          <div class="row">
+            <p class="col-xs-4">Flextime: {{user.totalFlexTime}} </p>
+            <div class="col-xs-2 col-xs-offset-6"><button class="btn btn-success btn-block" ng-click="add()">Add new row</button></div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <footer class="row">
+      <div class="col-xs-6">
+        <p><input type="checkbox" ng-model="default" /><span> Make Default</span></p>
+        <p><input type="checkbox" ng-model="timesheet.signed" /><span> Signature</span></p>
+      </div>
+      <div class="col-xs-2 col-xs-offset-4">
+        <button class="btn btn-primary btn-block" ng-click="save()">Save</button>
+        <button class="btn btn-primary btn-block" ng-click="submit()">Submit</button>
+      </div>    
+    </footer>
+  </div>
+</content>

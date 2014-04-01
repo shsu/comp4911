@@ -7,10 +7,9 @@
           <tr ng-repeat="timesheet in timesheets">
             <td>Week No: {{timesheet.weekNumber}}</td>
             <td>
-              <span ng-show="timesheet.isApproved">Accepted</span>
               <span ng-hide="timesheet.isApproved">Declined</span>
             </td>
-            <td><a class="cursor-hand" ng-click="delete(timesheet)"> Delete</a></td>
+            <td><a ng-href="#/timesheet/{{timesheet.id}}">Correct</a></td>
           </tr>
         </tbody>
       </table>
