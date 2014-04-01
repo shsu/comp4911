@@ -25,3 +25,22 @@ var cascadiaDirectives = angular.module('cascadiaDirectives', []);
 	    }
 	  }
 	});
+
+	cascadiaDirectives.directive('lowercase', function() {
+	    return {
+	        restrict: 'A',
+	        require: 'ngModel',
+	        link: function(scope, element, attr, ngModel) {
+
+	            function fromUser(text) {
+	                return (text || '') * 10
+	            }
+
+	            function toUser(text) {
+	                return (text || '') / 10;
+	            }
+	            ngModel.$parsers.push(fromUser);
+	            ngModel.$formatters.push(toUser);
+	        }
+	    };
+	});
