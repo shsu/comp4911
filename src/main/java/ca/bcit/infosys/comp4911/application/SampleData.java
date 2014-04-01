@@ -516,6 +516,25 @@ public class SampleData {
         tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 11, 2014, 0, true, true, true);
         timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
+        
+        // Rudy: adding new sample timesheet data
+        // User1, Week13 : new TimesheetRows
+        TimesheetRow wp1Row4 = new TimesheetRow(12345, "A1112222", 80, 80, 80, 80, 80, 40, 0, null,
+                userDao.read(1).getpLevel());
+        TimesheetRow wp1Row5 = new TimesheetRow(12345, "B3332222", 80, 0, 0, 0, 0, 0, 0, null,
+                userDao.read(1).getpLevel());
+        TimesheetRow wp1Row6 = new TimesheetRow(12345, "B3332223", 0, 50, 60, 30, 50, 30, 0, null,
+                userDao.read(1).getpLevel());
+        
+        // User1, Week13: Adding TimesheetRows to RowCollection
+        rowCollection.add(wp1Row4);
+        rowCollection.add(wp1Row5);
+        rowCollection.add(wp1Row6);
+        
+        // User1, Week13: Making the new Timesheet
+        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 13, 2014, 0, true, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        rowCollection.clear();
     }
 
     private void generateWorkPackageStatusReports(){
