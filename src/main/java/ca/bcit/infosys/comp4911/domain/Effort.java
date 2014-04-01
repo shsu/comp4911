@@ -29,6 +29,9 @@ public class Effort implements Serializable {
     @JoinColumn(name="WP_ID")
     private WorkPackage workPackage;
 
+
+    private int workPackageId;
+
     public Effort(PLevel pLevel, int personDays) {
 		super();
 		this.pLevel = pLevel;

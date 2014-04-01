@@ -2,41 +2,49 @@
   <h1 class="secondary">Work Package Status Report</h1>
   <div ng-controller="WPStatusReportController">
 	  <div class="row">
-	    <p class="col-lg-3">Project No. 
-	      <select ng-init="loadProjects()" ng-change="loadWorkPackages()" ng-model="project" ng-options="p.projectNumber for p in projects">
-	      </select>
-	      Work Package No:
-	      <select ng-model="workpackage" ng-options="wp.workPackageNumber for wp in workpackages">
-	      </select>
-	    </p>
-	    <p class="col-lg-4">Project Name: {{project.projectName}}</p>
-	    <p class="col-lg-4">Budget: {{project.allocatedBudget | currency: amount: symbol}}</p>
-	  </div>
-	  <div class="row">
-	  	<p>
-	  		Report No.
-	  		<input type="text" ng-model="reportNumber" />
-	  	</p>
+	    <p class="col-lg-3">Project No. {{package.projectNumber}}</p>
+    </div>
+    <div class="row">
+      <p class="col-lg-4">
+	       Work Package No: {{package.workPackageNumber}}
+     </p>
+     <p class="col-lg-4">
+       Work Package Name: {{package.workPackageName}}
+      </p>
+    <p class="col-lg-4">Budget:</p>
 	  </div>
 		<div class="row">
       <div class="col-md-6">
-      		Report Date:
-          <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-            <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-            </span>
-          </p>
-      </div>
-      <div class="col-md-6">
-      	Reporting Period:
-          <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-            <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-            </span>
-          </p>
+      		Report Date: <input ng-model="reportDate" type="date" />
       </div>
     </div>
-	</div>
+    <div class="row">
+      <div class="col-lg-4">
+        <table class="table table-hover table-nonfluid table-bordered">
+          <tbody>
+            <tr>
+              <th>Pay Grade</th>
+              <th>Person Days</th>
+            </tr>
+            <tr ng-repeat="effort in listOfEffort">
+              <td>{{effort.pLevel}}</td><td><input type="number" ng-model="effort.personDays" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-lg-6">
+        <p>Work Accomplished:</p>
+        <textarea ng-model="workAccomplished" rows="4" cols="50"></textarea>
+        <p>Problem Encountered</p>
+        <textarea ng-model="problemEncountered" rows="4" cols="50"></textarea>
+        <p>Comment</p>
+        <textarea ng-model="comment" rows="4" cols="50"></textarea>
+        <p>Problem Anticipated</p>
+        <textarea ng-model="problemAnticipated" rows="4" cols="50"></textarea>
+        <p>Work Planned</p>
+        <textarea ng-model="workPlanned" rows="4" cols="50"></textarea>
+        <button ng-click="submit()">Submit</button>
+      </div>
+    </div>
+  </div>
 </content>

@@ -1293,9 +1293,70 @@ cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', 
 /*
     WORK PACKAGE STATUS REPORT CONTROLLER
 */
-cascadiaControllers.controller('WPStatusReportController', ['$scope', 'Restangular',
-  function($scope, Restangular){
-    
+cascadiaControllers.controller('WPStatusReportController', ['$scope', '$routeParams', 'Restangular',
+  function($scope, $params, Restangular){
+    var param = $params.id;
+    $scope.package = {};
+    $scope.problemEncountered;
+    $scope.problemAnticipated;
+    $scope.workPlanned;
+    $scope.comment;
+    $scope.workAccomplished;
+
+
+    Restangular.one('work_packages', param).get().then(function(response){
+      $scope.package = response;
+    })
+
+    $scope.listOfEffort = [
+          {
+            pLevel: "P1",
+            personDays: 0
+          },
+          {
+            pLevel: "P2",
+            personDays: 0
+          },
+          {
+            pLevel: "P3",
+            personDays: 0
+          },
+          {
+            pLevel: "P4",
+            personDays: 0
+          },
+          {
+            pLevel: "P5",
+            personDays: 0
+          },
+          {
+            pLevel: "DS",
+            personDays: 0
+          },
+          {
+            pLevel: "SS",
+            personDays: 0
+          }
+        ]
+
+      $scope.submit = function() {
+        var data = {
+          reportDate: $scope.reportDate,
+          workPackageNumber: $scope.package.workPackageNumber,
+          comment: $scope.comment,
+          workAccomplished: $scope.workAccomplished,
+          problemEncountered: $scope.problemEncountered,
+          problemAnticipated: $scope.problemAnticipated,
+          workPlanned: $scope.workPlanned,
+          estimatedWorkRemainingInPD: $scope.listOfEffort
+        }
+
+        Restangular.one('work_packages/' + $scope.package.workPackageNumber + '/status_reports').customPOST(data).then(function(response){
+          GrowlResponse(response)
+        }, function(response){
+          GrowlResponse(response)
+        })
+      }
   }
 ]);
 
