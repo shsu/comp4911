@@ -58,7 +58,7 @@ public class SampleData {
         generateWorkPackages();
         generateWorkPackageAssignments();
         generateTimesheets();
-        generateWorkPackageStatusReports();
+        //generateWorkPackageStatusReports();
     }
 
     private void generateUsers() {
@@ -298,13 +298,13 @@ public class SampleData {
         		"A111222", "Implement domain models", issueDate, "100", endDate, 12345, test),false);
 
 		// Create 200 workpackages for Project Barbosa
-        for(int i = 0; i < 200; i++) {
-            if(i < 10) { workPackageNumber = "A11110" + i;}
-            if(i >= 10 && i < 100) { workPackageNumber = "A1111" + i; }
-            if(i >= 100) { workPackageNumber = "A111" + i; }
-            workPackageDao.create(new WorkPackage(
-                workPackageNumber, wpName, issueDate, "100", endDate, 55522, beginningEstimate),false);
-        }
+//        for(int i = 0; i < 200; i++) {
+//            if(i < 10) { workPackageNumber = "A11110" + i;}
+//            if(i >= 10 && i < 100) { workPackageNumber = "A1111" + i; }
+//            if(i >= 100) { workPackageNumber = "A111" + i; }
+//            workPackageDao.create(new WorkPackage(
+//                workPackageNumber, wpName, issueDate, "100", endDate, 55522, beginningEstimate),false);
+//        }
 
         issueDate = setDate(2, 5, 2014);
         endDate = setDate(4, 12, 2014);
@@ -509,59 +509,63 @@ public class SampleData {
         rowCollection.add(wp1Row3);
         tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
         timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(3, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(4, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(5, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(6, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(7, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(8, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(3, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(4, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(5, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(6, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(7, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        tempTimesheet = new Timesheet(8, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        rowCollection.clear();
-        
-        rowCollection.add(wp2Row1);
-        rowCollection.add(wp2Row2);
-        rowCollection.add(wp2Row3);
-        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 47, 2013, 0, true, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        rowCollection.clear();
-        
-        rowCollection.add(wp3Row1);
-        rowCollection.add(wp3Row2);
-        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 11, 2014, 0, true, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        rowCollection.clear();
-        
-        // Rudy: adding new sample timesheet data
-        // User2, week 13
-        TimesheetRow wp3Row3 = new TimesheetRow(99777, "ZZ334222", 25, 25, 75, 0, 40, 60, 20, null,
-                userDao.read(2).getpLevel());
-        rowCollection.add(wp3Row3);
-        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 13, 2014, 0, true, true, true);
-        timesheetDao.create(tempTimesheet,false);
-        rowCollection.clear();
+
+//        rowCollection = new ArrayList<TimesheetRow>();
+//        rowCollection.add(wp1Row1);
+//        rowCollection.add(wp2Row1);
+//        tempTimesheet = new Timesheet(2, rowCollection, 12, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(3, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(4, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(5, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(6, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(7, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(8, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(3, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(4, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(5, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(6, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(7, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        tempTimesheet = new Timesheet(8, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        rowCollection.clear();
+//
+//        rowCollection.add(wp2Row1);
+//        rowCollection.add(wp2Row2);
+//        rowCollection.add(wp2Row3);
+//        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 47, 2013, 0, true, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        rowCollection.clear();
+//
+//        rowCollection.add(wp3Row1);
+//        rowCollection.add(wp3Row2);
+//        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 11, 2014, 0, true, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        rowCollection.clear();
+//
+//        // Rudy: adding new sample timesheet data
+//        // User2, week 13
+//        TimesheetRow wp3Row3 = new TimesheetRow(99777, "ZZ334222", 25, 25, 75, 0, 40, 60, 20, null,
+//                userDao.read(2).getpLevel());
+//        rowCollection.add(wp3Row3);
+//        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 13, 2014, 0, true, true, true);
+//        timesheetDao.create(tempTimesheet,false);
+//        rowCollection.clear();
         
     }
 
