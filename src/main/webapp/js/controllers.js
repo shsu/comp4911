@@ -908,8 +908,24 @@ cascadiaControllers.controller('PCBACController', ['$scope', 'Restangular',
 /*
     PCPR CONTROLLER
 */
-cascadiaControllers.controller('PCPRController', ['$scope', 'Restangular',
-  function($scope, Restangular){
+cascadiaControllers.controller('PCPRController', ['$scope', 'Restangular', 'GrowlResponse',
+  function($scope, Restangular, GrowlResponse){
+    $scope.statuses = [ 'Open', 'Closed'];
+    $scope.project = {};
+    $scope.projectChosen = false;
+    $scope.quantity = 20;
+    mapOfWP = {};
+    wpChanged = [];
+
+    $scope.loadProjects = function() {
+      Restangular.all('projects').getList().then(function(response){
+        $scope.projects = response;
+      });
+    }
+    
+    Restangular.one('user/projects/managed').getList().then(function(response){
+      $scope.projects = response;
+    });
 
   }
 ]);
