@@ -20,10 +20,6 @@
               <th class="th-narrow">Project Name</th>
               <th class="th-narrow">Allocated Budget</th>
               <th class="th-wide">Unallocated Budget</th>
-<<<<<<< HEAD
-              <th class="th-narrow">Complete Date</th>
-=======
->>>>>>> ff5c955bbae709be2c0c5028b420e21925d35ba0
               <th class="th-narrow">Issue Date</th>
               <th class="th-narrow">Client Rate</th>
               <th class="th-narrow">Project Manager</th>

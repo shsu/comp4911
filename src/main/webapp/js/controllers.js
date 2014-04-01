@@ -1202,6 +1202,35 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
       });
     }
 
+	$scope.open = function () {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: ModalInstanceCtrl,
+        resolve: {
+          item: function () {
+            return $scope.cUser;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        var user = $scope.cUser;
+      
+        persist(user);
+      }, function(){
+        console.log("dismissed")
+      });
+
+      var persist = function(user) {
+        
+          $.growl.notice({message:"Password saved."});
+        
+      }
+    }
+
+
+
     if($rootScope.user) {
       if($rootScope.user.supervisorUserID){
         $scope.loadSupervisor();
