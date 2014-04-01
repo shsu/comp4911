@@ -111,7 +111,7 @@ public class ProjectResource {
             return SH.response(404);
         }
 
-        return SH.responseWithEntity(200, projectAssignmentDao.getAllUsers(projectNumber));
+        return SH.responseWithEntity(200, projectDao.getAllUsers(projectNumber));
     }
 
 }

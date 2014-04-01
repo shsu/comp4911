@@ -1,5 +1,6 @@
 package ca.bcit.infosys.comp4911.services;
 
+import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageStatusReportDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
@@ -28,6 +29,9 @@ public class WorkPackageResource {
 
     @EJB
     private WorkPackageStatusReportDao workPackageStatusReportDao;
+
+    @EJB
+    private WorkPackageAssignmentDao workPackageAssignmentDao;
 
     @EJB
     private UserTokens userTokens;
@@ -116,5 +120,18 @@ public class WorkPackageResource {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         return SH.responseWithEntity(200, workPackageDao.getAllByProject(projectNumber));
+    }
+
+    @GET
+    @Path("{workpackage_number}/users")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllWorkPackageAssignments(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("workpackage_number") String workPackageNumber) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        return SH.responseWithEntity(200,
+                workPackageAssignmentDao.getAllUsersByWorkPackageNumber(workPackageNumber));
     }
 }

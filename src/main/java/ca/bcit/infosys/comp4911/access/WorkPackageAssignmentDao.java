@@ -24,7 +24,7 @@ public class WorkPackageAssignmentDao {
         }
     }
 
-    public WorkPackageAssignment read ( final int wpAssignmentID)
+    public WorkPackageAssignment read ( final Integer wpAssignmentID)
     {
         return em.find(WorkPackageAssignment.class, wpAssignmentID);
     }
@@ -43,7 +43,7 @@ public class WorkPackageAssignmentDao {
 
     // creating a list even though it is a single result, avoids an exception being thrown on no entity found.
     public List<WorkPackageAssignment> getByUserAndWorkPackage(final String workPackageNumber, final int userId) {
-        TypedQuery<WorkPackageAssignment> query = em.createQuery("select w from WorkPackageAssignment w"
+        TypedQuery<WorkPackageAssignment> query = em.createQuery("select DISTINCT w from WorkPackageAssignment w"
                 + " where w.workPackageNumber = :workPackageNumber and w.userId = :userId",
                 WorkPackageAssignment.class);
         query.setParameter("workPackageNumber", workPackageNumber);
@@ -65,7 +65,7 @@ public class WorkPackageAssignmentDao {
         return query.getResultList();
     }
 
-    public List<User> getAllByWorkPackageNumber(final String workPackageNumber){
+    public List<User> getAllUsersByWorkPackageNumber(final String workPackageNumber){
         TypedQuery<User> query = em.createQuery("SELECT u FROM User u" +
                 " WHERE u.id IN (SELECT wpa.userId FROM WorkPackageAssignment wpa " +
                 " WHERE wpa.workPackageNumber = :workPackageNumber)", User.class);

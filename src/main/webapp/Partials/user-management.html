@@ -15,19 +15,16 @@
             <th class="th-narrow">Emp ID</th>
             <th class="th-narrow">Emp Name</th>
             <th class="th-narrow">User Name</th>
-            <th class="th-wide">Assign to Supervisor</th>
+            <th class="th-narrow">Supervisor</th>
             <th class="th-narrow">Labour Grade</th>
           </tr>
-          <tr ng-click="select(u)" ng-repeat="u in users | filter: search">
-            <td><a href="#/users/{{u.id}}">{{u.id}}</td>
+          <tr ng-click="select(u)" ng-repeat="u in users | filter: search | limitTo: quantity">
+            <td><a href="#/users/{{u.id}}">{{u.id}}</a></td>
             <td>{{u.firstName}} {{u.lastName}}</td>
             <td>{{u.username}}</td>
             <td>
-              <a href="#/assign-supervisor/{{u.id}}" ng-hide="hasSupervisor(u)">Assign</a>
-                <span ng-show="hasSupervisor(u)">
-                    {{supervisor.firstName}} {{supervisor.lastName}}
-                    (<a class="cursor-hand" ng-click="assignSupervisor()">Change</a>)
-                </span>
+              <a href="#/users/{{u.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor(u)">Assign</a>
+              <a href="#/users/{{u.id}}/assign-supervisor" class="cursor-hand" ng-show="hasSupervisor(u)">Change</a>
             </td>
             <td>{{u.pLevel}}</td>
           </tr>

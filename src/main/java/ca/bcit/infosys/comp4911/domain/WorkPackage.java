@@ -1,11 +1,6 @@
 package ca.bcit.infosys.comp4911.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,14 +9,16 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.lang.Override;
+import java.util.List;
 
 @Entity
 public class WorkPackage implements Serializable
 {
    @Id
-   @Column(updatable = false, nullable = false)
+   @Column(updatable = false, nullable = false, name = "WORKPACKAGE_NUMBER")
    @Size(min = 7, max = 250,message="WorkPackageNumber size must be between 7 and 250.")
    @NotBlank(message="WorkPackageNumber can not be blank.")
    private String workPackageNumber;
@@ -57,13 +54,9 @@ public class WorkPackage implements Serializable
    @Temporal(TemporalType.DATE)
    private Date endDate;
 
-   @Column
-   @Min(value=0,message="EstimateToCompletion can not be less than 0.")
-   private int estimateToCompletion;
-
-   @Column
-   @Min(value=0,message="EstimateAtStart can not be less than 0.")
-   private int estimateAtStart;
+    @OneToMany(mappedBy="workPackage", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @Size(min=1, max=7)
+    private List<Effort> estimateAtStart;
 
    @Column
    @Min(value=0,message="ProjectNumber can not be smaller than 0.")
@@ -174,7 +167,7 @@ public class WorkPackage implements Serializable
 
    public WorkPackage(String workPackageNumber, String workPackageName,
          Date issueDate, String progressStatus, Date endDate,
-         int projectNumber, int estimateAtStart, int estimateToCompletion)
+         int projectNumber, List<Effort> estimateAtStart)
    {
       super();
       this.workPackageNumber = workPackageNumber;
@@ -184,8 +177,6 @@ public class WorkPackage implements Serializable
       this.endDate = endDate;
       this.projectNumber = projectNumber;
       this.estimateAtStart = estimateAtStart;
-      this.estimateToCompletion = estimateToCompletion;
-
       this.description = "";
       this.completeDate = issueDate;
       this.startDate = issueDate;
@@ -196,9 +187,10 @@ public class WorkPackage implements Serializable
     * default issueDate to current date,
     * default progressStatus to empty string,
     * default endDate to null,
-    * defaultestimateAtStart to 0,
+    * defaultestimateAtStart to an Empty List<Effort>,
     * default 
-    * @param workPackageNumberestimateToCompletion to 0,
+    * @param workPackageNumber
+    * defailt estimateToCompletion to an empty List<Effort>,
     * default description to empty string,
     * default coompleteDate to issueDate, and
     * default startDate to issueDate
@@ -214,9 +206,7 @@ public class WorkPackage implements Serializable
 	      this.progressStatus = "";
 	      this.endDate = null;
 	      this.projectNumber = projectNumber;
-	      this.estimateAtStart = 0;
-	      this.estimateToCompletion = 0;
-
+	      this.estimateAtStart = new ArrayList<Effort>();
 	      this.description = "";
 	      this.completeDate = issueDate;
 	      this.startDate = issueDate;
@@ -236,22 +226,12 @@ public class WorkPackage implements Serializable
       this.endDate = endDate;
    }
 
-   public int getEstimateToCompletion()
-   {
-      return this.estimateToCompletion;
-   }
-
-   public void setEstimateToCompletion(final int estimateToCompletion)
-   {
-      this.estimateToCompletion = estimateToCompletion;
-   }
-
-   public int getEstimateAtStart()
+   public List<Effort> getEstimateAtStart()
    {
       return this.estimateAtStart;
    }
 
-   public void setEstimateAtStart(final int estimateAtStart)
+   public void setEstimateAtStart(final List<Effort> estimateAtStart)
    {
       this.estimateAtStart = estimateAtStart;
    }
@@ -278,7 +258,6 @@ public class WorkPackage implements Serializable
          result += ", description: " + description;
       if (progressStatus != null && !progressStatus.trim().isEmpty())
          result += ", progressStatus: " + progressStatus;
-      result += ", estimateToCompletion: " + estimateToCompletion;
       result += ", estimateAtStart: " + estimateAtStart;
       result += ", projectNumber: " + projectNumber;
       return result;

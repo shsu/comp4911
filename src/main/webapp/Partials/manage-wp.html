@@ -28,13 +28,16 @@
             <th>WP Title</th>
             <th>Assign Responsible Engineer</th>
             <th>Assign Employees</th>
-            <th>Issue Date</th>
+            <th>Issue Date</th>            
             <th>Budget</th>
             <th>Status</th>
+            <th>Status Report</th>
           </tr>
-          <tr ng-repeat="wp in workPackages | filter: query">
-            <td><a href="#/wp-details/{{wp.workPackageNumber}}" has-permission="ProjectManager">{{wp.workPackageNumber}}</a></td>
-            <td><a href="#/wp-status-report/{{wp.workPackageNumber}}" has-permission="ResponsibleEngineer">{{wp.workPackageNumber}}</a></td>
+          <tr ng-repeat="wp in workPackages | filter: query | limitTo: quantity">
+            <td>
+              <a href="#/wp-details/{{wp.workPackageNumber}}" has-permission="ProjectManager">{{wp.workPackageNumber}}</a>
+              <a href="#/wp-status-report/{{wp.workPackageNumber}}" has-permission="ResponsibleEngineer">{{wp.workPackageNumber}}</a>
+            </td>
             <td>{{wp.workPackageName}}</td>
             <td><a href="#/add-engineer/{{wp.workPackageNumber}}">Assign Responsible Engineer</a></td>
             <td><a href="#/assign-employee-wp/{{wp.workPackageNumber}}">Assign Employees</a></td>
@@ -44,6 +47,9 @@
             <td>
               <select ng-model="wp.progressStatus" ng-change="change(wp)" ng-options="s for s in statuses">
               </select>
+            </td>
+            <td>
+              <a href="#/wp-status-report/{{wp.workPackageNumber}}">Create Status Report</a></td>
             </td>
           </tr>
         </tbody>

@@ -4,6 +4,7 @@ import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
+import ca.bcit.infosys.comp4911.domain.ProjectAssignment;
 import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.domain.WorkPackage;
 import ca.bcit.infosys.comp4911.domain.WorkPackageAssignment;
@@ -23,9 +24,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-/**
- * Created by Graeme on 2/11/14.
- */
 @Path("/work_packages/{id}/assignments")
 public class WorkPackageAssignmentResource {
     @EJB
@@ -48,7 +46,7 @@ public class WorkPackageAssignmentResource {
       @PathParam("id") String id) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        return SH.responseWithEntity(200, workPackageAssignmentDao.getAllByWorkPackageNumber(id));
+        return SH.responseWithEntity(200, workPackageAssignmentDao.getAllUsersByWorkPackageNumber(id));
     }
 
     @POST
@@ -56,17 +54,35 @@ public class WorkPackageAssignmentResource {
     public Response createWorkPackageAssignment(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @PathParam("id") Integer id,
+      @PathParam("id") String id,
       final WorkPackageAssignment workPackageAssignment) {
-        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+            int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        WorkPackageAssignment update = workPackageAssignmentDao.read(id);
-        if (update == null) {
+            workPackageAssignmentDao.create(workPackageAssignment,true);
+            return SH.response(201);
+    }
+
+    @GET
+    @Path("{user_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getWorkPackageAssignmentByUserAndWorkPackage(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("user_id") Integer userId,
+            @PathParam("id") String wpNumber) {
+        userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        User user = userDao.read(userId);
+        if (user == null) {
             return SH.response(404);
         }
 
-        workPackageAssignmentDao.create(workPackageAssignment,true);
-        return SH.response(201);
+        WorkPackage wp = workPackageDao.read(wpNumber);
+        if (wp == null) {
+            return SH.response(404);
+        }
+
+        return SH.responseWithEntity(200, workPackageAssignmentDao.getByUserAndWorkPackage(wpNumber, userId));
     }
 
     @PUT
@@ -76,7 +92,7 @@ public class WorkPackageAssignmentResource {
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
       @PathParam("user_id") Integer user_id,
-      @PathParam("wp_id") String wpId,
+      @PathParam("id") String wpId,
       final WorkPackageAssignment workPackageAssignment) {
         userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 

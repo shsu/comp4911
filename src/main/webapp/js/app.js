@@ -1,10 +1,12 @@
 var cascadia = angular.module('cascadiaApp', [
     'ngRoute',
+    'ngAnimate',
     'restangular',
     'ui.bootstrap',
     'cascadiaControllers',
     'cascadiaServices',
-    'cascadiaDirectives'
+    'cascadiaDirectives',
+    'chieffancypants.loadingBar'
 ]);
 
 cascadia.config(['$routeProvider',
@@ -18,12 +20,9 @@ cascadia.config(['$routeProvider',
         when('/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/assign-manager.html'}).
         when('/assign-project', {controller: 'PackageController', templateUrl:'Partials/assign-project.html'}).
         when('/assign-re', {controller: 'ARController', templateUrl:'Partials/assign-re.html'}).
-        when('/assign-supervisor/:id', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
-        when('/assign-ta/:id', {controller: 'ATAController', templateUrl:'Partials/assign-ta.html'}).
         when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html'}).
         when('/create-wp/:id', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html'}).
         when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html'}).
-        when('/users/pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html'}).
         when('/engineer-budget', {controller: 'EngineerBudgetController', templateUrl:'Partials/engineer-budget.html'}).
         when('/login', {controller: 'LoginController', templateUrl:'Partials/login.html'}).
         when('/logout', {controller: 'LogoutController'}).
@@ -39,7 +38,7 @@ cascadia.config(['$routeProvider',
         when('/projects/new', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html', permission: 'ProjectManager'}).
         when('/projects/search', {controller: 'SearchProjectController', templateUrl:'Partials/search-project.html'}).
         when('/projects/:id', {controller: 'ProjectDetailsController', templateUrl: 'Partials/project-details.html'}).
-        when('/projects/:id/add-manager', {controller: 'ManagerController', templateUrl:'Partials/add-project-manager.html'}).
+        when('/projects/:id/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/add-project-manager.html'}).
         when('/project-summary', {controller: 'ProjectSummaryController', templateUrl:'Partials/project-summary.html'}).
         when('/rate-sheet', {controller: 'RateSheetController', templateUrl:'Partials/rate-sheet.html'}).
         when('/timesheet-approval', {controller: 'TAController', templateUrl:'Partials/timesheet-approval.html', permission:'TimesheetApprover'}).
@@ -50,10 +49,14 @@ cascadia.config(['$routeProvider',
         when('/user', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html'}).
         when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management.html', permission: 'Supervisor'}).
         when('/users/new', {controller: 'CreateUserController', templateUrl:'Partials/create-user.html'}).
+        when('/users/pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html'}).
         when('/users/:id', {controller: 'ManagedUserProfileController', templateUrl:'Partials/user-profile-managed.html'}).
+        when('/users/:id/assign-supervisor', {controller: 'ASController', templateUrl:'Partials/assign-supervisor.html'}).
+        when('/users/:id/assign-ta', {controller: 'ATAController', templateUrl:'Partials/assign-ta.html'}).
         when('/weekly-project', {controller: 'WeeklyProjectController', templateUrl:'Partials/weekly-project.html'}).
         when('/wp-details', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).
         when('/wp-details/:id', {controller: 'WPDetailsController', templateUrl:'Partials/wp-details.html'}).
+        when('/wp-status-report', {controller: 'WPStatusReportController', templateUrl:'Partials/wp-status-report.html'}).
         when('/wp-status-report/:id', {controller: 'WPStatusReportController', templateUrl:'Partials/wp-status-report.html'}).
         otherwise({redirectTo:'/'});
     }])

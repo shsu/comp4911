@@ -39,14 +39,14 @@
                 <select ng-model="r.workPackageNumber" ng-hide="timesheet.signed" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select>
                 <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
               </td>
-              <td><input type="number" step="0.1" class="form-control" min="0" max="24" ng-readonly="timesheet.signed" ng-model="r.saturday" />
-              <td><input type="number" step="0.1" class="form-control" min="0" max="24" ng-readonly="timesheet.signed" ng-model="r.sunday" /></td>
-              <td><input type="number" step="0.1" class="form-control" min="0" max="24" ng-readonly="timesheet.signed" ng-model="r.monday" /></td>
-              <td><input type="number" step="0.1" class="form-control" min="0" max="24" ng-readonly="timesheet.signed" ng-model="r.tuesday" /></td>
-              <td><input type="number" step="0.1" class="form-control" min="0" max="24" ng-readonly="timesheet.signed" ng-model="r.wednesday" /></td>
-              <td><input type="number" step="0.1" class="form-control" min="0" max="24" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
-              <td><input type="number" step="0.1" class="form-control" min="0" max="24" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
-              <td>{{r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday}}</td>
+              <td><input type="number" lowercase step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.saturday"></input></td>
+              <td><input type="number" lowercase step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.sunday"></input></td>
+              <td><input type="number" lowercase step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.monday"></input></td>
+              <td><input type="number" lowercase step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.tuesday"></input></td>
+              <td><input type="number" lowercase step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.wednesday"></input></td>
+              <td><input type="number" lowercase step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday"></input></td>
+              <td><input type="number" lowercase step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday"></input></td>
+              <td>{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10}}</td>
               <td><span ng-click="delete($index)" class="cursor-hand">Delete</span></td>
             </tr>
           </tbody>

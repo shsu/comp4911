@@ -69,11 +69,16 @@ cascadiaServices.factory('GrowlResponse', [
         $.growl.notice({message:"Operation Successful"});
       }
       else if(response.status == 400){
-          var errorMessage = response.errors[0].error;
-          for(var i = 1; i < response.errors.length; ++i) {
-            errorMessage += ('\n' + response.errors[i].error);
-          } 
-          $.growl.error({message: errorMessage})
+          if(response.data.errors){
+              var errorMessage = "";
+              for(var i = 0; i < response.data.errors.length; ++i) {
+                  errorMessage += ('\n' + response.data.errors[i].error);
+              }
+              $.growl.error({message: errorMessage})
+          } else {
+              $.growl.error({message: "Bad Request"})
+          }
+
       }
       else if(response.status == 401){
           $.growl.error({message: "Unauthorized. Check your username and password."})

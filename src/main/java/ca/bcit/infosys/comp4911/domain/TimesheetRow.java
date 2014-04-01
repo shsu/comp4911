@@ -74,7 +74,7 @@ public class TimesheetRow implements Serializable
    @Min(value=0,message="ProjectNumber can not be smaller than 0.")
    private int projectNumber;
 
-    @Column
+   @Column
    private PLevel pLevel;
 
    public Integer getId()

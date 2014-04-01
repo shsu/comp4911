@@ -2,14 +2,12 @@
     <h1 class="secondary">Project Cost Performance Report (PCPR)</h1><br /> 
     <div ng-controller="PCPRController">
     <div class="row">
-      <p class="col-xs-3">Project No. 
-        <select name="" id="">
-          <option value="">PR0001</option>
-          <option value="">PR0002</option>
-        </select>
-      </p>
-      <p class="col-xs-3">Project Name: MOSAICS</p>
-      <p class="col-xs-6">Project Manager: David L. Bowden</p>
+      <p class="col-lg-3">Project No. 
+      <select ng-init="loadProjects()" ng-model="project" ng-options="p.projectNumber for p in projects">
+      </select>
+    </p>
+      <p class="col-xs-3">Project Name: </p>
+      <p class="col-xs-6">Project Manager: </p>
     </div>
     <div class="row">
       <time class="col-xs-3">Jan 2014</time>

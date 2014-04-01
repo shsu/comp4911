@@ -21,7 +21,7 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="select(manager)" data-toggle="modal" data-target="#addModal" class="{{manager.selected}}" ng-hide="!query" ng-repeat="manager in userList | filter:query">
+            <tr ng-click="select(manager)" data-toggle="modal" data-target="#addModal" class="{{manager.selected}}" ng-repeat="manager in userList | filter:query | limitTo: quantity">
               <td>{{manager.id}}</td> 
               <td>{{manager.firstName}} {{manager.lastName}}</td>
               <td>{{manager.pLevel}}</td>

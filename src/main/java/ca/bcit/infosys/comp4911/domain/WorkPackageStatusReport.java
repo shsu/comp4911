@@ -1,14 +1,6 @@
 package ca.bcit.infosys.comp4911.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,9 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.lang.Override;
 
 @Entity
@@ -65,8 +55,8 @@ public class WorkPackageStatusReport implements Serializable
    @Column
    private String workPlanned;
 
-   @OneToMany
-   private Set<Effort> estimatedWorkRemainingInPD = new HashSet<Effort>();
+   @OneToMany(cascade= CascadeType.ALL)
+   private List<Effort> estimatedWorkRemainingInPD = new ArrayList<Effort>();
 
    @Column
    @NotNull(message="ProblemAnticipated can not be null.")
@@ -81,7 +71,7 @@ public class WorkPackageStatusReport implements Serializable
    public WorkPackageStatusReport(int weekNumber, int year,
 		Date reportDate, String comment, String workAccomplished,
 		String problemEncountered, String workPlanned,
-		Set<Effort> estimatedWorkRemainingInPD, String problemAnticipated,
+		List<Effort> estimatedWorkRemainingInPD, String problemAnticipated,
 		String workPackageNumber) {
 	super();
 	this.weekNumber = weekNumber;
@@ -118,7 +108,7 @@ public class WorkPackageStatusReport implements Serializable
 		this.workAccomplished = "";
 		this.problemEncountered = "";
 		this.workPlanned = "";
-		this.estimatedWorkRemainingInPD = new HashSet<Effort>();
+		this.estimatedWorkRemainingInPD = new ArrayList<Effort>();
 		this.problemAnticipated = "";
 		this.workPackageNumber = workPackageNumber;
 	   }
@@ -226,13 +216,13 @@ public class WorkPackageStatusReport implements Serializable
       this.year = year;
    }
 
-   public Set<Effort> getEstimatedWorkRemainingInPD()
+   public List<Effort> getEstimatedWorkRemainingInPD()
    {
       return this.estimatedWorkRemainingInPD;
    }
 
    public void setEstimatedWorkRemainingInPD(
-         final Set<Effort> estimatedWorkRemainingInPD)
+         final List<Effort> estimatedWorkRemainingInPD)
    {
       this.estimatedWorkRemainingInPD = estimatedWorkRemainingInPD;
    }
