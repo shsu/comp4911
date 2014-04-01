@@ -914,8 +914,6 @@ cascadiaControllers.controller('PCPRController', ['$scope', 'Restangular', 'Grow
     $scope.project = {};
     $scope.projectChosen = false;
     $scope.quantity = 20;
-    mapOfWP = {};
-    wpChanged = [];
 
     $scope.loadProjects = function() {
       Restangular.all('projects').getList().then(function(response){
