@@ -292,7 +292,7 @@ public class SampleData {
         String wpName = "Lots'o Packages";
         String appendNumber = "";
         Date issueDate = setDate(1, 2, 2014);
-        Date endDate = setDate(1, 10, 2014);
+        Date endDate = setDate(5, 15, 2014);
         
         workPackageDao.create(new WorkPackage(
         		"A111222", "Implement domain models", issueDate, "100", endDate, 12345, test),false);
@@ -372,9 +372,30 @@ public class SampleData {
             ),false);
             
             Date activateDate = setDate(1, 2, 2014);
-            Date deactivateDate = setDate(1, 10, 2014);
+            Date deactivateDate = setDate(5, 15, 2014);
             
             WorkPackageAssignment assignment = new WorkPackageAssignment("A111222", qUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("A111222", jedwardUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("A111222", awongUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("A111222", bnelsonUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("A111222", csandhuUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("A111222", zcantwellUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("A111222", cparkUserId, false, true, activateDate, deactivateDate);
+            workPackageAssignmentDao.create(assignment, false);
+            
+            assignment = new WorkPackageAssignment("A111222", gsmithUserId, false, true, activateDate, deactivateDate);
             workPackageAssignmentDao.create(assignment, false);
             
             activateDate = setDate(2, 6, 2014);
@@ -456,23 +477,23 @@ public class SampleData {
     }
     
     private void generateTimesheets() {
-    	TimesheetRow wp1Row1 = new TimesheetRow(12345, "A1112222", 80, 80, 80, 80, 80, 40, 0, null,
+    	TimesheetRow wp1Row1 = new TimesheetRow(12345, "A111222", 80, 80, 80, 80, 80, 0, 0, null,
                 userDao.read(1).getpLevel());
-        TimesheetRow wp1Row2 = new TimesheetRow(12345, "B3332222", 80, 0, 0, 0, 0, 0, 0, null,
+        TimesheetRow wp1Row2 = new TimesheetRow(12345, "B333222", 80, 0, 0, 0, 0, 0, 0, null,
                 userDao.read(1).getpLevel());
-        TimesheetRow wp1Row3 = new TimesheetRow(12345, "B3332223", 0, 50, 60, 30, 50, 30, 0, null,
-                userDao.read(1).getpLevel());
-        
-        TimesheetRow wp2Row1 = new TimesheetRow(55522, "A3334444", 0, 65, 25, 35, 0, 0, 0, null,
-                userDao.read(1).getpLevel());
-        TimesheetRow wp2Row2 = new TimesheetRow(55522, "C3332222", 50, 0, 0, 25, 80, 0, 0, null,
-                userDao.read(1).getpLevel());
-        TimesheetRow wp2Row3 = new TimesheetRow(55522, "A3334452", 30, 0, 50, 0, 0, 40, 0, null,
+        TimesheetRow wp1Row3 = new TimesheetRow(12345, "B333223", 0, 50, 60, 30, 50, 30, 0, null,
                 userDao.read(1).getpLevel());
         
-        TimesheetRow wp3Row1 = new TimesheetRow(99777, "ZZ334222", 25, 0, 75, 0, 40, 60, 20, null,
+        TimesheetRow wp2Row1 = new TimesheetRow(55522, "A333444", 0, 65, 25, 35, 0, 0, 0, null,
+                userDao.read(1).getpLevel());
+        TimesheetRow wp2Row2 = new TimesheetRow(55522, "C333222", 50, 0, 0, 25, 80, 0, 0, null,
+                userDao.read(1).getpLevel());
+        TimesheetRow wp2Row3 = new TimesheetRow(55522, "A333445", 30, 0, 50, 0, 0, 40, 0, null,
+                userDao.read(1).getpLevel());
+        
+        TimesheetRow wp3Row1 = new TimesheetRow(99777, "ZZ33422", 25, 0, 75, 0, 40, 60, 20, null,
                 userDao.read(2).getpLevel());
-        TimesheetRow wp3Row2 = new TimesheetRow(99777, "ZZ334229", 70, 20, 5, 0, 40, 30, 60, null,
+        TimesheetRow wp3Row2 = new TimesheetRow(99777, "ZZ33423", 70, 20, 5, 0, 40, 30, 60, null,
                 userDao.read(2).getpLevel());
         
         List<TimesheetRow> rowCollection = new ArrayList<TimesheetRow>();
@@ -480,12 +501,28 @@ public class SampleData {
         Timesheet tempTimesheet;
         
         rowCollection.add(wp1Row1);
-        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 11, 2014, 40, false, true, true);
+        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
         timesheetDao.create(tempTimesheet,false);
         rowCollection.clear();
         
         rowCollection.add(wp1Row2);
         rowCollection.add(wp1Row3);
+        tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(3, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(4, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(5, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(6, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(7, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        tempTimesheet = new Timesheet(8, new ArrayList(rowCollection), 12, 2014, 0, false, true, true);
+        timesheetDao.create(tempTimesheet,false);
         tempTimesheet = new Timesheet(1, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
         timesheetDao.create(tempTimesheet,false);
         tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 13, 2014, 0, false, true, true);
@@ -539,15 +576,15 @@ public class SampleData {
 
     private void generateWorkPackageStatusReports(){
 
-        List<Effort> remainingEstimate= new ArrayList<Effort>();
-        remainingEstimate.add(effortDao.read(10));
-        remainingEstimate.add(effortDao.read(11));
-        remainingEstimate.add(effortDao.read(12));
-        remainingEstimate.add(effortDao.read(13));
-        remainingEstimate.add(effortDao.read(14));
-        Date date = setDate(1, 1, 2014);
-        workPackageStatusReportDao.create(new WorkPackageStatusReport(1, 2014, date, "new wpsr", "Lots of work accomplished",
-                "none", "approve timesheets", remainingEstimate, "none", "A1112222"),false);
+        List<Effort> remainingEstimate= effortDao.listOfEffort(99, 101);
+        Date date = setDate(3, 24, 2014);
+        workPackageStatusReportDao.create(new WorkPackageStatusReport(12, 2014, date, "new wpsr", "Lots of work accomplished",
+                "none", "approve timesheets", remainingEstimate, "none", "B333223"),false);
+        
+        remainingEstimate = effortDao.listOfEffort(99, 101);
+        date = setDate(3, 31, 2014);
+        workPackageStatusReportDao.create(new WorkPackageStatusReport(13, 2014, date, "WPSR to test", "Pretty much slacked off",
+        		"Too many to count", "So many things", remainingEstimate, "Bugs galore", "B333223"), false);
     }
 
     private Date setDate(int month, int day, int year)
@@ -566,15 +603,21 @@ public class SampleData {
         effortDao.create(new Effort(PLevel.P3, 50), true);
         effortDao.create(new Effort(PLevel.P4, 50), true);
         effortDao.create(new Effort(PLevel.P5, 50), true);
+        effortDao.create(new Effort(PLevel.DS, 50), true);
+        effortDao.create(new Effort(PLevel.SS, 50), true);
         effortDao.create(new Effort(PLevel.P1, 100), true);
         effortDao.create(new Effort(PLevel.P2, 100), true);
         effortDao.create(new Effort(PLevel.P3, 100), true);
         effortDao.create(new Effort(PLevel.P4, 100), true);
         effortDao.create(new Effort(PLevel.P5, 100), true);
+        effortDao.create(new Effort(PLevel.DS, 100), true);
+        effortDao.create(new Effort(PLevel.SS, 100), true);
         effortDao.create(new Effort(PLevel.P1, 2300), true);
         effortDao.create(new Effort(PLevel.P2, 2400), true);
         effortDao.create(new Effort(PLevel.P3, 2500), true);
         effortDao.create(new Effort(PLevel.P4, 2600), true);
         effortDao.create(new Effort(PLevel.P5, 2700), true);
+        effortDao.create(new Effort(PLevel.DS, 2800), true);
+        effortDao.create(new Effort(PLevel.SS, 2900), true);
     }
 }
