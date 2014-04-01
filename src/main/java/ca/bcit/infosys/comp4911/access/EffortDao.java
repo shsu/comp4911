@@ -50,46 +50,46 @@ public class EffortDao {
     }
 
     private Effort getP1 (final int workDaysMin, final int workDaysMax) {
-        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = P1" +
-                "and e.personDays >= :workDaysMin and " +
-                "e.personDays <= :workDaysMax"  , Effort.class);
+        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = ca.bcit.infosys.comp4911.domain.PLevel.P1" +
+                " and e.personDays >= :workDaysMin and" +
+                " e.personDays <= :workDaysMax"  , Effort.class);
         query.setParameter("workDaysMin", workDaysMin);
         query.setParameter("workDaysMax", workDaysMax);
         return query.getSingleResult();
     }
 
     private Effort getP2 (final int workDaysMin, final int workDaysMax) {
-        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = P2" +
-                "and e.personDays >= :workDaysMin and " +
-                "e.personDays <= :workDaysMax"  , Effort.class);
+        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = ca.bcit.infosys.comp4911.domain.PLevel.P2" +
+                " and e.personDays >= :workDaysMin and" +
+                " e.personDays <= :workDaysMax"  , Effort.class);
         query.setParameter("workDaysMin", workDaysMin);
         query.setParameter("workDaysMax", workDaysMax);
         return query.getSingleResult();
     }
 
     private Effort getP3 (final int workDaysMin, final int workDaysMax) {
-        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = P3" +
-                "and e.personDays >= :workDaysMin and " +
-                "e.personDays <= :workDaysMax"  , Effort.class);
+        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = ca.bcit.infosys.comp4911.domain.PLevel.P3" +
+                " and e.personDays >= :workDaysMin and" +
+                " e.personDays <= :workDaysMax"  , Effort.class);
         query.setParameter("workDaysMin", workDaysMin);
         query.setParameter("workDaysMax", workDaysMax);
         return query.getSingleResult();
     }
 
     private Effort getP4 (final int workDaysMin, final int workDaysMax) {
-        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = P4" +
-                "and e.personDays >= :workDaysMin and " +
-                "e.personDays <= :workDaysMax"  , Effort.class);
+        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = ca.bcit.infosys.comp4911.domain.PLevel.P4" +
+                " and e.personDays >= :workDaysMin and" +
+                " e.personDays <= :workDaysMax"  , Effort.class);
         query.setParameter("workDaysMin", workDaysMin);
         query.setParameter("workDaysMax", workDaysMax);
         return query.getSingleResult();
     }
 
     private Effort getP5 (final int workDaysMin, final int workDaysMax) {
-        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = P5" +
-                "and e.personDays >= :workDaysMin and " +
-                "e.personDays <= :workDaysMax"  , Effort.class);
-        query.setParameter("workDays", workDaysMin);
+        TypedQuery<Effort> query = em.createQuery("Select e From Effort e where e.pLevel = ca.bcit.infosys.comp4911.domain.PLevel.P5" +
+                " and e.personDays >= :workDaysMin and" +
+                " e.personDays <= :workDaysMax"  , Effort.class);
+        query.setParameter("workDaysMin", workDaysMin);
         query.setParameter("workDaysMax", workDaysMax);
         return query.getSingleResult();
     }
