@@ -31,24 +31,18 @@ public class UserDao {
 
     public void update(final User user) {
         if(ValidationHelper.validateEntity(user)){
+
+            String oldPassword = read(user.getId()).getPassword();
+            if (user.getPassword() != oldPassword) {
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            }
+
             em.merge(user);
         }
     }
 
     public void delete(final User user) {
         em.remove(read(user.getId()));
-    }
-
-    public void updatePassword(final int id, final String newPassword) {
-        User user = read(id);
-        if (user != null && !Strings.isNullOrEmpty(newPassword)) {
-            String oldPassword = user.getPassword();
-
-            // If old password was modified, hash the new one.
-            if (newPassword != oldPassword) {
-                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-            }
-        }
     }
 
     public List<User> getAll() {
