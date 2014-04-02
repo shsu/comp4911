@@ -55,7 +55,7 @@ public class WorkPackageStatusReport implements Serializable
    @Column
    private String workPlanned;
 
-   @OneToMany(cascade= CascadeType.ALL)
+   @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
    @Size(min=5, max=7, message="There must be at least 5 effort items in the list, and at most 7!")
    @JoinTable(name="WORKPACKAGE_STATUS_REPORT_EFFORT",
            joinColumns = { @JoinColumn(name="WPSR_NUMBER")},
