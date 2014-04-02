@@ -19,7 +19,7 @@ public class WorkPackage implements Serializable
 {
    @Id
    @Column(updatable = false, nullable = false, name = "WORKPACKAGE_NUMBER")
-   @Size(min = 7, max = 7,message="WorkPackageNumber size must be between 7 and 250.")
+   @Size(min = 6, max = 7,message="WorkPackageNumber size must be between 7 and 250.")
    @NotBlank(message="WorkPackageNumber can not be blank.")
    private String workPackageNumber;
 
