@@ -145,26 +145,26 @@ public class UserResourceTest {
         
         given().auth().preemptive().basic(token, "").when().get(url + "/user").then().statusCode(200).and().assertThat().body("username", equalTo("q"));
     }
-    
-    @Test
-    public void testUpdateUserProfile() throws Exception {
-    	Response response = given().auth().preemptive().basic("q", "q").when().get(url + "/user/token");
-        response.then().statusCode(200);
-        token = (String) new JSONObject(response.asString()).get("token");
-        ObjectMapper mapper = new ObjectMapper();
-        StringWriter writer = new StringWriter();
-        
-        User user = given().auth().preemptive().basic(token, "").when().get(url + "/user").as(User.class);
-        user.setUsername("qq");
-        mapper.writeValue(writer, user);
-        given().auth().preemptive().basic(token, "").contentType(ContentType.JSON).body(writer.toString()).when().put(url + "/user").then().statusCode(200);
-        
-        response = given().auth().preemptive().basic("qq", "q").when().get(url + "/user/token");
-        token = (String) new JSONObject(response.asString()).get("token");
-        given().auth().preemptive().basic(token, "").when().get(url + "/user").then().assertThat().body("username", equalTo("qq"));
-        
-        reverseChanges();
-    }
+//    TODO: This test should modify a non critical user, and be responsible for changing it back to the original state.
+//    @Test
+//    public void testUpdateUserProfile() throws Exception {
+//    	Response response = given().auth().preemptive().basic("q", "q").when().get(url + "/user/token");
+//        response.then().statusCode(200);
+//        token = (String) new JSONObject(response.asString()).get("token");
+//        ObjectMapper mapper = new ObjectMapper();
+//        StringWriter writer = new StringWriter();
+//
+//        User user = given().auth().preemptive().basic(token, "").when().get(url + "/user").as(User.class);
+//        user.setUsername("qq");
+//        mapper.writeValue(writer, user);
+//        given().auth().preemptive().basic(token, "").contentType(ContentType.JSON).body(writer.toString()).when().put(url + "/user").then().statusCode(200);
+//
+//        response = given().auth().preemptive().basic("qq", "q").when().get(url + "/user/token");
+//        token = (String) new JSONObject(response.asString()).get("token");
+//        given().auth().preemptive().basic(token, "").when().get(url + "/user").then().assertThat().body("username", equalTo("qq"));
+//
+//        reverseChanges();
+//    }
     
     @Test
     public void testGetUserPermissions() throws Exception {
