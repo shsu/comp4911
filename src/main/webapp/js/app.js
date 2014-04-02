@@ -5,6 +5,7 @@ var cascadia = angular.module('cascadiaApp', [
     'ui.bootstrap',
     'cascadiaControllers',
     'cascadiaServices',
+    'cascadiaFilters',
     'cascadiaDirectives',
     'chieffancypants.loadingBar'
 ]);

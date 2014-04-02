@@ -496,13 +496,13 @@ cascadiaControllers.controller('ATAController', ['$scope', '$modal', '$rootScope
 /*
     ASSIGN SUPERVISOR CONTROLLER
 */
-cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
-  function($scope, $modal, $rootScope, $params, $location, Restangular, GrowlResponse){
+cascadiaControllers.controller('ASController', ['$scope', '$http', '$modal', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $http, $modal, $rootScope, $params, $location, Restangular, GrowlResponse){
     var base = Restangular.all('users');
     var param = $params.id;
     $scope.cUser = {};
     $scope.supervisor = {};
-
+    
     base.getList().then(function(response) {
       $scope.users = response;
     }, function(response){

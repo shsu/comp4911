@@ -24,7 +24,7 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="select(sup); open()" class="{{sup.selected}}" ng-repeat="sup in users | filter: search" >
+            <tr ng-click="select(sup); open()" class="{{sup.selected}}" ng-repeat="sup in filtered = (users | uniqueUser:cUser) | filter: search" >
               <td>{{sup.id}}</td> 
               <td>{{sup.firstName}} {{sup.lastName}}</td>
               <td>{{sup.pLevel}}</td>
