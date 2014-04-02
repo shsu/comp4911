@@ -83,9 +83,9 @@ cascadiaControllers.controller('EngineerController', ['$scope', '$modal', 'Filte
 /*
     ADD MANAGER CONTROLLER
 */
-cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$location', 'FilterUser',
+cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$modal', '$location', 'FilterUser',
  'GrowlResponse', '$routeParams', 'Restangular',
-  function($scope, $rootScope, $location, FilterUser, GrowlResponse, $params, Restangular) {
+  function($scope, $rootScope, $modal, $location, FilterUser, GrowlResponse, $params, Restangular) {
     var param = $params.id;
     $scope.project = {};
     $scope.quantity = 20;
@@ -120,6 +120,51 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$l
         $.growl.notice({ message: "Project Assigned" });
       })
     };
+
+     $scope.open = function () {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: ModalInstanceCtrl,
+        resolve: {
+          item: function () {
+            return $scope.selectedManager;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        var base = Restangular.one('projects', $scope.project.projectNumber);
+        base.one('assignments', $scope.selectedManager.id).get().then(function(response){
+          if(response.length){
+            projectAssignment = response[0];
+            projectAssignment.projectManager = true;
+            base.one('assignments', $scope.selectedManager.id).customPUT(projectAssignment).then(function(response){
+              GrowlResponse(response)
+              $location.path('/projects');
+            }, function(response){
+              GrowlResponse(response)
+            })
+          } 
+          else {
+            var data = {
+              projectNumber: $scope.project.projectNumber,
+              userId: $scope.selectedManager.id,
+              projectManager: true,
+              active: true
+            }
+            base.one('assignments').customPOST(data).then(function(response){
+              GrowlResponse(response)
+              $location.path('/projects');
+            }, function(response){
+              GrowlResponse(response)
+            })
+          }
+        })
+      }, function(){
+          console.log("dismissed")
+      });
+    }
   }
 ]);
 
@@ -358,6 +403,14 @@ cascadiaControllers.controller('ProjectManagementController', ['$scope', '$locat
     Restangular.all('projects').getList().then(function(response){
       $scope.projects = response;
     });
+
+    $scope.hasProjectManager = function(project) {
+        if(angular.isDefined(project)) {
+          Restangular.one('projects/' + project.projectNumber + 'assignments/manager').get().then(function(response) {
+            
+          })
+        }
+    }
 
     $scope.selectedManager = {};
 
@@ -1269,7 +1322,12 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
   function($scope, $rootScope, $params, Restangular) {
     $rootScope.user = JSON.parse(localStorage.getItem('user'));
 
-    $scope.hasSupervisor = function() {
+    if($rootScope.user && $rootScope.user.supervisorUserID){
+      loadSupervisor();
+      loadTimesheetApprover();
+    }
+
+    var hasSupervisor = function() {
       var user = $rootScope.user;
       if(user && user.supervisorUserID) {
         return true;
@@ -1277,7 +1335,7 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
       return false;
     }
 
-    $scope.hasTimesheetApprover = function() {
+    var hasTimesheetApprover = function() {
       user = $rootScope.user;
       if(user && user.timesheetApproverUserID) {
         return true;
@@ -1321,17 +1379,6 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
         
           $.growl.notice({message:"Password saved."});
         
-      }
-    }
-
-
-
-    if($rootScope.user) {
-      if($rootScope.user.supervisorUserID){
-        $scope.loadSupervisor();
-        if($rootScope.user.supervisorUserID != $rootScope.user.timesheetApproverUserID) {
-          $scope.loadTimesheetApprover();
-        }
       }
     }
   }

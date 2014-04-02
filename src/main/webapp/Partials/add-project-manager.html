@@ -21,7 +21,7 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="select(manager)" data-toggle="modal" data-target="#addModal" class="{{manager.selected}}" ng-repeat="manager in userList | filter:query | limitTo: quantity">
+            <tr ng-click="select(manager); open()" data-toggle="modal" data-target="#addModal" class="{{manager.selected}}" ng-repeat="manager in userList | filter:query | limitTo: quantity">
               <td>{{manager.id}}</td> 
               <td>{{manager.firstName}} {{manager.lastName}}</td>
               <td>{{manager.pLevel}}</td>
@@ -38,37 +38,19 @@
             <button ng-click="cancel()" class="pull-right btn btn-primary btn-block">Cancel</button>
         </div>
     </div>
-  
-  <div class="modal manager fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body">
-            <p>Do you want to add this manager to the project?</p>
-            <div ng-model="selectedManager">
-              <span style="margin-right: 20px;"><strong>Name:</strong> {{selectedManager.firstName}} {{selectedManager.lastName}}</span>
-              <span><strong>Pay Grade:</strong> {{selectedManager.pLevel}}</span>
-            </div>
-            <p>&nbsp;</p>
-            <p class="pull-left">Other assigned projects:</p>
-            <table class="table table-bordered">
-              <tbody>
-                <tr>
-                  <th>Project No.</th>
-                  <th>Description</th>
-                </tr>
-                <tr>
-                  <td>P29999</td>
-                  <td>Cascadia</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save()">Add</button>
-            <button style="" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cancel()">Cancel</button>
-          </div>
-        </div>
-      </div>
+  <script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3>Confirm Assignment</h3>
     </div>
-  </div>
+    <div class="modal-body" style="text-align: center">
+        <h5 style="margin: 25px 0;font-weight:bold">{{item.firstName}} {{item.lastName}}</h5>
+        <h4>As Project Manager</h4>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-lg btn-success" ng-click="ok()">OK
+        </button>
+        <button class="btn btn-lg btn-danger" ng-click="cancel()">Cancel
+        </button>
+    </div>
+  </script>
 </content>

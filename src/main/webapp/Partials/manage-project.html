@@ -20,7 +20,6 @@
               <th class="th-narrow">Project Name</th>
               <th class="th-narrow">Allocated Budget</th>
               <th class="th-wide">Unallocated Budget</th>
-              <th class="th-narrow">Complete Date</th>
               <th class="th-narrow">Issue Date</th>
               <th class="th-narrow">Client Rate</th>
               <th class="th-narrow">Project Manager</th>
@@ -32,7 +31,11 @@
             <td>{{project.unAllocatedBudget}} </td>
             <td>{{project.issueDate}}</td>
             <td>{{project.clientRate}}</td>
-            <td><a href="#/projects/{{project.projectNumber}}/assign-manager/">Assign</a></td>
+            <td>
+              <a href="#/projects/{{project.projectNumber}}/assign-manager">
+                <span ng-hide="hasProjectManager(project)">Assign</span>
+                <span ng-show="hasProjectManager(project)">Change</span>
+              </a>
             </td>
           </tr>
         </tbody>
