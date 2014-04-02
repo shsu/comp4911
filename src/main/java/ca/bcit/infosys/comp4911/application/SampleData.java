@@ -58,7 +58,7 @@ public class SampleData {
         generateWorkPackages();
         generateWorkPackageAssignments();
         generateTimesheets();
-        //generateWorkPackageStatusReports();
+        generateWorkPackageStatusReports();
     }
 
     private void generateUsers() {
@@ -295,7 +295,7 @@ public class SampleData {
         Date endDate = setDate(5, 15, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"A111222", "Implement domain models", issueDate, "100", endDate, 12345, test),false);
+        		"A111222", "Implement domain models", issueDate, "100", endDate, 12345, beginningEstimate),false);
 
 		// Create 200 workpackages for Project Barbosa
 //        for(int i = 0; i < 200; i++) {
@@ -579,13 +579,15 @@ public class SampleData {
 
         List<Effort> remainingEstimate= effortDao.listOfEffort(99, 101);
         Date date = setDate(3, 24, 2014);
-        workPackageStatusReportDao.create(new WorkPackageStatusReport(12, 2014, date, "new wpsr", "Lots of work accomplished",
-                "none", "approve timesheets", remainingEstimate, "none", "B333223"),false);
-        
-        remainingEstimate = effortDao.listOfEffort(99, 101);
-        date = setDate(3, 31, 2014);
-        workPackageStatusReportDao.create(new WorkPackageStatusReport(13, 2014, date, "WPSR to test", "Pretty much slacked off",
-        		"Too many to count", "So many things", remainingEstimate, "Bugs galore", "B333223"), false);
+        WorkPackageStatusReport WPSR = new WorkPackageStatusReport(12, 2014, date, "new wpsr", "Lots of work accomplished",
+                "none", "approve timesheets", remainingEstimate, "none", "B333223");
+        workPackageStatusReportDao.create(WPSR,false);
+
+//        remainingEstimate = effortDao.listOfEffort(99, 101);
+//        date = setDate(3, 31, 2014);
+//        WPSR = new WorkPackageStatusReport(13, 2014, date, "WPSR to test", "Pretty much slacked off",
+//                "Too many to count", "So many things", remainingEstimate, "Bugs galore", "B333223");
+//        workPackageStatusReportDao.create(WPSR, false);
     }
 
     private Date setDate(int month, int day, int year)
@@ -620,5 +622,18 @@ public class SampleData {
         effortDao.create(new Effort(PLevel.P5, 2700), true);
         effortDao.create(new Effort(PLevel.DS, 2800), true);
         effortDao.create(new Effort(PLevel.SS, 2900), true);
+    }
+
+    private List<Effort> effortGenerator(int p1, int p2, int p3, int p4, int p5, int ss, int ds){
+        List<Effort> effortList = new ArrayList<Effort>();
+        effortList.add(new Effort(PLevel.P1, p1));
+        effortList.add(new Effort(PLevel.P2, p2));
+        effortList.add(new Effort(PLevel.P3, p3));
+        effortList.add(new Effort(PLevel.P4, p4));
+        effortList.add(new Effort(PLevel.P5, p5));
+        effortList.add(new Effort(PLevel.SS, ss));
+        effortList.add(new Effort(PLevel.SS, ds));
+        return effortList;
+
     }
 }

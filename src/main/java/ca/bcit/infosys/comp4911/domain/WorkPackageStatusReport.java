@@ -18,7 +18,7 @@ public class WorkPackageStatusReport implements Serializable
 
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id", updatable = false, nullable = false)
+   @Column(name = "WPSR_ID", updatable = false, nullable = false)
    @Min(value=0,message="ID can not be smaller than 0.") 
    private Integer id = null;
 
@@ -56,6 +56,10 @@ public class WorkPackageStatusReport implements Serializable
    private String workPlanned;
 
    @OneToMany(cascade= CascadeType.ALL)
+   @Size(min=5, max=7, message="There must be at least 5 effort items in the list, and at most 7!")
+   @JoinTable(name="WORKPACKAGE_STATUS_REPORT_EFFORT",
+           joinColumns = { @JoinColumn(name="WPSR_NUMBER")},
+           inverseJoinColumns = { @JoinColumn(name="EFFORT_ID")})
    private List<Effort> estimatedWorkRemainingInPD = new ArrayList<Effort>();
 
    @Column

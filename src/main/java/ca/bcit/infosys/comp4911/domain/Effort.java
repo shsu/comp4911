@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Effort implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "EFFORT_ID", updatable = false, nullable = false)
     @Min(value = 0, message="ID can not be smaller than 0.") 
     private Integer id = null;
     
@@ -24,13 +24,6 @@ public class Effort implements Serializable {
     @Column
     @Min(value = 0, message="PersonDays can not be smaller than 0.")
     private int personDays;
-
-    @ManyToOne
-    @JoinColumn(name="WP_ID")
-    private WorkPackage workPackage;
-
-
-    private int workPackageId;
 
     public Effort(PLevel pLevel, int personDays) {
 		super();

@@ -54,9 +54,12 @@ public class WorkPackage implements Serializable
    @Temporal(TemporalType.DATE)
    private Date endDate;
 
-    @OneToMany(mappedBy="workPackage", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    @Size(min=1, max=7)
-    private List<Effort> estimateAtStart;
+   @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+   @Size(min=5, max=7)
+   @JoinTable(name="WORKPACKAGE_EFFORT",
+           joinColumns = { @JoinColumn(name="WORKPACKAGE_NUMBER")},
+           inverseJoinColumns = { @JoinColumn(name="EFFORT_ID")})
+   private List<Effort> estimateAtStart;
 
    @Column
    @Min(value=0,message="ProjectNumber can not be smaller than 0.")
