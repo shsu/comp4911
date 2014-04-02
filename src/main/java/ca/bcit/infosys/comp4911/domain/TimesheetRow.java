@@ -33,7 +33,7 @@ public class TimesheetRow implements Serializable
 
    @Column
    //@NotBlank(message="WorkPackageNumber can not be blank.")  
-   @Size(min=6,max=7,message="WorkPackageNumber can not contain more than 250 charaters.")
+   @Size(max = 7,message="Work Package Number must be no more than 7 characters.")
    @NotNull(message="WorkPackageNumber can not be null.")
    private String workPackageNumber;
 
