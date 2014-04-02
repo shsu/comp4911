@@ -1368,11 +1368,7 @@ cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$loca
       $scope.cUser = response;
       if($scope.cUser.supervisorUserID){
         loadSupervisor();
-        if($scope.cUser.supervisorUserID != $scope.cUser.timesheetApproverUserID) {
-          loadTimesheetApprover();
-        } else if($scope.cUser.timesheetApproverUserID) {
-          $scope.timesheetApprover = $scope.supervisor;
-        }
+        loadTimesheetApprover();
       }
     });
 

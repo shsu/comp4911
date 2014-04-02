@@ -34,8 +34,8 @@
             <tr>
               <td>Assigned Manager</td>
               <td>
-                <a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor(u)">Assign</a>
-                <span ng-show="hasSupervisor(u)">
+                <a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor()">Assign</a>
+                <span ng-show="hasSupervisor()">
                     {{supervisor.firstName}} {{supervisor.lastName}}
                     (<a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand">Change</a>)
                 </span>

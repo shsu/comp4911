@@ -46,6 +46,7 @@ public class WorkPackage implements Serializable
    @Size(max=250,message="Description can not contain more than 250 characters.")
    private String description;
 
+    /** This is supposed to be Active or Inactive I believe */
    @Column
    @NotNull(message="ProgressStatus can not be null.")
    @Size(max=250,message="ProgressStatus can not contain more than 250 characters.")

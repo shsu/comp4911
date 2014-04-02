@@ -29,7 +29,6 @@
             <th>Assign Responsible Engineer</th>
             <th>Assign Employees</th>
             <th>Issue Date</th>            
-            <th>Budget</th>
             <th>Status</th>
             <th>Status Report</th>
           </tr>
@@ -42,15 +41,8 @@
             <td><a href="#/add-engineer/{{wp.workPackageNumber}}">Assign Responsible Engineer</a></td>
             <td><a href="#/assign-employee-wp/{{wp.workPackageNumber}}">Assign Employees</a></td>
             <td>{{wp.issueDate}}</td>
-            <!-- Figure this out later -->
-            <td>TBD</td>
-            <td>
-              <select ng-model="wp.progressStatus" ng-change="change(wp)" ng-options="s for s in statuses">
-              </select>
-            </td>
-            <td>
-              <a href="#/wp-status-report/{{wp.workPackageNumber}}">Create Status Report</a></td>
-            </td>
+            <td>{{wp.progressStatus}}</td>
+            <td><a href="#/wp-status-report/{{wp.workPackageNumber}}">Create Status Report</a></td>
           </tr>
         </tbody>
       </table>
