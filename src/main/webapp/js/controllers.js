@@ -3,8 +3,9 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
 /*
     ADD ENGINEER CONTROLLER
 */
-cascadiaControllers.controller('EngineerController', ['$scope', '$modal', 'GrowlResponse', '$routeParams', 'Restangular',
-  function($scope, $modal, GrowlResponse, $params, Restangular) {
+cascadiaControllers.controller('EngineerController', ['$scope', '$modal', 'FilterUser', 'GrowlResponse', 
+  '$routeParams', 'Restangular',
+  function($scope, $modal, FilterUser, GrowlResponse, $params, Restangular) {
     $scope.param = $params.id;
     $scope.package = {};
     $scope.quantity = 20;
@@ -28,13 +29,8 @@ cascadiaControllers.controller('EngineerController', ['$scope', '$modal', 'Growl
       $scope.engineers = response;
     });
 
-    $scope.search = function(item) {
-      if (item.id.toString().indexOf($scope.query) != -1 || item.firstName.indexOf($scope.query) != -1 ||
-                item.lastName.indexOf($scope.query) != -1 || item.username.indexOf($scope.query) != -1 ||
-                item.pLevel == $scope.query || !$scope.query) {
-        return true;
-      }
-      return false;
+    $scope.search = function(user) {
+      return FitlerUser(user, $scope.query);
     }
 
     $scope.select = function(user) {
@@ -87,8 +83,9 @@ cascadiaControllers.controller('EngineerController', ['$scope', '$modal', 'Growl
 /*
     ADD MANAGER CONTROLLER
 */
-cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$location', 'GrowlResponse', '$routeParams', 'Restangular',
-  function($scope, $rootScope, $location, GrowlResponse, $params, Restangular) {
+cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$location', 'FilterUser',
+ 'GrowlResponse', '$routeParams', 'Restangular',
+  function($scope, $rootScope, $location, FilterUser, GrowlResponse, $params, Restangular) {
     var param = $params.id;
     $scope.project = {};
     $scope.quantity = 20;
@@ -106,12 +103,8 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$l
     };
 
     
-    $scope.search = function (s) {
-      if (s.id.toString().indexOf($scope.query) != -1 || s.firstName.indexOf($scope.query) != -1 
-          || s.lastName.indexOf($scope.query) != -1){
-        return true;
-      }
-      return false;
+    $scope.search = function (user) {
+      return FilterUser(user, $scope.query);
     };
 
     /* Should be checking if user is already assigned to project before updating it */
@@ -416,8 +409,9 @@ cascadiaControllers.controller('APController', ['$scope', '$location', 'Restangu
 /*
     ASSIGN TIMESHEET APPROVER CONTROLLER
 */
-cascadiaControllers.controller('ATAController', ['$scope', '$modal', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
-  function($scope, $modal, $rootScope, $params, $location, Restangular, GrowlResponse){
+cascadiaControllers.controller('ATAController', ['$scope', '$modal', '$rootScope', '$routeParams', '$location', 
+  'FilterUser', 'Restangular', 'GrowlResponse',
+  function($scope, $modal, $rootScope, $params, $location, FilterUser, Restangular, GrowlResponse){
     var base = Restangular.all('users');
     var param = $params.id;
     $scope.cUser = {};
@@ -454,12 +448,8 @@ cascadiaControllers.controller('ATAController', ['$scope', '$modal', '$rootScope
         return false;
     }
     
-    $scope.search = function (s) {
-      if (s.id.toString().indexOf($scope.query) != -1 || s.firstName.indexOf($scope.query) != -1 
-          || s.lastName.indexOf($scope.query) != -1 || !$scope.query){
-        return true;
-      }
-      return false;
+    $scope.search = function (user) {
+      return FilterUser(user, $scope.query);
     };
 
     $scope.open = function () {
@@ -496,8 +486,9 @@ cascadiaControllers.controller('ATAController', ['$scope', '$modal', '$rootScope
 /*
     ASSIGN SUPERVISOR CONTROLLER
 */
-cascadiaControllers.controller('ASController', ['$scope', '$http', '$modal', '$rootScope', '$routeParams', '$location', 'Restangular', 'GrowlResponse',
-  function($scope, $http, $modal, $rootScope, $params, $location, Restangular, GrowlResponse){
+cascadiaControllers.controller('ASController', ['$scope', '$modal', '$rootScope', '$routeParams', '$location',
+ 'FilterUser', 'Restangular', 'GrowlResponse',
+  function($scope, $modal, $rootScope, $params, $location, FilterUser, Restangular, GrowlResponse){
     var base = Restangular.all('users');
     var param = $params.id;
     $scope.cUser = {};
@@ -534,12 +525,8 @@ cascadiaControllers.controller('ASController', ['$scope', '$http', '$modal', '$r
         return false;
     }
     
-    $scope.search = function (s) {
-      if (s.id.toString().indexOf($scope.query) != -1 || s.firstName.indexOf($scope.query) != -1 
-          || s.lastName.indexOf($scope.query) != -1 || !$scope.query){
-        return true;
-      }
-      return false;
+    $scope.search = function (user) {
+      return FilterUser(user, $scope.query);
     };
 
     $scope.open = function () {
@@ -1065,8 +1052,8 @@ cascadiaControllers.controller('ProjectManagementSupervisorController', ['$scope
 /*
     PROJECT DETAILS CONTROLLER
 */
-cascadiaControllers.controller('ProjectDetailsController', ['$scope', '$routeParams', 'Restangular',
-  function($scope, $params, Restangular){
+cascadiaControllers.controller('ProjectDetailsController', ['$scope', '$routeParams', 'FilterUser', 'Restangular',
+  function($scope, $params, FilterUser, Restangular){
     var param = $params.id;
 
     $scope.project = {}
@@ -1084,13 +1071,8 @@ cascadiaControllers.controller('ProjectDetailsController', ['$scope', '$routePar
       })
     }
 
-    $scope.search = function(item) {
-      if (item.id.toString().indexOf($scope.query) != -1 || item.firstName.indexOf($scope.query) != -1 ||
-                item.lastName.indexOf($scope.query) != -1 || item.username.indexOf($scope.query) != -1 ||
-                item.pLevel == $scope.query || !$scope.query) {
-        return true;
-      }
-      return false;
+    $scope.search = function(user) {
+      return FilterUser(user, $scope.query);
     }
   }
 ]);
@@ -1555,8 +1537,9 @@ cascadiaControllers.controller('CreateUserController', ['$scope', '$rootScope', 
       GET /users/:user_id
       PUT /users/:user_id  
 */
-cascadiaControllers.controller('UsersManagementController', ['$scope', '$location', '$rootScope', 'Restangular', 'GrowlResponse',
-  function($scope, $location, $rootScope, Restangular, GrowlResponse) {
+cascadiaControllers.controller('UsersManagementController', ['$scope', '$location', '$rootScope', 'Restangular',
+ 'FilterUser', 'GrowlResponse',
+  function($scope, $location, $rootScope, Restangular, FilterUser, GrowlResponse) {
     var base = Restangular.all('users');
 
     $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
@@ -1581,13 +1564,8 @@ cascadiaControllers.controller('UsersManagementController', ['$scope', '$locatio
       $location.path('/users/' + u.id);
     }
 
-    $scope.search = function(item) {
-      if (item.id.toString().indexOf($scope.query) != -1 || item.firstName.indexOf($scope.query) != -1 ||
-                item.lastName.indexOf($scope.query) != -1 || item.username.indexOf($scope.query) != -1 ||
-                item.pLevel == $scope.query || !$scope.query) {
-        return true;
-      }
-      return false;
+    $scope.search = function(user) {
+      return FilterUser(user, $scope.query);
     }
 
     $scope.delete = function(user, $index) {
