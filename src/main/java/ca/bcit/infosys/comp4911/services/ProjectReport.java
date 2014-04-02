@@ -71,7 +71,7 @@ public class ProjectReport {
             wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
             reportHelperRows[i] = getWPPersonHours(wpTimesheetRows);
             reportHelperRows[i].setWpNumber(wpsr.getWorkPackageNumber());
-            calculateTotalLabourDollars(reportHelperRows[i], wpsr.getYear());
+            calculateTotalLabourDollars(reportHelperRows[i], wpsr.getReportDate().getYear());
             String key = "WP" + i;
             report.append(key, reportHelperRows[i].toString());
             i++;

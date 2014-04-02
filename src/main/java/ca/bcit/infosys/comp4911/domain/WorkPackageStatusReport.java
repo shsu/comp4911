@@ -26,14 +26,6 @@ public class WorkPackageStatusReport implements Serializable
    @Column(name = "version")
    private int version = 0;
 
-   @Column
-   @Min(value=0,message="WeekNumber can not be smaller than 0.")
-   private int weekNumber;
-
-   @Column
-   @Min(value=0,message="Year can not be less than 0.")
-   private int year;
-
    @Temporal(TemporalType.DATE)
    private Date reportDate;
 
@@ -69,17 +61,14 @@ public class WorkPackageStatusReport implements Serializable
 
    @Column
    @NotBlank(message="WorkPackageNumber can not be null.")
-   @Size(max=250,message="WorkPackageNumber can not contain more than 250 characters.")
+   @Size(min=6, max=7, message="WorkPackageNumber must conatain 7 characters.")
    private String workPackageNumber;
 
-   public WorkPackageStatusReport(int weekNumber, int year,
-		Date reportDate, String comment, String workAccomplished,
+   public WorkPackageStatusReport(Date reportDate, String comment, String workAccomplished,
 		String problemEncountered, String workPlanned,
 		List<Effort> estimatedWorkRemainingInPD, String problemAnticipated,
 		String workPackageNumber) {
 	super();
-	this.weekNumber = weekNumber;
-	this.year = year;
 	this.reportDate = reportDate;
 	this.comment = comment;
 	this.workAccomplished = workAccomplished;
@@ -99,14 +88,10 @@ public class WorkPackageStatusReport implements Serializable
     * default workPlanned to empty string,
     * default problemAnticipated to empty string, and
     * default estimatedWorkRemainingInPD to empty HashSet<Effort>
-    * @param weekNumber
-    * @param year
     * @param workPackageNumber
     */
-   public WorkPackageStatusReport(int weekNumber, int year, String workPackageNumber) {
+   public WorkPackageStatusReport(String workPackageNumber) {
 		super();
-		this.weekNumber = weekNumber;
-		this.year = year;
 		this.reportDate = DateTime.now().toDate();
 		this.comment = "";
 		this.workAccomplished = "";
@@ -200,26 +185,6 @@ public class WorkPackageStatusReport implements Serializable
       this.version = version;
    }
 
-   public int getWeekNumber()
-   {
-      return this.weekNumber;
-   }
-
-   public void setWeekNumber(final int weekNumber)
-   {
-      this.weekNumber = weekNumber;
-   }
-
-   public int getYear()
-   {
-      return this.year;
-   }
-
-   public void setYear(final int year)
-   {
-      this.year = year;
-   }
-
    public List<Effort> getEstimatedWorkRemainingInPD()
    {
       return this.estimatedWorkRemainingInPD;
@@ -277,8 +242,6 @@ public class WorkPackageStatusReport implements Serializable
    public String toString()
    {
       String result = getClass().getSimpleName() + " ";
-      result += "weekNumber: " + weekNumber;
-      result += ", year: " + year;
       if (comment != null && !comment.trim().isEmpty())
          result += ", comment: " + comment;
       if (workAccomplished != null && !workAccomplished.trim().isEmpty())

@@ -646,13 +646,13 @@ public class SampleData {
          */
         List<Effort> remainingEstimate= effortDao.listOfEffort(99, 101);
         Date date = setDate(3, 24, 2014);
-        WorkPackageStatusReport WPSR = new WorkPackageStatusReport(12, 2014, date, "new wpsr", "Lots of work accomplished",
+        WorkPackageStatusReport WPSR = new WorkPackageStatusReport(date, "new wpsr", "Lots of work accomplished",
                 "none", "approve timesheets", remainingEstimate, "none", "B333223");
         workPackageStatusReportDao.create(WPSR,false);
 
         remainingEstimate = effortDao.listOfEffort(99, 101);
         date = setDate(3, 31, 2014);
-        WPSR = new WorkPackageStatusReport(13, 2014, date, "WPSR to test", "Pretty much slacked off",
+        WPSR = new WorkPackageStatusReport(date, "WPSR to test", "Pretty much slacked off",
                 "Too many to count", "So many things", effortGenerator(10, 10, 10, 10, 10, 10, 10), "Bugs galore", "B333223");
         workPackageStatusReportDao.create(WPSR, false);
     }
