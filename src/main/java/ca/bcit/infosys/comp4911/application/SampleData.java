@@ -279,6 +279,11 @@ public class SampleData {
     }
 
     private void generateWorkPackages() {
+
+        // Please Delete the below rows and replace all effort generated with the effortGenerator method
+        // (See the example in the very first Work Package created). All effort will now be persisted to the
+        // db upon creation of either wps or wpsrs. Please test starting the server
+        // before committing and let me know if you get any errors.
         List<Effort> beginningEstimate = new ArrayList<Effort>();
         List<Effort> test = new ArrayList<Effort>();
         test.add(new Effort(PLevel.P1, 20));
@@ -293,10 +298,16 @@ public class SampleData {
         String appendNumber = "";
         Date issueDate = setDate(1, 2, 2014);
         Date endDate = setDate(5, 15, 2014);
-        
-        workPackageDao.create(new WorkPackage(
-        		"A111222", "Implement domain models", issueDate, "100", endDate, 12345, beginningEstimate),false);
 
+        //Base example
+        workPackageDao.create(new WorkPackage(
+        		"A111222", "Implement domain models", issueDate, "100", endDate, 12345, effortGenerator(10,10,10,10,10,10,10)),false);
+
+
+        /**
+         * Please fix this generator. Some must have been changed as it now generates duplicate work package
+         * numbers.
+         */
 		// Create 200 workpackages for Project Barbosa
 //        for(int i = 0; i < 200; i++) {
 //            if(i < 10) { workPackageNumber = "A11110" + i;}
@@ -477,7 +488,11 @@ public class SampleData {
     }
     
     private void generateTimesheets() {
-    	TimesheetRow wp1Row1 = new TimesheetRow(12345, "A111222", 80, 80, 80, 80, 80, 0, 0, null,
+        /**
+         * Please sanitize data here. Please note that once you assign a Timesheet row to a Timesheet that it cannot
+         * be assigned to assigned to another Timesheet.
+         */
+        TimesheetRow wp1Row1 = new TimesheetRow(12345, "A111222", 80, 80, 80, 80, 80, 0, 0, null,
                 userDao.read(1).getpLevel());
         TimesheetRow wp1Row2 = new TimesheetRow(12345, "B333222", 80, 0, 0, 0, 0, 0, 0, null,
                 userDao.read(1).getpLevel());
@@ -576,18 +591,20 @@ public class SampleData {
     }
 
     private void generateWorkPackageStatusReports(){
-
+        /**
+         * As with work packages please use the effortGenerator to generate a list of effort
+         */
         List<Effort> remainingEstimate= effortDao.listOfEffort(99, 101);
         Date date = setDate(3, 24, 2014);
         WorkPackageStatusReport WPSR = new WorkPackageStatusReport(12, 2014, date, "new wpsr", "Lots of work accomplished",
                 "none", "approve timesheets", remainingEstimate, "none", "B333223");
         workPackageStatusReportDao.create(WPSR,false);
 
-//        remainingEstimate = effortDao.listOfEffort(99, 101);
-//        date = setDate(3, 31, 2014);
-//        WPSR = new WorkPackageStatusReport(13, 2014, date, "WPSR to test", "Pretty much slacked off",
-//                "Too many to count", "So many things", remainingEstimate, "Bugs galore", "B333223");
-//        workPackageStatusReportDao.create(WPSR, false);
+        remainingEstimate = effortDao.listOfEffort(99, 101);
+        date = setDate(3, 31, 2014);
+        WPSR = new WorkPackageStatusReport(13, 2014, date, "WPSR to test", "Pretty much slacked off",
+                "Too many to count", "So many things", effortGenerator(10, 10, 10, 10, 10, 10, 10), "Bugs galore", "B333223");
+        workPackageStatusReportDao.create(WPSR, false);
     }
 
     private Date setDate(int month, int day, int year)
@@ -600,6 +617,12 @@ public class SampleData {
     	return theDate;
     }
 
+    /**
+     * Please replace any effort which is used above in the generateWorkPackageStatusReports and the generateWorkPackage
+     * methods with the effortGenerator method at the bottom of the page. Effort should only be
+     * being persisted via cascading in Work Packages, and Work Package Status reports. Delete this method and its
+     * contents when you are finished.
+     */
     private void generateEffort() {
         effortDao.create(new Effort(PLevel.P1, 50), true);
         effortDao.create(new Effort(PLevel.P2, 50), true);
