@@ -32,7 +32,7 @@ public class WorkPackageAssignment implements Serializable {
 
     @Column
     @NotBlank(message="WorkPackageNumber can not be blank.")
-    @Size(max = 250,message="WorkPackageNumber can not contain more than 250 characters.")
+    @Size(min = 6, max = 7,message="Work Package Number can not contain more than 7 charaters.")
     private String workPackageNumber;
 
     @Column
