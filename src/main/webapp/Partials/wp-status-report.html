@@ -1,23 +1,26 @@
 <content>
-  <h1 class="secondary">Work Package Status Report</h1>
+  <h1 class="secondary">Work Package Status Report</h1><br />
   <div ng-controller="WPStatusReportController">
 	  <div class="row">
-	    <p class="col-lg-3">Project No. {{package.projectNumber}}</p>
+	    <p class="col-lg-3"><strong>Project No. </strong>{{package.projectNumber}}</p>
     </div>
     <div class="row">
-      <p class="col-lg-4">
-	       Work Package No: {{package.workPackageNumber}}
+      <p class="col-lg-3">
+	   <strong>Work Package No: </strong>{{package.workPackageNumber}}
      </p>
-     <p class="col-lg-4">
-       Work Package Name: {{package.workPackageName}}
+     <p class="col-lg-5">
+       <strong>Work Package Name: </strong> {{package.workPackageName}}
       </p>
-    <p class="col-lg-4">Budget:</p>
-	  </div>
-		<div class="row">
-      <div class="col-md-6">
-      		Report Date: <input ng-model="reportDate" type="date" />
-      </div>
+      <p class="col-lg-3"><strong>Budget: </strong></p>
+	 </div>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+         <label for="reportDate">Report Date: </label>          
+          <input ng-model="reportDate" type="date" class="form-control" id="reportDate" />
+        </div>
+      </form>
     </div>
+    <hr />
     <div class="row">
       <div class="col-lg-4">
         <table class="table table-hover table-nonfluid table-bordered">
@@ -32,18 +35,36 @@
           </tbody>
         </table>
       </div>
-      <div class="col-lg-6">
-        <p>Work Accomplished:</p>
-        <textarea ng-model="workAccomplished" rows="4" cols="50"></textarea>
-        <p>Problem Encountered</p>
-        <textarea ng-model="problemEncountered" rows="4" cols="50"></textarea>
-        <p>Comment</p>
-        <textarea ng-model="comment" rows="4" cols="50"></textarea>
-        <p>Problem Anticipated</p>
-        <textarea ng-model="problemAnticipated" rows="4" cols="50"></textarea>
-        <p>Work Planned</p>
-        <textarea ng-model="workPlanned" rows="4" cols="50"></textarea>
-        <button ng-click="submit()">Submit</button>
+      <div class="col-lg-8">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-target="#workAccomplished" data-toggle="tab" >Work<br/> Accomplished</a></li>
+          <li><a data-target="#problemEncountered" data-toggle="tab">Problem<br/> Encountered</a></li>
+          <li><a data-target="#comment" data-toggle="tab">Comment<br/>&nbsp;</a></li>
+          <li><a data-target="#problemAnticipated" data-toggle="tab">Problem<br/> Anticipated</a></li>
+          <li><a data-target="#workPlanned" data-toggle="tab">Work<br/> Planned</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane active" id="workAccomplished">
+            <textarea class="form-control" ng-model="workAccomplished" rows="15" cols="50" placeholder="WorkAccomplished: "></textarea>
+          </div>
+          <div class="tab-pane" id="problemEncountered">
+            <textarea class="form-control" ng-model="problemEncountered" rows="15" cols="50" placeholder="Problem Encountered:"></textarea>
+          </div>
+          <div class="tab-pane" id="comment">
+            <textarea class="form-control" ng-model="comment" rows="15" cols="50" placeholder="Comment:"> </textarea>
+          </div>
+          <div class="tab-pane" id="problemAnticipated">
+            <textarea class="form-control" ng-model="problemAnticipated" rows="15" cols="50" placeholder="Problem Anticipated:"></textarea>
+          </div>
+          <div class="tab-pane" id="workPlanned">
+            <textarea class="form-control" ng-model="workPlanned" rows="15" cols="50" placeholder="Work Planned:"> </textarea>
+          </div>
+        </div>
+        <br />        
+        <button ng-click="submit()" class="btn btn-primary pull-right">Submit Report</button>
       </div>
     </div>
   </div>
