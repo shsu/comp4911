@@ -9,7 +9,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -33,7 +32,7 @@ public class WorkPackageAssignment implements Serializable {
 
     @Column
     @NotBlank(message="WorkPackageNumber can not be blank.")
-    @Size(max = 7,message="Work Package Number must be no more than 7 characters.")
+    @Size(max = 250,message="WorkPackageNumber can not contain more than 250 characters.")
     private String workPackageNumber;
 
     @Column
