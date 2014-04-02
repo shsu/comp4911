@@ -187,6 +187,21 @@ Use HTTP Basic Auth username field for the token
 + Response 403
 + Response 404
 
+## Projects [/projects/:project_number/manager]
+### Retrieve manager assigned to project [GET]
+Use HTTP Basic Auth username field for token
+
++ Response 200 (application/json)
+
+    + Body
+
+            {}
+
++ Response 400
++ Response 401
++ Response 403
++ Response 404
+
 ## Project Assignments [/projects/:project_number/assignments]
 ### Create a project assignment [POST]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
