@@ -1,23 +1,5 @@
 var cascadiaServices = angular.module('cascadiaServices', []);
 
-// Ensures we have a collection of users at our disposal at all times
-cascadiaServices.factory('InitUserMap', ['Restangular',
- function(Restangular) {
-    return function(scope){
-        if(scope.isAuthenticated && (!scope.userMap || scope.userMap.length == 0)) {
-            scope.userMap = {}
-
-            Restangular.all('users').getList().then(function(response){
-                scope.userList = response;
-                for(var i = 0; i < scope.userList.length; ++i) {
-                  scope.userMap[scope.userList[i].id] = scope.userList[i];
-                }
-            });
-        }
-    }
-}]);
-
-
 /** Service to be used for filtering users */
 cascadiaServices.factory('FilterUser', [
   function() {

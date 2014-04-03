@@ -105,7 +105,7 @@ cascadia.config(['$routeProvider',
             resolve: requiresAuthentication}).
         otherwise({redirectTo:'/login'});
     }])
-    .run(function($rootScope, $location, permissions, AuthenticateUser, InitUserMap) {
+    .run(function($rootScope, $location, permissions) {
         $rootScope.$on('$routeChangeStart', function(scope, next, current) {
             if(localStorage.getItem('permissions')){
                 permissions.setPermissions(JSON.parse(localStorage.getItem('permissions')));
