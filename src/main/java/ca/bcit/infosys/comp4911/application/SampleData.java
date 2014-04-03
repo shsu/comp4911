@@ -9,6 +9,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.Random;
 
 @Singleton
 @Startup
@@ -59,6 +60,8 @@ public class SampleData {
         generateWorkPackageAssignments();
         generateTimesheets();
         generateWorkPackageStatusReports();
+        andJobsSaidLetThereBeAShitTonOfTimeSheets();
+        projectWPSRGenerator(55522);
     }
 
     private void generateUsers() {
@@ -655,6 +658,7 @@ public class SampleData {
         WPSR = new WorkPackageStatusReport(date, "WPSR to test", "Pretty much slacked off",
                 "Too many to count", "So many things", effortGenerator(10, 10, 10, 10, 10, 10, 10), "Bugs galore", "B333223");
         workPackageStatusReportDao.create(WPSR, false);
+
     }
 
     private Date setDate(int month, int day, int year)
@@ -708,5 +712,108 @@ public class SampleData {
         effortList.add(new Effort(PLevel.SS, ds));
         return effortList;
 
+    }
+
+    private void andJobsSaidLetThereBeAShitTonOfTimeSheets(){
+        Random random = new Random();
+        boolean approved = false;
+        boolean signed = true;
+        boolean pending = true;
+        for(int i = 0; i < 7000; i++){
+            if(i > 3000 && i < 6000){
+                approved = true;
+                signed =  true;
+                pending = false;
+            }
+            String wpNumber = "A333" + (random.nextInt(100)+100);
+            List<TimesheetRow> tsrList = generateListOfRows(55522, wpNumber, random.nextInt(4)+1);
+            timesheetDao.create(new Timesheet(random.nextInt(8)+1, tsrList, random.nextInt(52)+1, 2014,
+                    0, approved, signed, pending), false);
+        }
+    }
+
+    private List<TimesheetRow> generateListOfRows(int projectNumber, String wpNumber, int numOfRows){
+        List<TimesheetRow> tsr = new ArrayList<TimesheetRow>();
+        Random random = new Random();
+        for(int i = 0; i < numOfRows; i++){
+            tsr.add(new TimesheetRow(projectNumber, wpNumber, random.nextInt(3),
+                    random.nextInt(3),
+                    random.nextInt(3),
+                    random.nextInt(3),
+                    random.nextInt(3),
+                    random.nextInt(3),
+                    random.nextInt(3), "Note", getRandPLevel(random.nextInt(7))));
+        }
+        return tsr;
+    }
+
+    private PLevel getRandPLevel(int i) {
+        switch(i) {
+            case 0:
+                return PLevel.P1;
+            case 1:
+                return PLevel.P2;
+            case 2:
+                return PLevel.P3;
+            case 3:
+                return PLevel.P4;
+            case 4:
+                return PLevel.P5;
+            case 5:
+                return PLevel.DS;
+            case 6:
+                return PLevel.SS;
+
+        }
+        return PLevel.P1;
+    }
+
+    /**
+     * Iterates through all work packages of a given project. It then creates a random(0-4) number of work
+     * package status reports for each work package in the project. Effort may or may not be increased for continuing
+     * work package status reports.
+     * @param projectNumber
+     */
+    private void projectWPSRGenerator(int projectNumber){
+        Random random = new Random();
+        int numOfWPSRsPerWP;
+        int increase;
+        int effortAmount;
+        Date date;
+        List<Effort> estimatedEffort;
+        List<WorkPackage> projectWPs = workPackageDao.getAllByProject(projectNumber);
+        Iterator<WorkPackage> projWPIterator = projectWPs.listIterator();
+        WorkPackage currentWp;
+        while(projWPIterator.hasNext()){
+            int month = random.nextInt(12);
+            int day = random.nextInt(27);
+            int year = 2014;
+            currentWp = projWPIterator.next();
+            numOfWPSRsPerWP = random.nextInt(5);
+            increase = random.nextInt(2);
+            date = new Date(month, day, year);
+            effortAmount = random.nextInt(80)+20;
+            estimatedEffort = effortGenerator(effortAmount, effortAmount, effortAmount, effortAmount,
+                    effortAmount, effortAmount, effortAmount);
+            for(int i = 0; i < numOfWPSRsPerWP; i++){
+                if(i > 0){
+                    if(month >= 11 ){
+                        month = 0;
+                        date = new Date(month, day, year+1);
+                    }
+                    else{
+                        date = new Date(month+1, day, year);
+                    }
+
+                }
+                if(increase > 0 && i > 0){
+                    effortAmount += 10;
+                }
+                estimatedEffort = effortGenerator(effortAmount, effortAmount, effortAmount, effortAmount,
+                        effortAmount, effortAmount, effortAmount);
+                workPackageStatusReportDao.create(new WorkPackageStatusReport(date, "Test", "Test",
+                        "Test", "Test", estimatedEffort, "Test", currentWp.getWorkPackageNumber()), false);
+            }
+        }
     }
 }
