@@ -102,6 +102,32 @@ public class SampleData {
         userDao.create(new User(
                 "gsmith@example.com", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 14,
                 78901234, 56789012, 56789012, PLevel.DS),false);
+
+        // Loops to create up to 2000 users for testing
+        // Separate loops for HR, Engineers, and Managers
+        //
+        String hr = "";   // hr
+        String e = "";     // engineer
+        String s = "";     // supervisor
+
+        for(int i = 1; i <= 50; i++){
+            hr = "hr" + Integer.toString(i);
+            userDao.create(new User(
+                    hr, hr, hr, hr, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
+        }
+
+        for(int i = 1; i <= 150; i++) {
+            e = "e" + Integer.toString(i);
+            userDao.create(new User(
+                    e, e, e, e, 1), false);
+        }
+
+        for(int i = 1; i <= 50; i++){
+            s = "s" + Integer.toString(i);
+            userDao.create(new User(
+                    s, s, s, s, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
+        }
+
     }
 
     private void generatePayRates() {
