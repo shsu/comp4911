@@ -260,22 +260,22 @@ public class SampleData {
         Date issueDate = setDate(1, 1, 2014);
         
         projectDao.create(new Project(
-        		12345, "Apollo", issueDate, null, new BigDecimal(1000), new BigDecimal(0), new BigDecimal(500000)),false);
+        		12345, "Apollo", issueDate, null, new BigDecimal(1.2), new BigDecimal(0), new BigDecimal(500000)),false);
         
         issueDate = setDate(11, 1, 2013);
         
         projectDao.create(new Project(
-        		55522, "Barbosa", issueDate, null, new BigDecimal(2000), new BigDecimal(250000), new BigDecimal(1500000)),false);
+        		55522, "Barbosa", issueDate, null, new BigDecimal(1.6), new BigDecimal(250000), new BigDecimal(1500000)),false);
         
         issueDate = setDate(7, 31, 2012);
         
         projectDao.create(new Project(
-        		99777, "Carolina", issueDate, null, new BigDecimal(2000), new BigDecimal(10000000), new BigDecimal(40000000)),false);
+        		99777, "Carolina", issueDate, null, new BigDecimal(2), new BigDecimal(10000000), new BigDecimal(40000000)),false);
         
         issueDate = setDate(2, 1, 2014);
         
         projectDao.create(new Project(
-        		88999, "Davenport", issueDate, null, new BigDecimal(2000), new BigDecimal(30000), new BigDecimal(3000000)),false);
+        		88999, "Davenport", issueDate, null, new BigDecimal(2), new BigDecimal(30000), new BigDecimal(3000000)),false);
     }
 
     private void generateWorkPackages() {
