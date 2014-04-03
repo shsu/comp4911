@@ -306,16 +306,16 @@ public class SampleData {
 
         /**
          * Please fix this generator. Some must have been changed as it now generates duplicate work package
-         * numbers.
+         * numbers. 
          */
 		// Create 200 workpackages for Project Barbosa
-//        for(int i = 0; i < 200; i++) {
-//            if(i < 10) { workPackageNumber = "A11110" + i;}
-//            if(i >= 10 && i < 100) { workPackageNumber = "A1111" + i; }
-//            if(i >= 100) { workPackageNumber = "A111" + i; }
-//            workPackageDao.create(new WorkPackage(
-//                workPackageNumber, wpName, issueDate, "100", endDate, 55522, beginningEstimate),false);
-//        }
+        for(int i = 0; i < 200; i++) {
+            if(i < 10) { workPackageNumber = "A11110" + i;}
+            if(i >= 10 && i < 100) { workPackageNumber = "A222" + i; }
+            if(i >= 100) { workPackageNumber = "A333" + i; }
+            workPackageDao.create(new WorkPackage(
+                workPackageNumber, wpName, issueDate, "100", endDate, 55522, beginningEstimate),false);
+        }
 
         issueDate = setDate(2, 5, 2014);
         endDate = setDate(4, 12, 2014);
