@@ -7,8 +7,6 @@
         <div class="row">
           <p class="col-sm-3">Project No: {{package.projectNumber}}</p>
           <p class="col-sm-3">Project Name: {{project.projectName}}</p>
-          <p class="col-sm-3">Budget: </p>
-          <p class="col-sm-3">Remaining Budget: </p>
         </div>
         <div class="row">
           <p class="col-sm-3">WP Number: {{package.workPackageNumber}}</p>
@@ -46,56 +44,45 @@
       </div>
       <div class="col-sm-7">
         <div class="panel panel-default">
-          <div class="panel-heading">Pay Grade:</div>
+          <div class="panel-heading">Engineering Estimate:</div>
           <div class="panel-body">
             <div class="table-responsive">
               <table class="table table-hover table-bordered">
                 <thead>
                   <th>Pay Grade</th>
-                  <th>Person Days for Completion</th>
-                  <th>Person Days Spent</th>
-                  <th>Estimated Remaining Person Days</th>
+                  <th>Person Days</th>
                 </thead>
+                <tbody>
+                  <tr ng-repeat="pLevel in pLevels">
+                    <td>{{estimate.pLevel}}</td>
+                    <td>{{estimate.personDays}}</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
         </div>
       </div>
-    </div>
-    </div>
-    <!-- <div class="row">
-        <div class="col-sm-5">
-            <div class="panel panel-default">
-              <div class="panel-heading">Future Assigned Employees:</div>
-              <div class="panel-body">
-                <div class="table-responsive">
-                  <table class="table table-hover table-bordered">
-                    <thead>
-                      <th>Assigned Employees</th>
-                      <th>Pay Grade</th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-        </div>
-    </div> -->
       <div class="col-sm-7">
-        <div class="panel panel-default">
-          <div class="panel-heading">Budget & Cost:</div>
-          <div class="panel-body">
-            <p>Budgeted Cost: {{package.estimateAtStart}}</p>
-            <p>Engineers Estimate: </p>
-            <p>Estimated Actual Cost at Completion: {{package.estimateToCompletion}}</p>
-            <p>Estimated Start Date: {{package.startDate}}</p>
-            <p>Estimated End Date: {{package.endDate}}</p>
-        </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">Status Reports</div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+              <thead>
+                <th>Status Report ID</th>
+                <th>Date</th>
+              </thead>
+              <tbody ng-click="select" ng-repeat="report in reports">
+                <tr>
+                  <td>{{report.id}}</td>
+                  <td>{{report.reportDate}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+    </div>
     </div>
   </div>  
 </content>

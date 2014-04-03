@@ -1521,8 +1521,8 @@ cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', 
 /*
     WORK PACKAGE STATUS REPORT CONTROLLER
 */
-cascadiaControllers.controller('WPStatusReportController', ['$scope', '$routeParams', 'Restangular',
-  function($scope, $params, Restangular){
+cascadiaControllers.controller('WPStatusReportController', ['$scope', '$location', '$routeParams', 'Restangular', 'GrowlResponse',
+  function($scope, $location, $params, Restangular, GrowlResponse){
     var param = $params.id;
     $scope.package = {};
     $scope.problemEncountered;
@@ -1580,6 +1580,7 @@ cascadiaControllers.controller('WPStatusReportController', ['$scope', '$routePar
         }
 
         Restangular.one('work_packages/' + $scope.package.workPackageNumber + '/status_reports').customPOST(data).then(function(response){
+          $location.path('wp-details/' + $scope.package.workPackageNumber);
           GrowlResponse(response)
         }, function(response){
           GrowlResponse(response)

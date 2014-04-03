@@ -61,7 +61,7 @@ public class WorkPackageStatusReport implements Serializable
 
    @Column
    @NotBlank(message="WorkPackageNumber can not be null.")
-   @Size(min=6, max=7, message="WorkPackageNumber must conatain 7 characters.")
+   @Size(min=0, max=7, message="WorkPackageNumber must conatain 7 characters.")
    private String workPackageNumber;
 
    public WorkPackageStatusReport(Date reportDate, String comment, String workAccomplished,
