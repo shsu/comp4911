@@ -65,6 +65,42 @@ cascadiaServices.factory('AuthenticateUser', ['$location', 'Restangular',
   }
 }]);
 
+cascadiaServices.factory('userService', ['$q', '$rootScope', '$location', 'Restangular',
+ function($q, $rootScope, $location, Restangular) {
+  return {
+    user: null,
+
+    isAuthenticatedResolve: function() {
+      var thisObject = this;
+      var defer = $q.defer();
+      if(thisObject.user) {
+        defer.resolve(thisObject.user);
+      } else if (localStorage.getItem('token')) {
+          Restangular.one('user').head({},
+            {'Authorization': 'Basic ' + localStorage.getItem('token')}).then(function(response){
+              console.log(response);
+              $rootScope.isAuthenticated = true;
+              Restangular.setDefaultHeaders({
+                'Authorization':'Basic ' + localStorage.getItem('token')
+              });
+              thisObject.user = localStorage.getItem('user');
+              defer.resolve(thisObject.user);
+          }, function(response) {
+            localStorage.clear();
+            $rootScope.isAuthenticated = false;
+            defer.reject(response);
+          })
+        } else {
+          $rootScope.isAuthenticated = false;
+          localStorage.clear();
+          defer.reject();
+        }
+        return defer.promise;
+      }
+    }
+  }
+]);
+
 cascadiaServices.factory('permissions',
   function($rootScope) {
     var permissionList;

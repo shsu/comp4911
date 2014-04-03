@@ -917,16 +917,9 @@ cascadiaControllers.controller('EngineerBudgetController', ['$scope', '$location
 /*
     NAVIGATION CONTROLLER
 */
-cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', '$location', 'Restangular', 'GrowlResponse', 'AuthenticateUser',
-  function($scope, $rootScope, $location, Restangular, GrowlResponse, AuthenticateUser) {
-    AuthenticateUser($rootScope);
+cascadiaControllers.controller('NavigationController', ['$scope', '$rootScope', '$location', 'Restangular', 'GrowlResponse',
+  function($scope, $rootScope, $location, Restangular, GrowlResponse) {
     $rootScope.user = JSON.parse(localStorage.getItem('user'));
-
-    $scope.logout = function() {
-      localStorage.clear();
-      $location.path('/login');
-      $.growl.notice({ message: "You Have Been Logged Out" });
-    }
   }
 ]);
 
@@ -993,7 +986,9 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
 */
 cascadiaControllers.controller('LogoutController', ['$scope', 'Restangular',
   function($scope, Restangular){
-
+    localStorage.clear();
+    $location.path('/login');
+    $.growl.notice({ message: "You Have Been Logged Out" });  
   }
 ]);
 
@@ -1229,7 +1224,8 @@ cascadiaControllers.controller('TADetailsController', ['$scope', '$location', 'R
     }
 
     $scope.reject = function() {
-      $scope.timeshet.pending = false;
+      $scope.timesheet.pending = false;
+      $scope.timesheet.signed = false;
       $scope.timesheet.put().then(function(response){
         $location.path('/timesheet-approval');
       });
@@ -1267,13 +1263,38 @@ cascadiaControllers.controller('TimesheetCorrectionController', ['$scope', '$roo
   function($scope, $rootScope, $params, Restangular, GrowlResponse) {
       var param = $params.id;
 
+      $scope.workPackageNumbers = {};
+      $scope.projectNumbers = [];
+
       $rootScope.user = JSON.parse(localStorage.getItem('user'));
 
       Restangular.one('timesheets', param).get().then(function(response) {
         $scope.timesheet = response;
       })
-    }
-  ])
+
+      Restangular.one('user/projects').getList().then(function(response){
+        projects = response;
+        for(var i = 0; i < projects.length; ++i) {
+          $scope.projectNumbers.push(projects[i].projectNumber);
+        }
+      }, function(response){
+        GrowlResponse(response);
+      });
+
+      $scope.listWP = function(p) {
+        Restangular.one('work_packages/project', p).getList().then(function(response){
+          workPackages = response;
+          $scope.workPackageNumbers[p] = []
+
+          for(var i = 0; i < workPackages.length; ++i) {
+            $scope.workPackageNumbers[p].push(workPackages[i].workPackageNumber);
+          }
+        }, function(response){
+          GrowlResponse(response);
+      });
+    } 
+  }
+])
 
 /*
     TIMESHEET CONTROLLER
