@@ -11,6 +11,8 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.*;
+import org.joda.time.DateTime;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * Dynamically creates report and returns it.
@@ -50,16 +52,17 @@ public class ProjectReport {
             @PathParam("id") final Integer projectId){
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        List<TimesheetRow> wpTimesheetRows;
-        Project project;
-        ReportHelper reportHelper;
-        ReportHelperRow[] reportHelperRows = new WPReportHelperRow[20];
-        WorkPackageStatusReport wpsr;
-        List<WorkPackageStatusReport> latestTwentyReports;
+        List<TimesheetRow>                      wpTimesheetRows;
+        Project                                 project;
+        ReportHelper                            reportHelper;
+        WPReportHelperRow[]                     reportHelperRows = new WPReportHelperRow[20];
+        WorkPackageStatusReport                 wpsr;
+        List<WorkPackageStatusReport>           latestTwentyReports;
+        DateTime                                date = new DateTime();
+        JSONObject                              report = new JSONObject();
+        JSONArray                               reportArray = new JSONArray();
+        ObjectMapper                            mapper = new ObjectMapper();
 
-        // No need for actual Entity because it is not actually stored in DB
-        JSONObject report = new JSONObject();
-        JSONArray reportArray = new JSONArray();
         project = projectDao.read(projectId);
         reportHelper = new ReportHelper(project.getProjectNumber(), project.getProjectName());
 
@@ -68,18 +71,24 @@ public class ProjectReport {
         int i = 0;
         while(wpsrIterator.hasNext()) {
             wpsr = wpsrIterator.next();
+            date = new DateTime(wpsr.getReportDate().toString());
             wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
-            reportHelperRows[i] = getWPPersonHours(wpTimesheetRows);
-            reportHelperRows[i].setWpNumber(wpsr.getWorkPackageNumber());
-            calculateTotalLabourDollars(reportHelperRows[i], wpsr.getReportDate().getYear());
+            reportHelperRows[i] = new WPReportHelperRow(wpsr.getWorkPackageNumber());
+            reportHelperRows[i].setpLevels(getWPPersonHours(wpTimesheetRows).getpLevels());
+            calculateTotalLabourDollars(reportHelperRows[i], date.getYear());
             String key = "WP" + i;
-            report.append(key, reportHelperRows[i].toString());
+            try{
+                report.append(key, mapper.writeValueAsString(reportHelperRows[i]));
+            }catch(Exception e){
+                e.printStackTrace();
+            }
             i++;
         }
 
         report.append("ProjectName", reportHelper.getProjectName());
         report.append("ProjectNumber", reportHelper.getProjectNumber());
         report.append("WorkPackages", reportArray);
+
 
         return SH.responseWithEntity(200, report.toString());
     }
