@@ -67,7 +67,7 @@
       </div>
       <div class="col-xs-2 col-xs-offset-4">
         <button class="btn btn-primary btn-block" ng-click="save()">Save</button>
-        <button class="btn btn-primary btn-block" ng-click="submit()">Submit</button>
+        <button class="btn btn-primary btn-block" ng-disabled="!timesheet.signed" ng-click="submit()">Submit</button>
       </div>    
     </footer>
   </div>

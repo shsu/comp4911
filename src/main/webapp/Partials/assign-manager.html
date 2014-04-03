@@ -21,7 +21,7 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="selectM($index)" class="{{manager.selected}}" ng-hide="!query" ng-repeat="manager in userList | filter:query">
+            <tr ng-click="selectM($index)" class="{{manager.selected}}" ng-hide="!query" ng-repeat="manager in userList | filter: search">
               <td>{{manager.id}}</td> 
               <td>{{manager.name}}</td>
               <td>{{manager.paygrade}}</td>

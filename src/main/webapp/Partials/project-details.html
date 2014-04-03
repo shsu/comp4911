@@ -10,6 +10,13 @@
           <p class="col-sm-3">Budget: {{project.unallocatedBudget + project.allocatedBudget}} </p>
           <p class="col-sm-3">Remaining Budget: {{project.unallocatedBudget}} </p>
         </div>
+        <div class="row">
+          <p>Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}
+              <a href="#/projects/{{project.projectNumber}}/assign-manager">
+                <span ng-hide="hasProjectManager()">Assign</span>
+                <span ng-show="hasProjectManager()">(Change)</span>
+              </a></p>
+        </div>
       </div>
     </div>      
     <div class="row">
