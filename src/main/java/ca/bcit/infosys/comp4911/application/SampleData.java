@@ -310,9 +310,9 @@ public class SampleData {
          */
 		// Create 200 workpackages for Project Barbosa
         for(int i = 0; i < 200; i++) {
-            if(i < 10) { workPackageNumber = "A11110" + i;}
-            if(i >= 10 && i < 100) { workPackageNumber = "A222" + i; }
-            if(i >= 100) { workPackageNumber = "A333" + i; }
+            if(i < 10) { workPackageNumber = "A11110" + i;}                 // add 1 digit
+            if(i >= 10 && i < 100) { workPackageNumber = "A2220" + i; }     // add 2 digits
+            if(i >= 100) { workPackageNumber = "A333" + i; }                // add 3 digits
             workPackageDao.create(new WorkPackage(
                 workPackageNumber, wpName, issueDate, "100", endDate, 55522, beginningEstimate),false);
         }
