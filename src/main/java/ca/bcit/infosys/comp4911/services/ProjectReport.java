@@ -44,6 +44,9 @@ public class ProjectReport {
     @EJB
     private PayRateDao payRateDao;
 
+    @EJB
+    private WorkPackageDao workPackageDao;
+
     @GET
     @Path("/matrix/{id}")
     public Response getProjectMatrixReport(
@@ -59,10 +62,9 @@ public class ProjectReport {
         WorkPackageStatusReport                 wpsr;
         List<WorkPackageStatusReport>           latestTwentyReports;
         DateTime                                date = new DateTime();
-        JSONObject                              report = new JSONObject();
         JSONArray                               reportArray = new JSONArray();
         ObjectMapper                            mapper = new ObjectMapper();
-
+        JSONObject                              objectToBeMapped;
         project = projectDao.read(projectId);
         reportHelper = new ReportHelper(project.getProjectNumber(), project.getProjectName());
 
@@ -70,28 +72,36 @@ public class ProjectReport {
         Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
         while(wpsrIterator.hasNext()) {
-            wpsr = wpsrIterator.next();
-            String year = wpsr.getReportDate().toString();
-            date = new DateTime(year);
-            wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
-            reportHelperRows[i] = new WPReportHelperRow(wpsr.getWorkPackageNumber());
-            reportHelperRows[i].setpLevels(getWPPersonHours(wpTimesheetRows).getpLevels());
-            calculateTotalLabourDollars(reportHelperRows[i], date.getYear());
-            String key = "WP" + i;
-            try{
-                report.append(key, mapper.writeValueAsString(reportHelperRows[i]));
-            }catch(Exception e){
+            try {
+                objectToBeMapped = new JSONObject();
+                wpsr = wpsrIterator.next();
+                String year = wpsr.getReportDate().toString();
+                date = new DateTime(year);
+                wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
+                reportHelperRows[i] = new WPReportHelperRow(wpsr.getWorkPackageNumber());
+                reportHelperRows[i].setpLevels(getWPPersonHours(wpTimesheetRows).getpLevels());
+                calculateTotalLabourDollars(reportHelperRows[i], date.getYear());
+                objectToBeMapped.put("PLevels", reportHelperRows[i].getpLevels());
+                objectToBeMapped.put("Labour Dollars", reportHelperRows[i].getLabourDollars());
+                objectToBeMapped.put("Work Package Number", wpsr.getWorkPackageNumber());
+                objectToBeMapped.put("Work Package Description",
+                        workPackageDao.read(wpsr.getWorkPackageNumber()).getWorkPackageName());
+                reportArray.put(objectToBeMapped);
+            }
+            catch(Exception e) {
                 e.printStackTrace();
             }
             i++;
         }
 
-        report.append("ProjectName", reportHelper.getProjectName());
-        report.append("ProjectNumber", reportHelper.getProjectNumber());
-        report.append("WorkPackages", reportArray);
+        objectToBeMapped = new JSONObject();
+        objectToBeMapped.put("Project Name", reportHelper.getProjectName());
+        objectToBeMapped.put("ProjectNumber", reportHelper.getProjectNumber());
+        reportArray.put(objectToBeMapped);
 
 
-        return SH.responseWithEntity(200, report.toString());
+
+        return SH.responseWithEntity(200, reportArray.toString());
     }
 
     /**
