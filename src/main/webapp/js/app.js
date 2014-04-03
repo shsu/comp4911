@@ -81,6 +81,8 @@ cascadia.config(['$routeProvider',
             resolve: requiresAuthentication}).
         when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management.html',
             resolve: requiresAuthentication, permission: 'Supervisor'}).
+        when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management.html',
+            resolve: requiresAuthentication, permission: 'Hr'}).
         when('/users/new', {controller: 'CreateUserController', templateUrl:'Partials/create-user.html',
             resolve: requiresAuthentication}).
         when('/users/pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html',
@@ -105,8 +107,6 @@ cascadia.config(['$routeProvider',
     }])
     .run(function($rootScope, $location, permissions, AuthenticateUser, InitUserMap) {
         $rootScope.$on('$routeChangeStart', function(scope, next, current) {
-            //AuthenticateUser($rootScope);
-
             if(localStorage.getItem('permissions')){
                 permissions.setPermissions(JSON.parse(localStorage.getItem('permissions')));
             }

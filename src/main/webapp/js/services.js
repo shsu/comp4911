@@ -37,34 +37,6 @@ cascadiaServices.factory('FilterUser', [
     }
 }]);
 
-
-cascadiaServices.factory('AuthenticateUser', ['$location', 'Restangular',
- function($location, Restangular) {
-  return function(scope) {
-    scope.isToken = (localStorage.getItem('token')) ? true : false;
-    if(scope.isToken){
-      Restangular.one('user').head({}, 
-        {'Authorization': 'Basic ' + localStorage.getItem('token')}).then(function(response){
-        console.log("Token is Valid");
-        scope.isAuthenticated = true;
-        Restangular.setDefaultHeaders({
-          'Authorization': 'Basic ' + localStorage.getItem('token')
-        });
-        console.log(Restangular.defaultHeaders);
-      }, function(response){
-        console.log("Token not Valid");
-        localStorage.clear();
-        scope.isAuthenticated = false;
-        $location.path('/login');
-      })
-    }
-    else {
-        scope.isAuthenticated = false;
-        $location.path('/login')
-    } 
-  }
-}]);
-
 cascadiaServices.factory('userService', ['$q', '$rootScope', '$location', 'Restangular',
  function($q, $rootScope, $location, Restangular) {
   return {

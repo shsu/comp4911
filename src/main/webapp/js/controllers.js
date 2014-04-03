@@ -984,9 +984,10 @@ cascadiaControllers.controller('LoginController', ['$scope', '$base64', 'Restang
 /*
     LOGOUT CONTROLLER
 */
-cascadiaControllers.controller('LogoutController', ['$scope', 'Restangular',
-  function($scope, Restangular){
+cascadiaControllers.controller('LogoutController', ['$scope', '$rootScope', 'Restangular',
+  function($scope, $rootScope, Restangular){
     localStorage.clear();
+    $rootScope.isAuthenticated = false;
     $location.path('/login');
     $.growl.notice({ message: "You Have Been Logged Out" });  
   }
