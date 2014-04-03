@@ -56,17 +56,17 @@ public class ProjectReport {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         List<TimesheetRow>                      wpTimesheetRows;
-        Project                                 project;
-        ReportHelper                            reportHelper;
         WPReportHelperRow[]                     reportHelperRows = new WPReportHelperRow[20];
         WorkPackageStatusReport                 wpsr;
         List<WorkPackageStatusReport>           latestTwentyReports;
-        DateTime                                date = new DateTime();
+        DateTime                                date;
         JSONArray                               reportArray = new JSONArray();
-        ObjectMapper                            mapper = new ObjectMapper();
         JSONObject                              objectToBeMapped;
-        project = projectDao.read(projectId);
-        reportHelper = new ReportHelper(project.getProjectNumber(), project.getProjectName());
+
+        objectToBeMapped = new JSONObject();
+        objectToBeMapped.put("ProjectNumber", projectId);
+        objectToBeMapped.put("Project Name", projectDao.read(projectId).getProjectName());
+        reportArray.put(objectToBeMapped);
 
         latestTwentyReports = wpsrDao.getLatestTwentyByProject(projectId);
         Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
@@ -81,11 +81,11 @@ public class ProjectReport {
                 reportHelperRows[i] = new WPReportHelperRow(wpsr.getWorkPackageNumber());
                 reportHelperRows[i].setpLevels(getWPPersonHours(wpTimesheetRows).getpLevels());
                 calculateTotalLabourDollars(reportHelperRows[i], date.getYear());
-                objectToBeMapped.put("PLevels", reportHelperRows[i].getpLevels());
-                objectToBeMapped.put("Labour Dollars", reportHelperRows[i].getLabourDollars());
                 objectToBeMapped.put("Work Package Number", wpsr.getWorkPackageNumber());
                 objectToBeMapped.put("Work Package Description",
                         workPackageDao.read(wpsr.getWorkPackageNumber()).getWorkPackageName());
+                objectToBeMapped.put("PLevels", reportHelperRows[i].getpLevels());
+                objectToBeMapped.put("Labour Dollars", reportHelperRows[i].getLabourDollars());
                 reportArray.put(objectToBeMapped);
             }
             catch(Exception e) {
@@ -93,13 +93,6 @@ public class ProjectReport {
             }
             i++;
         }
-
-        objectToBeMapped = new JSONObject();
-        objectToBeMapped.put("Project Name", reportHelper.getProjectName());
-        objectToBeMapped.put("ProjectNumber", reportHelper.getProjectNumber());
-        reportArray.put(objectToBeMapped);
-
-
 
         return SH.responseWithEntity(200, reportArray.toString());
     }
