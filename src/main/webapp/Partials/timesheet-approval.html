@@ -7,18 +7,16 @@
           <tbody>
             <tr>
               <th>Emp ID</th>
-              <th>Emp Name</th>
               <th>Week No</th>
               <th>Timesheet</th>
             </tr>
             <tr>
-             <td ng-hide="timesheet.length">No Timesheets to manage at the moment</td>
+             <td ng-hide="timesheets.length">No Timesheets to manage at the moment</td>
             </tr>
             <tr ng-repeat="timesheet in timesheets">
               <td>{{timesheet.userId}}</td>
-              <td>{{userMap[timesheet.userId].firstName}} {{userMap[timesheet.userId].lastName}}</td>
               <td>{{timesheet.weekNumber}}</td>
-              <td><a class="cursor-hand" ng-click="select($index)">Timesheet</a></td>
+              <td><a class="cursor-hand" ng-click="select(timesheet.id)">Timesheet</a></td>
             </tr>
           </tbody>
         </table>

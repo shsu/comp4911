@@ -1223,14 +1223,16 @@ cascadiaControllers.controller('TADetailsController', ['$scope', '$location', 'R
     $scope.approve = function() {
       $scope.timesheet.approved = true;
       $scope.timesheet.pending = false;
-      $scope.timesheet.put();
-      $location.path('/timesheet-approval');
+      $scope.timesheet.put().then(function(response){
+        $location.path('/timesheet-approval');
+      });
     }
 
     $scope.reject = function() {
       $scope.timeshet.pending = false;
-      $scope.timesheet.put();
-      $location.path('/timesheet-approval');
+      $scope.timesheet.put().then(function(response){
+        $location.path('/timesheet-approval');
+      });
     }
   }
 ]);
@@ -1248,10 +1250,10 @@ cascadiaControllers.controller('TAController', ['$scope', '$location', 'Restangu
       $scope.timesheets = response;
     })
 
-    $scope.select = function($index) {
-      var ndx = $index;
-      var str = "/timesheet/";
-      var path = str.concat($scope.timesheets[ndx].id);
+
+    $scope.select = function(id) {
+      var str = "/timesheet-approval/";
+      var path = str.concat(id);
       $location.path(path);
     }
   }
