@@ -53,7 +53,7 @@ public class ProjectAssignmentDao {
 
     public List<User> getProjectManager(final int projectNumber) {
         TypedQuery<User> query = em.createQuery("select u from User u where u.id" +
-                " = (select DISTINCT p.userId from ProjectAssignment p" +
+                " IN (select DISTINCT p.userId from ProjectAssignment p" +
                 " where p.projectNumber = :projectNumber and p.projectManager = true)", User.class);
         query.setParameter("projectNumber", projectNumber);
         return query.getResultList();

@@ -72,6 +72,19 @@ public class ProjectAssignmentResource {
         return SH.responseWithEntity(200, projectAssignmentDao.getProjectManager(projectNumber));
     }
 
+    @GET
+    @Path("{user_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserProjectAssignment(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("project_number") int projectNumber,
+            @PathParam("user_id") int user_Id){
+
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+        return SH.responseWithEntity(200, projectAssignmentDao.getByUserAndProject(projectNumber, user_Id));
+    }
+
     @PUT
     @Path("{project_number}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -88,19 +101,6 @@ public class ProjectAssignmentResource {
         ProjectAssignment projectAssignment = projectAssignmentDao.getByProject(projectNumber);
         projectAssignment.setProjectManager(isProjectManager);
         return SH.response(200);
-    }
-
-    @GET
-    @Path("{user_id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserProjectAssignment(
-            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-            @QueryParam(SH.TOKEN_STRING) final String queryToken,
-            @PathParam("project_number") int projectNumber,
-            @PathParam("user_id") int user_Id){
-
-        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
-        return SH.responseWithEntity(200, projectAssignmentDao.getByUserAndProject(projectNumber, user_Id));
     }
 
 
