@@ -48,7 +48,7 @@ public class StatusReportResource {
             return SH.response(404);
         }
 
-        return SH.responseWithEntity(200, workPackageStatusReportDao.getAll());
+        return SH.responseWithEntity(200, workPackageStatusReportDao.getAllByWorkPackage(id));
     }
 
     @POST
