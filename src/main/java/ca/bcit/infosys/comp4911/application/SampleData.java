@@ -60,8 +60,8 @@ public class SampleData {
         generateWorkPackageAssignments();
         generateTimesheets();
         generateWorkPackageStatusReports();
-        andJobsSaidLetThereBeAShitTonOfTimeSheets();
-        projectWPSRGenerator(55522);
+        //andJobsSaidLetThereBeAShitTonOfTimeSheets();
+        //projectWPSRGenerator(55522);
     }
 
     private void generateUsers() {
