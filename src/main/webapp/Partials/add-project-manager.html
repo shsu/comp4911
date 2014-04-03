@@ -22,7 +22,7 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="select(manager); open()" data-toggle="modal" data-target="#addModal" class="{{manager.selected}}" ng-repeat="manager in filtered = (userList | uniqueUser:curProjectManager) | filter: search | limitTo: quantity">
+            <tr ng-click="select(manager); open()" data-toggle="modal" data-target="#addModal" class="{{manager.selected}}" ng-repeat="manager in filtered = (users | uniqueUser:curProjectManager) | filter: search | limitTo: quantity">
               <td>{{manager.id}}</td> 
               <td>{{manager.firstName}} {{manager.lastName}}</td>
               <td>{{manager.pLevel}}</td>
