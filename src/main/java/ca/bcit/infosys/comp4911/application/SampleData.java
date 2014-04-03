@@ -779,6 +779,7 @@ public class SampleData {
         List<WorkPackage> projectWPs = workPackageDao.getAllByProject(projectNumber);
         Iterator<WorkPackage> projWPIterator = projectWPs.listIterator();
         WorkPackage currentWp;
+        Calendar calendar = Calendar.getInstance();
         while(projWPIterator.hasNext()){
             int month = random.nextInt(12);
             int day = random.nextInt(27);
@@ -786,24 +787,24 @@ public class SampleData {
             currentWp = projWPIterator.next();
             numOfWPSRsPerWP = random.nextInt(5);
             increase = random.nextInt(2);
-            date = new Date(month, day, year);
             effortAmount = random.nextInt(80)+20;
-            estimatedEffort = effortGenerator(effortAmount, effortAmount, effortAmount, effortAmount,
-                    effortAmount, effortAmount, effortAmount);
             for(int i = 0; i < numOfWPSRsPerWP; i++){
                 if(i > 0){
                     if(month >= 11 ){
                         month = 0;
-                        date = new Date(month, day, year+1);
+                        year += 1;
+                        calendar.set(year, month, day);
                     }
                     else{
-                        date = new Date(month+1, day, year);
+                        month += 1;
+                        calendar.set(year, month, day);
                     }
 
                 }
                 if(increase > 0 && i > 0){
                     effortAmount += 10;
                 }
+                date = calendar.getTime();
                 estimatedEffort = effortGenerator(effortAmount, effortAmount, effortAmount, effortAmount,
                         effortAmount, effortAmount, effortAmount);
                 workPackageStatusReportDao.create(new WorkPackageStatusReport(date, "Test", "Test",

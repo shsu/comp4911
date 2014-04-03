@@ -71,7 +71,8 @@ public class ProjectReport {
         int i = 0;
         while(wpsrIterator.hasNext()) {
             wpsr = wpsrIterator.next();
-            date = new DateTime(wpsr.getReportDate().toString());
+            String year = wpsr.getReportDate().toString();
+            date = new DateTime(year);
             wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
             reportHelperRows[i] = new WPReportHelperRow(wpsr.getWorkPackageNumber());
             reportHelperRows[i].setpLevels(getWPPersonHours(wpTimesheetRows).getpLevels());
