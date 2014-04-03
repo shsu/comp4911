@@ -4,6 +4,7 @@
     <div class="row">
       <div class="col-lg-4">Project No.: {{project.projectNumber}}</div>
       <div class="col-lg-4">Project Name: {{project.projectName}}</div>
+      <div class="col-lg-4" ng-show="hasProjectManager()">Current Manager: {{curProjectManager.firstName}} {{curProjectManager.lastName}}</div>
     </div>
     <div class="row">
       <div class="col-lg-12">
@@ -21,7 +22,7 @@
               <th style="width:40%;">Emp Name</th>
               <th style="width:40%;">Pay Grade</th>
             </tr>
-            <tr ng-click="select(manager); open()" data-toggle="modal" data-target="#addModal" class="{{manager.selected}}" ng-repeat="manager in userList | filter:query | limitTo: quantity">
+            <tr ng-click="select(manager); open()" data-toggle="modal" data-target="#addModal" class="{{manager.selected}}" ng-repeat="manager in filtered = (userList | uniqueUser:curProjectManager) | filter: search | limitTo: quantity">
               <td>{{manager.id}}</td> 
               <td>{{manager.firstName}} {{manager.lastName}}</td>
               <td>{{manager.pLevel}}</td>
@@ -29,14 +30,6 @@
           </tbody>
         </table>
       </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2 col-lg-offset-8 ">
-            <a data-toggle="modal" data-target="#addModal" class="pull-right btn btn-primary btn-block">Select</a>
-        </div>
-        <div class="col-lg-2 ">
-            <button ng-click="cancel()" class="pull-right btn btn-primary btn-block">Cancel</button>
-        </div>
     </div>
   <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-header">

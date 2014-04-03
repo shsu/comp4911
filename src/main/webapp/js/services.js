@@ -29,13 +29,14 @@ cascadiaServices.factory('FilterUser', [
       query = query.toLowerCase();
 
       if (user.id.toString().indexOf(query) != -1 || user.firstName.toLowerCase().indexOf(query) != -1 ||
-                user.lastName.toLowerCase().indexOf(query) != -1 || user.username.toLowerCase().indexOf(query) != -1 ||
-                user.pLevel == query.toUpperCase()) {
+                user.lastName.toLowerCase().indexOf(query) != -1 || user.pLevel == query.toUpperCase()) {
         return true;
       }
+      
       return false;
     }
 }]);
+
 
 cascadiaServices.factory('AuthenticateUser', ['$location', 'Restangular',
  function($location, Restangular) {

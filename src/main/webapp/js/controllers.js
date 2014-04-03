@@ -92,11 +92,24 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$m
 
     Restangular.one('projects/' + param).get().then(function(response){
       $scope.project = response;
+      loadManager();
     })
 
     Restangular.all('users').getList().then(function(response){
       $scope.users = response;
     });
+
+    var loadManager = function() {
+      Restangular.one('projects/' + $scope.project.projectNumber + '/assignments/manager').get().then(function(response) {
+        $scope.curProjectManager = response[0];
+      })
+    }
+
+    $scope.hasProjectManager = function() {
+      if(angular.isDefined($scope.curProjectManager)) {
+        return ($scope.curProjectManager.id);
+      }
+    }
 
     $scope.select = function (s) {
       $scope.selectedManager= s;
@@ -135,12 +148,23 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$m
 
       modalInstance.result.then(function () {
         var base = Restangular.one('projects', $scope.project.projectNumber);
+
+        if(angular.isDefined($scope.curProjectManager)) {
+          base.one('assignments', $scope.curProjectManager.id).get().then(function(response){
+            var assign = response[0];
+            assign.projectManager = false;
+            base.one('assignments/' + $scope.curProjectManager.id).customPUT(assign).then(function(response) {
+              GrowlResponse(response);
+            }, function(response) {
+              GrowlResponse(response);
+            })
+          })
+        }
         base.one('assignments', $scope.selectedManager.id).get().then(function(response){
           if(response.length){
             projectAssignment = response[0];
             projectAssignment.projectManager = true;
-            base.one('assignments', $scope.selectedManager.id).customPUT(projectAssignment).then(function(response){
-              GrowlResponse(response)
+            base.one('assignments/' + $scope.selectedManager.id).customPUT(projectAssignment).then(function(response){
               $location.path('/projects');
             }, function(response){
               GrowlResponse(response)
@@ -154,7 +178,6 @@ cascadiaControllers.controller('ManagerController', ['$scope', '$rootScope', '$m
               active: true
             }
             base.one('assignments').customPOST(data).then(function(response){
-              GrowlResponse(response)
               $location.path('/projects');
             }, function(response){
               GrowlResponse(response)
@@ -399,17 +422,23 @@ cascadiaControllers.controller('ProjectManagementController', ['$scope', '$locat
   function($scope, $location, GrowlResponse, Restangular) {
     
     $scope.quantity = 20;
+    $scope.checked = {};
 
     Restangular.all('projects').getList().then(function(response){
       $scope.projects = response;
     });
 
+    var getManager = function(project) {
+      Restangular.one('projects/' + project.projectNumber + '/assignments/manager').get().then(function(response) {
+          return (response.length);
+      })
+    }
+
     $scope.hasProjectManager = function(project) {
-        if(angular.isDefined(project)) {
-          Restangular.one('projects/' + project.projectNumber + 'assignments/manager').get().then(function(response) {
-            
-          })
-        }
+      if(angular.isDefined(project) && !$scope.checked[project.projectNumber]) {
+        $scope.checked[project.projectNumber] = true;
+        return getManager(project);
+      }
     }
 
     $scope.selectedManager = {};
@@ -1116,12 +1145,25 @@ cascadiaControllers.controller('ProjectDetailsController', ['$scope', '$routePar
     Restangular.one('projects', param).get().then(function(response){
       $scope.project = response;
       loadUsers();
+      loadManager();
     });
+
+    var loadManager = function() {
+      Restangular.one('projects/' + $scope.project.projectNumber + '/assignments/manager').get().then(function(response) {
+        $scope.projectManager = response[0];
+      })
+    }
 
     var loadUsers = function() {
       Restangular.all('projects/' + $scope.project.projectNumber + '/users').getList().then(function(response){
         $scope.assignedUsers = response;
       })
+    }
+
+    $scope.hasProjectManager = function() {
+      if(angular.isDefined($scope.projectManager)) {
+        return ($scope.projectManager.id);
+      }
     }
 
     $scope.search = function(user) {
@@ -1454,17 +1496,22 @@ cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', 
 
     base.get().then(function(response){
       $scope.package = response;
+      loadProject();
     });
 
-    Restangular.all('work_packages/' + $scope.param + '/assignments').getList().then(function(response){
+    base.getList('assignments').then(function(response){
       $scope.assignedUsers = response;
     });
 
-    $timeout(function(){
+    base.getList('status_reports').then(function(response) {
+      $scope.reports = response;
+    })
+
+    var loadProject = function() {
       Restangular.one('projects/' + $scope.package.projectNumber).get().then(function(response){
         $scope.project = response;
       });
-    }, 300);
+    };
          
   }
 ]);
