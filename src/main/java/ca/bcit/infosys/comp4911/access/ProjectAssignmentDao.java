@@ -73,7 +73,7 @@ public class ProjectAssignmentDao {
     }
 
     // creating a list even though it is a single result, avoids an exception being thrown on no entity found.
-    public List<ProjectAssignment> getByUserAndProject(final Integer projectNumber, final int userId) {
+    public List<ProjectAssignment> getByUserAndProject(final int projectNumber, final int userId) {
         TypedQuery<ProjectAssignment> query = em.createQuery("select DISTINCT p from ProjectAssignment p"
                 + " where p.projectNumber = :projectNumber and p.userId = :userId",
                 ProjectAssignment.class);
