@@ -30,7 +30,7 @@ cascadiaControllers.controller('EngineerController', ['$scope', '$modal', 'Filte
     });
 
     $scope.search = function(user) {
-      return FitlerUser(user, $scope.query);
+      return FilterUser(user, $scope.query);
     }
 
     $scope.select = function(user) {
