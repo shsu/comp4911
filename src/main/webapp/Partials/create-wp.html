@@ -16,18 +16,8 @@
         <div class="col-lg-4"><input type="text" ng-model="workPackage.workPackageName" class="form-control"></div>
       </div>
       <div class="row">
-        <div class="col-lg-2"><p>Estimate At Start: </p></div>
-        <div class="col-lg-4"><input type="text" ng-model="workPackage.estimateAtStart" class="form-control"></div>
-        <!--<div class="col-lg-2"><p>Estimate at Completion:</p></div> 
-        <div class="col-lg-4"><input type="text" ng-model="workPackage.estimateToCompletion" class="form-control"></div>-->
         <div class="col-lg-2"><p>Description:</p></div>
         <div class="col-lg-4"><textarea rows="3" ng-model="workPackage.description" class="form-control"></textarea></div>
-      </div>
-      <div class="row">
-          <div class="col-lg-2"><p>Status: </p></div>
-          <div class="col-lg-4">              
-            <select ng-model="workPackage.progressStatus" ng-options="s for s in statuses"></select>
-          </div> 
       </div>
       <div class="row">
           <div class = "col-lg-4 col-lg-offset-8"><button ng-click="save()" class="btn btn-block btn-primary">Save</button></div>

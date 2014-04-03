@@ -797,13 +797,12 @@ cascadiaControllers.controller('CreateWPController', ['$scope', '$location', 'Re
         $scope.project = response;
       });
 
-    $scope.statuses = [ 'Open', 'Closed'];
-
     $scope.save = function() {
       workPackage = $scope.workPackage;
-      workPackage.projectNumber = $scope.project.projectNumber;
+      workPackage.progressStatus = 'Active';
+      workPackage.issueDate = new Date();
 
-      Restangular.one('work_packages').customPOST(workPackage).then(function(response){
+      Restangular.one('work_packages').customPOST($scope.workPackage).then(function(response){
         $.growl.notice({ message: "Work Package Created" });
       }, function(response){
         GrowlResponse(response);
