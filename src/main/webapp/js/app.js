@@ -63,19 +63,18 @@ cascadia.config(['$routeProvider',
     }])
     .run(function($rootScope, $location, permissions, AuthenticateUser, InitUserMap) {
         $rootScope.$on('$routeChangeStart', function(scope, next, current) {
+            AuthenticateUser($rootScope);
+
             if(localStorage.getItem('permissions')){
                 permissions.setPermissions(JSON.parse(localStorage.getItem('permissions')));
             }
-            var permission = next.$$route.permission;
-            if(_.isString(permission) && !permissions.hasPermission(permission)){
-                $location.path('/unauthorized');
+            if(next.$$route && next.$$route.permission){
+                var permission = next.$$route.permission;
+                if(_.isString(permission) && !permissions.hasPermission(permission)){
+                    $location.path('/unauthorized');
+                }
             }
         });
-        $rootScope.$on('$routeChangeSuccess',
-            function() {
-                AuthenticateUser($rootScope);
-                InitUserMap($rootScope);
-            })
     });
 // Runs every time page is reloaded or routed, ensures authentication and headers are set appropriately
 
