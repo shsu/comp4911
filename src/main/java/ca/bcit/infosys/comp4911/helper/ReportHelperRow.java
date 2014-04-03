@@ -17,6 +17,7 @@ public class ReportHelperRow {
     private String wpDescription;
 
     public ReportHelperRow() {
+        pLevels = new HashMap<PLevel, Integer>();
         pLevels.put(PLevel.P1, 0);
         pLevels.put(PLevel.P2, 0);
         pLevels.put(PLevel.P3, 0);
