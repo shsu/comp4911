@@ -200,18 +200,21 @@ cascadiaControllers.controller('AEPController', ['$rootScope', '$scope', '$locat
     var param = $params.id;
     Restangular.one('users', param).get().then(function(response){
       $scope.cUser = response;
+      loadUsers();
     });
 
     $scope.selectedProjects = [];
     $scope.quantity = 20;
 
-    Restangular.all('users/' + $scope.cUser.id + '/projects').getList().then(function(response){
-      $scope.selectedProjects = response;
-    });
+    var loadUsers = function(){
+      Restangular.all('users/' + $scope.cUser.id + '/projects').getList().then(function(response){
+        $scope.selectedProjects = response;
+      });
 
-    Restangular.all('projects').getList().then(function(response){
-      $scope.projects = response;
-    });
+      Restangular.all('projects').getList().then(function(response){
+        $scope.projects = response;
+      });
+    } 
 
     $scope.selectP = function($index) {
       if ($scope.projects[$index].disabled) {
