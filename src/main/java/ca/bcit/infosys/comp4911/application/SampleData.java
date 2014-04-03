@@ -471,11 +471,6 @@ public class SampleData {
             ));
         }
         */
-        projectAssignmentDao.create(new ProjectAssignment(
-                projects.get(0).getProjectNumber(),
-                users.get(0).getId(),
-                true, true
-        ),false);
         
         ProjectAssignment assignment = new ProjectAssignment(12345, users.get(0).getId(), true, true);
         projectAssignmentDao.create(assignment, false);
