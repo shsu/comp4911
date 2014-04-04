@@ -1,6 +1,5 @@
 package ca.bcit.infosys.comp4911.application;
 
-import ca.bcit.infosys.comp4911.helper.SH;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
@@ -12,8 +11,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 import java.util.UUID;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Singleton
 public class UserTokens {

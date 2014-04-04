@@ -1,8 +1,5 @@
 package ca.bcit.infosys.comp4911.helper;
 
-import ca.bcit.infosys.comp4911.domain.PLevel;
-
-import java.util.HashMap;
 
 /**
  * Created by craigleclair on 2014-03-29.
