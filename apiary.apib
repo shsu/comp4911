@@ -321,6 +321,22 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
     + Body
     
             {
+                "id": 1,
+                "version": 0,
+                "username": "q",
+                "password": "test-password",
+                "firstName": "Apiary",
+                "lastName": "Apiary",
+                "startDate": "2014-04-03",
+                "status": "Active",
+                "paidHoursPerWeek": 40,
+                "totalFlexTime": 50,
+                "vacationDays": 0,
+                "defaultTimesheetID": 0,
+                "supervisorUserID": 1,
+                "timesheetApproverUserID": 1,
+                "pLevel": "P5",
+                "hr": true
             }
 
 + Response 401
@@ -345,8 +361,8 @@ Use HTTP Basic Auth for username/password
     + Body
     
             {
-                "user_id":"<user_id>",
-                "token":"<token>"
+                "user_id": 1,
+                "token":"test-token"
             }
 
 + Response 400
@@ -382,6 +398,19 @@ Use HTTP Basic Auth for username/password
     + Body
             [
                 {
+                    "name": "Hr"
+                },
+                {
+                    "name": "ProjectManager"
+                },
+                {
+                    "name": "Supervisor"
+                },
+                {
+                    "name": "TimesheetApprover"
+                },
+                {
+                    "name": "ResponsibleEngineer"
                 }
             ]
 
@@ -393,9 +422,17 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
 
 + Response 200
     + Body
-    
+
             [
                 {
+                    "projectNumber": 12345,
+                    "version": 0,
+                    "projectName": "Apollo",
+                    "issueDate": "2014-01-01",
+                    "completeDate": null,
+                    "clientRate": 1.2,
+                    "unAllocatedBudget": 0,
+                    "allocatedBudget": 500000
                 }
             ]
 
@@ -526,6 +563,94 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
     
             [
                 {
+                "id": 1,
+                "version": 0,
+                "username": "q",
+                "password": "$2a$10$KXZMtKCY6ZOe3GUoQ1d.LOfWSRea8Q4xXxcu5jtpjfHE5CI0Nn4JO",
+                "firstName": "FirstName",
+                "lastName": "LastName",
+                "startDate": "2014-04-03",
+                "status": "Active",
+                "paidHoursPerWeek": 40,
+                "totalFlexTime": 50,
+                "vacationDays": 0,
+                "defaultTimesheetID": 0,
+                "supervisorUserID": 0,
+                "timesheetApproverUserID": 0,
+                "pLevel": "P5",
+                "hr": true
+                },
+                {
+                "id": 2,
+                "version": 0,
+                "username": "username0@example.com",
+                "password": "$2a$10$opLiY8keyJTT0qvoZgT32uhFJEpZPGNBOfHkV2EQ.TzliFsn9upJG",
+                "firstName": "Bruce",
+                "lastName": "Link",
+                "startDate": "2014-04-03",
+                "status": "Active",
+                "paidHoursPerWeek": 40,
+                "totalFlexTime": 0,
+                "vacationDays": 0,
+                "defaultTimesheetID": 0,
+                "supervisorUserID": 1,
+                "timesheetApproverUserID": 1,
+                "pLevel": "P5",
+                "hr": true
+                },
+                {
+                "id": 3,
+                "version": 0,
+                "username": "jedward@example.com",
+                "password": "$2a$10$h1/JlLXmidDTthHYzHfLbuGY7VEGW3xgH5s1ybZ2AmiaJp.SYSgrO",
+                "firstName": "John",
+                "lastName": "Edward",
+                "startDate": "2000-01-01",
+                "status": "Active",
+                "paidHoursPerWeek": 40,
+                "totalFlexTime": 0,
+                "vacationDays": 14,
+                "defaultTimesheetID": 12345678,
+                "supervisorUserID": 1,
+                "timesheetApproverUserID": 1,
+                "pLevel": "P1",
+                "hr": false
+                },
+                {
+                "id": 4,
+                "version": 0,
+                "username": "awong@example.com",
+                "password": "$2a$10$eC1ma3GjlH2ZiO6EnGGKI.S7wvNd8N1VP3ivXeOmpWU0kFUQr/g8i",
+                "firstName": "Alice",
+                "lastName": "Wong",
+                "startDate": "2000-01-01",
+                "status": "Active",
+                "paidHoursPerWeek": 40,
+                "totalFlexTime": 0,
+                "vacationDays": 14,
+                "defaultTimesheetID": 23456789,
+                "supervisorUserID": 1,
+                "timesheetApproverUserID": 1,
+                "pLevel": "P2",
+                "hr": false
+                },
+                {
+                "id": 5,
+                "version": 0,
+                "username": "bnelson@example.com",
+                "password": "$2a$10$Z37Y2/P13eiWSMNBzAD37O5j5/bsDRCKFdSwm.iAMlYUKpsfvj7eq",
+                "firstName": "Bob",
+                "lastName": "Nelson",
+                "startDate": "2000-01-01",
+                "status": "Active",
+                "paidHoursPerWeek": 40,
+                "totalFlexTime": 0,
+                "vacationDays": 14,
+                "defaultTimesheetID": 34567890,
+                "supervisorUserID": 56789012,
+                "timesheetApproverUserID": 56789012,
+                "pLevel": "P3",
+                "hr": false
                 }
             ]
 

@@ -130,11 +130,12 @@ var requiresAuthentication = {
 cascadia.config(function(RestangularProvider) {
     if(checkServerStatus("http://localhost:8080/comp4911/api")){
         RestangularProvider.setBaseUrl('http://localhost:8080/comp4911/api');
-    } else if(checkServerStatus("http://www.comp4911.com/api")){
-        RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
+    } else if(checkServerStatus("https://comp4911-stevenhsu.rhcloud.com/api")){
+        RestangularProvider.setBaseUrl('https://comp4911-stevenhsu.rhcloud.com/api');
     } else {
-        $.growl.warning({ message: "Unable to make connection to an API. " +
-            "If you are using the hosted API, please wait 5 minutes before trying again." });
+        RestangularProvider.setBaseUrl('https://comp4911.apiary.io');
+        $.growl.warning({ message: "Unable to make connection to an real API. " +
+            "You are now using our apiary mock server." });
     }
 });
 
