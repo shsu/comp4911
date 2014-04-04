@@ -1,6 +1,44 @@
 <content>
-<h1 class="secondary">Project Summary</h1>
-<div ng-controller="ProjectSummaryController">
-  
-</div>
+    <h1 class="secondary">Project Summary</h1><br /> 
+    <div ng-controller="ProjectSummaryController">
+    <div class="row">
+      <p class="col-xs-3">Project Name: {{project.projectName}}</p>
+      <p class="col-xs-3">Project Number: {{project.projectNumber}}</p>
+      <p class="col-xs-6">Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}</p>
+    </div>
+    <div class="row">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+          <tbody>
+            <tr>
+              <th>WP#</th>
+              <th>Description</th>
+              <th>P5<br>{{payRates.P5}}</th>
+              <th>P4<br>{{payRates.P4}}</th>
+              <th>P3<br>{{payRates.P3}}</th>
+              <th>P2<br>{{payRates.P2}}</th>
+              <th>P1<br>{{payRates.P1}}</th>
+              <th>DS<br>{{payRates.DS}}</th>
+              <th>SS<br>{{payRates.SS}}</th>
+              <th>TOTAL</th>
+              <th>Labour Dollars</th>
+            </tr>
+            <tr ng-repeat="row in rows">
+              <td>{{row.workPackageNumber}}</td>
+              <td>{{row.workPackageDescription}}</td>
+              <td>{{row.pLevels.P5}}</td>
+              <td>{{row.pLevels.P4}}</td>
+              <td>{{row.pLevels.P3}}</td>
+              <td>{{row.pLevels.P2}}</td>
+              <td>{{row.pLevels.P1}}</td>
+              <td>{{row.pLevels.DS}}</td>
+              <td>{{row.pLevels.SS}}</td>
+              <td>{{(row.pLevels.P5 + row.pLevels.P4 + row.pLevels.P3 + row.pLevels.P2+ row.pLevels.P1 +row.pLevels.DS + row.pLevels.SS)}}</td>
+              <td>{{row.labourDollars}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </content>

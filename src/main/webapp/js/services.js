@@ -32,7 +32,6 @@ cascadiaServices.factory('userService', ['$q', '$rootScope', '$location', 'Resta
       } else if (localStorage.getItem('token')) {
           Restangular.one('user').head({},
             {'Authorization': 'Basic ' + localStorage.getItem('token')}).then(function(response){
-              console.log(response);
               $rootScope.isAuthenticated = true;
               Restangular.setDefaultHeaders({
                 'Authorization':'Basic ' + localStorage.getItem('token')

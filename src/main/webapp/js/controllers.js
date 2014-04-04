@@ -819,6 +819,8 @@ cascadiaControllers.controller('CreateWPController', ['$scope', '$location', 'Re
 cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'GrowlResponse',
   function($scope, $rootScope, Restangular, GrowlResponse) {
 
+    $scope.quantity = 20;
+
     Restangular.all('user/timesheets').getList().then(function(response) {
       $scope.timesheets = response;
     });
@@ -1173,9 +1175,25 @@ cascadiaControllers.controller('ProjectDetailsController', ['$scope', '$routePar
 /*
     PROJECT SUMMARY CONTROLLER
 */
-cascadiaControllers.controller('ProjectSummaryController', ['$scope', 'Restangular',
-  function($scope, Restangular){
+cascadiaControllers.controller('ProjectSummaryController', ['$scope', '$routeParams', 'Restangular',
+  function($scope, $params, Restangular){
+    var param = $params.id;
+    $scope.project = {};
 
+    Restangular.all('reports/matrix/' + param).getList().then(function(response) {
+      $scope.project = response[0];
+      loadManager();
+      $scope.payRates = $scope.project.payRates; 
+      response.splice(0, 1);
+      $scope.rows = response;
+      console.log($scope.rows[0]);
+    });
+
+    var loadManager = function() {
+      Restangular.one('projects/' + $scope.project.projectNumber + '/assignments/manager').get().then(function(response){
+        $scope.projectManager = response[0];
+      });
+    }
   }
 ]);
 
@@ -1386,16 +1404,29 @@ cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '
 /*
     USER PROFILE CONTROLLER
 */
-cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope', '$routeParams', 'Restangular',
-  function($scope, $rootScope, $params, Restangular) {
+cascadiaControllers.controller('UserProfileController', ['$scope', '$modal', 'GrowlResponse', '$rootScope', '$routeParams', 'Restangular',
+  function($scope, $modal, GrowlResponse, $rootScope, $params, Restangular) {
     $rootScope.user = JSON.parse(localStorage.getItem('user'));
+    $scope.newPassword;
+
+    var loadSupervisor = function(){
+      Restangular.one('users', $rootScope.user.supervisorUserID).get().then(function(response){
+        $scope.supervisor = response;
+      });
+    }
+
+    var loadTimesheetApprover = function() {
+      Restangular.one('users', $rootScope.user.timesheetApproverUserID).get().then(function(response){
+        $scope.timesheetApprover = response;
+      });
+    }
 
     if($rootScope.user && $rootScope.user.supervisorUserID){
       loadSupervisor();
       loadTimesheetApprover();
     }
 
-    var hasSupervisor = function() {
+    $scope.hasSupervisor = function() {
       var user = $rootScope.user;
       if(user && user.supervisorUserID) {
         return true;
@@ -1403,24 +1434,12 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
       return false;
     }
 
-    var hasTimesheetApprover = function() {
+    $scope.hasTimesheetApprover = function() {
       user = $rootScope.user;
       if(user && user.timesheetApproverUserID) {
         return true;
       }
       return false;
-    }
-
-    $scope.loadSupervisor = function() {
-      Restangular.one('users', $rootScope.user.supervisorUserID).get().then(function(response){
-        $scope.supervisor = response;
-      });
-    }
-
-    $scope.loadTimesheetApprover = function() {
-      Restangular.one('users', $rootScope.user.timesheetApproverUserID).get().then(function(response){
-        $scope.timesheetApprover = response;
-      });
     }
 
 	$scope.open = function () {
@@ -1430,23 +1449,28 @@ cascadiaControllers.controller('UserProfileController', ['$scope', '$rootScope',
         controller: ModalInstanceCtrl,
         resolve: {
           item: function () {
-            return $scope.cUser;
+            return $scope.newPassword;
           }
         }
       });
 
       modalInstance.result.then(function () {
-        var user = $scope.cUser;
-      
-        persist(user);
+        Restangular.one('users', $rootScope.user.id).get().then(function(response) {
+          var user = response;
+          persist(user);
+        });
       }, function(){
         console.log("dismissed")
       });
 
       var persist = function(user) {
-        
+        user.password = $scope.newPassword;
+
+        user.put().then(function(response) {
           $.growl.notice({message:"Password saved."});
-        
+        }, function(response) {
+          GrowlResponse(response);
+        });
       }
     }
   }

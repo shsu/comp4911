@@ -51,7 +51,6 @@
         </table>
       </div>    
     </div>
-  </div>
     <script type="text/ng-template" id="myModalContent.html">
           <div class="modal-header">
               <h3>Change Password</h3>
@@ -63,14 +62,14 @@
               </div>
               <div class="input-group input-group-lg">
 				<span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                <input type="password" class="form-control" ng-model="password" id="password" placeholder="Password" maxlength="250" required>
+                <input type="password" class="form-control" ng-model="oldPassword" id="password" placeholder="Password" maxlength="250" required>
 			</div>
               <div>
               New Password
               </div>
               <div class="input-group input-group-lg">
 				<span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                <input type="password" class="form-control" ng-model="password" id="password" placeholder="Password" maxlength="250" required>
+                <input type="password" class="form-control" ng-model="item" id="password" placeholder="Password" maxlength="250" required>
 			</div>
 			</form>
           </div>
@@ -81,4 +80,6 @@
               </button>
           </div>
       </script>
+    </div>
+  </div>
 </content>
