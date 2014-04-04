@@ -34,7 +34,7 @@ cascadia.config(['$routeProvider',
         when('/engineer-budget', {controller: 'EngineerBudgetController', templateUrl:'Partials/engineer-budget.html',
             resolve: requiresAuthentication}).
         when('/login', {controller: 'LoginController', templateUrl:'Partials/login.html'}).
-        when('/logout', {controller: 'LogoutController', templateUrl:''}).
+        when('/logout', {controller: 'LogoutController', template:' '}).
         when('/manage-approver', {controller: 'ManageApproverController', templateUrl:'Partials/manage-approver.html',
              resolve: requiresAuthentication}).
         when('/manage-project', {controller: 'ProjectManagementController', templateUrl:'Partials/manage-project.html',
@@ -118,8 +118,6 @@ cascadia.config(['$routeProvider',
             }
         });
     });
-// Runs every time page is reloaded or routed, ensures authentication and headers are set appropriately
-
 
 var requiresAuthentication = {
   user: function(userService) {

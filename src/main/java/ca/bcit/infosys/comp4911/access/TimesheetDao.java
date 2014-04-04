@@ -65,7 +65,7 @@ public class TimesheetDao {
     }
 
     public List<Timesheet> getRejected(final Integer userId) {
-        TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.isApproved = :approved" +
+        TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.approved = :approved" +
                 " and t.userId = :userId",
                 Timesheet.class);
         query.setParameter("approved", false);
