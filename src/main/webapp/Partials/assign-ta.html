@@ -1,15 +1,19 @@
 <content>
   <div ng-controller="ATAController">
+  <ol class="breadcrumb">
+    <li><a href="#/users">User Profile</a></li>
+    <li class="active">Assign Timesheet Approver</li>
+  </ol>   
   <h1 class="secondary">Assign Timesheet Approver</h1><br />
     <div class="row">
-      <strong><p class="col-xs-4">Emp ID: {{cUser.id}}</p></strong>
+      <strong><p class="col-xs-3">Emp ID: {{cUser.id}}</p></strong>
       <strong><p class="col-xs-4">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p></strong>
       <strong><p class="col-xs-4" ng-show="hasTimesheetApprover()">Current Timesheet Approver: {{ta.firstName}} {{ta.lastName}}</p></strong>
     </div>
     <div class="row">
       <div class="form-group">
-        <label class="col-xs-2" for="ta">Search Timesheet Approver: </label>
-        <div class="col-xs-4">
+        <label class="col-xs-3" for="ta">Search Timesheet Approver: </label>
+        <div class="col-xs-3">
           <input type="text" placeholder="Search" class="form-control" id="ta" ng-model="query" />
         </div>
       </div>          
