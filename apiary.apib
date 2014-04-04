@@ -226,7 +226,6 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
 + Response 404
 + Response 409
 
-## Project Assignments [/projects/:project_number/assignments/:user_id]
 ### Update a project assignment [PUT]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
@@ -242,7 +241,7 @@ Authenticate using HTTP Basic Auth (token as the username) or use query paramete
 + Response 404
 
 ## Project Assignments [/projects/:project_number/assignments/:user_id]
-### Get a [project Assignment [GET]
+### Get a project Assignment [GET]
 Authenticate using HTTP Basic Auth (token as the username) or use query parameter of: token=<token>.
 
 + Response 200 (application/json)
@@ -394,8 +393,12 @@ Use HTTP Basic Auth for username/password
 + Response 401
 
 ## User Permissions [/user/permissions]
+### Retrieve permissions [GET]
+Get user permissions
+
 + Response 200
     + Body
+
             [
                 {
                     "name": "Hr"
