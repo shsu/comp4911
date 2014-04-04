@@ -7,6 +7,9 @@ import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -70,5 +73,17 @@ public class PayRateDao {
                 " ORDER BY p.pLevel", PayRate.class);
         query.setParameter("year", year);
         return query.getResultList();
+    }
+
+    public HashMap<PLevel, BigDecimal> getPayRateHashByYear(final int year) {
+        List<PayRate> payRates = getPayRateByYear(year);
+        Iterator<PayRate> payRateIterator = payRates.listIterator();
+        PayRate payRate;
+        HashMap<PLevel, BigDecimal> pLevelIntegerHashMap = new HashMap<PLevel, BigDecimal>();
+        while(payRateIterator.hasNext()){
+            payRate = payRateIterator.next();
+            pLevelIntegerHashMap.put(payRate.getpLevel(), payRate.getRate());
+        }
+        return pLevelIntegerHashMap;
     }
 }
