@@ -1,7 +1,11 @@
 package ca.bcit.infosys.comp4911.helper;
 
+import ca.bcit.infosys.comp4911.domain.Effort;
 import ca.bcit.infosys.comp4911.domain.PLevel;
+import ca.bcit.infosys.comp4911.domain.WorkPackageStatusReport;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -115,6 +119,35 @@ public class ReportHelperRow {
             case DS:
                 incrementDS(hours);
                 break;
+        }
+    }
+
+    /**
+     * This method is used to access the current PayRate for the work packages year. Once the PayRate for the given
+     * year has been found, the rate for each Pay Level is used to calculate the total Labour dollars. It is then
+     * stored in the ReportHelperRow.
+     * @param yearPayRate
+     */
+    public void calculateTotalLabourDollars(HashMap<PLevel, BigDecimal> yearPayRate){
+        double totalLabourDollars = 0;
+        totalLabourDollars += yearPayRate.get(PLevel.DS).doubleValue() * getpLevels().get(PLevel.DS);
+        totalLabourDollars += yearPayRate.get(PLevel.P1).doubleValue() * getpLevels().get(PLevel.P1);
+        totalLabourDollars += yearPayRate.get(PLevel.P2).doubleValue() * getpLevels().get(PLevel.P2);
+        totalLabourDollars += yearPayRate.get(PLevel.P3).doubleValue() * getpLevels().get(PLevel.P3);
+        totalLabourDollars += yearPayRate.get(PLevel.P4).doubleValue() * getpLevels().get(PLevel.P4);
+        totalLabourDollars += yearPayRate.get(PLevel.P5).doubleValue() * getpLevels().get(PLevel.P5);
+        totalLabourDollars += yearPayRate.get(PLevel.SS).doubleValue() * getpLevels().get(PLevel.SS);
+        setLabourDollars(totalLabourDollars);
+    }
+
+    public void calculateProjectExpectedPLevelTotals(ArrayList<WorkPackageStatusReport> oneStatusReportPerWP){
+        int length = oneStatusReportPerWP.size();
+        ArrayList<Effort> effort;
+        for(int i = 0; i < length; i++){
+            effort = (ArrayList)oneStatusReportPerWP.get(i).getEstimatedWorkRemainingInPD();
+            for(int j = 0; j < effort.size(); j++){
+                increasePLevel(effort.get(j).getpLevel(), effort.get(j).getPersonDays());
+            }
         }
     }
 }
