@@ -52,6 +52,7 @@ public class SampleData {
     @PostConstruct
     public void populateData() {
         generateUsers();
+        generate250Users();
         generateProjects();
         generatePayRates();
         generateProjectAssignments();
@@ -102,13 +103,15 @@ public class SampleData {
         userDao.create(new User(
                 "gsmith@example.com", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 14,
                 78901234, 56789012, 56789012, PLevel.DS),false);
+    }
 
+    private void generate250Users() {
         // Loops to create up to 2000 users for testing
         // Separate loops for HR, Engineers, and Managers
         //
-        String hr = "";   // hr
-        String e = "";     // engineer
-        String s = "";     // supervisor
+        String hr;   // hr
+        String e;     // engineer
+        String s;     // supervisor
 
         for(int i = 1; i <= 50; i++){
             hr = "hr" + Integer.toString(i);
@@ -127,7 +130,6 @@ public class SampleData {
             userDao.create(new User(
                     s, s, s, s, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
         }
-
     }
 
     private void generatePayRates() {
