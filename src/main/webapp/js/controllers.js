@@ -1376,8 +1376,11 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.save = function() {  
           if($scope.default && ($rootScope.user.defaultTimesheetID != $scope.timesheet.id)) {
-            $rootScope.user.defaultTimesheetID = $scope.timesheet.id;
-            $rootScope.user.put();
+            Restangular.one('users', $rootScope.user.id).get().then(function(response) {
+              var user = response;
+              user.defaultTimesheetID = $scope.timesheet.id;
+              user.put();
+            })
           }
           $scope.timesheet.put();
           $.growl.notice({ message: "TimeSheet Saved" });
