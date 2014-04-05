@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0;
   border: 1px solid #dddddd; }
   .body table.table tr > th {
-    background: #edeff0; }
+    background: whitesmoke; }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
   padding: 15px; }
@@ -74,9 +74,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .cursor-hand {
   cursor: pointer; }
-
-.breadcrumb {
-  background-color: transparent; }
 
 .navbar {
   border-radius: 0; }
@@ -120,9 +117,6 @@ h1, h2, h3, h4, h5, h6 {
   .modal-footer button {
     width: 48.66%;
     float: left; }
-
-.emp-info {
-  padding-top: 37px; }
 
 .col-min-width {
   min-width: 90px; }

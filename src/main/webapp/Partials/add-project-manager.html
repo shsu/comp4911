@@ -1,10 +1,12 @@
 <content>
-  <ol class="breadcrumb">
-    <li><a href="#/manage-project">Manage Project</a></li>
-    <li class="active">Assign Manager to Project</li>
-  </ol>   
   <div ng-controller="ManagerController">
-  <h1 class="secondary">Assign Manager to Project</h1><br />
+    <h1 class="secondary">Assign Manager to Project</h1>
+    <div class="row">
+      <ol class="breadcrumb">
+        <li><a href="#/manage-project">Manage Project</a></li>
+        <li class="active">Assign Manager to Project</li>
+      </ol>   
+    </div>
     <div class="row">
       <div class="col-lg-4">Project No.: {{project.projectNumber}}</div>
       <div class="col-lg-4">Project Name: {{project.projectName}}</div>

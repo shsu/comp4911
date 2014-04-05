@@ -1,10 +1,12 @@
 <content>
-  <ol class="breadcrumb">
-    <li><a href="#/users">User Profile</a></li>
-    <li class="active">Assign To Supervisor</li>
-  </ol>   
   <div ng-controller="ASController">
-  <h1 class="secondary">Assign To Supervisor</h1><br />
+    <h1 class="secondary">Assign To Supervisor</h1>
+    <div class="row">
+      <ol class="breadcrumb">
+        <li><a href="#/users">User Profile</a></li>
+        <li class="active">Assign To Supervisor</li>
+      </ol>   
+    </div>
     <div class="row">
       <strong><p class="col-xs-4">Emp ID: {{cUser.id}}</p></strong>
       <strong><p class="col-xs-4">Emp Name: {{cUser.firstName}} {{cUser.lastName}}</p></strong>
