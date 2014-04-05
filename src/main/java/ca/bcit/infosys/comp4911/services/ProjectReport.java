@@ -165,7 +165,7 @@ public class ProjectReport {
             workPackageObject.put("workPackageBudgetInDollars", wpBudget.getLabourDollars());
         }
 
-        return SH.responseWithEntity(200, wpBudget);
+        return SH.responseWithEntity(200, wpBudget.toString());
     }
 
 
