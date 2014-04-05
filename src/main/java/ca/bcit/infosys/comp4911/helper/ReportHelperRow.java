@@ -98,22 +98,6 @@ public class ReportHelperRow {
 
     public void setpLevels(HashMap<PLevel, Integer> pLevels) { this.pLevels = pLevels; }
 
-    /**
-     * This method is used to access the current PayRate for the work packages year. Once the PayRate for the given
-     * year has been found, the rate for each Pay Level is used to calculate the total Labour dollars. It is then
-     * stored in the ReportHelperRow.
-     * @param yearPayRate
-     */
-    public void calculateTotalLabourDollars(HashMap<PLevel, BigDecimal> yearPayRate){
-        labourDollars += yearPayRate.get(PLevel.DS).doubleValue() * getpLevels().get(PLevel.DS);
-        labourDollars += yearPayRate.get(PLevel.P1).doubleValue() * getpLevels().get(PLevel.P1);
-        labourDollars += yearPayRate.get(PLevel.P2).doubleValue() * getpLevels().get(PLevel.P2);
-        labourDollars += yearPayRate.get(PLevel.P3).doubleValue() * getpLevels().get(PLevel.P3);
-        labourDollars += yearPayRate.get(PLevel.P4).doubleValue() * getpLevels().get(PLevel.P4);
-        labourDollars += yearPayRate.get(PLevel.P5).doubleValue() * getpLevels().get(PLevel.P5);
-        labourDollars += yearPayRate.get(PLevel.SS).doubleValue() * getpLevels().get(PLevel.SS);
-    }
-
     public void calculateExpectedPLevelTotalsFromWPSRs(List<WorkPackageStatusReport> oneStatusReportPerWP){
         Iterator<WorkPackageStatusReport> wpsrIterator = oneStatusReportPerWP.listIterator();
         WorkPackageStatusReport wpsr;
@@ -122,6 +106,7 @@ public class ReportHelperRow {
             increasePLevelsFromEffortList(wpsr.getEstimatedWorkRemainingInPD(), wpsr.getReportDate());
         }
     }
+
     /**
      * Gets the amount of PLevel days per a list of Timesheets. This iterates through all of the Timesheets associated
      * with a specific Work Package. It then updates the amount of PLevels used per work package.

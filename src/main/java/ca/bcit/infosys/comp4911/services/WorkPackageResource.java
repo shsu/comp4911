@@ -1,5 +1,6 @@
 package ca.bcit.infosys.comp4911.services;
 
+import ca.bcit.infosys.comp4911.access.TimesheetRowDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageAssignmentDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageStatusReportDao;
@@ -36,6 +37,9 @@ public class WorkPackageResource {
     @EJB
     private UserTokens userTokens;
 
+    @EJB
+    private TimesheetRowDao timesheetRowDao;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllWorkPackages(
@@ -54,6 +58,10 @@ public class WorkPackageResource {
             final WorkPackage workPackage) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
+        if(timesheetRowDao.isParentLeaf(workPackage.getWorkPackageNumber()))
+        {
+            return SH.responseWithEntity(409, "The Parent of this Work Package already contains Timesheets.");
+        }
         workPackageDao.create(workPackage,false);
         return SH.response(201);
     }

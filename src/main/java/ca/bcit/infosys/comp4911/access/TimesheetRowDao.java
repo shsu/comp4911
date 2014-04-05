@@ -66,4 +66,20 @@ public class TimesheetRowDao {
         query.setParameter("workpackageId", workpackageId);
         return query.getResultList();
     }
+
+    public boolean isParentLeaf(String wpNumber) {
+        String parentNumber = wpNumber;
+        for(int i = 0; i < 7; i++){
+            //find first occurrence of 0
+            if(wpNumber.charAt(i) == '0') {
+                parentNumber = wpNumber.substring(0, i-2);
+                for(int j = 0; j < 7 - parentNumber.length(); j++){
+                    parentNumber += '0';
+                }
+                break;
+            }
+
+        }
+        return getTimesheetRowsByWP(parentNumber).size() > 0;
+    }
 }
