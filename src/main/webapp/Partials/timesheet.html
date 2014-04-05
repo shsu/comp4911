@@ -55,7 +55,7 @@
           <div class="row"><p class="col-xs-4">Overtime: {{timesheet.overTime}} </p></div>
           <div class="row">
             <p class="col-xs-4">Flextime: {{user.totalFlexTime}} </p>
-            <div class="col-xs-3 col-sm-2 pull-right"><button class="btn btn-success btn-block" ng-click="add()" ng-disabled="timesheet.signed" ng-hide="timesheet.approved">Add new row</button></div>
+            <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 pull-right"><button class="btn btn-success btn-block" ng-click="add()" ng-disabled="timesheet.signed" ng-hide="timesheet.approved">Add new row</button></div>
           </div>
         </footer>
       </div>
@@ -65,7 +65,7 @@
         <p><input type="checkbox" ng-model="default" /><span> Make Default</span></p>
         <p><input type="checkbox" ng-model="timesheet.signed" ng-hide="timesheet.approved" /><span> Signature</span></p>
       </div>
-      <div class="col-xs-3 col-sm-2 pull-right" ng-hide="timesheet.approved">
+      <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 pull-right" ng-hide="timesheet.approved">
         <button class="btn btn-primary btn-block" ng-click="save()">Save</button>
         <button class="btn btn-primary btn-block" ng-disabled="!timesheet.signed" ng-click="submit()">Submit</button>
       </div>    

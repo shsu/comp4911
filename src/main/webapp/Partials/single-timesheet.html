@@ -1,5 +1,5 @@
 <content>
-  <div ng-controller="TADetailsController">
+  <div ng-controller="TADetailsController">    
     <h1 class="secondary">TimeSheet</h1>
     <div class="row">
         <ol class="breadcrumb">
@@ -56,9 +56,11 @@
         </footer>
       </div>
     </div>
-    <div class="row pull-right">
-        <button class="btn btn-primary" ng-click="approve()">Approve</button>&nbsp;
-        <button class="btn btn-danger" ng-click="reject()">Reject</button>
+    <div class="row">
+        <div class="pull-right">
+          <button class="btn btn-primary " ng-click="approve()">Approve</button>&nbsp;
+          <button class="btn btn-danger " ng-click="reject()">Reject</button>
+        </div>
     </div>
   </div>
 </content>
