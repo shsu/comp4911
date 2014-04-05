@@ -100,7 +100,8 @@ public class UsersResource {
         }
 
         userDao.update(user);
-        return SH.response(200);
+
+        return SH.responseWithEntity(200, userDao.read(user.getId()));
     }
 
     @GET
