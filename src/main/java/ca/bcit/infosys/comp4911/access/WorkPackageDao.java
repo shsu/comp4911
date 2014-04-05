@@ -4,6 +4,7 @@ import ca.bcit.infosys.comp4911.domain.WorkPackage;
 import ca.bcit.infosys.comp4911.helper.ValidationHelper;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Typed;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -76,5 +77,17 @@ public class WorkPackageDao {
         return query.getResultList();
     }
 
-
+    public List<String> getWPChildren(String wPNumber) {
+        String findChildren = wPNumber;
+        for(int i = 0; i < wPNumber.length(); i++){
+            if(wPNumber.charAt(i) == '0'){
+                findChildren = wPNumber.substring(0, i-1) + "%";
+                break;
+            }
+        }
+        TypedQuery<String> query = em.createQuery("select wp.workPackageNumber from WorkPackage wp" +
+                " where wp.workPackageNumber like :findChildren", String.class);
+        query.setParameter("findChildren", findChildren);
+        return query.getResultList();
+    }
 }

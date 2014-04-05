@@ -135,6 +135,40 @@ public class ProjectReport {
         return SH.responseWithEntity(200, pBObject.toString());
     }
 
+    @GET
+    @Path("/work_package/budget/{workpackage_number}")
+    public Response getWorkPackageBudgetReport(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("workpackage_number") final String wPNumber) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        JSONObject workPackageObject = new JSONObject();
+        ReportHelperRow wpBudget = new ReportHelperRow();
+
+        if(wPNumber.charAt(6) != '0'){
+            wpBudget.calculatePersonHours(tsrDao.getTimesheetRowsByWP(wPNumber));
+            workPackageObject.put("workPackagePLevels", wpBudget.getpLevels());
+            workPackageObject.put("workPackageBudgetInDollars", wpBudget.getLabourDollars());
+        }
+        else {
+            List<String> wPChildren = workPackageDao.getWPChildren(wPNumber);
+            Iterator<String> childrenIterator = wPChildren.listIterator();
+            List<TimesheetRow> childrensRows = new ArrayList<TimesheetRow>();
+            String childWPNumber;
+            while(childrenIterator.hasNext()){
+                childWPNumber = childrenIterator.next();
+                childrensRows.addAll(tsrDao.getTimesheetRowsByWP(childWPNumber));
+            }
+            wpBudget.calculatePersonHours(childrensRows);
+            workPackageObject.put("workPackagePLevels", wpBudget.getpLevels());
+            workPackageObject.put("workPackageBudgetInDollars", wpBudget.getLabourDollars());
+        }
+
+        return SH.responseWithEntity(200, wpBudget);
+    }
+
+
     private ArrayList<WorkPackageStatusReport> getSingleWPSRPerWP(List<WorkPackageStatusReport> allWPSR) {
         /**
          * HashMap is used to check for double WPSRs. Check for double in order to only take the most
