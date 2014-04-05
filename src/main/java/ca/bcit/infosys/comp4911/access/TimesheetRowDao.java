@@ -53,16 +53,9 @@ public class TimesheetRowDao {
         return query.getResultList();
     }
 
-    public List<TimesheetRow> getAllByWP(final String workPackageNumber){
-        TypedQuery<TimesheetRow> query = em.createQuery("select t from TimesheetRow" +
-                " t where t.workPackageNumber = :workPackageNumber", TimesheetRow.class);
-        query.setParameter("workPackageNumber", workPackageNumber);
-        return query.getResultList();
-    }
-
-    public List<TimesheetRow> getAllByProject(final String projectNumber){
+    public List<TimesheetRow> getAllByProject(final int projectNumber){
     TypedQuery<TimesheetRow> query = em.createQuery("select t from TimesheetRow" +
-            " t where t.workPackageNumber = :projectNumber", TimesheetRow.class);
+            " t where t.projectNumber = :projectNumber", TimesheetRow.class);
     query.setParameter("projectNumber", projectNumber);
     return query.getResultList();
     }

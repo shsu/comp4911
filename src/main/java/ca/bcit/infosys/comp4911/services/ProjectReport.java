@@ -4,6 +4,7 @@ import ca.bcit.infosys.comp4911.access.*;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.*;
 import ca.bcit.infosys.comp4911.helper.*;
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,7 +13,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.*;
-import org.joda.time.DateTime;
 
 /**
  * Dynamically creates report and returns it.
@@ -61,14 +61,14 @@ public class ProjectReport {
         WPReportHelperRow[]                     reportHelperRows = new WPReportHelperRow[20];
         WorkPackageStatusReport                 wpsr;
         List<WorkPackageStatusReport>           latestTwentyReports;
-        DateTime                                date;
         JSONArray                               reportArray = new JSONArray();
         JSONObject                              objectToBeMapped;
         HashMap<PLevel, BigDecimal>             yearPayRateInfo;
+
         project = projectDao.read(projectId);
 
-        date = new DateTime(project.getIssueDate().toString());
-        yearPayRateInfo = payRateDao.getPayRateHashByYear(date.getYear());
+        yearPayRateInfo = getPLevelBigDecimalHashForYear(project.getIssueDate());
+
         objectToBeMapped = new JSONObject();
         objectToBeMapped.put("projectNumber", projectId);
         objectToBeMapped.put("projectName", project.getProjectName());
@@ -84,13 +84,9 @@ public class ProjectReport {
         while(wpsrIterator.hasNext()) {
             objectToBeMapped = new JSONObject();
             wpsr = wpsrIterator.next();
-            String year = wpsr.getReportDate().toString();
-            date = new DateTime(year);
-            yearPayRateInfo = payRateDao.getPayRateHashByYear(date.getYear());
             wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
             reportHelperRows[i] = new WPReportHelperRow(wpsr.getWorkPackageNumber());
-            reportHelperRows[i].setpLevels(getWPPersonHours(wpTimesheetRows).getpLevels());
-            reportHelperRows[i].calculateTotalLabourDollars(yearPayRateInfo);
+            reportHelperRows[i].calculatePersonHours(wpTimesheetRows);
             objectToBeMapped.put("workPackageNumber", wpsr.getWorkPackageNumber());
             objectToBeMapped.put("workPackageDescription",
                     workPackageDao.read(wpsr.getWorkPackageNumber()).getWorkPackageName());
@@ -109,40 +105,34 @@ public class ProjectReport {
      * @param projectId
      * @return
      */
-//    @GET
-//    @Path("/budget/{id}")
-//    public Response getProjectBudgetReport(
-//            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
-//            @QueryParam(SH.TOKEN_STRING) final String queryToken,
-//            @PathParam("id") final Integer projectId) {
-//        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
-//
-//        ArrayList<WorkPackageStatusReport> mostRecentReports = (ArrayList)wpsrDao.getAllByProject(projectId);
-//        ArrayList<Effort> effort;
-//        ReportHelperRow newHelper = new ReportHelperRow();
-//        ProjectBudgetReport pbr = new ProjectBudgetReport();
-//        ArrayList<WorkPackageStatusReport> oneStatusReportPerWP = getSingleWPSRPerWP(mostRecentReports);
-//        pbr.getExpectedBudget().calculateProjectExpectedPLevelTotals(oneStatusReportPerWP);
-//
-//    }
+    @GET
+    @Path("/budget/{id}")
+    public Response getProjectBudgetReport(
+            @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
+            @QueryParam(SH.TOKEN_STRING) final String queryToken,
+            @PathParam("id") final Integer projectId) {
+        int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-    /**
-     * Gets the amount of PLevel days per a list of Timesheets. This iterates through all of the Timesheets associated
-     * with a specific Work Package. It then updates the amount of PLevels used per work package.
-     * @param timesheetRowList, wpNumber
-     * @return - the finished reportHelperRow
-     */
-    private ReportHelperRow getWPPersonHours(List<TimesheetRow> timesheetRowList){
-        ReportHelperRow reportHelperRow = new ReportHelperRow();
-        Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
-        TimesheetRow tsr;
-        while(timesheetRowIterator.hasNext())
-        {
-            tsr = timesheetRowIterator.next();
-            reportHelperRow.increasePLevel(tsr.getpLevel(), tsr.calculateTotal());
-        }
 
-        return reportHelperRow;
+        JSONArray projectBudgetJSON = new JSONArray();
+        JSONObject pBObject = new JSONObject();
+        ProjectBudgetReport pbr = new ProjectBudgetReport();
+        List<WorkPackageStatusReport> mostRecentReports = wpsrDao.getAllByProject(projectId);
+        mostRecentReports = getSingleWPSRPerWP(mostRecentReports);
+
+        pbr.getExpectedBudget().calculateExpectedPLevelTotalsFromWPSRs(mostRecentReports);
+        pbr.getCurrentSpending().calculatePersonHours(tsrDao.getAllByProject(projectId));
+        pbr.getInitialBudget().calculateInitialBudget(workPackageDao.getAllByProject(projectId));
+
+        pBObject.put("ExpectedBudget", pbr.getExpectedBudget().getpLevels());
+        pBObject.put("ExpectedBusgetInDollars", pbr.getExpectedBudget().getLabourDollars());
+        pBObject.put("CurrentSpending", pbr.getCurrentSpending());
+        pBObject.put("CurrentSpendingInDollar", pbr.getCurrentSpending().getLabourDollars());
+        pBObject.put("InitialBudget", pbr.getInitialBudget());
+        pBObject.put("InitialBudgetInDollars", pbr.getInitialBudget().getLabourDollars());
+
+
+        return SH.responseWithEntity(200, pBObject.toString());
     }
 
     private ArrayList<WorkPackageStatusReport> getSingleWPSRPerWP(List<WorkPackageStatusReport> allWPSR) {
@@ -169,4 +159,10 @@ public class ProjectReport {
         }
         return mostRecentWPSR;
     }
+
+    public HashMap<PLevel, BigDecimal> getPLevelBigDecimalHashForYear(Date date){
+        DateTime dateTime = new DateTime(date.toString());
+        return payRateDao.getPayRateHashByYear(dateTime.getYear());
+    }
+
 }

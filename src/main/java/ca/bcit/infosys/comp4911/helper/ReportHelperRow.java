@@ -1,12 +1,16 @@
 package ca.bcit.infosys.comp4911.helper;
 
-import ca.bcit.infosys.comp4911.domain.Effort;
-import ca.bcit.infosys.comp4911.domain.PLevel;
-import ca.bcit.infosys.comp4911.domain.WorkPackageStatusReport;
+import ca.bcit.infosys.comp4911.access.PayRateDao;
+import ca.bcit.infosys.comp4911.access.WorkPackageDao;
+import ca.bcit.infosys.comp4911.domain.*;
+import org.joda.time.DateTime;
 
+import javax.ejb.EJB;
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A project manager needs to see the most recent WPs associated with a project, and how much work has been
@@ -14,8 +18,14 @@ import java.util.HashMap;
  * Created by craigleclair on 3/14/2014.
  */
 public class ReportHelperRow {
+
+    @EJB
+    private WorkPackageDao workPackageDao;
+
+    @EJB
+    private PayRateDao payRateDao;
+
     private HashMap<PLevel, Integer> pLevels;
-    private double total;
     private double labourDollars;
     private String wpNumber;
     private String wpDescription;
@@ -29,6 +39,7 @@ public class ReportHelperRow {
         pLevels.put(PLevel.P5, 0);
         pLevels.put(PLevel.SS, 0);
         pLevels.put(PLevel.DS, 0);
+        labourDollars = 0;
     }
 
     public void incrementP1(int hours){
@@ -59,14 +70,6 @@ public class ReportHelperRow {
         pLevels.put(PLevel.DS, pLevels.get(PLevel.DS) + hours);
     }
 
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
     public double getLabourDollars() {
         return labourDollars;
     }
@@ -95,33 +98,6 @@ public class ReportHelperRow {
 
     public void setpLevels(HashMap<PLevel, Integer> pLevels) { this.pLevels = pLevels; }
 
-    public void increasePLevel(PLevel pLevel, int hours){
-
-        switch(pLevel){
-            case P1:
-                incrementP1(hours);
-                break;
-            case P2:
-                incrementP2(hours);
-                break;
-            case P3:
-                incrementP3(hours);
-                break;
-            case P4:
-                incrementP4(hours);
-                break;
-            case P5:
-                incrementP5(hours);
-                break;
-            case SS:
-                incrementSS(hours);
-                break;
-            case DS:
-                incrementDS(hours);
-                break;
-        }
-    }
-
     /**
      * This method is used to access the current PayRate for the work packages year. Once the PayRate for the given
      * year has been found, the rate for each Pay Level is used to calculate the total Labour dollars. It is then
@@ -129,25 +105,100 @@ public class ReportHelperRow {
      * @param yearPayRate
      */
     public void calculateTotalLabourDollars(HashMap<PLevel, BigDecimal> yearPayRate){
-        double totalLabourDollars = 0;
-        totalLabourDollars += yearPayRate.get(PLevel.DS).doubleValue() * getpLevels().get(PLevel.DS);
-        totalLabourDollars += yearPayRate.get(PLevel.P1).doubleValue() * getpLevels().get(PLevel.P1);
-        totalLabourDollars += yearPayRate.get(PLevel.P2).doubleValue() * getpLevels().get(PLevel.P2);
-        totalLabourDollars += yearPayRate.get(PLevel.P3).doubleValue() * getpLevels().get(PLevel.P3);
-        totalLabourDollars += yearPayRate.get(PLevel.P4).doubleValue() * getpLevels().get(PLevel.P4);
-        totalLabourDollars += yearPayRate.get(PLevel.P5).doubleValue() * getpLevels().get(PLevel.P5);
-        totalLabourDollars += yearPayRate.get(PLevel.SS).doubleValue() * getpLevels().get(PLevel.SS);
-        setLabourDollars(totalLabourDollars);
+        labourDollars += yearPayRate.get(PLevel.DS).doubleValue() * getpLevels().get(PLevel.DS);
+        labourDollars += yearPayRate.get(PLevel.P1).doubleValue() * getpLevels().get(PLevel.P1);
+        labourDollars += yearPayRate.get(PLevel.P2).doubleValue() * getpLevels().get(PLevel.P2);
+        labourDollars += yearPayRate.get(PLevel.P3).doubleValue() * getpLevels().get(PLevel.P3);
+        labourDollars += yearPayRate.get(PLevel.P4).doubleValue() * getpLevels().get(PLevel.P4);
+        labourDollars += yearPayRate.get(PLevel.P5).doubleValue() * getpLevels().get(PLevel.P5);
+        labourDollars += yearPayRate.get(PLevel.SS).doubleValue() * getpLevels().get(PLevel.SS);
     }
 
-    public void calculateProjectExpectedPLevelTotals(ArrayList<WorkPackageStatusReport> oneStatusReportPerWP){
-        int length = oneStatusReportPerWP.size();
-        ArrayList<Effort> effort;
-        for(int i = 0; i < length; i++){
-            effort = (ArrayList)oneStatusReportPerWP.get(i).getEstimatedWorkRemainingInPD();
-            for(int j = 0; j < effort.size(); j++){
-                increasePLevel(effort.get(j).getpLevel(), effort.get(j).getPersonDays());
-            }
+    public void calculateExpectedPLevelTotalsFromWPSRs(List<WorkPackageStatusReport> oneStatusReportPerWP){
+        Iterator<WorkPackageStatusReport> wpsrIterator = oneStatusReportPerWP.listIterator();
+        WorkPackageStatusReport wpsr;
+        while(wpsrIterator.hasNext()){
+            wpsr = wpsrIterator.next();
+            increasePLevelsFromEffortList(wpsr.getEstimatedWorkRemainingInPD(), wpsr.getReportDate());
+        }
+    }
+    /**
+     * Gets the amount of PLevel days per a list of Timesheets. This iterates through all of the Timesheets associated
+     * with a specific Work Package. It then updates the amount of PLevels used per work package.
+     * @param timesheetRowList, wpNumber
+     * @return - the finished reportHelperRow
+     */
+    public void calculatePersonHours(List<TimesheetRow> timesheetRowList){
+        Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
+        TimesheetRow tsr;
+        WorkPackage workPackage;
+        while(timesheetRowIterator.hasNext())
+        {
+            tsr = timesheetRowIterator.next();
+            workPackage = workPackageDao.read(tsr.getWorkPackageNumber());
+            increasePLevel(getPLevelBigDecimalHashForYear(workPackage.getIssueDate()),
+                    tsr.getpLevel(), tsr.calculateTotal());
+        }
+    }
+
+    public void calculateInitialBudget(List<WorkPackage> projectWorkPackages){
+        Iterator<WorkPackage> wpIterator = projectWorkPackages.listIterator();
+        WorkPackage projectWorkPackage;
+        while(wpIterator.hasNext()){
+            projectWorkPackage = wpIterator.next();
+            increasePLevelsFromEffortList(projectWorkPackage.getEstimateAtStart(),
+                    projectWorkPackage.getIssueDate());
+        }
+    }
+
+    private void increasePLevelsFromEffortList(List<Effort> effortList, Date date){
+        Iterator<Effort> effortIterator;
+        effortIterator = effortList.listIterator();
+        Effort effort;
+        while(effortIterator.hasNext()){
+            effort = effortIterator.next();
+            increasePLevel(getPLevelBigDecimalHashForYear(date),
+                    effort.getpLevel(), effort.getPersonDays());
+
+        }
+    }
+
+    public HashMap<PLevel, BigDecimal> getPLevelBigDecimalHashForYear(Date date){
+        DateTime dateTime = new DateTime(date.toString());
+        return payRateDao.getPayRateHashByYear(dateTime.getYear());
+    }
+
+    public void increasePLevel(HashMap<PLevel, BigDecimal> yearPayRate, PLevel pLevel, int hours){
+
+        switch(pLevel){
+            case P1:
+                incrementP1(hours);
+                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                break;
+            case P2:
+                incrementP2(hours);
+                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                break;
+            case P3:
+                incrementP3(hours);
+                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                break;
+            case P4:
+                incrementP4(hours);
+                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                break;
+            case P5:
+                incrementP5(hours);
+                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                break;
+            case SS:
+                incrementSS(hours);
+                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                break;
+            case DS:
+                incrementDS(hours);
+                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                break;
         }
     }
 }

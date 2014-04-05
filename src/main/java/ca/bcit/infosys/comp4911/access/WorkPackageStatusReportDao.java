@@ -70,6 +70,7 @@ public class WorkPackageStatusReportDao {
                 " where r.workPackageNumber IN" +
                 " (select w.workPackageNumber from WorkPackage w where w.projectNumber = :projectNumber)"  +
                 " ORDER BY r.reportDate", WorkPackageStatusReport.class);
+        query.setParameter("projectNumber", projectNumber);
         return query.getResultList();
     }
 
