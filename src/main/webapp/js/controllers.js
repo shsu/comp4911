@@ -1027,12 +1027,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
       mapOfWP = {};
       wpChanged = [];
 
-      $scope.loadProjects = function() {
-        Restangular.all('projects').getList().then(function(response){
-          $scope.projects = response;
-        });
-      }
-
       $scope.loadWorkPackages = function(projectNumber) {
         Restangular.one('work_packages/project').getList($scope.project.projectNumber).then(function(response){
           $scope.projectChosen = true;
@@ -1043,7 +1037,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
       Restangular.one('user/projects/managed').getList().then(function(response){
         $scope.projects = response;
       });
-
     }
     ]);
 
