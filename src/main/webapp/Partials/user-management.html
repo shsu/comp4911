@@ -5,7 +5,7 @@
     <form action="" class="form-inline col-xs-8">
       <p>Search Employees: <input type="text" placeholder="Search by ID or Name" class="form-control" ng-model="query" /></p>
     </form>
-        <a href="#/users/new" class="btn btn-success pull-right">Add New Employee</a>
+        <a href="#/users/new" class="btn btn-success pull-right" has-permission='Hr'>Add New Employee</a>
   </div>
   <div class="row">
     <div class="table-responsive">
@@ -15,14 +15,14 @@
             <th class="th-narrow">Emp ID</th>
             <th class="th-narrow">Emp Name</th>
             <th class="th-narrow">User Name</th>
-            <th class="th-narrow">Supervisor</th>
+            <th class="th-narrow" has-permission='Hr'>Supervisor</th>
             <th class="th-narrow">Labour Grade</th>
           </tr>
           <tr ng-click="select(u)" ng-repeat="u in users | filter: search | limitTo: quantity">
             <td><a href="#/users/{{u.id}}">{{u.id}}</a></td>
             <td>{{u.firstName}} {{u.lastName}}</td>
             <td>{{u.username}}</td>
-            <td>
+            <td has-permission='Hr'>
               <a href="#/users/{{u.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor(u)">Assign</a>
               <a href="#/users/{{u.id}}/assign-supervisor" class="cursor-hand" ng-show="hasSupervisor(u)">Change</a>
             </td>

@@ -1690,7 +1690,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
        function($scope, $location, $rootScope, Restangular, FilterUser, GrowlResponse) {
         var base = Restangular.all('users');
 
-        $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
+        $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5', 'DS', 'SS' ];
         $scope.statuses = [ 'Active', 'Inactive' ];
         $scope.cUser = {}
         $scope.quantity = 20;
