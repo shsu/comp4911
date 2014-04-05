@@ -39,7 +39,7 @@ public class UserDao {
         if(ValidationHelper.validateEntity(user)){
 
             String oldPassword = read(user.getId()).getPassword();
-            if (user.getPassword() != oldPassword) {
+            if (!user.getPassword().equals(oldPassword)) {
                 user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             }
 
