@@ -1,6 +1,6 @@
 <content>
-  <h1 class="secondary">Project Details</h1><br />
   <div ng-controller="ProjectDetailsController">
+    <h1 class="secondary">Project Details</h1><br />
     <!-- <p>{{project}}</p> -->
     <div class="panel panel-default">
       <div class="panel-body">
@@ -11,7 +11,7 @@
           <p class="col-sm-3">Remaining Budget: {{project.unallocatedBudget}} </p>
         </div>
         <div class="row">
-          <p>Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}
+          <p class="col-sm-12">Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}
               <a href="#/projects/{{project.projectNumber}}/assign-manager">
                 <span ng-hide="hasProjectManager()">Assign</span>
                 <span ng-show="hasProjectManager()">(Change)</span>
@@ -24,8 +24,8 @@
         <div class="panel panel-default">
           <div class="panel-heading">Assigned Employees:</div>
           <div class="panel-body">
-            <input type="text" ng-model="query" placeholder="Search User"/>
-            <br><br>
+            <input type="text" ng-model="query" placeholder="Search User" class="form-control" />
+            <br />
             <div class="table-responsive">
               <table class="table table-hover table-bordered">
                 <thead>

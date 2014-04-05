@@ -1,6 +1,6 @@
-<content>
-  <h1 class="secondary">Assign Responsible Engineer</h1><br />     
+<content> 
   <div ng-controller="EngineerController">
+    <h1 class="secondary">Assign Responsible Engineer</h1><br />     
     <div class="row">
       <ul class="list-inline">
         <li class="col-xs-3">Project No.: <a href="#/manage-project/{{package.projectNumber}}">{{project.projectNumber}}</a></li>
@@ -11,7 +11,7 @@
     </div>
     <div class="row">
       <p>Employee</p>
-      <p class="col-xs-12 no-pl"><input type="text" ng-model="query" class="col-xs-5" placeholder="Enter Employee Name, number or PayGrade"/></p>
+      <p class="col-xs-5 no-pl"><input type="text" ng-model="query" class="form-control" placeholder="Enter Employee Name, number or PayGrade"/></p>
       <div class="col-xs-12 results">
         <table class="table table-hover">
           <tbody>

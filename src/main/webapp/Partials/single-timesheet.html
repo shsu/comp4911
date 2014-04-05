@@ -1,4 +1,8 @@
 <content>
+  <ol class="breadcrumb">
+    <li><a href="#/timesheet-approval">Timesheet Approval</a></li>
+    <li class="active">Timesheet</li>
+  </ol>   
   <div ng-controller="TADetailsController">
     <div class="row">
       <h1 class="secondary col-xs-4">TimeSheet</h1>
@@ -50,13 +54,9 @@
         </footer>
       </div>
     </div>
-    <footer class="row">
-      <div class="col-xs-6">
-      </div>
-      <div class="col-xs-6">
-        <button class="btn btn-primary" ng-click="approve()">Approve</button>
-        <button class="btn btn-primary" ng-click="reject()">Reject</button>
-      </div>    
-    </footer>
+    <div class="row pull-right">
+        <button class="btn btn-primary" ng-click="approve()">Approve</button>&nbsp;
+        <button class="btn btn-danger" ng-click="reject()">Reject</button>
+    </div>
   </div>
 </content>

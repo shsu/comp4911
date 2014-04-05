@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0;
   border: 1px solid #dddddd; }
   .body table.table tr > th {
-    background: #cccccc; }
+    background: #edeff0; }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
   padding: 15px; }
@@ -74,6 +74,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .cursor-hand {
   cursor: pointer; }
+
+.breadcrumb {
+  background-color: transparent; }
 
 .navbar {
   border-radius: 0; }
@@ -205,7 +208,3 @@ time {
   background: #dddddd;
   border-radius: 5px;
   margin-bottom: 10px; }
-
-.table-nonfluid {
-  width: auto;
-}
