@@ -72,8 +72,12 @@ public class UserResource {
       final User user) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
+        if(user.getId() != userId){
+            SH.responseBadRequest("Unable to modify the profile of a user other than yourself. Please use the /users endpoint.");
+        }
+
         userDao.update(user);
-        return SH.response(200);
+        return SH.responseWithEntity(200, userDao.read(userId));
     }
 
     @Path("/token")
