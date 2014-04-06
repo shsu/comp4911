@@ -68,8 +68,9 @@ public class ProjectReport {
         HashMap<PLevel, BigDecimal>             yearPayRateInfo;
 
         project = projectDao.read(projectId);
+        DateTime dateTime = new DateTime(project.getIssueDate().toString());
 
-        yearPayRateInfo = getPLevelBigDecimalHashForYear(project.getIssueDate());
+        yearPayRateInfo = payRateDao.getPayRateHashByYear().get(dateTime.getYear());
 
         objectToBeMapped = new JSONObject();
         objectToBeMapped.put("projectNumber", projectId);
@@ -78,16 +79,18 @@ public class ProjectReport {
         reportArray.put(objectToBeMapped);
 
         latestTwentyReports = wpsrDao.getLatestTwentyByProject(projectId);
+
         if(latestTwentyReports.size() <= 0){
             return SH.responseWithEntity(200, reportArray.toString());
         }
+
         Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
         while(wpsrIterator.hasNext()) {
             objectToBeMapped = new JSONObject();
             wpsr = wpsrIterator.next();
             wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
-            reportHelperRows[i] = new ReportHelperRow(workPackageDao, payRateDao);
+            reportHelperRows[i] = new ReportHelperRow(workPackageDao, payRateDao.getPayRateHashByYear());
             reportHelperRows[i].calculatePersonHours(wpTimesheetRows);
             objectToBeMapped.put("workPackageNumber", wpsr.getWorkPackageNumber());
             objectToBeMapped.put("workPackageDescription",
@@ -119,9 +122,9 @@ public class ProjectReport {
 
         JSONArray projectBudgetJSON = new JSONArray();
         JSONObject pBObject = new JSONObject();
-        ProjectBudgetReport pbr = new ProjectBudgetReport(workPackageDao, payRateDao);
+        ProjectBudgetReport pbr = new ProjectBudgetReport(workPackageDao, payRateDao.getPayRateHashByYear());
         List<WorkPackageStatusReport> mostRecentReports = wpsrDao.getAllByProject(projectId);
-        mostRecentReports = getSingleWPSRPerWP(mostRecentReports);
+        mostRecentReports = ReportHelperRow.getSingleWPSRPerWP(mostRecentReports);
 
         pbr.getExpectedBudget().calculateExpectedPLevelTotalsFromWPSRs(mostRecentReports);
         pbr.getCurrentSpending().calculatePersonHours(tsrDao.getAllByProject(projectId));
@@ -148,59 +151,29 @@ public class ProjectReport {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         JSONObject workPackageObject = new JSONObject();
-        ReportHelperRow wpBudget = new ReportHelperRow(workPackageDao, payRateDao);
+        ProjectBudgetReport wpBudget = new ProjectBudgetReport(workPackageDao, payRateDao.getPayRateHashByYear());
 
         if(wPNumber.charAt(6) != '0'){
-            wpBudget.calculatePersonHours(tsrDao.getTimesheetRowsByWP(wPNumber));
-            workPackageObject.put("workPackagePLevels", wpBudget.getpLevels());
-            workPackageObject.put("workPackageBudgetInDollars", wpBudget.getLabourDollars());
+            wpBudget.getCurrentSpending().calculatePersonHours(tsrDao.getTimesheetRowsByWP(wPNumber));
+            workPackageObject.put("workPackagePLevels", wpBudget.getCurrentSpending().getpLevels());
+            workPackageObject.put("workPackageBudgetInDollars", wpBudget.getCurrentSpending().getLabourDollars());
         }
         else {
             List<String> wPChildren = workPackageDao.getWPChildren(wPNumber);
             Iterator<String> childrenIterator = wPChildren.listIterator();
             List<TimesheetRow> childrensRows = new ArrayList<TimesheetRow>();
+            List<WorkPackageStatusReport> childrenWPSRs = new ArrayList<WorkPackageStatusReport>();
             String childWPNumber;
             while(childrenIterator.hasNext()){
                 childWPNumber = childrenIterator.next();
                 childrensRows.addAll(tsrDao.getTimesheetRowsByWP(childWPNumber));
             }
-            wpBudget.calculatePersonHours(childrensRows);
-            workPackageObject.put("workPackagePLevels", wpBudget.getpLevels());
-            workPackageObject.put("workPackageBudgetInDollars", wpBudget.getLabourDollars());
+            wpBudget.getCurrentSpending().calculatePersonHours(childrensRows);
+            workPackageObject.put("workPackagePLevels", wpBudget.getCurrentSpending().getpLevels());
+            workPackageObject.put("workPackageBudgetInDollars", wpBudget.getCurrentSpending().getLabourDollars());
         }
 
         return SH.responseWithEntity(200, workPackageObject.toString());
-    }
-
-
-    private ArrayList<WorkPackageStatusReport> getSingleWPSRPerWP(List<WorkPackageStatusReport> allWPSR) {
-        /**
-         * HashMap is used to check for double WPSRs. Check for double in order to only take the most
-         * recent WPSR.
-         */
-        HashMap<String, Boolean> singleWPSRPerWP = new HashMap<String,
-                Boolean>();
-        ArrayList<WorkPackageStatusReport> mostRecentWPSR = new ArrayList<WorkPackageStatusReport>();
-        WorkPackageStatusReport currentWPSR;
-        Iterator<WorkPackageStatusReport> wpsrIterator = allWPSR.listIterator();
-        while(wpsrIterator.hasNext()){
-            currentWPSR = wpsrIterator.next();
-            if(singleWPSRPerWP.containsKey(currentWPSR.getWorkPackageNumber())){
-                continue;
-            }
-            else {
-                singleWPSRPerWP.put(currentWPSR.getWorkPackageNumber(), true);
-                mostRecentWPSR.add(currentWPSR);
-
-            }
-
-        }
-        return mostRecentWPSR;
-    }
-
-    public HashMap<PLevel, BigDecimal> getPLevelBigDecimalHashForYear(Date date){
-        DateTime dateTime = new DateTime(date.toString());
-        return payRateDao.getPayRateHashByYear(dateTime.getYear());
     }
 
 }

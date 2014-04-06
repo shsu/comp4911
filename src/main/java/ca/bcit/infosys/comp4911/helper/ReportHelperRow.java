@@ -7,10 +7,7 @@ import org.joda.time.DateTime;
 
 import javax.ejb.EJB;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * A project manager needs to see the most recent WPs associated with a project, and how much work has been
@@ -19,18 +16,19 @@ import java.util.List;
  */
 public class ReportHelperRow {
 
-    private WorkPackageDao workPackageDao;
+    public HashMap<Integer, HashMap<PLevel, BigDecimal>> yearPLevelRateHashMap;
 
-    private PayRateDao payRateDao;
+    private WorkPackageDao workPackageDao;
 
     private HashMap<PLevel, Integer> pLevels;
     private double labourDollars;
     private String wpNumber;
     private String wpDescription;
 
-    public ReportHelperRow(WorkPackageDao workPackageDao, PayRateDao payRateDao) {
+    public ReportHelperRow(WorkPackageDao workPackageDao,
+                           HashMap<Integer, HashMap<PLevel, BigDecimal>> yearPLevelRateHashMap) {
         this.workPackageDao = workPackageDao;
-        this.payRateDao = payRateDao;
+        this.yearPLevelRateHashMap = yearPLevelRateHashMap;
         pLevels = new HashMap<PLevel, Integer>();
         pLevels.put(PLevel.P1, 0);
         pLevels.put(PLevel.P2, 0);
@@ -117,11 +115,12 @@ public class ReportHelperRow {
         Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
         TimesheetRow tsr;
         WorkPackage workPackage;
+        HashMap<String, Date> wpNumberDateHash  =
+                workPackageDao.getWPNumberDateHash(timesheetRowList.get(0).getProjectNumber());
         while(timesheetRowIterator.hasNext())
         {
             tsr = timesheetRowIterator.next();
-            workPackage = workPackageDao.read(tsr.getWorkPackageNumber());
-            increasePLevel(getPLevelBigDecimalHashForYear(workPackage.getIssueDate()),
+            increasePLevel(yearPLevelRateHashMap.get(getYearInt(wpNumberDateHash.get(tsr.getWorkPackageNumber()))),
                     tsr.getpLevel(), tsr.calculateTotal());
         }
     }
@@ -142,15 +141,15 @@ public class ReportHelperRow {
         Effort effort;
         while(effortIterator.hasNext()){
             effort = effortIterator.next();
-            increasePLevel(getPLevelBigDecimalHashForYear(date),
+            increasePLevel(yearPLevelRateHashMap.get(getYearInt(date)),
                     effort.getpLevel(), effort.getPersonDays());
 
         }
     }
 
-    public HashMap<PLevel, BigDecimal> getPLevelBigDecimalHashForYear(Date date){
+    public int getYearInt(Date date){
         DateTime dateTime = new DateTime(date.toString());
-        return payRateDao.getPayRateHashByYear(dateTime.getYear());
+        return dateTime.getYear();
     }
 
     public void increasePLevel(HashMap<PLevel, BigDecimal> yearPayRate, PLevel pLevel, int hours){
@@ -185,5 +184,30 @@ public class ReportHelperRow {
                 labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
                 break;
         }
+    }
+
+    public static ArrayList<WorkPackageStatusReport> getSingleWPSRPerWP(List<WorkPackageStatusReport> allWPSR) {
+        /**
+         * HashMap is used to check for double WPSRs. Check for double in order to only take the most
+         * recent WPSR.
+         */
+        HashMap<String, Boolean> singleWPSRPerWP = new HashMap<String,
+                Boolean>();
+        ArrayList<WorkPackageStatusReport> mostRecentWPSR = new ArrayList<WorkPackageStatusReport>();
+        WorkPackageStatusReport currentWPSR;
+        Iterator<WorkPackageStatusReport> wpsrIterator = allWPSR.listIterator();
+        while(wpsrIterator.hasNext()){
+            currentWPSR = wpsrIterator.next();
+            if(singleWPSRPerWP.containsKey(currentWPSR.getWorkPackageNumber())){
+                continue;
+            }
+            else {
+                singleWPSRPerWP.put(currentWPSR.getWorkPackageNumber(), true);
+                mostRecentWPSR.add(currentWPSR);
+
+            }
+
+        }
+        return mostRecentWPSR;
     }
 }

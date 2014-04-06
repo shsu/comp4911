@@ -68,22 +68,26 @@ public class PayRateDao {
         return query.getSingleResult();
     }
 
-    public List<PayRate> getPayRateByYear(final int year) {
-        TypedQuery<PayRate> query = em.createQuery("SELECT p FROM PayRate p WHERE p.year = :year" +
-                " ORDER BY p.pLevel", PayRate.class);
-        query.setParameter("year", year);
-        return query.getResultList();
-    }
-
-    public HashMap<PLevel, BigDecimal> getPayRateHashByYear(final int year) {
-        List<PayRate> payRates = getPayRateByYear(year);
+    public HashMap<Integer, HashMap<PLevel, BigDecimal>> getPayRateHashByYear() {
+        List<PayRate> payRates = getAllPayRates();
         Iterator<PayRate> payRateIterator = payRates.listIterator();
         PayRate payRate;
-        HashMap<PLevel, BigDecimal> pLevelIntegerHashMap = new HashMap<PLevel, BigDecimal>();
+        HashMap<PLevel, BigDecimal> pLevelBigDecimalHashMap;
+        HashMap<Integer, HashMap<PLevel, BigDecimal>> pLevelIntegerHashMap
+                = new HashMap<Integer, HashMap<PLevel, BigDecimal>>();
+
         while(payRateIterator.hasNext()){
             payRate = payRateIterator.next();
-            pLevelIntegerHashMap.put(payRate.getpLevel(), payRate.getRate());
+            if(pLevelIntegerHashMap.get(payRate.getYear()) != null) {
+                pLevelIntegerHashMap.get(payRate.getYear()).put(payRate.getpLevel(), payRate.getRate());
+            }
+            else {
+                pLevelBigDecimalHashMap = new HashMap<PLevel, BigDecimal>();
+                pLevelBigDecimalHashMap.put(payRate.getpLevel(), payRate.getRate());
+                pLevelIntegerHashMap.put(payRate.getYear(), pLevelBigDecimalHashMap);
+            }
         }
+
         return pLevelIntegerHashMap;
     }
 }

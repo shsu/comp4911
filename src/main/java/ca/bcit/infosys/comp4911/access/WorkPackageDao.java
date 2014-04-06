@@ -8,6 +8,9 @@ import javax.enterprise.inject.Typed;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 @Stateless
@@ -78,8 +81,8 @@ public class WorkPackageDao {
     }
 
     public List<WorkPackage> getAllProjectWPLeafs(final int projectNumber) {
-        TypedQuery<WorkPackage> query = em.createQuery("select w from WorkPackage where w.workPackageNumber IN" +
-                " (select Distinct tsr.workPackageNumber from TimesheetRow" +
+        TypedQuery<WorkPackage> query = em.createQuery("select w from WorkPackage w where w.workPackageNumber IN" +
+                " (select Distinct tsr.workPackageNumber from TimesheetRow tsr" +
                 " where tsr.projectNumber = :projectNumber)", WorkPackage.class);
         query.setParameter("projectNumber", projectNumber);
         return query.getResultList();
@@ -97,5 +100,23 @@ public class WorkPackageDao {
                 " where wp.workPackageNumber like :findChildren", String.class);
         query.setParameter("findChildren", findChildren);
         return query.getResultList();
+    }
+
+    public HashMap<String, Date> getWPNumberDateHash(int projectNumber) {
+        TypedQuery<WorkPackage> query = em.createQuery("select wp from WorkPackage wp"
+                + " where wp.projectNumber = :projectNumber",
+                WorkPackage.class);
+        query.setParameter("projectNumber", projectNumber);
+
+        List<WorkPackage> listOfWorkPackages = query.getResultList();
+        Iterator<WorkPackage> workPackageIterator = listOfWorkPackages.listIterator();
+        HashMap<String, Date> wPNumbersAndDates = new HashMap<String, Date>();
+        WorkPackage workPackage;
+        while(workPackageIterator.hasNext()) {
+            workPackage = workPackageIterator.next();
+            wPNumbersAndDates.put(workPackage.getWorkPackageNumber(), workPackage.getIssueDate());
+        }
+
+        return wPNumbersAndDates;
     }
 }

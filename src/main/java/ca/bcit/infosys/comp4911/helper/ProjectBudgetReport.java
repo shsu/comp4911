@@ -3,6 +3,10 @@ package ca.bcit.infosys.comp4911.helper;
 
 import ca.bcit.infosys.comp4911.access.PayRateDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
+import ca.bcit.infosys.comp4911.domain.PLevel;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
 
 /**
  * Created by craigleclair on 2014-03-29.
@@ -15,10 +19,11 @@ public class ProjectBudgetReport {
 
     ReportHelperRow expectedBudget;
 
-    public ProjectBudgetReport(WorkPackageDao workPackageDao, PayRateDao payRateDao){
-        initialBudget = new ReportHelperRow(workPackageDao, payRateDao);
-        currentSpending = new ReportHelperRow(workPackageDao, payRateDao);
-        expectedBudget = new ReportHelperRow(workPackageDao, payRateDao);
+    public ProjectBudgetReport(WorkPackageDao workPackageDao,
+                               HashMap<Integer, HashMap<PLevel, BigDecimal>> yearPLevelRateHashMap){
+        initialBudget = new ReportHelperRow(workPackageDao, yearPLevelRateHashMap);
+        currentSpending = new ReportHelperRow(workPackageDao, yearPLevelRateHashMap);
+        expectedBudget = new ReportHelperRow(workPackageDao, yearPLevelRateHashMap);
     }
 
     public ReportHelperRow getCurrentSpending() {
