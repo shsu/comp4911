@@ -17,7 +17,7 @@
               <th style="width: 33%;">Project Number</th>
               <th style="width: 33%;">Project Name</th>
             </tr>
-            <tr ng-click="markForAssignment($index)" class="assigned-{{project.selected}}" ng-hide="{{project.selected}}" ng-repeat="project in projects | filter:query | limitTo: quantity">
+            <tr ng-click="selectP($index)" class="{{project.selected}} disabled-{{project.disabled}}" ng-repeat="project in projects | filter:query | limitTo: quantity">
               <td>{{project.projectNumber}}</td> 
               <td>{{project.projectName}}</td>
             </tr>
@@ -25,8 +25,8 @@
         </table>    
       </div>
       <div class="col-xs-2">
-        <button ng-click="add()" class="btn btn-primary btn-block">Add</button>
-        <button ng-click="remove()" class="btn btn-primary btn-block">Remove</button>
+        <button ng-click="addP()" class="btn btn-primary btn-block">Add</button>
+        <button ng-click="removeP()" class="btn btn-primary btn-block">Remove</button>
       </div>
       <div class="col-xs-5 results">
         <table class="table table-hover">
@@ -35,9 +35,9 @@
               <th style="width: 33%;">Project Number</th>
               <th style="width: 33%;">Project Name</th>
             </tr>
-            <tr ng-click="markForRemoval($index)" class="assigned-{{project.selected}} remove-{{project.markedForRemoval}}" ng-hide="{{!project.selected}}" ng-repeat="project in projects">
-              <td>{{project.projectNumber}}</td> 
-              <td>{{project.projectName}}</td>
+            <tr ng-click="addedSelectP($index)" class="{{selectedProject.selected}}" ng-hide="!selectedProjects" ng-repeat="selectedProject in selectedProjects">
+              <td>{{selectedProject.projectNumber}}</td> 
+              <td>{{selectedProject.projectName}}</td>
             </tr>
           </tbody>
         </table>

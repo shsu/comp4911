@@ -202,3 +202,10 @@ time {
   background: #dddddd;
   border-radius: 5px;
   margin-bottom: 10px; }
+
+.assigned-true {
+  display: block;
+}
+.assigned-false {
+  display: none;
+}
