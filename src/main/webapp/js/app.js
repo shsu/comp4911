@@ -47,14 +47,10 @@ cascadia.config(['$routeProvider',
             resolve: requiresAuthentication}).
         when('/pcpr', {controller: 'PCPRController', templateUrl:'Partials/pcpr.html',
             resolve: requiresAuthentication}).
-        when('/project', {controller: 'ProjectManagementController', templateUrl:'Partials/project-management.html',
-            resolve: requiresAuthentication}).
         when('/projects', {controller: 'ProjectManagementController', templateUrl:'Partials/manage-project.html',
             resolve: requiresAuthentication, permission: 'ProjectManager, Hr'}).
         when('/projects/new', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html',
             resolve: requiresAuthentication, permission: 'Hr'}).
-        when('/projects/search', {controller: 'SearchProjectController', templateUrl:'Partials/search-project.html',
-            resolve: requiresAuthentication}).
         when('/projects/:id', {controller: 'ProjectDetailsController', templateUrl: 'Partials/project-details.html',
             resolve: requiresAuthentication}).
         when('/projects/:id/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/add-project-manager.html',
@@ -78,9 +74,7 @@ cascadia.config(['$routeProvider',
         when('/user', {controller: 'UserProfileController', templateUrl:'Partials/user-profile.html',
             resolve: requiresAuthentication}).
         when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management.html',
-            resolve: requiresAuthentication, permission: 'Supervisor'}).
-        when('/users', {controller: 'UsersManagementController', templateUrl:'Partials/user-management.html',
-            resolve: requiresAuthentication, permission: 'Hr'}).
+            resolve: requiresAuthentication, permission: 'Supervisor, Hr'}).
         when('/users/new', {controller: 'CreateUserController', templateUrl:'Partials/create-user.html',
             resolve: requiresAuthentication}).
         when('/users/pay-rates', {controller: 'EditPayRatesController', templateUrl:'Partials/edit-pay-rates.html',
@@ -117,7 +111,7 @@ cascadia.config(['$routeProvider',
                     } 
                 }
                 if(!accessible) {
-                    $location.path('/login');
+                    $location.path('/logout');
                 }
             }
         });

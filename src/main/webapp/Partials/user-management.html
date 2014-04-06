@@ -23,8 +23,10 @@
             <td>{{u.firstName}} {{u.lastName}}</td>
             <td>{{u.username}}</td>
             <td has-permission='Hr'>
-              <a href="#/users/{{u.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor(u)">Assign</a>
-              <a href="#/users/{{u.id}}/assign-supervisor" class="cursor-hand" ng-show="hasSupervisor(u)">Change</a>
+              <a href="#/users/{{u.id}}/assign-supervisor" class="cursor-hand">
+                <span ng-hide="hasSupervisor(u)">Assign</span>
+                <span ng-show="hasSupervisor(u)">Change</span>
+              </a>
             </td>
             <td>{{u.pLevel}}</td>
           </tr>
