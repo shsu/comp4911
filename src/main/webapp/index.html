@@ -44,14 +44,14 @@
             <li><a href="#/projects/new">Create</a></li>
           </ul>
         </li>
-        <li class="dropdown">
+        <li class="dropdown" has-permission='ProjectManager, ResponsibleEngineer'>
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-fw fa-list-ul"></i> Work Packages <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#/manage-wp-pm" has-permission="ProjectManager">Manage</a></li>
             <li><a href="#/manage-wp-re" has-permission="ResponsibleEngineer">Manage</a></li>
           </ul>
         </li>
-      <li class="dropdown">
+      <li class="dropdown" has-permission='Hr, ProjectManager'>
           <a class="dropdown-toggle cursor-hand" data-toggle="dropdown"><i class="fa fa-fw fa-users"></i> Users <b class="caret"></b></a>
           <ul class="dropdown-menu">
               <li><a href="#/users" has-permission="Supervisor, Hr">Manage</a></li>

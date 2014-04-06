@@ -1380,6 +1380,12 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           GrowlResponse(response);
         });
 
+        $scope.hasProjects = function() {
+          if($scope.projectNumbers) {
+            return $scope.projectNumbers.length > 0;
+          }
+        }
+
         $scope.listWP = function(p) {
           Restangular.one('work_packages/project', p).getList().then(function(response){
             workPackages = response;
