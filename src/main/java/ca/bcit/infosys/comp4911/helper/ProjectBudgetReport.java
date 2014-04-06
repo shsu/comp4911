@@ -1,6 +1,9 @@
 package ca.bcit.infosys.comp4911.helper;
 
 
+import ca.bcit.infosys.comp4911.access.PayRateDao;
+import ca.bcit.infosys.comp4911.access.WorkPackageDao;
+
 /**
  * Created by craigleclair on 2014-03-29.
  */
@@ -12,10 +15,10 @@ public class ProjectBudgetReport {
 
     ReportHelperRow expectedBudget;
 
-    public ProjectBudgetReport(){
-        initialBudget = new ReportHelperRow();
-        currentSpending = new ReportHelperRow();
-        expectedBudget = new ReportHelperRow();
+    public ProjectBudgetReport(WorkPackageDao workPackageDao, PayRateDao payRateDao){
+        initialBudget = new ReportHelperRow(workPackageDao, payRateDao);
+        currentSpending = new ReportHelperRow(workPackageDao, payRateDao);
+        expectedBudget = new ReportHelperRow(workPackageDao, payRateDao);
     }
 
     public ReportHelperRow getCurrentSpending() {

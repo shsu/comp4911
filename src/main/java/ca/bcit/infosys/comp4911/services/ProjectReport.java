@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.*;
@@ -49,6 +50,7 @@ public class ProjectReport {
 
     @GET
     @Path("/matrix/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getProjectMatrixReport(
             @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
@@ -57,8 +59,8 @@ public class ProjectReport {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         List<TimesheetRow>                      wpTimesheetRows;
-        Project project;
-        WPReportHelperRow[]                     reportHelperRows = new WPReportHelperRow[20];
+        Project                                 project;
+        ReportHelperRow[]                       reportHelperRows = new ReportHelperRow[20];
         WorkPackageStatusReport                 wpsr;
         List<WorkPackageStatusReport>           latestTwentyReports;
         JSONArray                               reportArray = new JSONArray();
@@ -85,7 +87,7 @@ public class ProjectReport {
             objectToBeMapped = new JSONObject();
             wpsr = wpsrIterator.next();
             wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
-            reportHelperRows[i] = new WPReportHelperRow(wpsr.getWorkPackageNumber());
+            reportHelperRows[i] = new ReportHelperRow(workPackageDao, payRateDao);
             reportHelperRows[i].calculatePersonHours(wpTimesheetRows);
             objectToBeMapped.put("workPackageNumber", wpsr.getWorkPackageNumber());
             objectToBeMapped.put("workPackageDescription",
@@ -107,6 +109,7 @@ public class ProjectReport {
      */
     @GET
     @Path("/budget/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getProjectBudgetReport(
             @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
@@ -116,7 +119,7 @@ public class ProjectReport {
 
         JSONArray projectBudgetJSON = new JSONArray();
         JSONObject pBObject = new JSONObject();
-        ProjectBudgetReport pbr = new ProjectBudgetReport();
+        ProjectBudgetReport pbr = new ProjectBudgetReport(workPackageDao, payRateDao);
         List<WorkPackageStatusReport> mostRecentReports = wpsrDao.getAllByProject(projectId);
         mostRecentReports = getSingleWPSRPerWP(mostRecentReports);
 
@@ -126,9 +129,9 @@ public class ProjectReport {
 
         pBObject.put("ExpectedBudget", pbr.getExpectedBudget().getpLevels());
         pBObject.put("ExpectedBusgetInDollars", pbr.getExpectedBudget().getLabourDollars());
-        pBObject.put("CurrentSpending", pbr.getCurrentSpending());
+        pBObject.put("CurrentSpending", pbr.getCurrentSpending().getpLevels());
         pBObject.put("CurrentSpendingInDollar", pbr.getCurrentSpending().getLabourDollars());
-        pBObject.put("InitialBudget", pbr.getInitialBudget());
+        pBObject.put("InitialBudget", pbr.getInitialBudget().getpLevels());
         pBObject.put("InitialBudgetInDollars", pbr.getInitialBudget().getLabourDollars());
 
 
@@ -137,6 +140,7 @@ public class ProjectReport {
 
     @GET
     @Path("/work_package/budget/{workpackage_number}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getWorkPackageBudgetReport(
             @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
@@ -144,7 +148,7 @@ public class ProjectReport {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
         JSONObject workPackageObject = new JSONObject();
-        ReportHelperRow wpBudget = new ReportHelperRow();
+        ReportHelperRow wpBudget = new ReportHelperRow(workPackageDao, payRateDao);
 
         if(wPNumber.charAt(6) != '0'){
             wpBudget.calculatePersonHours(tsrDao.getTimesheetRowsByWP(wPNumber));
@@ -165,7 +169,7 @@ public class ProjectReport {
             workPackageObject.put("workPackageBudgetInDollars", wpBudget.getLabourDollars());
         }
 
-        return SH.responseWithEntity(200, wpBudget.toString());
+        return SH.responseWithEntity(200, workPackageObject.toString());
     }
 
 

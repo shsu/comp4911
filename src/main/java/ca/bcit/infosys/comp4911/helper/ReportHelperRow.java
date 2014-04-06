@@ -19,10 +19,8 @@ import java.util.List;
  */
 public class ReportHelperRow {
 
-    @EJB
     private WorkPackageDao workPackageDao;
 
-    @EJB
     private PayRateDao payRateDao;
 
     private HashMap<PLevel, Integer> pLevels;
@@ -30,7 +28,9 @@ public class ReportHelperRow {
     private String wpNumber;
     private String wpDescription;
 
-    public ReportHelperRow() {
+    public ReportHelperRow(WorkPackageDao workPackageDao, PayRateDao payRateDao) {
+        this.workPackageDao = workPackageDao;
+        this.payRateDao = payRateDao;
         pLevels = new HashMap<PLevel, Integer>();
         pLevels.put(PLevel.P1, 0);
         pLevels.put(PLevel.P2, 0);

@@ -340,7 +340,7 @@ public class SampleData {
          * numbers. 
          */
 		// Create 200 workpackages for Project Barbosa
-        for(int i = 0; i < 200; i++) {
+        for(int i = 0; i <= 200; i++) {
             if(i < 10) { workPackageNumber = "A11111" + i;}                 // add 1 digit
             if(i >= 10 && i < 100) { workPackageNumber = "A2222" + i; }     // add 2 digits
             if(i >= 100) {
@@ -351,7 +351,7 @@ public class SampleData {
                 workPackageNumber = "A333" + i;
             }                // add 3 digits
             workPackageDao.create(new WorkPackage(
-                workPackageNumber, wpName, issueDate, "100", endDate, 55522, beginningEstimate),false);
+                workPackageNumber, wpName, issueDate, "100", endDate, 55522, effortGenerator(10,10,10,10,10,10,10)),false);
         }
 
         issueDate = setDate(2, 5, 2014);
@@ -754,7 +754,9 @@ public class SampleData {
                 signed =  true;
                 pending = false;
             }
-            String wpNumber = "A333" + (random.nextInt(100)+100);
+            String wpNumber = "A3331";
+            wpNumber += (random.nextInt(9)+1);
+            wpNumber += (random.nextInt(9)+1);
             List<TimesheetRow> tsrList = generateListOfRows(55522, wpNumber, random.nextInt(4)+1);
             timesheetDao.create(new Timesheet(random.nextInt(8)+1, tsrList, random.nextInt(52)+1, 2014,
                     0, approved, signed, pending), false);
