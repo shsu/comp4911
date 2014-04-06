@@ -175,8 +175,6 @@ time {
     background: #dddddd; }
   .results .disabled-true {
     background: #dddddd; }
-  .results .true {
-    background: rgba(0, 255, 0, 0.2) !important; }
 
 .table-wrapper {
   border: 1px solid #dddddd;
@@ -206,9 +204,18 @@ time {
   border-radius: 5px;
   margin-bottom: 10px; }
 
-.assigned-true {
-  display: block;
-}
-.assigned-false {
+#notAssigned .true {
   display: none;
+}
+
+#notAssigned .assign-true {
+  background: rgba(0, 255, 0, 0.2) !important;
+}
+
+#assigned .false {
+  display: none;
+}
+
+#assigned .remove-true {
+  background: rgba(255, 0, 0, 0.2) !important;
 }

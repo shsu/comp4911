@@ -8,16 +8,15 @@
       </ul>
     </div>
     <div class="row">
-      <p>Employee</p>
       <p class="col-xs-12 no-pl"><input type="text" ng-model="query.projectNumber" class="col-xs-5" placeholder="Enter Project Number"/></p>
-      <div class="col-xs-5 results">
+      <div class="col-xs-5 results" id="notAssigned">
         <table class="table table-hover">
           <tbody>
             <tr>
               <th style="width: 33%;">Project Number</th>
               <th style="width: 33%;">Project Name</th>
             </tr>
-            <tr ng-click="markForAssignment($index)" class="assigned-{{project.selected}}" ng-hide="{{project.selected}}" ng-repeat="project in projects | filter:query | limitTo: quantity">
+            <tr ng-click="markForAssignment($index)" class="{{project.selected}} assign-{{project.markedForAssignment}}" ng-repeat="project in projects | filter:query | limitTo: quantity">
               <td>{{project.projectNumber}}</td> 
               <td>{{project.projectName}}</td>
             </tr>
@@ -28,23 +27,20 @@
         <button ng-click="add()" class="btn btn-primary btn-block">Add</button>
         <button ng-click="remove()" class="btn btn-primary btn-block">Remove</button>
       </div>
-      <div class="col-xs-5 results">
+      <div class="col-xs-5 results" id="assigned">
         <table class="table table-hover">
           <tbody>
             <tr>
               <th style="width: 33%;">Project Number</th>
               <th style="width: 33%;">Project Name</th>
             </tr>
-            <tr ng-click="markForRemoval($index)" class="assigned-{{project.selected}} remove-{{project.markedForRemoval}}" ng-hide="{{!project.selected}}" ng-repeat="project in projects">
+            <tr ng-click="markForRemoval($index)" class="{{project.selected}} remove-{{project.markedForRemoval}}" ng-repeat="project in projects">
               <td>{{project.projectNumber}}</td> 
               <td>{{project.projectName}}</td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div>
-    <div class="row">
-      <button class="col-lg-2 btn btn-primary pull-right">Save</button>
     </div>
   </div>
 </content>

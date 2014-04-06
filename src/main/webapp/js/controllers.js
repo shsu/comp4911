@@ -198,106 +198,203 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
     cascadiaControllers.controller('AEPController', ['$rootScope', '$scope', '$location', '$routeParams', 'Restangular', 'GrowlResponse',
       function($rootScope, $scope, $location, $params, Restangular, GrowlResponse){
         var param = $params.id;
-        Restangular.one('users', param).get().then(function(response){
-          $scope.cUser = response;
-          loadUsers();
-        });
+        var projectList = [];
+        var userProjectList = [];
+        $scope.projects = [];
 
-        $scope.selectedProjects = [];
         $scope.quantity = 20;
 
-        var loadUsers = function(){
-          Restangular.all('users/' + $scope.cUser.id + '/projects').getList().then(function(response){
-            $scope.selectedProjects = response;
-          });
+        // get the current user and force a synchronous loading of projects
+        Restangular.one('users', param).get().then(function(response){
+          $scope.cUser = response;
+          getAllProjects();
+        });
 
+        /*  
+          get all projects, give them a default state of selected=false, and store in projectList[]
+        */
+        var getAllProjects = function(){
           Restangular.all('projects').getList().then(function(response){
-            $scope.projects = response;
+            projectList = response;
+
+            for (var i = 0; i < projectList.length; i++){
+              projectList[i].selected = false;
+            }
+
+            getAllUserProjects();
+          });
+        }
+
+        /*
+          get all assigned projects, store in userProjectList
+          compare userProjectList with projectList, assigning selected=true to matching projects
+          finally, store in $scope.projects
+        */
+        var getAllUserProjects = function(){
+          Restangular.all('users/' + $scope.cUser.id + '/projects').getList().then(function(response){
+            userProjectList = response;
+
+            for (var i = 0; i < userProjectList.length; i++){
+              for (var j = 0; j < projectList.length; j++){
+                if (userProjectList[i].projectNumber == projectList[j].projectNumber){
+                  projectList[j].selected = true;
+                  projectList[j].markedForRemoval = false;
+                }
+              }
+            }
+
+            angular.copy(projectList, $scope.projects);
           });
         } 
 
-        $scope.selectP = function($index) {
-          if ($scope.projects[$index].disabled) {
-            return;
-          }
+        $scope.markForAssignment = function($index){
+          var state = $scope.projects[$index] && $scope.projects[$index].markedForAssignment;
 
-          if (!$scope.projects[$index].selected) {
-            $scope.projects[$index].selected = true;
+          if (state == undefined || state == false){
+            $scope.projects[$index].markedForAssignment = true;
           } else {
-            $scope.projects[$index].selected = false;
+            $scope.projects[$index].markedForAssignment = false;
           }
         }
 
-        $scope.addedSelectP = function($index) {
-          if (!$scope.selectedProjects[$index].selected) {
-            $scope.selectedProjects[$index].selected = true;
+        $scope.markForRemoval = function($index){
+          var state = $scope.projects[$index] && $scope.projects[$index].markedForRemoval;
+
+          if (state == undefined || state == false){
+            $scope.projects[$index].markedForRemoval = true;
           } else {
-            $scope.selectedProjects[$index].selected = false;
+            $scope.projects[$index].markedForRemoval = false;
           }
+          
         }
 
-        $scope.addP = function() {
-          $scope.projects.forEach(addToSelectedP);
-        }
+        $scope.add = function(){
+          var length = $scope.projects.length;
 
-        function addToSelectedP(obj) {
-          if (obj.selected === true && obj.disabled !== true) {
-            $scope.selectedProjects.push({
-              projectNumber: obj.projectNumber,
-              projectName: obj.projectName,
-              selected: false
-            });
-            obj.disabled = true;
-            obj.selected = false;
-            var data = {
-              userId: $scope.cUser.id,
-              projectNumber: obj.projectNumber,
-              active: true
-            }
-            Restangular.one('projects/' + obj.projectNumber + '/assignments').customPOST(data).then(function(response){
-              $.growl.notice({ message: "Employee Assigned" });
-            });
-          }
-        }
+          for (var i = 0; i < length; i++){
+            if ($scope.projects[i].markedForAssignment){
+              var projNum = $scope.projects[i].projectNumber;
 
-        $scope.removeP = function() {
-          var length = $scope.selectedProjects.length;
-
-          for (var i = 0; i < length;) {
-            if (!removeFromSelectedP($scope.selectedProjects[i]))
-              i++;
-          };
-        }
-
-        function removeFromSelectedP(obj) {
-          if (obj !== undefined && obj.selected === true) {
-            var num = obj.projectNumber;
-            for (var i = 0; i < $scope.projects.length; i++) {
-              if ($scope.projects[i].projectNumber == num) {
-                $scope.projects[i].disabled = false;
+              var data = {
+                userId: $scope.cUser.id,
+                projectNumber: projNum,
+                active: true,
               }
+
+              Restangular.one('projects/' + projNum + '/assignments').customPOST(data).then(function(response){
+                $.growl.notice({ message: "Employee Assigned" });
+                $scope.projects[i].selected = true;
+              });
             }
-        /*
-        var data = {
-          userId: $scope.cUser.id,
-          projectNumber: obj.projectNumber,
-          active: false
+          }
         }
-        Restangular.one('projects/' + obj.projectNumber + '/assignments').customPUT(data).then(function(response){
-          $.growl.notice("Success", "Object Created");
-        });*/
 
-var index = $scope.selectedProjects.indexOf(obj);
+        $scope.remove = function(){
+          var length = $scope.projects.length;
 
-if (index > -1) {
-  $scope.selectedProjects.splice(index, 1);
-}
-return true;
-}
-return false;
-}
-}
-]);
+          for (var i = 0; i < length; i++){
+            if ($scope.projects[i].markedForRemoval){
+              var projNum = $scope.projects[i].projectNumber;
+
+              var data = {
+                userId: $scope.cUser.id,
+                projectNumber: projNum,
+                active: false,
+              }
+
+              Restangular.one('projects/' + $scope.projects[i].projectNumber + '/assignments/' + $scope.cUser.id).customPUT(data);
+
+              $scope.projects[i].selected = false;
+            }
+          }
+        }
+
+
+        // $scope.selectP = function($index) {
+        //   if ($scope.projects[$index].disabled) {
+        //     return;
+        //   }
+
+        //   if (!$scope.projects[$index].selected) {
+        //     $scope.projects[$index].selected = true;
+        //   } else {
+        //     $scope.projects[$index].selected = false;
+        //   }
+        // }
+
+        // $scope.addedSelectP = function($index) {
+        //   if (!$scope.selectedProjects[$index].selected) {
+        //     $scope.selectedProjects[$index].selected = true;
+        //   } else {
+        //     $scope.selectedProjects[$index].selected = false;
+        //   }
+        // }
+
+        // $scope.addP = function() {
+        //   $scope.projects.forEach(addToSelectedP);
+        // }
+
+        // function addToSelectedP(obj) {
+        //   if (obj.selected === true && obj.disabled !== true) {
+        //     $scope.selectedProjects.push({
+        //       projectNumber: obj.projectNumber,
+        //       projectName: obj.projectName,
+        //       selected: false
+        //     });
+        //     obj.disabled = true;
+        //     obj.selected = false;
+        //     var data = {
+        //       userId: $scope.cUser.id,
+        //       projectNumber: obj.projectNumber,
+        //       active: true
+        //     }
+        //     Restangular.one('projects/' + obj.projectNumber + '/assignments').customPOST(data).then(function(response){
+        //       $.growl.notice({ message: "Employee Assigned" });
+        //     });
+        //   }
+        // }
+
+        // $scope.removeP = function() {
+        //   var length = $scope.selectedProjects.length;
+
+        //   for (var i = 0; i < length;) {
+        //     if (!removeFromSelectedP($scope.selectedProjects[i]))
+        //       i++;
+        //   };
+        // }
+
+        // function removeFromSelectedP(obj) {
+        //   if (obj !== undefined && obj.selected === true) {
+        //     var num = obj.projectNumber;
+        //     for (var i = 0; i < $scope.projects.length; i++) {
+        //       if ($scope.projects[i].projectNumber == num) {
+        //         $scope.projects[i].disabled = false;
+        //       }
+        //     }
+        
+        //     var data = {
+        //       userId: $scope.cUser.id,
+        //       projectNumber: obj.projectNumber,
+        //       active: false
+        //     }
+
+        //     Restangular.one('projects/' + obj.projectNumber + '/assignments').customPUT(data).then(function(response){
+        //       $.growl.notice("Success", "Object Created");
+        //     }); 
+
+        //     var index = $scope.selectedProjects.indexOf(obj);
+
+        //     if (index > -1) {
+        //       $scope.selectedProjects.splice(index, 1);
+        //     }
+
+        //     return true;
+        //   }
+
+        //   return false;
+        // }
+    
+}]);
 
 
 
