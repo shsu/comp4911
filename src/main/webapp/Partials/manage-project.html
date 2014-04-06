@@ -22,7 +22,6 @@
               <th class="th-wide">Unallocated Budget</th>
               <th class="th-narrow">Issue Date</th>
               <th class="th-narrow">Client Rate</th>
-              <th class="th-narrow">Project Manager</th>
           </tr>
           <tr ng-click="select(project)" ng-repeat="project in projects | filter: query | limitTo: 20">
             <td><a href="#/projects/{{project.projectNumber}}">{{project.projectNumber}}</a></td>
@@ -31,12 +30,6 @@
             <td>{{project.unAllocatedBudget}} </td>
             <td>{{project.issueDate}}</td>
             <td>{{project.clientRate}}</td>
-            <td>
-              <a href="#/projects/{{project.projectNumber}}/assign-manager">
-                <span ng-hide="hasProjectManager(project)">Assign</span>
-                <span ng-show="hasProjectManager(project)">Change</span>
-              </a>
-            </td>
           </tr>
         </tbody>
       </table>

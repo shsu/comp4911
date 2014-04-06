@@ -25,7 +25,6 @@ cascadiaServices.factory('userService', ['$q', '$rootScope', '$location', 'Resta
     user: null,
 
     isAuthenticatedResolve: function() {
-      console.log("Authentication");
       var thisObject = this;
       var defer = $q.defer();
       if(thisObject.user) {

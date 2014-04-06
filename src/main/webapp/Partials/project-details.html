@@ -12,14 +12,14 @@
         </div>
         <div class="row">
           <p class="col-sm-12">Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}
-              <a href="#/projects/{{project.projectNumber}}/assign-manager">
+              <a href="#/projects/{{project.projectNumber}}/assign-manager" has-permission="Hr">
                 <span ng-hide="hasProjectManager()">Assign</span>
                 <span ng-show="hasProjectManager()">(Change)</span>
               </a></p>
         </div>
       </div>
     </div>      
-    <div class="row">
+    <div class="row" has-permission="ProjectManager">
       <div class="col-sm-5">
         <div class="panel panel-default">
           <div class="panel-heading">Assigned Employees:</div>
@@ -64,28 +64,6 @@
       </div>
     </div>
     </div>
-    <!-- <div class="row">
-        <div class="col-sm-5">
-            <div class="panel panel-default">
-              <div class="panel-heading">Future Assigned Employees:</div>
-              <div class="panel-body">
-                <div class="table-responsive">
-                  <table class="table table-hover table-bordered">
-                    <thead>
-                      <th>Assigned Employees</th>
-                      <th>Pay Grade</th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <div class="row">
       <div class="col-sm-7">
         <div class="panel panel-default">

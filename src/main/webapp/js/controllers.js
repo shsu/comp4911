@@ -427,9 +427,20 @@ return false;
         $scope.quantity = 20;
         $scope.checked = {};
 
-        Restangular.all('projects').getList().then(function(response){
-          $scope.projects = response;
-        });
+        var loadManaged = function() {
+          Restangular.all('user/projects/managed').getList().then(function(response){
+            $scope.projects = response;
+          });
+        }
+
+        var loadAll = function() {
+          Restangular.all('projects').getList().then(function(response){
+            $scope.projects = response;
+          });
+        }
+
+        var str = localStorage.getItem('permissions');
+        (str.indexOf('ProjectManager') != -1) ? loadManaged() : loadAll();
 
         var getManager = function(project) {
           Restangular.one('projects/' + project.projectNumber + '/assignments/manager').get().then(function(response) {

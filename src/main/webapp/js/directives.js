@@ -6,16 +6,22 @@ var cascadiaDirectives = angular.module('cascadiaDirectives', []);
 	      if(!_.isString(attrs.hasPermission))
 	        throw "hasPermission value must be a string";
 	 
-	      var value = attrs.hasPermission.trim();
-	      var notPermissionFlag = value[0] === '!';
-	      if(notPermissionFlag) {
-	        value = value.slice(1).trim();
-	      }
+	 			var array = attrs.hasPermission.split(',');
+	      // var notPermissionFlag = value[0] === '!';
+	      // if(notPermissionFlag) {
+	      //   value = value.slice(1).trim();
+	      // }
 	 
 	      function toggleVisibilityBasedOnPermission() {
-	        var hasPermission = permissions.hasPermission(value);
+	      	var hasPermission = false;
+
+	      	for(var i = 0; i < array.length; ++i){
+	      		if(permissions.hasPermission(array[i].trim())) {	
+	      			hasPermission = true;
+	      		}
+	      	}
 	 
-	        if(hasPermission && !notPermissionFlag || !hasPermission && notPermissionFlag)
+	        if(hasPermission)
 	          element.show();
 	        else
 	          element.hide();

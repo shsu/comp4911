@@ -37,8 +37,6 @@ cascadia.config(['$routeProvider',
         when('/logout', {controller: 'LogoutController', template:' '}).
         when('/manage-approver', {controller: 'ManageApproverController', templateUrl:'Partials/manage-approver.html',
              resolve: requiresAuthentication}).
-        when('/manage-project', {controller: 'ProjectManagementController', templateUrl:'Partials/manage-project.html',
-             resolve: requiresAuthentication, permission: 'ProjectManager'}).
         when('/manage-wp-pm', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html',
              resolve: requiresAuthentication, permission: 'ProjectManager'}).
         when('/manage-wp-re', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html',
@@ -52,9 +50,9 @@ cascadia.config(['$routeProvider',
         when('/project', {controller: 'ProjectManagementController', templateUrl:'Partials/project-management.html',
             resolve: requiresAuthentication}).
         when('/projects', {controller: 'ProjectManagementController', templateUrl:'Partials/manage-project.html',
-            resolve: requiresAuthentication, permission: 'ProjectManager'}).
+            resolve: requiresAuthentication, permission: 'ProjectManager, Hr'}).
         when('/projects/new', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html',
-            resolve: requiresAuthentication, permission: 'ProjectManager'}).
+            resolve: requiresAuthentication, permission: 'Hr'}).
         when('/projects/search', {controller: 'SearchProjectController', templateUrl:'Partials/search-project.html',
             resolve: requiresAuthentication}).
         when('/projects/:id', {controller: 'ProjectDetailsController', templateUrl: 'Partials/project-details.html',
@@ -111,8 +109,14 @@ cascadia.config(['$routeProvider',
                 permissions.setPermissions(JSON.parse(localStorage.getItem('permissions')));
             }
             if(next.$$route && next.$$route.permission){
-                var permission = next.$$route.permission;
-                if(_.isString(permission) && !permissions.hasPermission(permission)){
+                var array = next.$$route.permission.split(',');
+                var accessible = false;
+                for(var i = 0; i < array.length; ++i){
+                    if(_.isString(array[i]) && permissions.hasPermission(array[i].trim())){
+                        accessible = true;
+                    } 
+                }
+                if(!accessible) {
                     $location.path('/login');
                 }
             }
