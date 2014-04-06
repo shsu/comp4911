@@ -75,6 +75,9 @@ h1, h2, h3, h4, h5, h6 {
 .cursor-hand {
   cursor: pointer; }
 
+.breadcrumb {
+  background-color: transparent; }
+
 .navbar {
   border-radius: 0; }
   .navbar .nav li a {

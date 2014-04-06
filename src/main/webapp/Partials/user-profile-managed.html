@@ -1,11 +1,13 @@
 <content>
-  <div ng-controller="ManagedUserProfileController">
-  <ol class="breadcrumb">
-    <li><a href="#/users">Manage User</a></li>
-    <li class="active">User Profile</li>
-  </ol>      
-    <h1 class="secondary">User Profile</h1><br />
-    <div class="row">
+    <div ng-controller="ManagedUserProfileController">
+        <h1 class="secondary">User Profile</h1>
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="#/users">Manage Users</a></li>
+                <li class="active">{{cUser.firstName}} {{cUser.lastName}}</li>
+            </ol>
+        </div>
+      <div class="row">
       <div class="table-responsive col-sm-6">
         <table class="table table-striped table-hover table-bordered">
           <tbody>
