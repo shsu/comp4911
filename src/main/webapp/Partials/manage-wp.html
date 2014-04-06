@@ -16,7 +16,7 @@
       </form>
     </div>
     <div class="col-lg-6">
-      <a href="#/create-wp/{{project.projectNumber}}" ng-disabled="!projectChosen" class="btn btn-success pull-right" has-permission="ProjectManager">Create Work Package</a>
+      <a ng-click="create()" ng-disabled="!projectChosen" class="btn btn-success pull-right" has-permission="ProjectManager">Create Work Package</a>
     </div>
   </div>
   <div class="row">
