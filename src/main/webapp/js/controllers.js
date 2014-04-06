@@ -570,7 +570,7 @@ return false;
 
           var persist = function(user) {
             Restangular.one('users', user.id).customPUT(user).then(function(response){
-              if($rootScope.user.userId == response.userId){
+              if($rootScope.user.id == response.id){
                   localStorage.setItem('user', JSON.stringify(response));
                   $rootScope.user = response;
               }
@@ -654,16 +654,16 @@ return false;
           console.log("dismissed")
         });
 
-        var persist = function(user) {
-          Restangular.one('users', user.id).customPUT(user).then(function(response){
-          if($rootScope.user.userId == response.userId){
-              localStorage.setItem('user', JSON.stringify(response));
-              $rootScope.user = response;
+          var persist = function (user) {
+              Restangular.one('users', user.id).customPUT(user).then(function (response) {
+                  if ($rootScope.user.id == response.id) {
+                      localStorage.setItem('user', JSON.stringify(response));
+                      $rootScope.user = response;
+                  }
+                  $location.path('users/' + user.id);
+                  $.growl.notice({message: "Supervisor Assigned"});
+              })
           }
-            $location.path('users/' + user.id);
-            $.growl.notice({message:"Supervisor Assigned"});
-          })
-        }
       }
     }
     ]);
