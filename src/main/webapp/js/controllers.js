@@ -808,11 +808,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.save = function () {
           if (!($scope.createWPForm.$valid)) {
             $.growl.warning({ message: "Invalid Input" });
-          } else {
+          } else if (!validateWPNumber($scope.workPackage.workPackageNumber)) {
+            $.growl.warning({ message: "Invalid Input - Work Package Number: if a character is 0, then the characters following it must all be 0 too." });
+          }else {
             workPackage = $scope.workPackage;
             workPackage.progressStatus = 'Active';
             workPackage.issueDate = new Date();
-
+            
             Restangular.one('work_packages').customPOST($scope.workPackage).then(function (response) {
               $.growl.notice({ message: "Work Package Created" });
             }, function (response) {
@@ -823,7 +825,23 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
       }
       ]);
 
-
+/*  
+    Function to validate WP Number
+    */
+    function validateWPNumber(wpNumberStr) {
+        var length = wpNumberStr.length;
+        for (var i = 1; i < length; i++) {
+          if ( (wpNumberStr.charAt(i-1) == 0) && (wpNumberStr.charAt(i) != 0) ) {
+            break;
+          }
+        }
+        
+        if (i < length) {
+          return false;
+        }
+        
+        return true;
+      }
 
 /*
     DASHBOARD CONTROLLER
