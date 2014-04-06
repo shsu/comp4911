@@ -44,7 +44,7 @@ public class WorkPackageDao {
 
     public List<WorkPackage> getAllByUser(int userId) {
         TypedQuery<WorkPackage> query = em.createQuery("select w from WorkPackage w "
-          + "where w.workPackageNumber = (SELECT i.workPackageNumber from WorkPackageAssignment i"
+          + "where w.workPackageNumber IN (SELECT i.workPackageNumber from WorkPackageAssignment i"
           + " where i.userId = :userId)",
           WorkPackage.class);
         query.setParameter("userId", userId);
@@ -53,8 +53,8 @@ public class WorkPackageDao {
 
     public List<WorkPackage> getAllByEngineer(int userId) {
         TypedQuery<WorkPackage> query = em.createQuery("select w from WorkPackage w "
-                + "where w.workPackageNumber = (SELECT i.workPackageNumber from WorkPackageAssignment i"
-                + " where i.userId = :userId and i.isResponsibleEngineer = :isEngineer)",
+                + "where w.workPackageNumber IN (SELECT i.workPackageNumber from WorkPackageAssignment i"
+                + " where i.userId = :userId and i.responsibleEngineer = :isEngineer)",
                 WorkPackage.class);
         query.setParameter("userId", userId);
         query.setParameter("isEngineer", true);

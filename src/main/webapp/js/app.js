@@ -37,9 +37,9 @@ cascadia.config(['$routeProvider',
         when('/logout', {controller: 'LogoutController', template:' '}).
         when('/manage-approver', {controller: 'ManageApproverController', templateUrl:'Partials/manage-approver.html',
              resolve: requiresAuthentication}).
-        when('/manage-wp-pm', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html',
+        when('/manage-wp-pm', {controller: 'WPManagementPMController', templateUrl:'Partials/manage-wp-pm.html',
              resolve: requiresAuthentication, permission: 'ProjectManager'}).
-        when('/manage-wp-re', {controller: 'WPManagementController', templateUrl:'Partials/manage-wp.html',
+        when('/manage-wp-re', {controller: 'WPManagementREController', templateUrl:'Partials/manage-wp-re.html',
             resolve: requiresAuthentication, permission: 'ResponsibleEngineer'}).
         when('/monthly-wp', {controller: 'MonthlyWPController', templateUrl:'Partials/monthly-wp.html',
             resolve: requiresAuthentication}).

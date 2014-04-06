@@ -1,9 +1,9 @@
 <content>
-<div ng-controller="WPManagementController">
+<div ng-controller="WPManagementPMController">
   <h1 class="secondary">Manage Work Package</h1><br />
   <div class="row">
     <p class="col-lg-3">Project No. 
-      <select  ng-init="loadProjects()" ng-change="loadWorkPackages()" ng-model="project" ng-options="p.projectNumber for p in projects">
+      <select  ng-init="loadProjects()" ng-change="loadWorkPackages()" ng-model="project" data-ng-options="p.projectNumber for p in projects">
       </select>
     </p>
     <p class="col-lg-4">Project Name: {{project.projectName}}</p>
@@ -16,7 +16,7 @@
       </form>
     </div>
     <div class="col-lg-6">
-      <a ng-click="create()" ng-disabled="!projectChosen" class="btn btn-success pull-right" has-permission="ProjectManager">Create Work Package</a>
+      <button ng-click="create()" ng-disabled="!projectChosen" class="btn btn-success pull-right" has-permission="ProjectManager">Create Work Package</button>
     </div>
   </div>
   <div class="row">
@@ -30,19 +30,16 @@
             <th>Assign Employees</th>
             <th>Issue Date</th>            
             <th>Status</th>
-            <th>Status Report</th>
           </tr>
           <tr ng-repeat="wp in workPackages | filter: query | limitTo: quantity">
             <td>
-              <a href="#/wp-details/{{wp.workPackageNumber}}" has-permission="ProjectManager">{{wp.workPackageNumber}}</a>
-              <a href="#/wp-status-report/{{wp.workPackageNumber}}" has-permission="ResponsibleEngineer">{{wp.workPackageNumber}}</a>
+               <a href="#/wp-details/{{wp.workPackageNumber}}">{{wp.workPackageNumber}}</a>
             </td>
             <td>{{wp.workPackageName}}</td>
             <td><a href="#/add-engineer/{{wp.workPackageNumber}}">Assign Responsible Engineer</a></td>
             <td><a href="#/assign-employee-wp/{{wp.workPackageNumber}}">Assign Employees</a></td>
             <td>{{wp.issueDate}}</td>
             <td>{{wp.progressStatus}}</td>
-            <td><a href="#/wp-status-report/{{wp.workPackageNumber}}">Create Status Report</a></td>
           </tr>
         </tbody>
       </table>

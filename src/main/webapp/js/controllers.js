@@ -66,7 +66,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
                   userId: $scope.selectedEngineer.id,
                   responsibleEngineer: true
                 }
-                base.one('assignments').post(data).then(function(response){
+                base.one('assignments').customPOST(data).then(function(response){
                   GrowlResponse(response)
                 }, function(response){
                   GrowlResponse(response)
@@ -825,8 +825,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             workPackage = $scope.workPackage;
             workPackage.progressStatus = 'Active';
             workPackage.issueDate = new Date();
+            workPackage.projectNumber = $scope.project.projectNumber;
             
             Restangular.one('work_packages').customPOST($scope.workPackage).then(function (response) {
+              $location.path('manage-wp-pm');
               $.growl.notice({ message: "Work Package Created" });
             }, function (response) {
               GrowlResponse(response);
@@ -1057,16 +1059,23 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
 
 /*
-   MANAGE WP CONTROLLER
+   MANAGE WP CONTROLLER FOR PM
    */
-   cascadiaControllers.controller('WPManagementController', ['$scope', 'Restangular', 'GrowlResponse',
-    function($scope, Restangular, GrowlResponse){
+   cascadiaControllers.controller('WPManagementPMController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
+    function($scope, $location, Restangular, GrowlResponse){
       $scope.statuses = [ 'Open', 'Closed'];
-      $scope.project = {};
       $scope.projectChosen = false;
       $scope.quantity = 20;
-      mapOfWP = {};
-      wpChanged = [];
+
+      var findSelected = function() {
+        if(localStorage.getItem('project-wp-creation')) {
+          var projectNumber = JSON.parse(localStorage.getItem('project-wp-creation'));
+          Restangular.one('projects', projectNumber).get().then(function(response){
+            $scope.project = response;
+            localStorage.removeItem('project-wp-creation');
+          })
+        }
+      }
 
       $scope.loadWorkPackages = function(projectNumber) {
         Restangular.one('work_packages/project').getList($scope.project.projectNumber).then(function(response){
@@ -1075,12 +1084,35 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         });
       }
 
-      Restangular.one('user/projects/managed').getList().then(function(response){
-        $scope.projects = response;
-      });
+      $scope.loadProjects = function() {
+        Restangular.one('user/projects/managed').getList().then(function(response){
+          $scope.projects = response;
+          findSelected();
+        });
+      }
+
+      $scope.create = function() {
+        localStorage.setItem('project-wp-creation', JSON.stringify($scope.project.projectNumber));
+        $location.path('/create-wp/' + $scope.project.projectNumber);
+      }
     }
     ]);
 
+/*
+   MANAGE WP CONTROLLER FOR RE
+   */
+   cascadiaControllers.controller('WPManagementREController', ['$scope', 'Restangular', 'GrowlResponse',
+    function($scope, Restangular, GrowlResponse){
+      $scope.statuses = [ 'Open', 'Closed'];
+      $scope.quantity = 20;
+
+      Restangular.all('user/work_packages?filter=responsibleEngineer').getList().then(function(response){
+        $scope.projectChosen = true;
+        $scope.workPackages = response;
+      });
+      
+    }
+    ]);
 
 
 /*
