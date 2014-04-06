@@ -77,11 +77,19 @@ public class WorkPackageDao {
         return query.getResultList();
     }
 
+    public List<WorkPackage> getAllProjectWPLeafs(final int projectNumber) {
+        TypedQuery<WorkPackage> query = em.createQuery("select w from WorkPackage where w.workPackageNumber IN" +
+                " (select Distinct tsr.workPackageNumber from TimesheetRow" +
+                " where tsr.projectNumber = :projectNumber)", WorkPackage.class);
+        query.setParameter("projectNumber", projectNumber);
+        return query.getResultList();
+    }
+
     public List<String> getWPChildren(String wPNumber) {
         String findChildren = wPNumber;
         for(int i = 0; i < wPNumber.length(); i++){
             if(wPNumber.charAt(i) == '0'){
-                findChildren = wPNumber.substring(0, i-1) + "%";
+                findChildren = wPNumber.substring(0, i) + "%";
                 break;
             }
         }

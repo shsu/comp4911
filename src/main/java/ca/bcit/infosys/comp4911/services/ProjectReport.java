@@ -125,7 +125,7 @@ public class ProjectReport {
 
         pbr.getExpectedBudget().calculateExpectedPLevelTotalsFromWPSRs(mostRecentReports);
         pbr.getCurrentSpending().calculatePersonHours(tsrDao.getAllByProject(projectId));
-        pbr.getInitialBudget().calculateInitialBudget(workPackageDao.getAllByProject(projectId));
+        pbr.getInitialBudget().calculateInitialBudget(workPackageDao.getAllProjectWPLeafs(projectId));
 
         pBObject.put("ExpectedBudget", pbr.getExpectedBudget().getpLevels());
         pBObject.put("ExpectedBusgetInDollars", pbr.getExpectedBudget().getLabourDollars());
