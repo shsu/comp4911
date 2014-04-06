@@ -86,11 +86,11 @@ public class SampleData {
         
         userDao.create(new User(
                 "bnelson@example.com", "q", "Bob", "Nelson", startDate, false, "Active", 40, 0, 14,
-                34567890, 56789012, 56789012, PLevel.P3),false);
+                34567890, 0, 0, PLevel.P3),false);
         
         userDao.create(new User(
                 "csandhu@example.com", "q", "Christine", "Sandhu", startDate, true, "Active", 40, 0, 14,
-                45678901, 56789012, 56789012, PLevel.P4),false);
+                45678901, 1, 1, PLevel.P4),false);
         
         userDao.create(new User(
                 "zcantwell@example.com", "q", "Zamir", "Cantwell", startDate, false, "Active", 40, 0, 14,
@@ -98,11 +98,15 @@ public class SampleData {
         
         userDao.create(new User(
                 "cpark@example.com", "q", "Chi-En", "Park", startDate, false, "Active", 40, 0, 14,
-                67890123, 56789012, 56789012, PLevel.SS),false);
+                67890123, 1, 1, PLevel.SS),false);
         
         userDao.create(new User(
                 "gsmith@example.com", "q", "Grace", "Smith", startDate, false, "Active", 40, 0, 14,
-                78901234, 56789012, 56789012, PLevel.DS),false);
+                78901234, 0, 0, PLevel.DS),false);
+        
+        userDao.create(new User(
+                "w", "w", "Mark", "Ahmadi", startDate, false, "Active", 40, 0, 14,
+                2, 0, 0, PLevel.P5),false);
     }
 
     private void generate250Users() {
@@ -526,6 +530,8 @@ public class SampleData {
          */
         TimesheetRow wp1Row1 = new TimesheetRow(12345, "A111222", 80, 80, 80, 80, 80, 0, 0, null,
                 userDao.read(1).getpLevel());
+        TimesheetRow wp1Row1C2 = new TimesheetRow(12345, "A111222", 80, 80, 80, 80, 80, 0, 0, null,
+                userDao.read(1).getpLevel());
         TimesheetRow wp1Row2 = new TimesheetRow(12345, "B333222", 80, 0, 0, 0, 0, 0, 0, null,
                 userDao.read(1).getpLevel());
         TimesheetRow wp1Row3u1wpsr1 = new TimesheetRow(12345, "B333223", 0, 50, 60, 30, 50, 30, 0, null,
@@ -579,86 +585,91 @@ public class SampleData {
         Timesheet tempTimesheet;
         
         rowCollection.add(wp1Row1);
-        tempTimesheet = new Timesheet(1, rowCollection, 11, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(1, rowCollection, 11, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u1wpsr1);
-        tempTimesheet = new Timesheet(1, rowCollection, 12, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(1, rowCollection, 12, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u2wpsr1);
-        tempTimesheet = new Timesheet(2, rowCollection, 12, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(2, rowCollection, 12, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u3wpsr1);
-        tempTimesheet = new Timesheet(3, rowCollection, 12, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(3, rowCollection, 12, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u4wpsr1);
-        tempTimesheet = new Timesheet(4, rowCollection, 12, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(4, rowCollection, 12, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u5wpsr1);
-        tempTimesheet = new Timesheet(5, rowCollection, 12, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(5, rowCollection, 12, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u6wpsr1);
-        tempTimesheet = new Timesheet(6, rowCollection, 12, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(6, rowCollection, 12, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u7wpsr1);
-        tempTimesheet = new Timesheet(7, rowCollection, 12, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(7, rowCollection, 12, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u8wpsr1);
-        tempTimesheet = new Timesheet(8, rowCollection, 12, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(8, rowCollection, 12, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u1wpsr2);
-        tempTimesheet = new Timesheet(1, rowCollection, 13, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(1, rowCollection, 13, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u2wpsr2);
-        Timesheet t = new Timesheet(2, rowCollection, 13, 2014, 0, false, true, true);
+        Timesheet t = new Timesheet(2, rowCollection, 13, 2014, 0, true, true, false);
         timesheetDao.create(t,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u3wpsr2);
-        Timesheet t2 = new Timesheet(3, rowCollection, 13, 2014, 0, false, true, true);
+        Timesheet t2 = new Timesheet(3, rowCollection, 13, 2014, 0, true, true, false);
         timesheetDao.create(t2,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u4wpsr2);
-        tempTimesheet = new Timesheet(4, rowCollection, 13, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(4, rowCollection, 13, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u5wpsr2);
-        tempTimesheet = new Timesheet(5, rowCollection, 13, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(5, rowCollection, 13, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u6wpsr2);
-        tempTimesheet = new Timesheet(6, rowCollection, 13, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(6, rowCollection, 13, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u7wpsr2);
-        tempTimesheet = new Timesheet(7, rowCollection, 13, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(7, rowCollection, 13, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp1Row3u8wpsr2);
-        tempTimesheet = new Timesheet(8, rowCollection, 13, 2014, 0, false, true, true);
+        tempTimesheet = new Timesheet(8, rowCollection, 13, 2014, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
 
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp2Row1);
         rowCollection.add(wp2Row2);
         rowCollection.add(wp2Row3);
-        tempTimesheet = new Timesheet(1, rowCollection, 47, 2013, 0, true, true, true);
+        tempTimesheet = new Timesheet(1, rowCollection, 47, 2013, 0, true, true, false);
         timesheetDao.create(tempTimesheet,false);
 
         rowCollection = new ArrayList<TimesheetRow>();
         rowCollection.add(wp3Row1);
         rowCollection.add(wp3Row2);
         tempTimesheet = new Timesheet(2, rowCollection, 11, 2014, 0, true, true, true);
+        timesheetDao.create(tempTimesheet,false);
+        
+        rowCollection = new ArrayList<TimesheetRow>();
+        rowCollection.add(wp1Row1C2);
+        tempTimesheet = new Timesheet(1, rowCollection, 14, 2014, 0, false, true, false);
         timesheetDao.create(tempTimesheet,false);
 
         // Rudy: adding new sample timesheet data
@@ -745,9 +756,9 @@ public class SampleData {
 
     private void andJobsSaidLetThereBeAShitTonOfTimeSheets(){
         Random random = new Random();
-        boolean approved = false;
+        boolean approved = true;
         boolean signed = true;
-        boolean pending = true;
+        boolean pending = false;
         for(int i = 0; i < 7000; i++){
             if(i > 3000 && i < 6000){
                 approved = true;
