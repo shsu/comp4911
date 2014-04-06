@@ -805,16 +805,20 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           $scope.project = response;
         });
 
-        $scope.save = function() {
-          workPackage = $scope.workPackage;
-          workPackage.progressStatus = 'Active';
-          workPackage.issueDate = new Date();
+        $scope.save = function () {
+          if (!($scope.createWPForm.$valid)) {
+            $.growl.warning({ message: "Invalid Input" });
+          } else {
+            workPackage = $scope.workPackage;
+            workPackage.progressStatus = 'Active';
+            workPackage.issueDate = new Date();
 
-          Restangular.one('work_packages').customPOST($scope.workPackage).then(function(response){
-            $.growl.notice({ message: "Work Package Created" });
-          }, function(response){
-            GrowlResponse(response);
-          })
+            Restangular.one('work_packages').customPOST($scope.workPackage).then(function (response) {
+              $.growl.notice({ message: "Work Package Created" });
+            }, function (response) {
+              GrowlResponse(response);
+            })
+          }
         }
       }
       ]);

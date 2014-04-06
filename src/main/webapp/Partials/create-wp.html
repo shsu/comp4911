@@ -8,20 +8,22 @@
       <p class="col-lg-4">Project Name: {{project.projectName}}</p>
       <p class="col-lg-4">Budget: {{project.allocatedBudget | currency: amount: symbol}}</p>
   </div>
-    <div class="well">
-      <div class="row">
-        <div class="col-lg-2"><p>WorkPackage No: </p></div>
-        <div class="col-lg-4"><input type="text" ng-model="workPackage.workPackageNumber" class="form-control"></div>
-        <div class="col-lg-2"><p>WorkPackage Title: </p></div>
-        <div class="col-lg-4"><input type="text" ng-model="workPackage.workPackageName" class="form-control"></div>
+    <form name="createWPForm">
+      <div class="well">
+        <div class="row">
+          <div class="col-lg-2"><p>WorkPackage No: </p></div>
+          <div class="col-lg-4"><input type="text" ng-model="workPackage.workPackageNumber" class="form-control" maxlength="7" required></div>
+          <div class="col-lg-2"><p>WorkPackage Title: </p></div>
+          <div class="col-lg-4"><input type="text" ng-model="workPackage.workPackageName" class="form-control"></div>
+        </div>
+        <div class="row">
+          <div class="col-lg-2"><p>Description:</p></div>
+          <div class="col-lg-4"><textarea rows="3" ng-model="workPackage.description" class="form-control"></textarea></div>
+        </div>
+        <div class="row">
+            <div class = "col-lg-4 col-lg-offset-8"><button ng-click="save()" class="btn btn-block btn-primary">Save</button></div>
+        </div>
       </div>
-      <div class="row">
-        <div class="col-lg-2"><p>Description:</p></div>
-        <div class="col-lg-4"><textarea rows="3" ng-model="workPackage.description" class="form-control"></textarea></div>
-      </div>
-      <div class="row">
-          <div class = "col-lg-4 col-lg-offset-8"><button ng-click="save()" class="btn btn-block btn-primary">Save</button></div>
-      </div>
-    </div>
+    </form>
   </div>
 </content>
