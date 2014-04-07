@@ -37,21 +37,17 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input type="number" class="form-input min-width" min="0"></td>
-                    <td><input type="number" class="form-input min-width" min="0"></td>
-                    <td><input type="number" class="form-input min-width" min="0"></td>
-                    <td><input type="number" class="form-input min-width" min="0"></td>
-                    <td><input type="number" class="form-input min-width" min="0"></td>
-                    <td><input type="number" class="form-input min-width" min="0"></td>
-                    <td><input type="number" class="form-input min-width" min="0"></td>
+                    <td ng-repeat="effort in listOfEffort"><input type="number" class="form-input min-width" min="0" ng-model="effort.pLevel"></td>
                   </tr>
                 </tbody>
               </table>
+              <button ng-click="save()">Save</button>
             </div>
           </div>
         </div>        
       </div>
-    </div>      
+    </div>   
+
     <div class="row">
       <div class="col-sm-5">
         <div class="panel panel-default">

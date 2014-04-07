@@ -1714,6 +1714,39 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
       function($scope, Restangular, $params, GrowlResponse, calculateBudget, FilterUser){
         $scope.param = $params.id;
         $scope.quantity = 20;
+        $scope.package = {};
+        
+
+        $scope.listOfEffort = [
+        {
+          pLevel: "P1",
+          personDays: 0
+        },
+        {
+          pLevel: "P2",
+          personDays: 0
+        },
+        {
+          pLevel: "P3",
+          personDays: 0
+        },
+        {
+          pLevel: "P4",
+          personDays: 0
+        },
+        {
+          pLevel: "P5",
+          personDays: 0
+        },
+        {
+          pLevel: "DS",
+          personDays: 0
+        },
+        {
+          pLevel: "SS",
+          personDays: 0
+        }
+        ]
 
         var base = Restangular.one('work_packages/' + $scope.param);
 
@@ -1749,6 +1782,11 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         
         $scope.search = function(user) {
           return FilterUser(user, $scope.query);
+        }
+
+        $scope.save = function() {
+          $scope.package.estimateAtStart = $scope.listOfEffort;
+          $scope.package.put();
         }
 
       }
