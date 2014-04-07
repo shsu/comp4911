@@ -115,14 +115,17 @@ public class ReportHelperRow {
         Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
         TimesheetRow tsr;
         WorkPackage workPackage;
-        HashMap<String, Date> wpNumberDateHash  =
-                workPackageDao.getWPNumberDateHash(timesheetRowList.get(0).getProjectNumber());
-        while(timesheetRowIterator.hasNext())
-        {
-            tsr = timesheetRowIterator.next();
-            increasePLevel(yearPLevelRateHashMap.get(getYearInt(wpNumberDateHash.get(tsr.getWorkPackageNumber()))),
-                    tsr.getpLevel(), tsr.calculateTotal());
+        if(timesheetRowList.size() > 0 ) {
+            HashMap<String, Date> wpNumberDateHash  =
+                    workPackageDao.getWPNumberDateHash(timesheetRowList.get(0).getProjectNumber());
+            while(timesheetRowIterator.hasNext())
+            {
+                tsr = timesheetRowIterator.next();
+                increasePLevel(yearPLevelRateHashMap.get(getYearInt(wpNumberDateHash.get(tsr.getWorkPackageNumber()))),
+                        tsr.getpLevel(), tsr.calculateTotal());
+            }
         }
+
     }
 
     public void calculateInitialBudget(List<WorkPackage> projectWorkPackages){
