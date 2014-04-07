@@ -52,8 +52,9 @@ public class SampleData {
     @PostConstruct
     public void populateData() {
         generateUsers();
-        generate250Users();
+//        generate250Users();  // generates 2000 users now
         generateProjects();
+//        generate100Projects()
         generatePayRates();
         generateProjectAssignments();
         generateEffort();
@@ -117,19 +118,19 @@ public class SampleData {
         String e;     // engineer
         String s;     // supervisor
 
-        for(int i = 1; i <= 50; i++){
+        for(int i = 1; i <= 100; i++){
             hr = "hr" + Integer.toString(i);
             userDao.create(new User(
                     hr, hr, hr, hr, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
         }
 
-        for(int i = 1; i <= 150; i++) {
+        for(int i = 1; i <= 1500; i++) {
             e = "e" + Integer.toString(i);
             userDao.create(new User(
                     e, e, e, e, 1), false);
         }
 
-        for(int i = 1; i <= 50; i++){
+        for(int i = 1; i <= 400; i++){
             s = "s" + Integer.toString(i);
             userDao.create(new User(
                     s, s, s, s, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
@@ -295,7 +296,7 @@ public class SampleData {
         Date issueDate = setDate(1, 1, 2014);
         
         projectDao.create(new Project(
-        		12345, "Apollo", issueDate, null, new BigDecimal(1.2), new BigDecimal(0), new BigDecimal(500000)),false);
+        		52345, "Apollo", issueDate, null, new BigDecimal(1.2), new BigDecimal(0), new BigDecimal(500000)),false);
         
         issueDate = setDate(11, 1, 2013);
         
@@ -311,6 +312,18 @@ public class SampleData {
         
         projectDao.create(new Project(
         		88999, "Davenport", issueDate, null, new BigDecimal(2), new BigDecimal(30000), new BigDecimal(3000000)),false);
+
+
+    }
+
+    private void generate100Projects() {
+        String pr;
+
+        for(int i = 10000; i <= 11100; i++){
+            pr = "Project" + Integer.toString(i);
+            projectDao.create(new Project(
+                    i, pr, issueDate, null, new BigDecimal(1.2), new BigDecimal(0), new BigDecimal(500000)),false);
+        }
     }
 
     private void generateWorkPackages() {
