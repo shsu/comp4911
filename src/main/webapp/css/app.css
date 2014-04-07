@@ -53,6 +53,9 @@ h1, h2, h3, h4, h5, h6 {
 .table-hover > tbody > tr:hover > th {
   background: #e9f2f9; }
 
+.table-responsive {
+  overflow-x: auto; }
+
 .body table.table {
   margin-bottom: 0;
   border: 1px solid #dddddd; }

@@ -5,27 +5,27 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="row">
-          <p class="col-sm-3">Project No: {{package.projectNumber}}</p>
-          <p class="col-sm-3">Project Name: {{project.projectName}}</p>
+          <p class="col-xs-3">Project No: {{package.projectNumber}}</p>
+          <p class="col-xs-3">Project Name: {{project.projectName}}</p>
         </div>
         <div class="row">
-          <p class="col-sm-3">WP Number: {{package.workPackageNumber}}</p>
-          <p class="col-sm-8">WP Title: {{package.workPackageName}}</p>
+          <p class="col-xs-3">WP Number: {{package.workPackageNumber}}</p>
+          <p class="col-xs-8">WP Title: {{package.workPackageName}}</p>
         </div>
         <div class="row">
-          <p class="description col-sm-12">
+          <p class="description col-xs-12">
             WP Description: {{package.description}}
           </p>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="panel panel-default">
           <div class="panel-heading">Initial Estimate</div>
           <div class="panel-body">
             <div class="table-responsive">
-              <table class="table table-hover table-bordered">
+              <table class="table table-hover table-bordered table-responsive">
                 <thead>
                   <th>P1</th>
                   <th>P2</th>
@@ -41,15 +41,16 @@
                   </tr>
                 </tbody>
               </table>
-              <button ng-click="save()">Save</button>
             </div>
+            <br />
+            <button class="btn btn-primary pull-right" ng-click="save()">Save</button>
           </div>
         </div>        
       </div>
     </div>   
 
     <div class="row">
-      <div class="col-sm-5">
+      <div class="col-xs-5">
         <div class="panel panel-default">
             <div class="panel-heading">Budget & Cost:</div>
             <div class="panel-body">
@@ -59,7 +60,7 @@
             </div>
         </div>        
       </div>
-      <div class="col-sm-7">
+      <div class="col-xs-7">
         <div class="panel panel-default">
           <div class="panel-heading">P-Level:</div>
           <div class="panel-body">
@@ -85,7 +86,7 @@
         </div>
     </div>
     <div class="row">
-      <div class="col-sm-5">
+      <div class="col-xs-5">
         <div class="panel panel-default">
           <div class="panel-heading">Status Reports</div>
           <div class="panel-body">
@@ -106,7 +107,7 @@
         </div>
       </div>        
     </div>
-    <div class="col-sm-7">
+    <div class="col-xs-7">
       <div class="panel panel-default">
         <div class="panel-heading">Assigned Employees:</div>
         <div class="panel-body">
