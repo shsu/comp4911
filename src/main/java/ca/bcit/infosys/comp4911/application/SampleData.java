@@ -503,6 +503,20 @@ public class SampleData {
             assignment = new WorkPackageAssignment("C333222", awongUserId, true, true, activateDate, deactivateDate);
             workPackageAssignmentDao.create(assignment, false);
         }
+        
+        //Richard: For each project assignment, assign all child workpackages to the assigned user
+        WorkPackageAssignment assignment;
+        Date activateDate = setDate(2, 12, 2014);
+        Date deactivateDate = setDate(12, 8, 2014);
+        List<WorkPackage> wpList;
+        List<ProjectAssignment> paList = projectAssignmentDao.getAll();
+        for(ProjectAssignment pa: paList){
+        	wpList = workPackageDao.getAllByProject(pa.getProjectNumber());
+        	for(WorkPackage wp : wpList){
+            	assignment = new WorkPackageAssignment(wp.getWorkPackageNumber(), pa.getUserId(), false , true, activateDate, deactivateDate);
+                workPackageAssignmentDao.create(assignment, false); 
+        	}
+        }
 
     }
     private void generateProjectAssignments()
@@ -529,6 +543,14 @@ public class SampleData {
         
         assignment = new ProjectAssignment(99777, users.get(1).getId(), false, true);
         projectAssignmentDao.create(assignment, false);
+        
+        //Richard: Assigning one random project to each user       
+        List<Project> projectList = projectDao.getAll();
+        List<User> userList = userDao.getAll();
+        for(User u : userList){  		
+        	assignment = new ProjectAssignment(projectList.get((u.getId()+10)%(projectList.size())).getProjectNumber(), u.getId(), false, true);        	   
+    		projectAssignmentDao.create(assignment, false);        
+        }
     }
     
     private void generateTimesheets() {
