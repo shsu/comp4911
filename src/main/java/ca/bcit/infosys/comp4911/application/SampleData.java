@@ -296,7 +296,7 @@ public class SampleData {
         Date issueDate = setDate(1, 1, 2014);
         
         projectDao.create(new Project(
-        		52345, "Apollo", issueDate, null, new BigDecimal(1.2), new BigDecimal(0), new BigDecimal(500000)),false);
+        		12345, "Apollo", issueDate, null, new BigDecimal(1.2), new BigDecimal(0), new BigDecimal(500000)),false);
         
         issueDate = setDate(11, 1, 2013);
         
@@ -317,6 +317,7 @@ public class SampleData {
     }
 
     private void generate100Projects() {
+        Date issueDate = setDate(1, 1, 2014);
         String pr;
 
         for(int i = 10000; i <= 11100; i++){
