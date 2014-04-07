@@ -58,10 +58,10 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="data in dataArray | orderBy: data.level">
-                    <td ng-bind="data.level"></td>
-                    <td ng-bind="data.ie | currency"></td>
-                    <td ng-bind="data.cs | currency"></td>
-                    <td ng-bind="data.re | currency"></td>
+                    <td ng-bind="data.level | uppercase"></td>
+                    <td ng-bind="(data.ie * 10)"></td>
+                    <td ng-bind="(data.cs * 10)"></td>
+                    <td ng-bind="(data.re * 10)"></td>
                   </tr>
                 </tbody>
               </table>
