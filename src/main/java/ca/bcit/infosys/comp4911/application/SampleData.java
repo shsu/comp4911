@@ -411,8 +411,7 @@ public class SampleData {
 
     private void generateWorkPackageAssignments() {
 
-        List<WorkPackage> packages = workPackageDao.getAll();
-        int qUserId = userDao.getAll().get(0).getId();
+    	int qUserId = userDao.getAll().get(0).getId();
         int jedwardUserId = userDao.getAll().get(1).getId();
         int awongUserId = userDao.getAll().get(2).getId();
         int bnelsonUserId = userDao.getAll().get(3).getId();
@@ -420,94 +419,85 @@ public class SampleData {
         int zcantwellUserId = userDao.getAll().get(5).getId();
         int cparkUserId = userDao.getAll().get(6).getId();
         int gsmithUserId = userDao.getAll().get(7).getId();
-
-        for(int i = 0; i < 5; i++)
-        {
-            workPackageAssignmentDao.create(new WorkPackageAssignment(
-                    packages.get(0).getWorkPackageNumber(),
-                    1,
-                    true, true,
-                    new Date(),
-                    new Date()
-            ),false);
+          
+        Date activateDate = setDate(1, 2, 2014);
+        Date deactivateDate = setDate(5, 15, 2014);
             
-            Date activateDate = setDate(1, 2, 2014);
-            Date deactivateDate = setDate(5, 15, 2014);
+        WorkPackageAssignment assignment = new WorkPackageAssignment("A111222", qUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            WorkPackageAssignment assignment = new WorkPackageAssignment("A111222", qUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("A111222", jedwardUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("A111222", jedwardUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("A111222", awongUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("A111222", awongUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("A111222", bnelsonUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("A111222", bnelsonUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("A111222", csandhuUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
+           
+        assignment = new WorkPackageAssignment("A111222", zcantwellUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("A111222", csandhuUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("A111222", cparkUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("A111222", zcantwellUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("A111222", gsmithUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("A111222", cparkUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        activateDate = setDate(2, 6, 2014);
+        deactivateDate = setDate(4, 12, 2014);
             
-            assignment = new WorkPackageAssignment("A111222", gsmithUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("B333222", qUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            activateDate = setDate(2, 6, 2014);
-            deactivateDate = setDate(4, 12, 2014);
+        activateDate = setDate(1, 14, 2014);
+        deactivateDate = setDate(4, 17, 2014);
             
-            assignment = new WorkPackageAssignment("B333222", qUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("B333223", qUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            activateDate = setDate(1, 14, 2014);
-            deactivateDate = setDate(4, 17, 2014);
+        assignment = new WorkPackageAssignment("B333223", jedwardUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("B333223", qUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("B333223", awongUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("B333223", jedwardUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("B333223", bnelsonUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("B333223", awongUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("B333223", csandhuUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("B333223", bnelsonUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("B333223", zcantwellUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("B333223", csandhuUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("B333223", cparkUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("B333223", zcantwellUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("B333223", gsmithUserId, false, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            assignment = new WorkPackageAssignment("B333223", cparkUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        activateDate = setDate(11, 10, 2013);
+        deactivateDate = setDate(11, 28, 2013);
             
-            assignment = new WorkPackageAssignment("B333223", gsmithUserId, false, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
+        assignment = new WorkPackageAssignment("A333444", awongUserId, true, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
             
-            activateDate = setDate(11, 10, 2013);
-            deactivateDate = setDate(11, 28, 2013);
+        activateDate = setDate(11, 12, 2014);
+        deactivateDate = setDate(12, 8, 2014);
             
-            assignment = new WorkPackageAssignment("A333444", awongUserId, true, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
-            
-            activateDate = setDate(11, 12, 2014);
-            deactivateDate = setDate(12, 8, 2014);
-            
-            assignment = new WorkPackageAssignment("C333222", awongUserId, true, true, activateDate, deactivateDate);
-            workPackageAssignmentDao.create(assignment, false);
-        }
+        assignment = new WorkPackageAssignment("C333222", awongUserId, true, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
+        
+        assignment = new WorkPackageAssignment("C333222", awongUserId, true, true, activateDate, deactivateDate);
+        workPackageAssignmentDao.create(assignment, false);
         
         //Richard: For each project assignment, assign all child workpackages to the assigned user
-        WorkPackageAssignment assignment;
-        Date activateDate = setDate(2, 12, 2014);
-        Date deactivateDate = setDate(12, 8, 2014);
+        activateDate = setDate(2, 12, 2014);
+        deactivateDate = setDate(12, 8, 2014);
         List<WorkPackage> wpList;
         List<ProjectAssignment> paList = projectAssignmentDao.getAll();
         for(ProjectAssignment pa: paList){
@@ -517,7 +507,6 @@ public class SampleData {
                 workPackageAssignmentDao.create(assignment, false); 
         	}
         }
-
     }
     private void generateProjectAssignments()
     {
