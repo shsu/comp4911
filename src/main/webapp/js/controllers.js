@@ -130,7 +130,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
         }
         Restangular.one('projects/' + $scope.project.projectNumber + '/assignments').customPOST(data).then(function(response){
           $location.path('manage-project');
-          $.growl.notice({ message: "Project Assigned" });
+          toastr.success("Project Assigned");
         })
       };
 
@@ -286,6 +286,10 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
                 $scope.projects[i].selected = true;
               });
             }
+
+            Restangular.one('projects/' + obj.projectNumber + '/assignments').customPOST(data).then(function(response){
+              toastr.success("Employee Assigned");
+            });
           }
         }
 
@@ -672,7 +676,7 @@ return false;
                       $rootScope.user = response;
                   }
                   $location.path('users/' + user.id);
-                  $.growl.notice({message: "Supervisor Assigned"});
+                  toastr.success("Supervisor Assigned");
               })
           }
       }
@@ -798,10 +802,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.save = function () {
           if (!($scope.createProjectForm.$valid)) {
-            $.growl.warning({ message: "Invalid Input" });
+            toastr.warning("Invalid Input");
           } else {
             base.post($scope.project).then(function (response) {
-              $.growl.notice({ message: "Project Created" });
+              toastr.success("Project Created");
               $location.path("/projects");
             }, function (response) {
               GrowlResponse(response);
@@ -829,9 +833,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.save = function () {
           if (!($scope.createWPForm.$valid)) {
-            $.growl.warning({ message: "Invalid Input" });
+            toastr.warning("Invalid Input");
           } else if (!validateWPNumber($scope.workPackage.workPackageNumber)) {
-            $.growl.warning({ message: "Invalid Input - Work Package Number: if a character is 0, then the characters following it must all be 0 too." });
+            toastr.warning("Invalid Input - Work Package Number: if a character is 0, then the characters following it must all be 0 too.");
           }else {
             workPackage = $scope.workPackage;
             workPackage.progressStatus = 'Active';
@@ -840,7 +844,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             
             Restangular.one('work_packages').customPOST($scope.workPackage).then(function (response) {
               $location.path('manage-wp-pm');
-              $.growl.notice({ message: "Work Package Created" });
+              toastr.success("Work Package Created");
             }, function (response) {
               GrowlResponse(response);
             })
@@ -932,7 +936,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           for(var i = 0; i < payRatesChanged.length; i++) {
             payRatesChanged[i].put();
           }
-          $.growl.notice({ message: "Pay Rates Saved" });
+          toastr.success("Pay Rates Saved");
         }
 
         $scope.prior = function() {
@@ -997,7 +1001,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.login = function () {
 
           if (!($scope.loginForm.$valid)) {
-            $.growl.warning({ message: "Invalid Input" });
+            toastr.warning("Invalid Input");
           } else {
             var data = {
               'username': $scope.username,
@@ -1042,7 +1046,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         localStorage.clear();
         $rootScope.isAuthenticated = false;
         $location.path('/login');
-        $.growl.notice({ message: "You Have Been Logged Out" });  
+        toastr.success("You Have Been Logged Out");
       }
       ]);
 
@@ -1199,7 +1203,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             $scope.projects.push(newproject);
             $scope.add_project = false;
             $location.path('/projects');
-            $.growl.notice({ message: "Project Created" });
+            toastr.success("Project Created");
           })
         }
       }
@@ -1473,7 +1477,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             })
           }
           $scope.timesheet.put();
-          $.growl.notice({ message: "TimeSheet Saved" });
+          toastr.success("TimeSheet Saved");
         }
 
         $scope.submit = function() {
@@ -1746,13 +1750,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.save = function () {
 
           if(!($scope.createUserForm.$valid)) {
-            $.growl.warning({ message: "Invalid or Incomplete Input" });
+            toastr.warning("Invalid or Incomplete Input");
           } else {
             user = $scope.cUser;
 
             Restangular.one('users').customPOST(user).then(function (response) {
               $location.path('/users');
-              $.growl.notice({ message: "User Created" });
+              toastr.success("User Created");
             }, function (response) {
               GrowlResponse(response);
             })

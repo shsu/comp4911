@@ -76,7 +76,7 @@ cascadiaServices.factory('GrowlResponse', [
   function() {
     return function(response) {
       if(response.status >= 200 && response.status <=304) {
-        $.growl.notice({message:"Operation Successful"});
+          toastr.success("Operation Successful");
       }
       else if(response.status == 400){
           if(response.data.errors){
@@ -84,22 +84,22 @@ cascadiaServices.factory('GrowlResponse', [
               for(var i = 0; i < response.data.errors.length; ++i) {
                   errorMessage += ('\n' + response.data.errors[i].error);
               }
-              $.growl.error({message: errorMessage})
+              toastr.error(errorMessage);
           } else {
-              $.growl.error({message: "Bad Request"})
+              toastr.error("Bad Request");
           }
 
       }
       else if(response.status == 401){
-          $.growl.error({message: "Unauthorized. Check your username and password."})
+          toastr.error("Unauthorized. Please re-login.");
       }
       else if(response.status == 403){
-        $.growl.error({message: "Forbidden"})
+          toastr.error("Forbidden");
       }
       else if(response.status == 404){
-        $.growl.error({message: "Not found. You may be pointing to the wrong endpoint."})
+          toastr.error("Not Found");
       } else {
-          $.growl.error({message: "Status Code "+ response.status})
+          toastr.error("Status Code "+ response.status);
       }
     }
 }]);
