@@ -285,7 +285,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
                 toastr.success("Employee Assigned");
               });
 
-              $scope.projects[i].selected = false;
+              $scope.projects[i].selected = true;
             }
           }
         }
