@@ -323,6 +323,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
               });
 
               $scope.projects[i].selected = false;
+              toastr.success("Employee Removed");
             }
           }
         }
@@ -411,12 +412,14 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
           for (var i = 0; i < length; i++){
             if ($scope.users[i].markedForRemoval){
               var user_id = $scope.users[i].id;
+              console.log(user_id);
 
               Restangular.all('work_packages/' + param + '/assignments/' + user_id).getList().then(function(response){
                 console.log(response);
                 var data = response[0];
                 data.active = false;
                 Restangular.one('work_packages/' + param + '/assignments/' + user_id).customPUT(data);
+                toastr.success("Employee Removed");
               });
 
               $scope.users[i].selected = false;
@@ -425,21 +428,45 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
         }
 
         $scope.add = function(){
-          // TODO
-        }
-        
-        // var data = {
-        //   workPackageNumber: $scope.package.workPackageNumber,
-        //   userId: obj.id,
-        //   active: true
-        // }
+          var length = $scope.users.length;
 
-        // Restangular.one('work_packages/' + $scope.package.workPackageNumber + '/assignments').customPOST(data).then(function(response){
-        //   GrowlResponse(response)
-        // }, function(response){
-        //   GrowlResponse(response)
-        // });
-  
+          for (var i = 0; i < length; i++){
+            if ($scope.users[i].markedForAssignment){
+              var user_id = $scope.users[i].id;
+              $scope.users[i].selected = true;
+              $scope.users[i].markedForRemoval = false;
+
+              var updateAssignment = function(assignment) {
+                assignment.active = true;
+                Restangular.one('work_packages/' + param + '/assignments/' + user_id).customPUT(assignment).then(function(response) {
+                  toastr.success("Employee Assigned");
+                });
+              }
+
+              var createAssignment = function() {
+                var data = {
+                  userId: user_id,
+                  workPackageNumber: param,
+                  active: true,
+                }
+
+                Restangular.one('work_packages/' + param + '/assignments').customPOST(data).then(function(response){
+                  toastr.success("Employee Assigned");
+                });
+              }
+
+              Restangular.all('work_packages/' + param + '/assignments/' + user_id).getList().then(function(response) {
+                if(response.length > 0) {
+                  console.log("Greater than 0");
+                  updateAssignment(response[0]);
+                } else {
+                  console.log("zero");
+                  createAssignment();
+                }
+              });
+            }
+          }
+        }
 }]);
 
 
