@@ -671,10 +671,8 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
           user.supervisorUserID = $scope.selectedEngineer.id;
           if(!user.timesheetApproverUserID){
             user.timesheetApproverUserID = $scope.selectedEngineer.id;
-            persist(user);
-          } else{
-            persist(user);
           }
+          persist(user);
         }, function(){
           console.log("dismissed")
         });
