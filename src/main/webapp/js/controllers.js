@@ -1220,12 +1220,41 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.project = {}
         $scope.assignedUsers = [];
         $scope.quantity = 20;
+        $scope.pLevelBudget = [];
 
         Restangular.one('projects', param).get().then(function(response){
           $scope.project = response;
           loadUsers();
           loadManager();
+          loadBudget();
         });
+
+        var loadBudget = function() {
+          Restangular.one('reports/budget/' + $scope.project.projectNumber).get().then(function(response){
+            $scope.report = response;
+            var initialEstimate = $scope.report.InitialEstimate;
+            var remainingEstimate = $scope.report.RemainingEstimate;
+            var currentSpending = $scope.report.CurrentSpending;
+            $scope.dataArray = createData(initialEstimate, remainingEstimate, currentSpending);
+
+          })
+        }
+
+        var createData = function(a, b, c) {
+          if(a && b && c){
+            var data = [
+              {level: 'p1', ie: a.P1, re: b.P1, cs: c.P1},
+              {level: 'p2', ie: a.P2, re: b.P2, cs: c.P2},
+              {level: 'p3', ie: a.P3, re: b.P3, cs: c.P3},
+              {level: 'p4', ie: a.P4, re: b.P4, cs: c.P4},
+              {level: 'p5', ie: a.P5, re: b.P5, cs: c.P5},
+              {level: 'ds', ie: a.DS, re: b.DS, cs: c.DS},
+              {level: 'ss', ie: a.SS, re: b.SS, cs: c.SS}
+            ];
+          }
+
+          return data;
+        }
 
         var loadManager = function() {
           Restangular.one('projects/' + $scope.project.projectNumber + '/assignments/manager').get().then(function(response) {

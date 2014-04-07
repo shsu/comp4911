@@ -7,8 +7,6 @@
         <div class="row">
           <p class="col-sm-3">Project No: {{project.projectNumber}}</p>
           <p class="col-sm-3">Project Name: {{project.projectName}}</p>
-          <p class="col-sm-3">Budget: {{project.unallocatedBudget + project.allocatedBudget}} </p>
-          <p class="col-sm-3">Remaining Budget: {{project.unallocatedBudget}} </p>
         </div>
         <div class="row">
           <p class="col-sm-12">Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}
@@ -54,10 +52,18 @@
               <table class="table table-hover table-bordered">
                 <thead>
                   <th>P-Level</th>
-                  <th>Person Days for Completion</th>
-                  <th>Person Days Spent</th>
-                  <th>Estimated Remaining Person Days</th>
+                  <th>Initial Estimate Budget</th>
+                  <th>Current Spending</th>
+                  <th>Estimate to End</th>
                 </thead>
+                <tbody>
+                  <tr ng-repeat="data in dataArray | orderBy: data.level">
+                    <td ng-bind="data.level"></td>
+                    <td ng-bind="data.ie | currency"></td>
+                    <td ng-bind="data.cs | currency"></td>
+                    <td ng-bind="data.re | currency"></td>
+                  </tr>
+                </tbody>
               </table>
             </div>
         </div>
@@ -69,11 +75,9 @@
         <div class="panel panel-default">
           <div class="panel-heading">Budget & Cost:</div>
           <div class="panel-body">
-            <p>Budgeted Cost: {{project.estimateAtStart}}</p>
-            <p>Engineers Estimate: </p>
-            <p>Estimated Actual Cost at Completion: {{project.estimateToCompletion}}</p>
-            <p>Estimated Start Date: {{project.startDate}}</p>
-            <p>Estimated End Date: {{project.endDate}}</p>
+            <p>Budgeted Cost: {{report.InitialEstimateInDollars | currency }}</p>
+            <p>Remaining Budget: {{(report.InitialEstimateInDollars - report.CurrentSpendingInDollars) | currency }}</p>
+            <p>Expected Ending Budget: {{(report.CurrentSpendingInDollars + report.RemainingEstimateInDollars) | currency}}</p>
         </div>
         </div>
       </div>
