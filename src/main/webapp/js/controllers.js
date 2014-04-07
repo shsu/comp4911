@@ -282,14 +282,11 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
               }
 
               Restangular.one('projects/' + projNum + '/assignments').customPOST(data).then(function(response){
-                $.growl.notice({ message: "Employee Assigned" });
-                $scope.projects[i].selected = true;
+                toastr.success("Employee Assigned");
               });
-            }
 
-            Restangular.one('projects/' + obj.projectNumber + '/assignments').customPOST(data).then(function(response){
-              toastr.success("Employee Assigned");
-            });
+              $scope.projects[i].selected = false;
+            }
           }
         }
 
@@ -300,13 +297,11 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
             if ($scope.projects[i].markedForRemoval){
               var projNum = $scope.projects[i].projectNumber;
 
-              var data = {
-                userId: $scope.cUser.id,
-                projectNumber: projNum,
-                active: false,
-              }
-
-              Restangular.one('projects/' + $scope.projects[i].projectNumber + '/assignments/' + $scope.cUser.id).customPUT(data);
+              Restangular.one('projects/' + projNum + '/assignments/' + $scope.cUser.id).get().then(function(response){
+                var data = response[0];
+                data.active = false;
+                Restangular.one('projects/' + projNum + '/assignments/' + $scope.cUser.id).customPUT(data);
+              });
 
               $scope.projects[i].selected = false;
             }
