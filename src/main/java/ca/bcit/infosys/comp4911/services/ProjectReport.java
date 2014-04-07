@@ -164,18 +164,18 @@ public class ProjectReport {
             List<WorkPackageStatusReport> childrenWPSRs = wpsrDao.getAllByMultipleWPNumber(wPChildrenString);
             List<WorkPackage> childrenWP = workPackageDao.getWPsByWorkPackageNumbers(wPChildrenString);
             wpBudget.getCurrentSpending().calculatePersonHours(childrensRows);
-            workPackageObject.put("CurrentWorkPackagePLevels",
+            workPackageObject.put("CurrentSpending",
                     wpBudget.getCurrentSpending().getpLevels());
-            workPackageObject.put("CurrentWorkPackageBudgetInDollars",
+            workPackageObject.put("CurrentSpendingInDollars",
                     wpBudget.getCurrentSpending().getLabourDollars());
             wpBudget.getExpectedBudget().
                     calculateExpectedPLevelTotalsFromWPSRs(ReportHelperRow.getSingleWPSRPerWP(childrenWPSRs));
-            workPackageObject.put("ExpectedWorkPackagePLevels",
+            workPackageObject.put("RemainingEstimate",
                     wpBudget.getExpectedBudget().getpLevels());
-            workPackageObject.put("ExpectedWorkPackageBudgetInDollars",
+            workPackageObject.put("RemainingEstimateInDollars",
                     wpBudget.getExpectedBudget().getLabourDollars());
             wpBudget.getInitialBudget().calculateInitialBudget(childrenWP);
-            workPackageObject.put("InitialEstimatePLevels",
+            workPackageObject.put("InitialEstimate",
                     wpBudget.getInitialBudget().getpLevels());
             workPackageObject.put("InitialEstimateInDollars",
                     wpBudget.getInitialBudget().getLabourDollars());

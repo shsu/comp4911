@@ -75,9 +75,9 @@ public class WorkPackageStatusReportDao {
     }
 
     public List<WorkPackageStatusReport> getAllByMultipleWPNumber(List<String> wPNumbers){
-        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select wpsr from WorkPackageStatusReport r" +
-                "where wpsr.workPackageNumber IN (:wPNumbers)", WorkPackageStatusReport.class);
-        query.setParameter("wpNumbers", wPNumbers);
+        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select wpsr from WorkPackageStatusReport wpsr" +
+                " where wpsr.workPackageNumber IN (:wPNumbers)", WorkPackageStatusReport.class);
+        query.setParameter("wPNumbers", wPNumbers);
         return query.getResultList();
 
     }
