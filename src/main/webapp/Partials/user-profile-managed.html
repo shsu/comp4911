@@ -16,14 +16,19 @@
               <td>{{cUser.id}}</td>
             </tr>
             <tr>
-                <td>User Name</td>
-                <td>{{cUser.username}}</td>
-            </tr>
-            <tr>
               <td>Full Name</td>
               <td>
-                  <input type="text" ng-model="cUser.firstName" size="15" maxlength="250" />
-                  <input type="text" ng-model="cUser.lastName" size="15" maxlength="250" />
+                <span ng-hide="editFirstName" ng-dblclick="focusFirst()" ng-bind="cUser.firstName"></span>
+                <input type="text" ng-show="editFirstName" ng-model="cUser.firstName" size="15" maxlength="250"></input> 
+                <span ng-hide="editLastName" ng-dblclick="focusLast()" ng-bind="cUser.lastName"></span>
+                <input type="text" ng-show="editLastName" ng-model="cUser.lastName" size="15" maxlength="250"></input>
+              </td>
+            </tr>
+            <tr>
+              <td>User Name</td>
+              <td>
+                <span ng-hide="editUserName" ng-dblclick="focusUserName()" ng-bind="cUser.username"></span>
+                <input type="text" ng-show="editUserName" ng-model="cUser.username"></input>
               </td>
             </tr>
             <tr>
@@ -44,7 +49,19 @@
               </td>
           </tr>
             <tr>
+<<<<<<< HEAD
               <td>Assigned Supervisor</td>
+=======
+              <td>P Level</td>
+              <td>
+                <span ng-hide="editPLevel" ng-dblclick="focusPLevel()" ng-bind="cUser.pLevel"></span>
+                <select ng-show="editPLevel" ng-model="cUser.pLevel" ng-options="i for i in items" required>     
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Assigned Manager</td>
+>>>>>>> User Profile modification possible
               <td>
                 <a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor()">Assign</a>
                 <span ng-show="hasSupervisor()">
@@ -66,9 +83,17 @@
           <tr>
               <td>Status</td>
               <td>
+<<<<<<< HEAD
                   <input type="text" ng-model="cUser.status" maxlength="250" />
               </td>
           </tr>
+=======
+                <span ng-hide="editStatus" ng-dblclick="focusStatus()" ng-bind="cUser.status"></span>
+                <select ng-show="editStatus" ng-model="cUser.status" ng-options="s for s in statuses" required>
+                </select>
+                </td>
+            </tr>
+>>>>>>> User Profile modification possible
           </tbody>
         </table>
       </div>    
@@ -79,7 +104,7 @@
               <a href="#/assign-employee-project/{{cUser.id}}" ng-hide=""class="btn btn-success btn-block">Add to Project</a>
           </div>
           <div class="col-sm-2 col-sm-offset-8">
-              <button class="btn btn-primary btn-block">Save</button>
+              <button ng-click="save()" class="btn btn-primary btn-block">Save</button>
           </div>
       </div>
       <div class="row">

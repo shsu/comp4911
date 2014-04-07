@@ -10,12 +10,20 @@
               <td>{{user.id}}</td>
             </tr>
             <tr>
-              <td>Username</td>
-              <td>{{user.username}}</td>
+              <td>Full Name</td>
+              <td>
+                <span ng-hide="editFirstName" ng-dblclick="focusFirst()" ng-bind="user.firstName"></span>
+                <input type="text" ng-show="editFirstName" ng-model="user.firstName" size="15" maxlength="250"></input> 
+                <span ng-hide="editLastName" ng-dblclick="focusLast()" ng-bind="user.lastName"></span>
+                <input type="text" ng-show="editLastName" ng-model="user.lastName" size="15" maxlength="250"></input>
+              </td>
             </tr>
             <tr>
-              <td>Full Name</td>
-              <td>{{user.firstName}} {{user.lastName}}</td>
+              <td>User Name</td>
+              <td>
+                <span ng-hide="editUserName" ng-dblclick="focusUserName()" ng-bind="user.username"></span>
+                <input type="text" ng-show="editUserName" ng-model="user.username"></input>
+              </td>
             </tr>
             <tr>
               <td>Password</td>
@@ -51,6 +59,11 @@
         </table>
       </div>    
     </div>
+    <div class="row">
+          <div class="col-sm-2 col-sm-offset-8">
+              <button ng-click="save()" class="btn btn-primary btn-block">Save</button>
+          </div>
+      </div>
     <script type="text/ng-template" id="myModalContent2.html">
       <div class="modal-header">
         <h3>Change Password</h3>

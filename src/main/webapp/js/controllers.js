@@ -1521,9 +1521,15 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 /*
     USER PROFILE CONTROLLER
     */
-    cascadiaControllers.controller('UserProfileController', ['$scope', '$modal', 'GrowlResponse', '$rootScope', '$routeParams', 'Restangular',
-      function($scope, $modal, GrowlResponse, $rootScope, $params, Restangular) {
-        $rootScope.user = JSON.parse(localStorage.getItem('user'));
+    cascadiaControllers.controller('UserProfileController', ['$scope', '$modal', '$location', 'GrowlResponse', '$rootScope', '$routeParams', 'Restangular',
+      function($scope, $modal, $location, GrowlResponse, $rootScope, $params, Restangular) {
+        var user = JSON.parse(localStorage.getItem('user'));
+        $scope.editFirstName = $scope.editLastName = $scope.editUserName = false;
+
+        Restangular.one('users', user.id).get().then(function(response) {
+          $rootScope.user = response;
+        });
+
 
         var loadSupervisor = function(){
           Restangular.one('users', $rootScope.user.supervisorUserID).get().then(function(response){
@@ -1542,6 +1548,18 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           loadTimesheetApprover();
         }
 
+        $scope.focusFirst = function() {
+          $scope.editFirstName = true;
+        }
+
+        $scope.focusLast = function() {
+          $scope.editLastName = true;
+        }
+
+        $scope.focusUserName = function() {
+          $scope.editUserName = true;
+        }
+
         $scope.hasSupervisor = function() {
           var user = $rootScope.user;
           if(user && user.supervisorUserID) {
@@ -1556,6 +1574,12 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             return true;
           }
           return false;
+        }
+
+        $scope.save = function() {
+          user = $rootScope.user;
+          user.put();
+          $location.path('dashboard');
         }
 
         $scope.open = function () {
@@ -1602,6 +1626,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         var param = $params.id;
         $scope.supervisor = {};
         $scope.timesheetApprover = {};
+        $scope.editFirstName = $scope.editLastName = $scope.editUserName = $scope.editPLevel = $scope.editStatus = false;
+        $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
+        $scope.statuses = [ 'Active', 'Inactive' ];
 
         Restangular.one('users', param).get().then(function(response){
           $scope.cUser = response;
@@ -1623,6 +1650,26 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           });
         }
 
+        $scope.focusFirst = function() {
+          $scope.editFirstName = true;
+        }
+
+        $scope.focusLast = function() {
+          $scope.editLastName = true;
+        }
+
+        $scope.focusUserName = function() {
+          $scope.editUserName = true;
+        }
+
+        $scope.focusStatus = function() {
+          $scope.editStatus = true;
+        }
+
+        $scope.focusPLevel = function() {
+          $scope.editPLevel = true;
+        }
+
         $scope.hasSupervisor = function() {
           user = $scope.cUser;
           if(user && user.supervisorUserID) {
@@ -1638,6 +1685,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           }
           return false;
         }
+
+        $scope.save = function() {
+          user = $scope.cUser;
+          user.put();
+          $location.path('users');
+        }
+
       }
       ]);
 
