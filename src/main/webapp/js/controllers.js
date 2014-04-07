@@ -274,7 +274,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
           for (var i = 0; i < length; i++){
             if ($scope.projects[i].markedForAssignment){
               var projNum = $scope.projects[i].projectNumber;
-              $scope.projects[i].selected = false;
+              $scope.projects[i].selected = true;
 
               var updateAssignment = function(assignment) {
                 assignment.active = true;
