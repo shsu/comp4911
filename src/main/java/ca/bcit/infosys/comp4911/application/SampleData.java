@@ -330,7 +330,7 @@ public class SampleData {
 
         //Base example
         workPackageDao.create(new WorkPackage(
-        		"A111222", "Implement domain models", issueDate, "Active", endDate, 12345, effortGenerator(10,10,10,10,10,10,10)),false);
+        		"A111222", "Implement domain models", issueDate, true, endDate, 12345, effortGenerator(10,10,10,10,10,10,10)),false);
 
 
         /**
@@ -349,50 +349,50 @@ public class SampleData {
                 workPackageNumber = "A333" + i;
             }                // add 3 digits
             workPackageDao.create(new WorkPackage(
-                workPackageNumber, wpName, issueDate, "Inactive", endDate, 55522, effortGenerator(10,10,10,10,10,10,10)),false);
+                workPackageNumber, wpName, issueDate, true, endDate, 55522, effortGenerator(10,10,10,10,10,10,10)),false);
         }
 
         issueDate = setDate(2, 5, 2014);
         endDate = setDate(4, 12, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"B333222", "Write tests", issueDate, "Active", endDate, 12345, effortGenerator(10,10,10,10,10,10,10)),false);
+        		"B333222", "Write tests", issueDate, true, endDate, 12345, effortGenerator(10,10,10,10,10,10,10)),false);
         
         issueDate = setDate(1, 14, 2014);
         endDate = setDate(4, 17, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"B333223", "Something important", issueDate, "Active", endDate, 12345, effortGenerator(10,10,10,10,10,10,10)),false);
+        		"B333223", "Something important", issueDate, true, endDate, 12345, effortGenerator(10,10,10,10,10,10,10)),false);
         
         issueDate = setDate(11, 10, 2013);
         endDate = setDate(11, 28, 2013);
 
         workPackageDao.create(new WorkPackage(
-        		"A333444", "Design Database", issueDate, "Inactive", endDate, 55522, effortGenerator(10,10,10,10,10,10,10)),false);
+        		"A333444", "Design Database", issueDate, true, endDate, 55522, effortGenerator(10,10,10,10,10,10,10)),false);
         
         issueDate = setDate(11, 12, 2013);
         endDate = setDate(12, 8, 2013);
         
         workPackageDao.create(new WorkPackage(
-        		"C333222", "Preliminary front end design", issueDate, "Inactive", endDate, 55522, effortGenerator(10,10,10,10,10,10,10)),false);
+        		"C333222", "Preliminary front end design", issueDate, true, endDate, 55522, effortGenerator(10,10,10,10,10,10,10)),false);
         
         issueDate = setDate(11, 15, 2013);
         endDate = setDate(2, 5, 2014);
         
         workPackageDao.create(new WorkPackage(
-        		"A333445", "Implement login logic", issueDate, "Inactive", endDate, 55522, effortGenerator(10,10,10,10,10,10,10)),false);
+        		"A333445", "Implement login logic", issueDate, true, endDate, 55522, effortGenerator(10,10,10,10,10,10,10)),false);
         
         issueDate = setDate(8, 2, 2012);
         endDate = setDate(3, 27, 2013);
         
         workPackageDao.create(new WorkPackage(
-        		"ZZ33422", "Research technologies", issueDate, "Active", endDate, 99977, effortGenerator(10,10,10,10,10,10,10)),false);
+        		"ZZ33422", "Research technologies", issueDate, true, endDate, 99977, effortGenerator(10,10,10,10,10,10,10)),false);
         
         issueDate = setDate(3, 15, 2013);
         endDate = setDate(6, 23, 2017);
         
         workPackageDao.create(new WorkPackage(
-        		"ZZ33423", "Solve world hunger", issueDate, "Active", endDate, 99977, effortGenerator(10,10,10,10,10,10,10)),false);
+        		"ZZ33423", "Solve world hunger", issueDate, true, endDate, 99977, effortGenerator(10,10,10,10,10,10,10)),false);
     }
 
     private void generateWorkPackageAssignments() {
