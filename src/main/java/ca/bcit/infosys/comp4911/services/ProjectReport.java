@@ -120,10 +120,11 @@ public class ProjectReport {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
 
-        JSONArray projectBudgetJSON = new JSONArray();
-        JSONObject pBObject = new JSONObject();
-        ProjectBudgetReport pbr = new ProjectBudgetReport(workPackageDao, payRateDao.getPayRateHashByYear());
-        List<WorkPackageStatusReport> mostRecentReports = wpsrDao.getAllByProject(projectId);
+        JSONArray                       projectBudgetJSON = new JSONArray();
+        JSONObject                      pBObject = new JSONObject();
+        ProjectBudgetReport             pbr = new ProjectBudgetReport(workPackageDao, payRateDao.getPayRateHashByYear());
+        List<WorkPackageStatusReport>   mostRecentReports = wpsrDao.getAllByProject(projectId);
+
         mostRecentReports = ReportHelperRow.getSingleWPSRPerWP(mostRecentReports);
 
         pbr.getExpectedBudget().calculateExpectedPLevelTotalsFromWPSRs(mostRecentReports);
@@ -150,16 +151,17 @@ public class ProjectReport {
             @PathParam("workpackage_number") final String wPNumber) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        JSONObject workPackageObject = new JSONObject();
+        JSONObject          workPackageObject = new JSONObject();
         ProjectBudgetReport wpBudget = new ProjectBudgetReport(workPackageDao, payRateDao.getPayRateHashByYear());
+        List<String> wPChildrenString;
 
         if(wPNumber.charAt(6) != '0'){
-            wpBudget.getCurrentSpending().calculatePersonHours(tsrDao.getTimesheetRowsByWP(wPNumber));
-            workPackageObject.put("workPackagePLevels", wpBudget.getCurrentSpending().getpLevels());
-            workPackageObject.put("workPackageBudgetInDollars", wpBudget.getCurrentSpending().getLabourDollars());
+            wPChildrenString = new ArrayList<String>();
+            wPChildrenString.add(wPNumber);
         }
         else {
-            List<String> wPChildrenString = workPackageDao.getWPChildren(wPNumber);
+            wPChildrenString = workPackageDao.getWPChildren(wPNumber);
+        }
             List<TimesheetRow> childrensRows = tsrDao.getTimesheetRowsByMultipleWPNumber(wPChildrenString);
             List<WorkPackageStatusReport> childrenWPSRs = wpsrDao.getAllByMultipleWPNumber(wPChildrenString);
             List<WorkPackage> childrenWP = workPackageDao.getWPsByWorkPackageNumbers(wPChildrenString);
@@ -180,7 +182,7 @@ public class ProjectReport {
             workPackageObject.put("InitialEstimateInDollars",
                     wpBudget.getInitialBudget().getLabourDollars());
 
-        }
+
 
         return SH.responseWithEntity(200, workPackageObject.toString());
     }
