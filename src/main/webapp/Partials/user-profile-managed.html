@@ -16,16 +16,19 @@
               <td>{{cUser.id}}</td>
             </tr>
             <tr>
-              <td>Name</td>
-              <td>{{cUser.firstName}} {{cUser.lastName}}</td>
+                <td>User Name</td>
+                <td>{{cUser.username}}</td>
             </tr>
             <tr>
-              <td>User Name</td>
-              <td>{{cUser.username}}</td>
+              <td>Full Name</td>
+              <td>
+                  <input type="text" ng-model="cUser.firstName" size="15" maxlength="250" />
+                  <input type="text" ng-model="cUser.lastName" size="15" maxlength="250" />
+              </td>
             </tr>
             <tr>
               <td>Password</td>
-              <td><a href="" class="cursor-hand">Change Password</a></td>
+                <td><a ng-click="open()" href="" class="cursor-hand">Change Password</a></td>
             </tr>
          </tbody>
         </table>
@@ -33,12 +36,15 @@
       <div class="table-responsive col-sm-6">
         <table class="table table-striped table-hover table-bordered">
           <tbody>
+          <tr>
+              <td>PLevel</td>
+              <td>
+                  <select ng-model="cUser.pLevel" ng-options="i for i in items" required>
+                  </select>
+              </td>
+          </tr>
             <tr>
-              <td>P Level</td>
-              <td>{{cUser.pLevel}}</td>
-            </tr>
-            <tr>
-              <td>Assigned Manager</td>
+              <td>Assigned Supervisor</td>
               <td>
                 <a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor()">Assign</a>
                 <span ng-show="hasSupervisor()">
@@ -57,10 +63,12 @@
                   </span>
               </td>
             </tr>
-            <tr> 
+          <tr>
               <td>Status</td>
-              <td>{{cUser.status}}</td>
-            </tr>
+              <td>
+                  <input type="text" ng-model="cUser.status" maxlength="250" />
+              </td>
+          </tr>
           </tbody>
         </table>
       </div>    
