@@ -8,6 +8,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 @Stateless
@@ -72,6 +75,28 @@ public class TimesheetRowDao {
                 " where tsr.workPackageNumber IN (:wpNumbers)", TimesheetRow.class);
         query.setParameter("wpNumbers", wPNumbers);
         return query.getResultList();
+    }
+
+    public HashMap<String, List<TimesheetRow>> getWPNumberTimesheetRowListHash(List<String> wPNumbers){
+        HashMap<String, List<TimesheetRow>> stringListHashMap = new HashMap<String, List<TimesheetRow>>();
+        List<TimesheetRow> timesheetRowListAll = getTimesheetRowsByMultipleWPNumber(wPNumbers);
+        Iterator<TimesheetRow> timesheetRowIterator = timesheetRowListAll.listIterator();
+        TimesheetRow tsr;
+        while(timesheetRowIterator.hasNext()){
+            tsr = timesheetRowIterator.next();
+            if(stringListHashMap.get(tsr.getWorkPackageNumber()) != null){
+                stringListHashMap.get(tsr.getWorkPackageNumber()).add(tsr);
+            }
+            else {
+                List<TimesheetRow> timesheetRowList = new ArrayList<TimesheetRow>();
+                timesheetRowList.add(tsr);
+                stringListHashMap.put(tsr.getWorkPackageNumber(), timesheetRowList);
+            }
+
+        }
+
+        return stringListHashMap;
+
     }
 
     public boolean isParentLeaf(String wpNumber) {

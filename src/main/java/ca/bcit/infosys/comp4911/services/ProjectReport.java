@@ -58,43 +58,47 @@ public class ProjectReport {
 
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-        List<TimesheetRow>                      wpTimesheetRows;
-        Project                                 project;
-        ReportHelperRow[]                       reportHelperRows = new ReportHelperRow[20];
-        WorkPackageStatusReport                 wpsr;
-        List<WorkPackageStatusReport>           latestTwentyReports;
-        JSONArray                               reportArray = new JSONArray();
-        JSONObject                              objectToBeMapped;
-        HashMap<PLevel, BigDecimal>             yearPayRateInfo;
+        List<TimesheetRow>                              wpTimesheetRows;
+        Project                                         project;
+        ReportHelperRow[]                               reportHelperRows = new ReportHelperRow[20];
+        String                                          wpsr;
+        List<String>                                    latestTwentyReports;
+        JSONArray                                       reportArray = new JSONArray();
+        JSONObject                                      objectToBeMapped;
+        HashMap<Integer, HashMap<PLevel, BigDecimal>>   yearPayRateInfo;
+        HashMap<String, List<TimesheetRow>>             wPNumberTSRListHash;
 
         project = projectDao.read(projectId);
         DateTime dateTime = new DateTime(project.getIssueDate().toString());
 
-        yearPayRateInfo = payRateDao.getPayRateHashByYear().get(dateTime.getYear());
+        yearPayRateInfo = payRateDao.getPayRateHashByYear();
 
         objectToBeMapped = new JSONObject();
         objectToBeMapped.put("projectNumber", projectId);
         objectToBeMapped.put("projectName", project.getProjectName());
-        objectToBeMapped.put("payRates", yearPayRateInfo);
+        objectToBeMapped.put("payRates", yearPayRateInfo.get(dateTime.getYear()));
         reportArray.put(objectToBeMapped);
 
         latestTwentyReports = wpsrDao.getLatestTwentyByProject(projectId);
+        wPNumberTSRListHash = tsrDao.getWPNumberTimesheetRowListHash(latestTwentyReports);
+
 
         if(latestTwentyReports.size() <= 0){
             return SH.responseWithEntity(200, reportArray.toString());
         }
 
-        Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
+        Iterator<String> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
         while(wpsrIterator.hasNext()) {
             objectToBeMapped = new JSONObject();
             wpsr = wpsrIterator.next();
-            wpTimesheetRows = tsrDao.getTimesheetRowsByWP(wpsr.getWorkPackageNumber());
-            reportHelperRows[i] = new ReportHelperRow(workPackageDao, payRateDao.getPayRateHashByYear());
+            if(wPNumberTSRListHash.get(wpsr) == null) { continue; }
+            wpTimesheetRows = wPNumberTSRListHash.get(wpsr);
+            reportHelperRows[i] = new ReportHelperRow(workPackageDao, yearPayRateInfo);
             reportHelperRows[i].calculatePersonHours(wpTimesheetRows);
-            objectToBeMapped.put("workPackageNumber", wpsr.getWorkPackageNumber());
+            objectToBeMapped.put("workPackageNumber", wpsr);
             objectToBeMapped.put("workPackageDescription",
-                    workPackageDao.read(wpsr.getWorkPackageNumber()).getWorkPackageName());
+                    workPackageDao.read(wpsr).getWorkPackageName());
             objectToBeMapped.put("pLevels", reportHelperRows[i].getpLevels());
             objectToBeMapped.put("labourDollars", reportHelperRows[i].getLabourDollars());
             reportArray.put(objectToBeMapped);

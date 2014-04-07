@@ -55,11 +55,11 @@ public class WorkPackageStatusReportDao {
         return query.getResultList();
     }
 
-    public List<WorkPackageStatusReport> getLatestTwentyByProject(final int projectNumber) {
-        TypedQuery<WorkPackageStatusReport> query = em.createQuery("select r from WorkPackageStatusReport r" +
+    public List<String> getLatestTwentyByProject(final int projectNumber) {
+        TypedQuery<String> query = em.createQuery("select r.workPackageNumber from WorkPackageStatusReport r" +
             " where r.workPackageNumber IN" +
             " (select w.workPackageNumber from WorkPackage w where w.projectNumber = :projectNumber)"  +
-            " ORDER BY r.reportDate", WorkPackageStatusReport.class);
+            " ORDER BY r.reportDate", String.class);
         query.setParameter("projectNumber", projectNumber);
         query.setMaxResults(MAX_SIZE);
         return query.getResultList();

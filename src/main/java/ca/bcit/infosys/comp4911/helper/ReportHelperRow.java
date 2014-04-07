@@ -112,10 +112,10 @@ public class ReportHelperRow {
      * @return - the finished reportHelperRow
      */
     public void calculatePersonHours(List<TimesheetRow> timesheetRowList){
-        Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
-        TimesheetRow tsr;
-        WorkPackage workPackage;
-        if(timesheetRowList.size() > 0 ) {
+        if(timesheetRowList != null && timesheetRowList.size() > 0 ) {
+            Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
+            TimesheetRow tsr;
+            WorkPackage workPackage;
             HashMap<String, Date> wpNumberDateHash  =
                     workPackageDao.getWPNumberDateHash(timesheetRowList.get(0).getProjectNumber());
             while(timesheetRowIterator.hasNext())
