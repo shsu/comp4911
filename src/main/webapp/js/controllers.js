@@ -1213,8 +1213,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 /*
     PROJECT DETAILS CONTROLLER
     */
-    cascadiaControllers.controller('ProjectDetailsController', ['$scope', '$routeParams', 'FilterUser', 'Restangular',
-      function($scope, $params, FilterUser, Restangular){
+    cascadiaControllers.controller('ProjectDetailsController', ['$scope', '$routeParams', 'FilterUser', 'Restangular', 'calculateBudget',
+      function($scope, $params, FilterUser, Restangular, calculateBudget){
         var param = $params.id;
 
         $scope.project = {}
@@ -1235,25 +1235,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             var initialEstimate = $scope.report.InitialEstimate;
             var remainingEstimate = $scope.report.RemainingEstimate;
             var currentSpending = $scope.report.CurrentSpending;
-            $scope.dataArray = createData(initialEstimate, remainingEstimate, currentSpending);
-
+            $scope.dataArray = calculateBudget(initialEstimate, remainingEstimate, currentSpending);
           })
-        }
-
-        var createData = function(a, b, c) {
-          if(a && b && c){
-            var data = [
-              {level: 'p1', ie: a.P1, re: b.P1, cs: c.P1},
-              {level: 'p2', ie: a.P2, re: b.P2, cs: c.P2},
-              {level: 'p3', ie: a.P3, re: b.P3, cs: c.P3},
-              {level: 'p4', ie: a.P4, re: b.P4, cs: c.P4},
-              {level: 'p5', ie: a.P5, re: b.P5, cs: c.P5},
-              {level: 'ds', ie: a.DS, re: b.DS, cs: c.DS},
-              {level: 'ss', ie: a.SS, re: b.SS, cs: c.SS}
-            ];
-          }
-
-          return data;
         }
 
         var loadManager = function() {
@@ -1664,15 +1647,17 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 /*
     WORK PACKAGE DETAILS CONTROLLER
     */
-    cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', '$routeParams', 'GrowlResponse', '$timeout',
-      function($scope, Restangular, $params, GrowlResponse, $timeout){
+    cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', '$routeParams', 'GrowlResponse', 'calculateBudget', 'FilterUser',
+      function($scope, Restangular, $params, GrowlResponse, calculateBudget, FilterUser){
         $scope.param = $params.id;
+        $scope.quantity = 20;
 
         var base = Restangular.one('work_packages/' + $scope.param);
 
         base.get().then(function(response){
           $scope.package = response;
           loadProject();
+          loadBudget();
         });
 
         base.getList('assignments').then(function(response){
@@ -1688,6 +1673,20 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             $scope.project = response;
           });
         };
+
+        var loadBudget = function() {
+          Restangular.one('reports/work_package/budget/' + $scope.package.workPackageNumber).get().then(function(response){
+            $scope.report = response;
+            var initialEstimate = $scope.report.InitialEstimate;
+            var remainingEstimate = $scope.report.RemainingEstimate;
+            var currentSpending = $scope.report.CurrentSpending;
+            $scope.dataArray = calculateBudget(initialEstimate, remainingEstimate, currentSpending);
+          })
+        }
+        
+        $scope.search = function(user) {
+          return FilterUser(user, $scope.query);
+        }
 
       }
       ]);

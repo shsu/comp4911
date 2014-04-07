@@ -54,6 +54,26 @@ cascadiaServices.factory('userService', ['$q', '$rootScope', '$location', 'Resta
   }
 ]);
 
+cascadiaServices.factory('calculateBudget',
+  function() {
+    return function(a, b, c) {
+        if(a && b && c){
+          var data = [
+            {level: 'p1', ie: a.P1, re: b.P1, cs: c.P1},
+            {level: 'p2', ie: a.P2, re: b.P2, cs: c.P2},
+            {level: 'p3', ie: a.P3, re: b.P3, cs: c.P3},
+            {level: 'p4', ie: a.P4, re: b.P4, cs: c.P4},
+            {level: 'p5', ie: a.P5, re: b.P5, cs: c.P5},
+            {level: 'ds', ie: a.DS, re: b.DS, cs: c.DS},
+            {level: 'ss', ie: a.SS, re: b.SS, cs: c.SS}
+          ];
+        }
+
+        return data;
+      }
+    
+  })
+
 cascadiaServices.factory('permissions',
   function($rootScope) {
     var permissionList;

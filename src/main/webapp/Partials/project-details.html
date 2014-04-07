@@ -10,77 +10,77 @@
         </div>
         <div class="row">
           <p class="col-sm-12">Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}
-              <a href="#/projects/{{project.projectNumber}}/assign-manager" has-permission="Hr">
-                <span ng-hide="hasProjectManager()">Assign</span>
-                <span ng-show="hasProjectManager()">(Change)</span>
-              </a></p>
+            <a href="#/projects/{{project.projectNumber}}/assign-manager" has-permission="Hr">
+              <span ng-hide="hasProjectManager()">Assign</span>
+              <span ng-show="hasProjectManager()">(Change)</span>
+            </a></p>
+          </div>
         </div>
-      </div>
-    </div>      
-    <div class="row" has-permission="ProjectManager">
-      <div class="col-sm-5">
-        <div class="panel panel-default">
-          <div class="panel-heading">Assigned Employees:</div>
-          <div class="panel-body">
-            <input type="text" ng-model="query" placeholder="Search User" class="form-control" />
-            <br />
-            <div class="table-responsive">
-              <table class="table table-hover table-bordered">
-                <thead>
-                  <th>Employee ID</th>
-                  <th>Employee Name</th>
-                  <th>P-Level</th>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="user in assignedUsers | limitTo: quantity | filter: search">
-                    <td>{{user.id}}</td>
-                    <td>{{user.firstName}} {{user.lastName}}</td>
-                    <td>{{user.pLevel}}</td>
-                  </tr>
-                </tbody>
-              </table>
+      </div>      
+      <div class="row" has-permission="ProjectManager">
+        <div class="col-sm-5">
+          <div class="panel panel-default">
+            <div class="panel-heading">Assigned Employees:</div>
+            <div class="panel-body">
+              <input type="text" ng-model="query" placeholder="Search User" class="form-control" />
+              <br />
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>P-Level</th>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="user in assignedUsers | limitTo: quantity | filter: search">
+                      <td>{{user.id}}</td>
+                      <td>{{user.firstName}} {{user.lastName}}</td>
+                      <td>{{user.pLevel}}</td>
+                    </tr>
+                  </tbody>
+                </table>
 
+              </div>
+            </div>            
+          </div>        
+        </div>
+        <div class="col-sm-7">
+          <div class="panel panel-default">
+            <div class="panel-heading">P-Level:</div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <th>P-Level</th>
+                    <th>Initial Estimate Budget</th>
+                    <th>Current Spending</th>
+                    <th>Estimate to End</th>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="data in dataArray | orderBy: data.level">
+                      <td ng-bind="data.level | uppercase"></td>
+                      <td ng-bind="(data.ie * 10)"></td>
+                      <td ng-bind="(data.cs * 10)"></td>
+                      <td ng-bind="(data.re * 10)"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>            
-        </div>        
+          </div>
+        </div>
       </div>
-      <div class="col-sm-7">
-        <div class="panel panel-default">
-          <div class="panel-heading">P-Level:</div>
-          <div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-hover table-bordered">
-                <thead>
-                  <th>P-Level</th>
-                  <th>Initial Estimate Budget</th>
-                  <th>Current Spending</th>
-                  <th>Estimate to End</th>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="data in dataArray | orderBy: data.level">
-                    <td ng-bind="data.level | uppercase"></td>
-                    <td ng-bind="(data.ie * 10)"></td>
-                    <td ng-bind="(data.cs * 10)"></td>
-                    <td ng-bind="(data.re * 10)"></td>
-                  </tr>
-                </tbody>
-              </table>
+      <div class="row">
+        <div class="col-sm-7">
+          <div class="panel panel-default">
+            <div class="panel-heading">Budget & Cost:</div>
+            <div class="panel-body">
+              <p>Budgeted Cost: {{report.InitialEstimateInDollars | currency }}</p>
+              <p>Remaining Budget: {{(report.InitialEstimateInDollars - report.CurrentSpendingInDollars) | currency }}</p>
+              <p>Expected Ending Budget: {{(report.CurrentSpendingInDollars + report.RemainingEstimateInDollars) | currency}}</p>
             </div>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-7">
-        <div class="panel panel-default">
-          <div class="panel-heading">Budget & Cost:</div>
-          <div class="panel-body">
-            <p>Budgeted Cost: {{report.InitialEstimateInDollars | currency }}</p>
-            <p>Remaining Budget: {{(report.InitialEstimateInDollars - report.CurrentSpendingInDollars) | currency }}</p>
-            <p>Expected Ending Budget: {{(report.CurrentSpendingInDollars + report.RemainingEstimateInDollars) | currency}}</p>
-        </div>
-        </div>
-      </div>
-    </div>
-  </div>  
-</content>
+    </div>  
+  </content>
