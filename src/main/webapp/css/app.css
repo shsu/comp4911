@@ -1,210 +1,60 @@
-.html .body .bg-primary {
-  background: #1b325f; }
+/*
+Syntax error: Invalid CSS after "": expected selector, was "<<<<<<< HEAD"
+        on line 291 of app.sass
 
-.html .body .primary {
-  color: #1b325f; }
+286: //                                                    WP DETAIL PAGE
+287: //------------------------------------------------------------------
+288: .min-width
+289:   width: 70px
+290: 
+291: <<<<<<< HEAD
+292: 
+293: // CRAM TIME
+294: #notAssigned .true 
+295:   display: none
+296: 
 
-.html .body .bg-secondary {
-  background: #eb540a; }
-
-.html .body .secondary {
-  color: #eb540a; }
-
-.html .body .bg-tertiary {
-  background: #9cc4e4; }
-
-.html .body .tertiary {
-  color: #9cc4e4; }
-
-.html .body .header-link {
-  color: white; }
-
-.no-padding, .table > tbody > tr > td.no-padding {
-  padding: 0; }
-
-.center {
-  text-align: center; }
-
-div.ng-scope {
-  padding: 0 20px; }
-
-.body {
-  min-height: 1000px;
-  font-family: "Lato";
-  font-weight: 300;
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -webkit-overflow-scrolling: touch;
-  padding-top: 70px; }
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Raleway";
-  font-weight: 300; }
-
-.row {
-  margin-bottom: 20px; }
-
-.table-hover > tbody > tr > td.active:hover,
-.table-hover > tbody > tr > th.active:hover,
-.table-hover > tbody > tr.active:hover > td,
-.table-hover > tbody > tr.active:hover > th {
-  background: #e9f2f9; }
-
-.table-hover > tbody > tr:hover > td,
-.table-hover > tbody > tr:hover > th {
-  background: #e9f2f9; }
-
-.body table.table {
-  margin-bottom: 0;
-  border: 1px solid #dddddd; }
-  .body table.table tr > th {
-    background: whitesmoke; }
-
-.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-  padding: 15px; }
-
-.btn.pull-right {
-  margin-left: 20px; }
-
-.no-pl {
-  padding-left: 0; }
-
-.adj-margin {
-  margin-left: 16px; }
-
-.cursor-hand {
-  cursor: pointer; }
-
-.breadcrumb {
-  background-color: transparent; }
-
-.navbar {
-  border-radius: 0; }
-  .navbar .nav li a {
-    color: white; }
-    .navbar .nav li a:hover {
-      opacity: 0.5; }
-  .navbar .dropdown-menu li a {
-    color: black; }
-
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 80px auto; }
-
-.btn-login {
-  display: block;
-  margin: 40px auto; }
-
-#forgot {
-  margin: 20px 0 0 12px;
-  display: block; }
-
-.modal-dialog {
-  width: 300px;
-  margin: 80px auto; }
-
-.modal-content {
-  padding: 10px; }
-
-.modal-header {
-  border-bottom: none; }
-
-.modal-title, .modal-body p {
-  text-align: center; }
-
-.modal-footer {
-  border-top: none;
-  text-align: none;
-  margin-top: 0; }
-  .modal-footer button {
-    width: 48.66%;
-    float: left; }
-
-.col-min-width {
-  min-width: 90px; }
-
-.timesheet {
-  padding: 20px;
-  border: 1px solid #dddddd; }
-  .timesheet footer {
-    margin-top: 20px;
-    clear: both; }
-    .timesheet footer button {
-      float: right; }
-
-.timesheet-nav {
-  text-align: center; }
-  .timesheet-nav li {
-    border: 1px solid #dddddd;
-    padding: 10px; }
-    .timesheet-nav li:first-child {
-      padding-left: 10px; }
-
-footer.row {
-  margin-top: 40px; }
-  footer.row button {
-    float: right; }
-
-time {
-  padding: 5px;
-  border: 1px solid #dddddd;
-  border-radius: 5px; }
-
-.results {
-  border: 1px solid #cccccc;
-  min-height: 300px; }
-  .results ul {
-    list-style: none;
-    margin-top: 15px; }
-    .results ul li {
-      background: #e9f2f9;
-      padding: 5px;
-      margin-top: 5px; }
-    .results ul .disabled-true {
-      background: #dddddd; }
-    .results ul .true {
-      background: rgba(0, 255, 0, 0.2) !important; }
-
-.results {
-  border: 1px solid #cccccc;
-  min-height: 300px;
-  padding: 0; }
-  .results .table-hover > tbody > tr.disabled-true:hover > td,
-  .results .table-hover > tbody > tr.disabled-true:hover > th {
-    background: #dddddd; }
-  .results .disabled-true {
-    background: #dddddd; }
-  .results .true {
-    background: rgba(0, 255, 0, 0.2) !important; }
-
-.table-wrapper {
-  border: 1px solid #dddddd;
-  min-height: 400px; }
-  .table-wrapper tr.true {
-    background: rgba(0, 255, 0, 0.2) !important; }
-
-.manager .modal-dialog {
-  width: 500px; }
-
-.usertable {
-  font-family: monospace; }
-
-.body .usertable table.table tr .th-narrow {
-  width: 15%; }
-
-.body .usertable table.table tr .th-wide {
-  width: 20%; }
-
-#users-management {
-  list-style: none;
-  padding-left: 0; }
-
-#users-management li {
-  padding: 10px;
-  background: #dddddd;
-  border-radius: 5px;
-  margin-bottom: 10px; }
-
-.min-width {
-  width: 70px; }
+Backtrace:
+app.sass:291
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/scss/parser.rb:1308:in `expected'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/scss/parser.rb:1242:in `expected'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/scss/parser.rb:1223:in `expr!'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/scss/static_parser.rb:20:in `parse_selector'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/perform.rb:383:in `visit_rule'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/perform.rb:152:in `block in visit'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/stack.rb:79:in `block in with_base'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/stack.rb:121:in `with_frame'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/stack.rb:79:in `with_base'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/perform.rb:152:in `visit'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/base.rb:52:in `map'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/perform.rb:161:in `block in visit_children'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/perform.rb:173:in `with_environment'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/perform.rb:160:in `visit_children'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/perform.rb:180:in `visit_root'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/perform.rb:151:in `visit'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/visitors/perform.rb:8:in `visit'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/root_node.rb:36:in `css_tree'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/tree/root_node.rb:20:in `render'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/engine.rb:274:in `render'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/plugin/compiler.rb:414:in `update_stylesheet'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/plugin/compiler.rb:189:in `block in update_stylesheets'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/plugin/compiler.rb:186:in `each'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/plugin/compiler.rb:186:in `update_stylesheets'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/plugin/compiler.rb:393:in `on_file_changed'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/lib/sass/plugin/compiler.rb:248:in `block in watch'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/vendor/listen/lib/listen/listener.rb:252:in `call'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/vendor/listen/lib/listen/listener.rb:252:in `on_change'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/vendor/listen/lib/listen/adapters/polling.rb:48:in `call'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/vendor/listen/lib/listen/adapters/polling.rb:48:in `poll_changed_directories'
+C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/sass-3.3.4/vendor/listen/lib/listen/adapter.rb:297:in `block in start_poller'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Invalid CSS after \"\": expected selector, was \"<<<<<<< HEAD\"\A         on line 291 of app.sass\A \A 286: //                                                    WP DETAIL PAGE\A 287: //------------------------------------------------------------------\A 288: .min-width\A 289:   width: 70px\A 290: \A 291: <<<<<<< HEAD\A 292: \A 293: // CRAM TIME\A 294: #notAssigned .true \A 295:   display: none\A 296: "; }
