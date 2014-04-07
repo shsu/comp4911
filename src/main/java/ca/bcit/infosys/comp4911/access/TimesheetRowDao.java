@@ -67,6 +67,13 @@ public class TimesheetRowDao {
         return query.getResultList();
     }
 
+    public List<TimesheetRow> getTimesheetRowsByMultipleWPNumber(final List<String> wPNumbers){
+        TypedQuery<TimesheetRow> query = em.createQuery("select tsr from TimesheetRow tsr" +
+                " where tsr.workPackageNumber IN (:wpNumbers)", TimesheetRow.class);
+        query.setParameter("wpNumbers", wPNumbers);
+        return query.getResultList();
+    }
+
     public boolean isParentLeaf(String wpNumber) {
         String parentNumber = wpNumber;
         for(int i = 0; i < 7; i++){

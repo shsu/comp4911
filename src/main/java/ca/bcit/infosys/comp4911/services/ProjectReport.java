@@ -130,12 +130,12 @@ public class ProjectReport {
         pbr.getCurrentSpending().calculatePersonHours(tsrDao.getAllByProject(projectId));
         pbr.getInitialBudget().calculateInitialBudget(workPackageDao.getAllProjectWPLeafs(projectId));
 
-        pBObject.put("ExpectedBudget", pbr.getExpectedBudget().getpLevels());
-        pBObject.put("ExpectedBusgetInDollars", pbr.getExpectedBudget().getLabourDollars());
+        pBObject.put("RemainingEstimate", pbr.getExpectedBudget().getpLevels());
+        pBObject.put("RemainingEstimateInDollars", pbr.getExpectedBudget().getLabourDollars());
         pBObject.put("CurrentSpending", pbr.getCurrentSpending().getpLevels());
-        pBObject.put("CurrentSpendingInDollar", pbr.getCurrentSpending().getLabourDollars());
-        pBObject.put("InitialBudget", pbr.getInitialBudget().getpLevels());
-        pBObject.put("InitialBudgetInDollars", pbr.getInitialBudget().getLabourDollars());
+        pBObject.put("CurrentSpendingInDollars", pbr.getCurrentSpending().getLabourDollars());
+        pBObject.put("InitialEstimate", pbr.getInitialBudget().getpLevels());
+        pBObject.put("InitialEstimateInDollars", pbr.getInitialBudget().getLabourDollars());
 
 
         return SH.responseWithEntity(200, pBObject.toString());
@@ -159,18 +159,27 @@ public class ProjectReport {
             workPackageObject.put("workPackageBudgetInDollars", wpBudget.getCurrentSpending().getLabourDollars());
         }
         else {
-            List<String> wPChildren = workPackageDao.getWPChildren(wPNumber);
-            Iterator<String> childrenIterator = wPChildren.listIterator();
-            List<TimesheetRow> childrensRows = new ArrayList<TimesheetRow>();
-            List<WorkPackageStatusReport> childrenWPSRs = new ArrayList<WorkPackageStatusReport>();
-            String childWPNumber;
-            while(childrenIterator.hasNext()){
-                childWPNumber = childrenIterator.next();
-                childrensRows.addAll(tsrDao.getTimesheetRowsByWP(childWPNumber));
-            }
+            List<String> wPChildrenString = workPackageDao.getWPChildren(wPNumber);
+            List<TimesheetRow> childrensRows = tsrDao.getTimesheetRowsByMultipleWPNumber(wPChildrenString);
+            List<WorkPackageStatusReport> childrenWPSRs = wpsrDao.getAllByMultipleWPNumber(wPChildrenString);
+            List<WorkPackage> childrenWP = workPackageDao.getWPsByWorkPackageNumbers(wPChildrenString);
             wpBudget.getCurrentSpending().calculatePersonHours(childrensRows);
-            workPackageObject.put("workPackagePLevels", wpBudget.getCurrentSpending().getpLevels());
-            workPackageObject.put("workPackageBudgetInDollars", wpBudget.getCurrentSpending().getLabourDollars());
+            workPackageObject.put("CurrentWorkPackagePLevels",
+                    wpBudget.getCurrentSpending().getpLevels());
+            workPackageObject.put("CurrentWorkPackageBudgetInDollars",
+                    wpBudget.getCurrentSpending().getLabourDollars());
+            wpBudget.getExpectedBudget().
+                    calculateExpectedPLevelTotalsFromWPSRs(ReportHelperRow.getSingleWPSRPerWP(childrenWPSRs));
+            workPackageObject.put("ExpectedWorkPackagePLevels",
+                    wpBudget.getExpectedBudget().getpLevels());
+            workPackageObject.put("ExpectedWorkPackageBudgetInDollars",
+                    wpBudget.getExpectedBudget().getLabourDollars());
+            wpBudget.getInitialBudget().calculateInitialBudget(childrenWP);
+            workPackageObject.put("InitialEstimatePLevels",
+                    wpBudget.getInitialBudget().getpLevels());
+            workPackageObject.put("InitialEstimateInDollars",
+                    wpBudget.getInitialBudget().getLabourDollars());
+
         }
 
         return SH.responseWithEntity(200, workPackageObject.toString());
