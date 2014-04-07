@@ -338,113 +338,109 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
         var param = $params.id;
         $scope.project = {};
         $scope.package = {};
+        $scope.users = [];
+        $scope.quantity = 20;
+
+        var userList = [];
+        var assignedUserList = [];
 
         Restangular.one('work_packages', param).get().then(function(response){
           $scope.package = response;
+          getProjectNumber($scope.package);
+        });
 
-          Restangular.one('projects', $scope.package.projectNumber).get().then(function(response){
+        var getProjectNumber = function(obj){
+          Restangular.one('projects', obj.projectNumber).get().then(function(response){
             $scope.project = response;
-
-            Restangular.all('projects/' + $scope.project.projectNumber + '/users').getList().then(function(response){
-              $scope.users = response;
-            })
-
-            Restangular.all('workpackages/' + param + '/users').getList().then(function(response){
-              $scope.selectedUsers = response;
-            }) 
-          })
-        })
-
-
-        $scope.selectedUsers = [];
-        $scope.quantity = 20;
-
-        $scope.selectP = function($index) {
-          if ($scope.users[$index].disabled) {
-            return;
-          }
-
-          if (!$scope.users[$index].selected) {
-            $scope.users[$index].selected = true;
-          } else {
-            $scope.users[$index].selected = false;
-          }
+            getUsersAssignedToProject($scope.project);
+          });    
         }
 
-        $scope.addedSelectP = function($index) {
-          if (!$scope.selectedUsers[$index].selected) {
-            $scope.selectedUsers[$index].selected = true;
-          } else {
-            $scope.selectedUsers[$index].selected = false;
-          }
-        }
+        var getUsersAssignedToProject = function(obj){
+          Restangular.all('projects/' + obj.projectNumber + '/users').getList().then(function(response){
+            userList = response;
 
-        $scope.addP = function() {
-          $scope.users.forEach(addToSelectedP);
-        }
-
-        function addToSelectedP(obj) {
-          if (obj.selected === true && obj.disabled !== true) {
-            $scope.selectedUsers.push({
-              id: obj.id,
-              firstName: obj.firstName,
-              lastName: obj.lastName,
-              selected: false
-            });
-            obj.disabled = true;
-            obj.selected = false;
-            var data = {
-              workPackageNumber: $scope.package.workPackageNumber,
-              userId: obj.id,
-              active: true
+            for (var i = 0; i < userList.length; i++){
+              userList[i].selected = false;
             }
 
-            Restangular.one('work_packages/' + $scope.package.workPackageNumber + '/assignments').customPOST(data).then(function(response){
-              GrowlResponse(response)
-            }, function(response){
-              GrowlResponse(response)
-            });
+            getUsersAssignedToWorkPackage();
+          });   
+        }
+
+        var getUsersAssignedToWorkPackage = function(){
+          Restangular.all('work_packages/' + param + '/assignments').getList().then(function(response){
+            assignedUserList = response;
+
+            for (var i = 0; i < assignedUserList.length; i++){
+              for (var j = 0; j < userList.length; j++){
+                if (assignedUserList[i].Id == userList[j].Id){
+                  userList[j].selected = true;
+                  userList[j].markedForRemoval = false;
+                }
+              } 
+            }
+
+            angular.copy(userList, $scope.users);
+          });
+        }   
+
+        $scope.markForAssignment = function($index){
+          var state = $scope.users[$index] && $scope.users[$index].markedForAssignment;
+
+          if (state == undefined || state == false){
+            $scope.users[$index].markedForAssignment = true;
+          } else {
+            $scope.users[$index].markedForAssignment = false;
           }
         }
 
-        $scope.removeP = function() {
-          var length = $scope.selectedUsers.length;
+        $scope.markForRemoval = function($index){
+          var state = $scope.users[$index] && $scope.users[$index].markedForRemoval;
 
-          for (var i = 0; i < length;) {
-            if (!removeFromSelectedP($scope.selectedUsers[i]))
-              i++;
-          };
+          if (state == undefined || state == false){
+            $scope.users[$index].markedForRemoval = true;
+          } else {
+            $scope.users[$index].markedForRemoval = false;
+          }   
         }
 
-        function removeFromSelectedP(obj) {
-          if (obj !== undefined && obj.selected === true) {
-            var num = obj.id;
-            for (var i = 0; i < $scope.users.length; i++) {
-              if ($scope.users[i].id == num) {
-                $scope.users[i].disabled = false;
-              }
+        $scope.remove = function(){
+          var length = $scope.users.length;
+
+          for (var i = 0; i < length; i++){
+            if ($scope.users[i].markedForRemoval){
+              var user_id = $scope.users[i].id;
+
+              Restangular.all('work_packages/' + param + '/assignments/' + user_id).getList().then(function(response){
+                console.log(response);
+                var data = response[0];
+                data.active = false;
+                Restangular.one('work_packages/' + param + '/assignments/' + user_id).customPUT(data);
+              });
+
+              $scope.users[i].selected = false;
             }
-        /*
-        var data = {
-          userId: $scope.cUser.id,
-          projectNumber: obj.projectNumber,
-          active: false
+          }
         }
-        Restangular.one('projects/' + obj.projectNumber + '/assignments').customPUT(data).then(function(response){
-          $.growl.notice("Success", "Object Created");
-        });*/
 
-var index = $scope.selectedUsers.indexOf(obj);
+        $scope.add = function(){
+          // TODO
+        }
+        
+        // var data = {
+        //   workPackageNumber: $scope.package.workPackageNumber,
+        //   userId: obj.id,
+        //   active: true
+        // }
 
-if (index > -1) {
-  $scope.selectedUsers.splice(index, 1);
-}
-return true;
-}
-return false;
-}
+        // Restangular.one('work_packages/' + $scope.package.workPackageNumber + '/assignments').customPOST(data).then(function(response){
+        //   GrowlResponse(response)
+        // }, function(response){
+        //   GrowlResponse(response)
+        // });
+  
 }]);
-
 
 
 /*

@@ -13,20 +13,20 @@ var cascadia = angular.module('cascadiaApp', [
 cascadia.config(['$routeProvider',
     function($routeProvider) {
       $routeProvider.
-        when('/add-engineer', {controller: 'EngineerController', templateUrl:'Partials/add-engineer.html',
-             resolve: requiresAuthentication}).
+        //when('/add-engineer', {controller: 'EngineerController', templateUrl:'Partials/add-engineer.html',
+             // resolve: requiresAuthentication}).
         when('/add-engineer/:id', {controller: 'EngineerController', templateUrl:'Partials/add-engineer.html',
              resolve: requiresAuthentication}).
         when('/assign-employee-project/:id', {controller: 'AEPController', templateUrl:'Partials/assign-employee-project.html',
              resolve: requiresAuthentication}).
-        when('/assign-employee-wp', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html',
-             resolve: requiresAuthentication}).
+        //when('/assign-employee-wp', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html',
+             // resolve: requiresAuthentication}).
         when('/assign-employee-wp/:id', {controller: 'AEWPController', templateUrl:'Partials/assign-employee-wp.html',
              resolve: requiresAuthentication}).
-        when('/assign-project', {controller: 'PackageController', templateUrl:'Partials/assign-project.html',
-             resolve: requiresAuthentication}).
-        when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html',
-             resolve: requiresAuthentication}).
+        // when('/assign-project', {controller: 'APController', templateUrl:'Partials/assign-project.html',
+        //      resolve: requiresAuthentication}).
+        // when('/assign-wp', {controller: 'PackageController', templateUrl:'Partials/assign-wp.html',
+        //      resolve: requiresAuthentication}).
         when('/create-wp/:id', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html',
              resolve: requiresAuthentication}).
         when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html', 

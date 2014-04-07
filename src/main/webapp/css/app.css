@@ -208,7 +208,7 @@ time {
   display: none;
 }
 
-#notAssigned .assign-true {
+#notAssigned .assign-true, .true {
   background: rgba(0, 255, 0, 0.2) !important;
 }
 
@@ -218,6 +218,10 @@ time {
 
 #assigned .remove-true {
   background: rgba(255, 0, 0, 0.2) !important;
+}
+
+#assigned .remove-false {
+  background: transparent !important;
 }
 
 #login {

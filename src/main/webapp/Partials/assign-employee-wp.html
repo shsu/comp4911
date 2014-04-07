@@ -14,14 +14,14 @@
       <p class="col-xs-5 no-pl"><input type="text" ng-model="query" class="form-control" placeholder="Enter Employee"/></p>
     </div>
     <div class="row">
-      <div class="col-xs-5 results">
+      <div class="col-xs-5 results" id="notAssigned">
         <table class="table table-hover">
           <tbody>
             <tr>
               <th style="width: 33%;">Employee ID</th>
               <th style="width: 33%;">Employee Name</th>
             </tr>
-            <tr ng-click="selectP($index)" class="{{selectedUser.selected}} disabled-{{project.disabled}}" ng-repeat="user in users | filter:query | limitTo: quantity">
+            <tr ng-click="markForAssignment($index)" class="{{user.selected}} assign-{{user.markedForAssignment}}" ng-repeat="user in users | filter:query | limitTo: quantity">
               <td>{{user.id}}</td> 
               <td>{{user.firstName}} {{user.lastName}}</td>
             </tr>
@@ -30,18 +30,18 @@
       </div>
       <div class="col-xs-2">
         <button ng-click="addP()" class="btn btn-primary btn-block">Add</button>
-        <button ng-click="removeP()" class="btn btn-primary btn-block">Remove</button>
+        <button ng-click="remove()" class="btn btn-primary btn-block">Remove</button>
       </div>
-      <div class="col-xs-5 results">
+      <div class="col-xs-5 results" id="assigned">
         <table class="table table-hover">
           <tbody>
             <tr>
               <th style="width: 33%;">Employee ID</th>
               <th style="width: 33%;">Employee Name</th>
             </tr>
-            <tr ng-click="addedSelectP($index)" class="{{selectedUser.selected}}" ng-hide="!selectedUsers" ng-repeat="selectedUser in selectedUsers">
-              <td>{{selectedUser.id}}</td> 
-              <td>{{selectedUser.firstName}} {{selectedUser.lastName}}</td>
+            <tr ng-click="markForRemoval($index)" class="{{user.selected}} remove-{{user.markedForRemoval}}"  ng-repeat="user in users">
+              <td>{{user.id}}</td> 
+              <td>{{user.firstName}} {{user.lastName}}</td>
             </tr>
           </tbody>
         </table>
