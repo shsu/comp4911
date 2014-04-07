@@ -35,7 +35,7 @@ div.ng-scope {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
-  padding-top: 70px; }
+  /*padding-top: 70px;*/ }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway";
@@ -218,4 +218,8 @@ time {
 
 #assigned .remove-true {
   background: rgba(255, 0, 0, 0.2) !important;
+}
+
+#login {
+  margin-top: 70px;
 }
