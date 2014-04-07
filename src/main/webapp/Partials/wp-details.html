@@ -18,29 +18,49 @@
           </p>
         </div>
       </div>
-    </div>      
+    </div>
     <div class="row">
-      <div class="col-sm-5">
+      <div class="col-sm-12">
         <div class="panel panel-default">
-          <div class="panel-heading">Assigned Employees:</div>
+          <div class="panel-heading">Initial Estimate</div>
           <div class="panel-body">
-          <input type="text" ng-model="query" placeholder="Search User" class="form-control" />
-              <br />
             <div class="table-responsive">
               <table class="table table-hover table-bordered">
                 <thead>
-                  <th>Assigned Employees</th>
-                  <th>Pay Grade</th>
+                  <th>P1</th>
+                  <th>P2</th>
+                  <th>P3</th>
+                  <th>P4</th>
+                  <th>P5</th>
+                  <th>DS</th>
+                  <th>SS</th>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="user in assignedUsers | filter: search | limitTo: quantity">
-                    <td>{{user.firstName}} {{user.lastName}}</td>
-                    <td>{{user.pLevel}}</td>
+                  <tr>
+                    <td><input type="number" class="form-input min-width" min="0"></td>
+                    <td><input type="number" class="form-input min-width" min="0"></td>
+                    <td><input type="number" class="form-input min-width" min="0"></td>
+                    <td><input type="number" class="form-input min-width" min="0"></td>
+                    <td><input type="number" class="form-input min-width" min="0"></td>
+                    <td><input type="number" class="form-input min-width" min="0"></td>
+                    <td><input type="number" class="form-input min-width" min="0"></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>            
+          </div>
+        </div>        
+      </div>
+    </div>      
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="panel panel-default">
+            <div class="panel-heading">Budget & Cost:</div>
+            <div class="panel-body">
+              <p>Budgeted Cost: {{report.InitialEstimateInDollars | currency }}</p>
+              <p>Remaining Budget: {{(report.InitialEstimateInDollars - report.CurrentSpendingInDollars) | currency }}</p>
+              <p>Expected Ending Budget: {{(report.CurrentSpendingInDollars + report.RemainingEstimateInDollars) | currency}}</p>
+            </div>
         </div>        
       </div>
       <div class="col-sm-7">
@@ -67,6 +87,9 @@
             </div>
           </div>
         </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5">
         <div class="panel panel-default">
           <div class="panel-heading">Status Reports</div>
           <div class="panel-body">
@@ -85,19 +108,30 @@
             </table>
           </div>
         </div>
-      </div>
+      </div>        
     </div>
-           <div class="row">
-        <div class="col-sm-7">
-          <div class="panel panel-default">
-            <div class="panel-heading">Budget & Cost:</div>
-            <div class="panel-body">
-              <p>Budgeted Cost: {{report.InitialEstimateInDollars | currency }}</p>
-              <p>Remaining Budget: {{(report.InitialEstimateInDollars - report.CurrentSpendingInDollars) | currency }}</p>
-              <p>Expected Ending Budget: {{(report.CurrentSpendingInDollars + report.RemainingEstimateInDollars) | currency}}</p>
-            </div>
+    <div class="col-sm-7">
+      <div class="panel panel-default">
+        <div class="panel-heading">Assigned Employees:</div>
+        <div class="panel-body">
+        <input type="text" ng-model="query" placeholder="Search User" class="form-control" />
+            <br />
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+              <thead>
+                <th>Assigned Employees</th>
+                <th>Pay Grade</th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="user in assignedUsers | filter: search | limitTo: quantity">
+                  <td>{{user.firstName}} {{user.lastName}}</td>
+                  <td>{{user.pLevel}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </div>
-  </div>  
+      </div>        
+    </div>
+  </div>
 </content>

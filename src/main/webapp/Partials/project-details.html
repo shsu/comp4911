@@ -20,29 +20,13 @@
       <div class="row" has-permission="ProjectManager">
         <div class="col-sm-5">
           <div class="panel panel-default">
-            <div class="panel-heading">Assigned Employees:</div>
+            <div class="panel-heading">Budget & Cost:</div>
             <div class="panel-body">
-              <input type="text" ng-model="query" placeholder="Search User" class="form-control" />
-              <br />
-              <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                  <thead>
-                    <th>Employee ID</th>
-                    <th>Employee Name</th>
-                    <th>P-Level</th>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="user in assignedUsers | limitTo: quantity | filter: search">
-                      <td>{{user.id}}</td>
-                      <td>{{user.firstName}} {{user.lastName}}</td>
-                      <td>{{user.pLevel}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-              </div>
-            </div>            
-          </div>        
+              <p>Budgeted Cost: {{report.InitialEstimateInDollars | currency }}</p>
+              <p>Remaining Budget: {{(report.InitialEstimateInDollars - report.CurrentSpendingInDollars) | currency }}</p>
+              <p>Expected Ending Budget: {{(report.CurrentSpendingInDollars + report.RemainingEstimateInDollars) | currency}}</p>
+            </div>
+          </div>
         </div>
         <div class="col-sm-7">
           <div class="panel panel-default">
@@ -69,18 +53,31 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-12">
           <div class="panel panel-default">
-            <div class="panel-heading">Budget & Cost:</div>
+            <div class="panel-heading">Assigned Employees:</div>
             <div class="panel-body">
-              <p>Budgeted Cost: {{report.InitialEstimateInDollars | currency }}</p>
-              <p>Remaining Budget: {{(report.InitialEstimateInDollars - report.CurrentSpendingInDollars) | currency }}</p>
-              <p>Expected Ending Budget: {{(report.CurrentSpendingInDollars + report.RemainingEstimateInDollars) | currency}}</p>
+              <input type="text" ng-model="query" placeholder="Search User" class="form-control" />
+              <br />
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>P-Level</th>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="user in assignedUsers | limitTo: quantity | filter: search">
+                      <td>{{user.id}}</td>
+                      <td>{{user.firstName}} {{user.lastName}}</td>
+                      <td>{{user.pLevel}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>        
             </div>
           </div>
         </div>
       </div>
-    </div>  
+    </div>
   </content>

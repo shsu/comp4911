@@ -35,7 +35,7 @@ div.ng-scope {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
-  /*padding-top: 70px;*/ }
+  padding-top: 70px; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway";
@@ -175,6 +175,8 @@ time {
     background: #dddddd; }
   .results .disabled-true {
     background: #dddddd; }
+  .results .true {
+    background: rgba(0, 255, 0, 0.2) !important; }
 
 .table-wrapper {
   border: 1px solid #dddddd;
@@ -204,26 +206,5 @@ time {
   border-radius: 5px;
   margin-bottom: 10px; }
 
-#notAssigned .true {
-  display: none;
-}
-
-#notAssigned .assign-true, .true {
-  background: rgba(0, 255, 0, 0.2) !important;
-}
-
-#assigned .false {
-  display: none;
-}
-
-#assigned .remove-true {
-  background: rgba(255, 0, 0, 0.2) !important;
-}
-
-#assigned .remove-false {
-  background: transparent !important;
-}
-
-#login {
-  margin-top: 70px;
-}
+.min-width {
+  width: 70px; }
