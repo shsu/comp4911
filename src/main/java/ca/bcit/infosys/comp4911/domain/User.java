@@ -56,7 +56,7 @@ public class User implements Serializable
    private Date startDate;
 
    @Column
-   private boolean isHR;
+   private boolean hr;
 
    @Column
    @NotNull(message="Status can not be null.")
@@ -162,12 +162,12 @@ public class User implements Serializable
 
    public boolean isHR()
    {
-      return isHR;
+      return hr;
    }
 
-   public void setHR(boolean isHR)
+   public void setHR(boolean hr)
    {
-      this.isHR = isHR;
+      this.hr = hr;
    }
 
    public String getStatus()
@@ -215,7 +215,7 @@ public class User implements Serializable
    }
 
     public User(final String username, final String password, final String firstName, final String lastName,
-                final Date startDate, final boolean isHR, final String status, final int paidHoursPerWeek,
+                final Date startDate, final boolean hr, final String status, final int paidHoursPerWeek,
                 final int totalFlexTime, final int vacationDays, final int defaultTimesheetID,
                 final int supervisorUserID, final int timesheetApproverUserID, final PLevel pLevel) {
         this.username = username;
@@ -223,7 +223,7 @@ public class User implements Serializable
         this.firstName = firstName;
         this.lastName = lastName;
         this.startDate = startDate;
-        this.isHR = isHR;
+        this.hr = hr;
         this.status = status;
         this.paidHoursPerWeek = paidHoursPerWeek;
         this.totalFlexTime = totalFlexTime;
@@ -258,7 +258,7 @@ public class User implements Serializable
     this.firstName = firstName;
     this.lastName = lastName;
     this.startDate = DateTime.now().toDate();
-    this.isHR = false;
+    this.hr = false;
     this.status = "Active";
     this.paidHoursPerWeek = 40;
     this.totalFlexTime = 0;
@@ -350,7 +350,7 @@ public class User implements Serializable
          result += ", firstName: " + firstName;
       if (lastName != null && !lastName.trim().isEmpty())
          result += ", lastName: " + lastName;
-      result += ", isHR: " + isHR;
+      result += ", hr: " + hr;
       if (status != null && !status.trim().isEmpty())
          result += ", status: " + status;
       result += ", paidHoursPerWeek: " + paidHoursPerWeek;
