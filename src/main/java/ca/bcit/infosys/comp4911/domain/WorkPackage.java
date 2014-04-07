@@ -47,10 +47,9 @@ public class WorkPackage implements Serializable
     private String description;
 
     /** This is supposed to be Active or Inactive I believe */
-    @Column
+    @Column()
     @NotNull(message="ProgressStatus can not be null.")
-    @Size(max=250,message="ProgressStatus can not contain more than 250 characters.")
-    private String progressStatus;
+    private boolean progressStatus = true;
 
     @Temporal(TemporalType.DATE)
     private Date endDate;
@@ -127,12 +126,12 @@ public class WorkPackage implements Serializable
       this.startDate = startDate;
     }
 
-    public String getProgressStatus()
+    public boolean getProgressStatus()
     {
       return progressStatus;
     }
 
-    public void setProgressStatus(String progressStatus)
+    public void setProgressStatus(boolean progressStatus)
     {
       this.progressStatus = progressStatus;
     }
@@ -200,7 +199,7 @@ public class WorkPackage implements Serializable
     }
 
     public WorkPackage(String workPackageNumber, String workPackageName,
-                       Date issueDate, String progressStatus, Date endDate,
+                       Date issueDate, boolean progressStatus, Date endDate,
                        int projectNumber, List<Effort> estimateAtStart)
     {
         super();
@@ -237,7 +236,7 @@ public class WorkPackage implements Serializable
         this.workPackageNumber = workPackageNumber;
         this.workPackageName = workPackageName;
         this.issueDate = DateTime.now().toDate();
-        this.progressStatus = "";
+        this.progressStatus = true;
         this.endDate = null;
         this.projectNumber = projectNumber;
         this.estimateAtStart = new ArrayList<Effort>();
@@ -260,8 +259,7 @@ public class WorkPackage implements Serializable
          result += ", workPackageName: " + workPackageName;
       if (description != null && !description.trim().isEmpty())
          result += ", description: " + description;
-      if (progressStatus != null && !progressStatus.trim().isEmpty())
-         result += ", progressStatus: " + progressStatus;
+    result += ", progressStatus: " + progressStatus;
       result += ", estimateAtStart: " + estimateAtStart;
       result += ", projectNumber: " + projectNumber;
       return result;
