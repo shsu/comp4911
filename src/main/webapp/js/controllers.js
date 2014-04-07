@@ -298,6 +298,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
               var projNum = $scope.projects[i].projectNumber;
 
               Restangular.one('projects/' + projNum + '/assignments/' + $scope.cUser.id).get().then(function(response){
+                console.log(response);
                 var data = response[0];
                 data.active = false;
                 Restangular.one('projects/' + projNum + '/assignments/' + $scope.cUser.id).customPUT(data);
