@@ -1649,6 +1649,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
     cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$location', '$rootScope', '$routeParams', 'Restangular',
       function($scope, $location, $rootScope, $params, Restangular) {
         var param = $params.id;
+          toastr.info("Double click to edit fields with the <i class='fa fa-pencil-square-o'></i> icon.")
         $scope.supervisor = {};
         $scope.timesheetApprover = {};
         $scope.editFirstName = $scope.editLastName = $scope.editUserName = $scope.editPLevel = $scope.editStatus = false;
@@ -1687,6 +1688,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           $scope.editUserName = true;
         }
 
+      $scope.focusPassword = function() {
+          $scope.editPassword = true;
+      }
+
         $scope.focusStatus = function() {
           $scope.editStatus = true;
         }
@@ -1715,6 +1720,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           user = $scope.cUser;
           user.put();
           $location.path('users');
+          toastr.success("User Profile Updated")
         }
 
       }

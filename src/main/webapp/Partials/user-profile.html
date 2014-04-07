@@ -22,7 +22,7 @@
               <td>User Name</td>
               <td>
                 <span ng-hide="editUserName" ng-dblclick="focusUserName()" ng-bind="user.username"></span>
-                <input type="text" ng-show="editUserName" ng-model="user.username"></input>
+                <input type="text" ng-show="editUserName" ng-model="user.username" requ></input>
               </td>
             </tr>
             <tr>
@@ -40,6 +40,10 @@
               <td>{{user.pLevel}}</td>
             </tr>
             <tr>
+                <td>Status</td>
+                <td>{{user.status}}</td>
+            </tr>
+            <tr>
               <td>Assigned Manager</td>
               <td><span ng-show="hasSupervisor()">{{supervisor.firstName}} {{supervisor.lastName}}</span>
                 <span ng-hide="hasSupervisor()">None Assigned</span>
@@ -51,13 +55,9 @@
                 <span ng-hide="hasTimesheetApprover()">None Assigned</span>
               </td>
             </tr>
-            <tr> 
-              <td>Status</td>
-              <td>{{user.status}}</td>
-            </tr>
           </tbody>
         </table>
-      </div>    
+      </div>
     </div>
     <div class="row">
           <div class="col-sm-2 col-sm-offset-8">
@@ -70,23 +70,10 @@
       </div>
       <div class="modal-body" style="text-align: center">
         <form name="loginForm">
-        <!--
-          <div>
-            Old Password
-          </div>
-          <div class="input-group input-group-lg">
-            <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-            <input type="password" class="form-control" data-ng-model="oldPassword" id="password" placeholder="Password" maxlength="250" required>
-          </div>-->
-          <div>
-            New Password
-          </div>
-          <div class="input-group input-group-lg">
-            <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-            <input type="password" class="form-control" data-ng-model="newPassword" id="password" placeholder="Password" maxlength="250" required>
-          </div>
+            <input type="password" class="form-control" data-ng-model="newPassword" id="password" placeholder="New Password" maxlength="250" required>
         </form>
       </div>
+      <br />
       <div class="modal-footer">
         <button class="btn btn-lg btn-success" ng-click="ok(newPassword)">OK
         </button>
