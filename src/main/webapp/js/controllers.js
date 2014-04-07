@@ -370,12 +370,12 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
         }
 
         var getUsersAssignedToWorkPackage = function(){
-          Restangular.all('work_packages/' + param + '/assignments').getList().then(function(response){
+          Restangular.all('work_packages/' + param + '/assignments?filter=active').getList().then(function(response){
             assignedUserList = response;
 
             for (var i = 0; i < assignedUserList.length; i++){
               for (var j = 0; j < userList.length; j++){
-                if (assignedUserList[i].Id == userList[j].Id){
+                if (assignedUserList[i].id == userList[j].id){
                   userList[j].selected = true;
                   userList[j].markedForRemoval = false;
                 }
@@ -412,10 +412,8 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
           for (var i = 0; i < length; i++){
             if ($scope.users[i].markedForRemoval){
               var user_id = $scope.users[i].id;
-              console.log(user_id);
 
               Restangular.all('work_packages/' + param + '/assignments/' + user_id).getList().then(function(response){
-                console.log(response);
                 var data = response[0];
                 data.active = false;
                 Restangular.one('work_packages/' + param + '/assignments/' + user_id).customPUT(data);
@@ -1816,9 +1814,28 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           $scope.package.put();
         }
 
+        $scope.openReport = function(report) {
+          $location.path('wp-status-report/' + $scope.package.workPackageNumber + '/' + report.id)
+        }
+
       }
       ]);
 
+
+    /*
+    WORK PACKAGE STATUS REPORT CLOSED CONTROLLER
+    */
+    cascadiaControllers.controller('WPStatusReportClosedController', ['$scope', '$location', '$routeParams', 'Restangular', 'GrowlResponse',
+      function($scope, $location, $params, Restangular, GrowlResponse){
+        var paramWP = $params.wpid;
+        var paramSR = $params.id; 
+        $scope.wp = {};
+
+        Restangular.one('work_packages/' + paramWP + '/status_reports/' + paramSR).get().then(function(response){
+          $scope.report = response;
+        })
+      }
+      ]);
 
 
 /*

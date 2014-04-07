@@ -96,7 +96,7 @@
                 <th>Status Report ID</th>
                 <th>Date</th>
               </thead>
-              <tbody ng-click="select" ng-repeat="report in reports">
+              <tbody ng-click="openReport(report)" ng-repeat="report in reports">
                 <tr>
                   <td>{{report.id}}</td>
                   <td>{{report.reportDate}}</td>

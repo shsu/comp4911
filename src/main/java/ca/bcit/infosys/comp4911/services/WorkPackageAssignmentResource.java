@@ -43,8 +43,13 @@ public class WorkPackageAssignmentResource {
     public Response getAllWorkPackageAssignments(
       @HeaderParam(SH.AUTHORIZATION_STRING) final String headerToken,
       @QueryParam(SH.TOKEN_STRING) final String queryToken,
-      @PathParam("id") String id) {
+      @PathParam("id") String id,
+      @QueryParam("filter") String filter) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+        if(filter != null && filter.equals("active")) {
+            return SH.responseWithEntity(200, workPackageAssignmentDao.getAllActiveUsersByWorkPackageNumber(id));
+        }
 
         return SH.responseWithEntity(200, workPackageAssignmentDao.getAllUsersByWorkPackageNumber(id));
     }
