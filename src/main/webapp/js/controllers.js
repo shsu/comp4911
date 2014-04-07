@@ -274,18 +274,36 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
           for (var i = 0; i < length; i++){
             if ($scope.projects[i].markedForAssignment){
               var projNum = $scope.projects[i].projectNumber;
+              $scope.projects[i].selected = false;
 
-              var data = {
-                userId: $scope.cUser.id,
-                projectNumber: projNum,
-                active: true,
+              var updateAssignment = function(assignment) {
+                assignment.active = true;
+                Restangular.one('projects/' + projNum + '/assignments/' + $scope.cUser.id).customPUT(assignment).then(function(response) {
+                  toastr.success("Employee Assigned");
+                })
               }
 
-              Restangular.one('projects/' + projNum + '/assignments').customPOST(data).then(function(response){
-                toastr.success("Employee Assigned");
-              });
+              var createAssignment = function() {
+                var data = {
+                  userId: $scope.cUser.id,
+                  projectNumber: projNum,
+                  active: true,
+                }
 
-              $scope.projects[i].selected = true;
+                Restangular.one('projects/' + projNum + '/assignments').customPOST(data).then(function(response){
+                  toastr.success("Employee Assigned");
+                });
+              }
+
+              Restangular.all('projects/' + projNum + '/assignments/' + $scope.cUser.id).getList().then(function(response) {
+                if(response.length > 0) {
+                  console.log("Greater than 0");
+                  updateAssignment(response[0]);
+                } else {
+                  console.log("zero");
+                  createAssignment();
+                }
+              });
             }
           }
         }
@@ -297,7 +315,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
             if ($scope.projects[i].markedForRemoval){
               var projNum = $scope.projects[i].projectNumber;
 
-              Restangular.one('projects/' + projNum + '/assignments/' + $scope.cUser.id).get().then(function(response){
+              Restangular.all('projects/' + projNum + '/assignments/' + $scope.cUser.id).getList().then(function(response){
                 console.log(response);
                 var data = response[0];
                 data.active = false;
@@ -1810,10 +1828,16 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5', 'DS', 'SS' ];
         $scope.statuses = [ 'Active', 'Inactive' ];
-        $scope.cUser = {}
         $scope.quantity = 20;
 
+        var loadUser = function() {
+          Restangular.one('user').get().then(function(response) {
+              $scope.user = response;
+          })
+        }
+
         base.getList().then(function(response) {
+          loadUser();
           $scope.users = response;
         }, function(response){
           GrowlResponse(response);
