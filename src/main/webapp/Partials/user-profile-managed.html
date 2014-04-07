@@ -43,10 +43,10 @@
           <tbody>
             <tr>
               <td>P Level</td>
-              <td>
+              <td data-toggle="tooltip" data-placement="right" title="Double-click to Change">
                 <span ng-hide="editPLevel" ng-dblclick="focusPLevel()" ng-bind="cUser.pLevel"></span>
                 <select ng-show="editPLevel" ng-model="cUser.pLevel" ng-options="i for i in items" required>     
-                </select>
+                </select> (Double-click to Change)
               </td>
             </tr>
             <tr>
@@ -71,14 +71,10 @@
             </tr>
           <tr>
               <td>Status</td>
-              <td>
-
-                  <input type="text" ng-model="cUser.status" maxlength="250" />
-              </td>
-          </tr>
-    <span ng-hide="editStatus" ng-dblclick="focusStatus()" ng-bind="cUser.status"></span>
+              <td data-toggle="tooltip" data-placement="right" title="Double-click to Change">
+                <span ng-hide="editStatus" ng-dblclick="focusStatus()" ng-bind="cUser.status"></span>
                 <select ng-show="editStatus" ng-model="cUser.status" ng-options="s for s in statuses" required>
-                </select>
+                </select> (Double-click to Change)
                 </td>
             </tr>
           </tbody>
