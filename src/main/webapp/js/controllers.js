@@ -1530,7 +1530,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
     cascadiaControllers.controller('UserProfileController', ['$scope', '$modal', 'GrowlResponse', '$rootScope', '$routeParams', 'Restangular',
       function($scope, $modal, GrowlResponse, $rootScope, $params, Restangular) {
         $rootScope.user = JSON.parse(localStorage.getItem('user'));
-        $scope.newPassword;
 
         var loadSupervisor = function(){
           Restangular.one('users', $rootScope.user.supervisorUserID).get().then(function(response){
@@ -1568,36 +1567,38 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.open = function () {
 
           var modalInstance = $modal.open({
-            templateUrl: 'myModalContent.html',
-            controller: ModalInstanceCtrl,
-            resolve: {
-              item: function () {
-                return $scope.newPassword;
-              }
-            }
+            templateUrl: 'myModalContent2.html',
+            controller: ModalInstanceCtrl2
           });
 
-          modalInstance.result.then(function () {
+          modalInstance.result.then(function (np) {
             Restangular.one('users', $rootScope.user.id).get().then(function(response) {
               var user = response;
-              persist(user);
+              
+              user.password = np;
+              console.log(np);
+
+              user.put().then(function(response) {
+                $.growl.notice({message:"Password saved."});
+              }, function(response) {
+                GrowlResponse(response);
+              });
             });
-          }, function(){
-            console.log("dismissed")
           });
-
-          var persist = function(user) {
-            user.password = $scope.newPassword;
-
-            user.put().then(function(response) {
-              $.growl.notice({message:"Password saved."});
-            }, function(response) {
-              GrowlResponse(response);
-            });
-          }
         }
       }
       ]);
+
+    var ModalInstanceCtrl2 = function ($scope, $modalInstance) {
+
+      $scope.ok = function (np) {
+        $modalInstance.close(np);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+    };
 
 /*
     MANAGED USER PROFILE CONTROLLER

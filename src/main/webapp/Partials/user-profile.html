@@ -21,7 +21,7 @@
               <td>Password</td>
               <td><a ng-click="open()" href="" class="cursor-hand">Change Password</a></td>
             </tr>
-         </tbody>
+          </tbody>
         </table>
       </div>
       <div class="table-responsive col-sm-6">
@@ -35,12 +35,12 @@
               <td>Assigned Manager</td>
               <td><span ng-show="hasSupervisor()">{{supervisor.firstName}} {{supervisor.lastName}}</span>
                 <span ng-hide="hasSupervisor()">None Assigned</span>
-               </td>
+              </td>
             </tr>
             <tr>
               <td>Timesheet Approver</td>
               <td><span ng-show="hasTimesheetApprover()">{{timesheetApprover.firstName}} {{timesheetApprover.lastName}}</span>
-              <span ng-hide="hasTimesheetApprover()">None Assigned</span>
+                <span ng-hide="hasTimesheetApprover()">None Assigned</span>
               </td>
             </tr>
             <tr> 
@@ -51,35 +51,36 @@
         </table>
       </div>    
     </div>
-    <script type="text/ng-template" id="myModalContent.html">
-          <div class="modal-header">
-              <h3>Change Password</h3>
+    <script type="text/ng-template" id="myModalContent2.html">
+      <div class="modal-header">
+        <h3>Change Password</h3>
+      </div>
+      <div class="modal-body" style="text-align: center">
+        <form name="loginForm">
+        <!--
+          <div>
+            Old Password
           </div>
-          <div class="modal-body" style="text-align: center">
-          <form name="loginForm">
-              <div>
-              Old Password
-              </div>
-              <div class="input-group input-group-lg">
-				<span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                <input type="password" class="form-control" ng-model="oldPassword" id="password" placeholder="Password" maxlength="250" required>
-			</div>
-              <div>
-              New Password
-              </div>
-              <div class="input-group input-group-lg">
-				<span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                <input type="password" class="form-control" ng-model="item" id="password" placeholder="Password" maxlength="250" required>
-			</div>
-			</form>
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+            <input type="password" class="form-control" data-ng-model="oldPassword" id="password" placeholder="Password" maxlength="250" required>
+          </div>-->
+          <div>
+            New Password
           </div>
-          <div class="modal-footer">
-              <button class="btn btn-lg btn-success" ng-click="ok()">OK
-              </button>
-              <button class="btn btn-lg btn-danger" ng-click="cancel()">Cancel
-              </button>
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+            <input type="password" class="form-control" data-ng-model="newPassword" id="password" placeholder="Password" maxlength="250" required>
           </div>
-      </script>
-    </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-lg btn-success" ng-click="ok(newPassword)">OK
+        </button>
+        <button class="btn btn-lg btn-danger" ng-click="cancel()">Cancel
+        </button>
+      </div>
+    </script>
   </div>
+</div>
 </content>
