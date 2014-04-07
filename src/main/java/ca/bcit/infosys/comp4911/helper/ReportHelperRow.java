@@ -19,7 +19,7 @@ public class ReportHelperRow {
     public HashMap<Integer, HashMap<PLevel, BigDecimal>> yearPLevelRateHashMap;
 
     private WorkPackageDao workPackageDao;
-
+    final private static double CONVERT_FROM_TENTHS = 0.1;
     private HashMap<PLevel, Integer> pLevels;
     private double labourDollars;
     private String wpNumber;
@@ -157,31 +157,31 @@ public class ReportHelperRow {
         switch(pLevel){
             case P1:
                 incrementP1(hours);
-                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                labourDollars += CONVERT_FROM_TENTHS * yearPayRate.get(pLevel).doubleValue() * hours;
                 break;
             case P2:
                 incrementP2(hours);
-                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                labourDollars += CONVERT_FROM_TENTHS * yearPayRate.get(pLevel).doubleValue() * hours;
                 break;
             case P3:
                 incrementP3(hours);
-                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                labourDollars += CONVERT_FROM_TENTHS * yearPayRate.get(pLevel).doubleValue() * hours;
                 break;
             case P4:
                 incrementP4(hours);
-                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                labourDollars += CONVERT_FROM_TENTHS * yearPayRate.get(pLevel).doubleValue() * hours;
                 break;
             case P5:
                 incrementP5(hours);
-                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                labourDollars += CONVERT_FROM_TENTHS * yearPayRate.get(pLevel).doubleValue() * hours;
                 break;
             case SS:
                 incrementSS(hours);
-                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                labourDollars += CONVERT_FROM_TENTHS * yearPayRate.get(pLevel).doubleValue() * hours;
                 break;
             case DS:
                 incrementDS(hours);
-                labourDollars += yearPayRate.get(pLevel).doubleValue() * hours;
+                labourDollars += CONVERT_FROM_TENTHS * yearPayRate.get(pLevel).doubleValue() * hours;
                 break;
         }
     }
