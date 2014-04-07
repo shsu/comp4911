@@ -41,17 +41,7 @@
       <div class="table-responsive col-sm-6">
         <table class="table table-striped table-hover table-bordered">
           <tbody>
-          <tr>
-              <td>PLevel</td>
-              <td>
-                  <select ng-model="cUser.pLevel" ng-options="i for i in items" required>
-                  </select>
-              </td>
-          </tr>
             <tr>
-<<<<<<< HEAD
-              <td>Assigned Supervisor</td>
-=======
               <td>P Level</td>
               <td>
                 <span ng-hide="editPLevel" ng-dblclick="focusPLevel()" ng-bind="cUser.pLevel"></span>
@@ -61,7 +51,6 @@
             </tr>
             <tr>
               <td>Assigned Manager</td>
->>>>>>> User Profile modification possible
               <td>
                 <a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor()">Assign</a>
                 <span ng-show="hasSupervisor()">
@@ -83,17 +72,15 @@
           <tr>
               <td>Status</td>
               <td>
-<<<<<<< HEAD
+
                   <input type="text" ng-model="cUser.status" maxlength="250" />
               </td>
           </tr>
-=======
-                <span ng-hide="editStatus" ng-dblclick="focusStatus()" ng-bind="cUser.status"></span>
+    <span ng-hide="editStatus" ng-dblclick="focusStatus()" ng-bind="cUser.status"></span>
                 <select ng-show="editStatus" ng-model="cUser.status" ng-options="s for s in statuses" required>
                 </select>
                 </td>
             </tr>
->>>>>>> User Profile modification possible
           </tbody>
         </table>
       </div>    
