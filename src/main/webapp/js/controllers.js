@@ -600,7 +600,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
                   $rootScope.user = response;
               }
               $location.path('users/' + user.id);
-              $.growl.notice({message:"Timesheet Approver Assigned"});
+              toastr.success("Timesheet Approver Assigned");
             })
           }
         }
@@ -1573,7 +1573,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               console.log(np);
 
               user.put().then(function(response) {
-                $.growl.notice({message:"Password saved."});
+                toastr.success("Password Changed");
               }, function(response) {
                 GrowlResponse(response);
               });
