@@ -54,12 +54,14 @@ public class SampleData {
         generateUsers();
 //        generate250Users();  // generates 2000 users now
         generateProjects();
-//        generate100Projects()
+//        generate100Projects();
         generatePayRates();
         generateProjectAssignments();
+//        generateProjectAssignmentForAll();
         generateEffort();
         generateWorkPackages();
         generateWorkPackageAssignments();
+//        generateWorkPackageAssignmentForAll();
         generateTimesheets();
         generateWorkPackageStatusReports();
         andJobsSaidLetThereBeAShitTonOfTimeSheets();
@@ -493,21 +495,31 @@ public class SampleData {
         workPackageAssignmentDao.create(assignment, false);
         
         assignment = new WorkPackageAssignment("C333222", awongUserId, true, true, activateDate, deactivateDate);
-        workPackageAssignmentDao.create(assignment, false);
+        workPackageAssignmentDao.create(assignment, false);        
         
-        //Richard: For each project assignment, assign all child workpackages to the assigned user
-        activateDate = setDate(2, 12, 2014);
-        deactivateDate = setDate(12, 8, 2014);
+    }
+    
+    /**
+     * For each project assignment, assign all child workpackages to the assigned user
+     */
+    private void generateWorkPackageAssignmentForAll(){
+        Date activateDate = setDate(2, 12, 2014);
+        Date deactivateDate = setDate(12, 8, 2014);
+        WorkPackageAssignment assignment;
         List<WorkPackage> wpList;
         List<ProjectAssignment> paList = projectAssignmentDao.getAll();
         for(ProjectAssignment pa: paList){
         	wpList = workPackageDao.getAllByProject(pa.getProjectNumber());
         	for(WorkPackage wp : wpList){
-            	assignment = new WorkPackageAssignment(wp.getWorkPackageNumber(), pa.getUserId(), false , true, activateDate, deactivateDate);
-                workPackageAssignmentDao.create(assignment, false); 
+        		//assign only if not already assigned
+            	if(workPackageAssignmentDao.getByUserAndWorkPackage(wp.getWorkPackageNumber(), pa.getUserId()).isEmpty()){
+            		assignment = new WorkPackageAssignment(wp.getWorkPackageNumber(), pa.getUserId(), false , true, activateDate, deactivateDate);
+            		workPackageAssignmentDao.create(assignment, false); 
+            	}
         	}
         }
     }
+    
     private void generateProjectAssignments()
     {
         List<Project> projects = projectDao.getAll();
@@ -531,14 +543,34 @@ public class SampleData {
         projectAssignmentDao.create(assignment, false);
         
         assignment = new ProjectAssignment(99777, users.get(1).getId(), false, true);
-        projectAssignmentDao.create(assignment, false);
+        projectAssignmentDao.create(assignment, false);        
         
-        //Richard: Assigning one random project to each user       
+    }
+    
+    /**
+     * Assigning one random project to each user
+     */
+    private void generateProjectAssignmentForAll(){      
         List<Project> projectList = projectDao.getAll();
         List<User> userList = userDao.getAll();
+        ProjectAssignment assignment;
+        int pCount = projectList.size();
+        int pNumber;
+        boolean isAssigned;
+        Random rand = new Random();
         for(User u : userList){  		
-        	assignment = new ProjectAssignment(projectList.get((u.getId()+10)%(projectList.size())).getProjectNumber(), u.getId(), false, true);        	   
-    		projectAssignmentDao.create(assignment, false);        
+        	isAssigned = false;
+        	pNumber = rand.nextInt(pCount);
+        	//check if the project is already assigned to the user        	
+        	for(ProjectAssignment pa :projectAssignmentDao.getAllByUserId(u.getId())){
+        		if(pa.getProjectNumber()==pNumber){
+        			isAssigned = true; 
+        		}
+        	}        	
+        	if(!isAssigned){
+	        	assignment = new ProjectAssignment(projectList.get(pNumber).getProjectNumber(), u.getId(), false, true);        	   
+	    		projectAssignmentDao.create(assignment, false);      
+        	}
         }
     }
     
