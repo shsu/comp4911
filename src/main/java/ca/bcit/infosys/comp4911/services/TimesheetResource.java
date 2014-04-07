@@ -1,8 +1,10 @@
 package ca.bcit.infosys.comp4911.services;
 
 import ca.bcit.infosys.comp4911.access.TimesheetDao;
+import ca.bcit.infosys.comp4911.access.UserDao;
 import ca.bcit.infosys.comp4911.application.UserTokens;
 import ca.bcit.infosys.comp4911.domain.Timesheet;
+import ca.bcit.infosys.comp4911.domain.User;
 import ca.bcit.infosys.comp4911.helper.SH;
 
 import javax.ejb.EJB;
@@ -23,6 +25,9 @@ import javax.ws.rs.core.Response;
  */
 @Path("/timesheets")
 public class TimesheetResource {
+
+    @EJB
+    private UserDao userDao;
 
     @EJB
     private TimesheetDao timesheetDao;
@@ -49,6 +54,9 @@ public class TimesheetResource {
       final Timesheet timesheet) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
         timesheetDao.create(timesheet,true);
+        User user = userDao.read(userId);
+        user.setTotalFlexTime(user.getTotalFlexTime() + timesheet.getOverTime());
+        userDao.update(user);
 
         return SH.response(201);
     }
@@ -84,6 +92,9 @@ public class TimesheetResource {
             return SH.response(404);
         }
 
+        Timesheet current = timesheetDao.read(id);
+        User user = userDao.read(userId);
+        user.setTotalFlexTime(user.getTotalFlexTime() + (timesheet.getOverTime() - current.getOverTime()));
         timesheetDao.update(timesheet);
         return SH.response(200);
     }
