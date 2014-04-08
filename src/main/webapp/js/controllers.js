@@ -1922,7 +1922,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.quantity = 20;
         $scope.package = {};
         $scope.listOfEffort = [];
-        
+        $scope.hasEffort = false;
+
         var initEffort = function() {
           $scope.listOfEffort = [
           {
@@ -1958,10 +1959,12 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         var base = Restangular.one('work_packages/' + $scope.param);
 
+
         base.get().then(function(response){
           $scope.package = response;
           loadProject();
           loadBudget();
+
           if($scope.package.estimateAtStart && $scope.package.estimateAtStart.length > 0) {
             $scope.listOfEffort = $scope.package.estimateAtStart;
             $scope.hasEffort = true;
@@ -1970,6 +1973,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             $scope.hasEffort = false;
           }
         });
+        
 
         base.getList('assignments').then(function(response){
           $scope.assignedUsers = response;
