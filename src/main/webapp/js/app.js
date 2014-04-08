@@ -63,8 +63,6 @@ cascadia.config(['$routeProvider',
             resolve: requiresAuthentication, permission:'TimesheetApprover'}).
         when('/timesheet-approval/:id', {controller: 'TADetailsController', templateUrl:'Partials/single-timesheet.html',
             resolve: requiresAuthentication, permission:'TimesheetApprover'}).
-        when('/timesheet-management', {controller: 'TimesheetController', templateUrl:'Partials/timesheet-management.html',
-            resolve: requiresAuthentication}).
         when('/timesheet', {controller: 'TimesheetController', templateUrl:'Partials/timesheet.html',
             resolve: requiresAuthentication}).
         when('/timesheet/:id', {controller: 'TimesheetCorrectionController', templateUrl:'Partials/timesheet-correction.html',

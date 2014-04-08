@@ -875,7 +875,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             toastr.warning("Invalid Input - Work Package Number: if a character is 0, then the characters following it must all be 0 too.");
           }else {
             workPackage = $scope.workPackage;
-            workPackage.progressStatus = 'Active';
+            workPackage.progressStatus = true;
             workPackage.issueDate = new Date();
             workPackage.projectNumber = $scope.project.projectNumber;
             
