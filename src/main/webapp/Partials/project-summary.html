@@ -2,9 +2,9 @@
     <h1 class="secondary">Project Summary</h1><br /> 
     <div ng-controller="ProjectSummaryController">
     <div class="row">
-      <p class="col-xs-3">Project Number: <select  ng-init="loadProjects()" ng-change="loadWorkPackages()" ng-model="project" data-ng-options="p.projectNumber for p in projects"></select></p>
+      <p class="col-xs-3">Project Number: <select ng-change="loadMatrix()" ng-model="pro" data-ng-options="p.projectNumber for p in projects"></select></p>
       <p class="col-xs-3">Project Name: {{project.projectName}}</p>
-      <p class="col-xs-6">Project Manager: {{user.firstName}} {{user.lastName}}</p>
+      <p class="col-xs-6">Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}</p>
     </div>
     <div class="row">
       <div class="table-responsive">
@@ -23,7 +23,7 @@
               <th>TOTAL</th>
               <th>Labour Dollars</th>
             </tr>
-            <tr ng-repeat="row in workPackages">
+            <tr ng-repeat="row in rows">
               <td>{{row.workPackageNumber}}</td>
               <td>{{row.workPackageDescription}}</td>
               <td>{{row.pLevels.P5}}</td>
@@ -34,7 +34,7 @@
               <td>{{row.pLevels.DS}}</td>
               <td>{{row.pLevels.SS}}</td>
               <td>{{(row.pLevels.P5 + row.pLevels.P4 + row.pLevels.P3 + row.pLevels.P2+ row.pLevels.P1 +row.pLevels.DS + row.pLevels.SS)}}</td>
-              <td>{{row.labourDollars}}</td>
+              <td>{{row.labourDollars | currency}}</td>
             </tr>
           </tbody>
         </table>

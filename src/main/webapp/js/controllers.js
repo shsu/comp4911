@@ -1310,38 +1310,19 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
           $scope.projectNumbers = [];
 
-          Restangular.one('user/projects').getList().then(function(response){
-              projects = response;
-              initList(projects);
-              for(var i = 0; i < projects.length; ++i) {
-                  $scope.projectNumbers.push(projects[i].projectNumber);
-              }
-          }, function(response){
-              GrowlResponse(response);
+          Restangular.all('user/projects/managed').getList().then(function(response){
+              $scope.projects = response;
           });
 
-          $scope.loadProjects = function() {
-              Restangular.one('user/projects/managed').getList().then(function(response){
-                  $scope.projects = response;
-                  findSelected();
-              });
-          };
-
-          $scope.loadWorkPackages = function(projectNumber) {
-              Restangular.one('work_packages/project').getList($scope.project.projectNumber).then(function(response){
-                  $scope.projectChosen = true;
-                  $scope.workPackages = response;
-              });
-          };
-
-        Restangular.all('reports/matrix/' + param).getList().then(function(response) {
-          $scope.project = response;
-          loadManager();
-          $scope.payRates = $scope.project.payRates; 
-          response.splice(0, 1);
-          $scope.rows = response;
-          console.log($scope.rows[0]);
-        });
+          $scope.loadMatrix = function() {
+            Restangular.all('reports/matrix/' + $scope.pro.projectNumber).getList().then(function(response) {
+              $scope.project = response[0];
+              loadManager();
+              $scope.payRates = $scope.project.payRates; 
+              response.splice(0, 1);
+              $scope.rows = response;
+            });
+          }
 
         var loadManager = function() {
           Restangular.one('projects/' + $scope.project.projectNumber + '/assignments/manager').get().then(function(response){
