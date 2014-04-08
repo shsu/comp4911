@@ -20,7 +20,7 @@
               <th style="width: 33%;">Emp Name</th>
               <th style="width: 33%;">Pay Grade</th>
             </tr>
-            <tr ng-click="select(engineer); open()" class="{{engineer.selected}} disabled-{{engineer.disabled}}" ng-repeat="engineer in engineers | filter: search | limitTo: quantity">
+            <tr ng-click="select(engineer); open()" class="{{engineer.selected}} disabled-{{engineer.disabled}}" ng-repeat="engineer in filtered = (engineers | uniqueUser:user) | filter: search | limitTo: quantity">
               <td>{{engineer.id}}</td> 
               <td>{{engineer.firstName}} {{engineer.lastName}}</td>
               <td>{{engineer.pLevel}}</td>

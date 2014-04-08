@@ -101,8 +101,8 @@
                 <th>Status Report ID</th>
                 <th>Date</th>
               </thead>
-              <tbody ng-click="openReport(report)" ng-repeat="report in reports">
-                <tr>
+              <tbody>
+                <tr ng-click="openReport(report)" class="cursor-hand" ng-repeat="report in reports">
                   <td>{{report.id}}</td>
                   <td>{{report.reportDate}}</td>
                 </tr>

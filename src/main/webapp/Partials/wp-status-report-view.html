@@ -2,14 +2,14 @@
   <h1 class="secondary">Work Package Status Report</h1><br />
   <div ng-controller="WPStatusReportClosedController">
    <div class="row">
-     <p class="col-lg-3"><strong>Project No. </strong>{{report.projectNumber}}</p>
+     <p class="col-lg-3"><strong>Project No. </strong>{{wp.projectNumber}}</p>
    </div>
    <div class="row">
     <p class="col-lg-3">
       <strong>Work Package No: </strong>{{report.workPackageNumber}}
     </p>
     <p class="col-lg-5">
-     <strong>Work Package Name: </strong>{{report.workPackageName}}
+     <strong>Work Package Name: </strong>{{wp.workPackageName}}
    </p>
  </div>
  <form class="form-inline" role="form">
@@ -28,7 +28,7 @@
           <th>Person Days</th>
         </tr>
         <tr ng-repeat="effort in report.estimatedWorkRemainingInPD">
-          <td><span ng-bind="effort.pLevel"></span></td><td><span ng-model="effort.personDays"></span></td>
+          <td><span ng-bind="effort.pLevel"></span></td><td><span ng-bind="effort.personDays"></span></td>
         </tr>
       </tbody>
     </table>
@@ -46,23 +46,18 @@
     <!-- Tab panes -->
     <div class="tab-content">
       <div class="tab-pane active" id="workAccomplished">
-        Work Accomplished:
         <span ng-bind="report.workAccomplished"></span>
       </div>
       <div class="tab-pane" id="problemEncountered">
-        Problem Encountered:
         <span ng-bind="report.problemEncountered"></span>
       </div>
       <div class="tab-pane" id="comment">
-        Comment:
         <span ng-bind="report.comment"></span>
       </div>
       <div class="tab-pane" id="problemAnticipated">
-        Problem Anticipated:
         <span ng-bind="report.problemAnticipated"></span>
       </div>
       <div class="tab-pane" id="workPlanned">
-        Work Planned:
         <span ng-bind="report.workPlanned"></span>
       </div>
     </div>

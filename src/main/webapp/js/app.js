@@ -91,6 +91,8 @@ cascadia.config(['$routeProvider',
             resolve: requiresAuthentication}).
         when('/wp-status-report', {controller: 'WPStatusReportController', templateUrl:'Partials/wp-status-report.html',
             resolve: requiresAuthentication}).
+        when('/wp-status-report/:id', {controller: 'WPStatusReportController', templateUrl:'Partials/wp-status-report.html',
+            resolve: requiresAuthentication}).
         when('/wp-status-report/:wpid/:id', {controller: 'WPStatusReportClosedController', templateUrl:'Partials/wp-status-report-view.html',
             resolve: requiresAuthentication}).
         otherwise({redirectTo:'/login'});

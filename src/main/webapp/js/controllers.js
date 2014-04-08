@@ -1916,8 +1916,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
     /*
         WORK PACKAGE DETAILS CONTROLLER
     */
-    cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', '$routeParams', 'GrowlResponse', 'calculateBudget', 'FilterUser',
-      function($scope, Restangular, $params, GrowlResponse, calculateBudget, FilterUser){
+    cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', '$routeParams', '$location', 'GrowlResponse', 'calculateBudget', 'FilterUser',
+      function($scope, Restangular, $params, $location, GrowlResponse, calculateBudget, FilterUser){
         $scope.param = $params.id;
         $scope.quantity = 20;
         $scope.package = {};
@@ -2039,7 +2039,14 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         Restangular.one('work_packages/' + paramWP + '/status_reports/' + paramSR).get().then(function(response){
           $scope.report = response;
+          loadPackage($scope.report.workPackageNumber);
         })
+
+        var loadPackage = function(wpNumber) {
+          Restangular.one('work_packages', wpNumber).get().then(function(response) {
+            $scope.wp = response;
+          })
+        }
       }
       ]);
 
