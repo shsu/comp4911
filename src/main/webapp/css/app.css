@@ -63,15 +63,7 @@ h1, h2, h3, h4, h5, h6 {
     background: whitesmoke; }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-  padding: 10px; }
-
-.borderless tfoot {
-    border: none;
-}
-
-.borderless td {
-    border: none;
-}
+  padding: 15px; }
 
 .btn.pull-right {
   margin-left: 20px; }
@@ -237,11 +229,5 @@ time {
 #login {
   margin-top: 70px; }
 
-/*
-  Allow angular.js to be loaded in body, hiding cloaked elements until
-  templates compile.  The !important is important given that there may be
-  other selectors that are more specific or come later and might alter display.
- */
-[ng\:cloak], [ng-cloak], .ng-cloak {
-    display: none !important;
-}
+.negative {
+  color: rgba(255, 0, 0, 0.5); }

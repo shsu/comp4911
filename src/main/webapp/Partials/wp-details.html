@@ -60,7 +60,7 @@
             <div class="panel-heading">Budget & Cost:</div>
             <div class="panel-body">
               <p id="budgetCost">Budgeted Cost: {{report.InitialEstimateInDollars | currency }}</p>
-              <p id="remainingBudget">Remaining Budget: {{(report.InitialEstimateInDollars - report.CurrentSpendingInDollars) | currency }}</p>
+              <p id="remainingBudget" ng-class="{'negative': ((report.InitialEstimateInDollars - report.CurrentSpendingInDollars) < 0)}">Remaining Budget: {{(report.InitialEstimateInDollars - report.CurrentSpendingInDollars) | currency }}</p>
               <p id="endingBudget">Expected Ending Budget: {{(report.CurrentSpendingInDollars + report.RemainingEstimateInDollars) | currency}}</p>
             </div>
         </div>        
