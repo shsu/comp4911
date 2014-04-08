@@ -1995,6 +1995,22 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           $location.path('wp-status-report/' + $scope.package.workPackageNumber + '/' + report.id)
         }
 
+        $scope.toggleStatus = function() {
+
+          if($scope.package.progressStatus)
+          {
+            $scope.package.progressStatus = false;
+          } else 
+          {
+            $scope.package.progressStatus = true;
+          }
+
+          $scope.package.put().then(function(response) {
+            $scope.package = response;
+          })
+
+        }
+
       }
       ]);
 

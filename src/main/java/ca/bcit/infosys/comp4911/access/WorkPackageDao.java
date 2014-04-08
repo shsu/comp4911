@@ -29,10 +29,11 @@ public class WorkPackageDao {
         return em.find(WorkPackage.class, workPackageNumber);
     }
 
-    public void update(final WorkPackage workPackage) {
+    public WorkPackage update(final WorkPackage workPackage) {
         if(ValidationHelper.validateEntity(workPackage)){
-            em.merge(workPackage);
+            return em.merge(workPackage);
         }
+        return null;
     }
 
     public void delete(final WorkPackage workPackage) {

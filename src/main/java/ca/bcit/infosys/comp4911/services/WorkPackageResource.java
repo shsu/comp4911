@@ -107,8 +107,7 @@ public class WorkPackageResource {
             return SH.response(404);
         }
 
-        workPackageDao.update(workPackage);
-        return SH.response(200);
+        return SH.responseWithEntity(200, workPackageDao.update(workPackage));
     }
 
     @DELETE
