@@ -41,8 +41,21 @@
             <tfoot>
             <tr>
                 <td></td>
-                <td>Total:</td>
-                <td>{{total / 10}}</td>
+                <td class="text-right">Total:</td>
+                <td class="text-right">{{total / 10}}</td>
+                <td class="text-center">{{sat / 10}}</td>
+                <td class="text-center">{{sun / 10}}</td>
+                <td class="text-center">{{mon / 10}}</td>
+                <td class="text-center">{{tue / 10}}</td>
+                <td class="text-center">{{wed / 10}}</td>
+                <td class="text-center">{{thu / 10}}</td>
+                <td class="text-center">{{fri / 10}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-right">Overtime:</td>
+                <td class="text-right"> {{timesheet.overTime / 10}}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -54,21 +67,8 @@
             </tr>
             <tr>
                 <td></td>
-                <td>Overtime:</td>
-                <td> {{timesheet.overTime / 10}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Flextime:  </td>
-                <td>{{user.totalFlexTime}}</td>
+                <td class="text-right">Flextime:  </td>
+                <td class="text-right">{{user.totalFlexTime}}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -89,14 +89,14 @@
                 <select ng-model="r.workPackageNumber" ng-hide="timesheet.signed" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select>
                 <span ng-show="timesheet.signed">{{r.workPackageNumber}}</span>
               </td>
-                <td>{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10}}</td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.saturday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.sunday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.monday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.tuesday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.wednesday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
+                <td class="text-right">{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10}}</td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.saturday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.sunday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.monday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.tuesday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.wednesday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
 <!--              <td><button class="input-sm" ng-readonly="timesheet.signed" ng-model="r.note">Note</button></td> -->
               <td><span ng-click="delete($index)" class="cursor-hand glyphicon glyphicon-remove-circle"></span></td>
             </tr>

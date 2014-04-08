@@ -1495,6 +1495,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.$watch('timesheet.timesheetRows', function() {
           console.log('check overtime');
           var total = 0;
+            var sat = 0;
+            var sun = 0;
+            var mon = 0;
+            var tue = 0;
+            var wed = 0;
+            var thu = 0;
+            var fri = 0;
           if($scope.timesheet) {
             var rows = $scope.timesheet.timesheetRows;
 
@@ -1502,10 +1509,24 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               total += (
                 rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
                 rows[i].wednesday + rows[i].thursday + rows[i].friday
-                )
+                );
+                sat += rows[i].saturday;
+                sun += rows[i].sunday;
+                mon += rows[i].monday;
+                tue += rows[i].tuesday;
+                wed += rows[i].wednesday;
+                thu += rows[i].thursday;
+                fri += rows[i].friday;
             }
 
             $scope.total = total;
+              $scope.sat = sat;
+              $scope.sun = sun;
+              $scope.mon = mon;
+              $scope.tue = tue;
+              $scope.wed = wed;
+              $scope.thu = thu;
+              $scope.fri = fri;
             
             if((total - 400) > 0) {
               $scope.timesheet.overTime = total - 400;
@@ -1660,6 +1681,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.$watch('timesheet.timesheetRows', function() {
           console.log('check overtime');
           var total = 0;
+            var sat = 0;
+            var sun = 0;
+            var mon = 0;
+            var tue = 0;
+            var wed = 0;
+            var thu = 0;
+            var fri = 0;
           if($scope.timesheet) {
             var rows = $scope.timesheet.timesheetRows;
 
@@ -1667,10 +1695,25 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               total += (
                 rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
                 rows[i].wednesday + rows[i].thursday + rows[i].friday
-                )
+                );
+                sat += rows[i].saturday;
+                sun += rows[i].sunday;
+                mon += rows[i].monday;
+                tue += rows[i].tuesday;
+                wed += rows[i].wednesday;
+                thu += rows[i].thursday;
+                fri += rows[i].friday;
+
             }
 
             $scope.total = total;
+              $scope.sat = sat;
+              $scope.sun = sun;
+              $scope.mon = mon;
+              $scope.tue = tue;
+              $scope.wed = wed;
+              $scope.thu = thu;
+              $scope.fri = fri;
 
             if((total - 400) > 0) {
               $scope.timesheet.overTime = total - 400;
