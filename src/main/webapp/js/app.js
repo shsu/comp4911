@@ -55,7 +55,7 @@ cascadia.config(['$routeProvider',
             resolve: requiresAuthentication}).
         when('/projects/:id/assign-manager', {controller: 'ManagerController', templateUrl:'Partials/add-project-manager.html',
             resolve: requiresAuthentication}).
-        when('/project-summary/:id', {controller: 'ProjectSummaryController', templateUrl:'Partials/project-summary.html',
+        when('/project-summary', {controller: 'ProjectSummaryController', templateUrl:'Partials/project-summary.html',
             resolve: requiresAuthentication}).
         when('/rate-sheet', {controller: 'RateSheetController', templateUrl:'Partials/rate-sheet.html',
             resolve: requiresAuthentication}).
