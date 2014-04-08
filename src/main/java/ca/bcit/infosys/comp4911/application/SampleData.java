@@ -127,23 +127,28 @@ public class SampleData {
         String e;     // engineer
         String s;     // supervisor
 
+        // Supervisors
+        for(int i = 1; i <= n/4; i++){
+            s = "s" + Integer.toString(i);
+            userDao.create(new User(
+                    s, s, s, s, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
+        }
+
+        // HR users
         for(int i = 1; i <= n/5; i++){
             hr = "hr" + Integer.toString(i);
             userDao.create(new User(
-                    hr, hr, hr, hr, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
+                    hr, hr, hr, hr, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P4),false);
         }
 
+        // Engineers
         for(int i = 1; i <= n; i++) {
             e = "e" + Integer.toString(i);
             userDao.create(new User(
                     e, e, e, e, 1), false);
         }
 
-        for(int i = 1; i <= n/4; i++){
-            s = "s" + Integer.toString(i);
-            userDao.create(new User(
-                    s, s, s, s, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
-        }
+
     }
 
     private void generatePayRates() {
