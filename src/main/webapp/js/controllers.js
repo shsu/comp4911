@@ -884,6 +884,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             workPackage.progressStatus = true;
             workPackage.issueDate = new Date();
             workPackage.projectNumber = $scope.project.projectNumber;
+            workPackage.estimateAtStart = [];
             
             Restangular.one('work_packages').customPOST($scope.workPackage).then(function (response) {
               $location.path('manage-wp-pm');
@@ -975,6 +976,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           }
         };
 
+        $scope.past = function(payRate) {
+          return payRate.year < moment().year()
+        }
+
         $scope.edit = function() {
           for(var i = 0; i < payRatesChanged.length; i++) {
             payRatesChanged[i].put();
@@ -995,8 +1000,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             $scope.index++;
           }
         }
+
         $scope.current = function() {
-          $scope.index=2014;
+          $scope.index = moment().year();
         }
 
       }

@@ -25,7 +25,7 @@
               </tr>
               <tr ng-repeat="pp in payRatesMap[(index - 1)]">
                 <td class="center"><strong>{{pp.pLevel}}</strong></td>
-                <td><input class="center" type="text" ng-readonly="" ng-change="change(pp)" ng-model="pp.rate"/></td>
+                <td><input class="center" type="text" ng-readonly="past(pp)" ng-change="change(pp)" ng-model="pp.rate"/></td>
               </tr>
           </table>
       </div>
@@ -36,7 +36,7 @@
               <th class="center">{{(index)}}</th>
             </tr>
               <tr ng-repeat="pc in payRatesMap[index]">
-                <td><input class="center" type="text" ng-readonly="" ng-change="change(pc)" ng-model="pc.rate"/></td>
+                <td><input class="center" type="text" ng-readonly="past(pc)" ng-change="change(pc)" ng-model="pc.rate"/></td>
               </tr>
             </tbody>
           </table>
@@ -48,7 +48,7 @@
                 <th class="center">{{(index + 1)}}</th>
               </tr>
               <tr ng-repeat="pn in payRatesMap[(index + 1)]">
-                <td><input class="center" type="text" ng-readonly="" ng-change="change(pn)" ng-model="pn.rate"/></td>
+                <td><input class="center" type="text" ng-readonly="past(pn)" ng-change="change(pn)" ng-model="pn.rate"/></td>
               </tr>
             </tbody>
           </table>
