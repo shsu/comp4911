@@ -22,7 +22,7 @@
                 <input type="text" ng-show="editFirstName" ng-model="cUser.firstName" size="15" maxlength="250"></input> 
                 <span ng-hide="editLastName" ng-dblclick="focusLast()" ng-bind="cUser.lastName"></span>
                 <input type="text" ng-show="editLastName" ng-model="cUser.lastName" size="15" maxlength="250"></input>
-                  <span class="glyphicon glyphicon-pencil" ng-click="focusFirst();focusLast();"></span>
+                  <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusFirst();focusLast();"></span>
               </td>
             </tr>
             <tr>
@@ -32,7 +32,7 @@
               <td>
                 <span ng-hide="editUserName" ng-dblclick="focusUserName()" ng-bind="cUser.username"></span>
                 <input type="text" ng-show="editUserName" ng-model="cUser.username"></input>
-                  &NonBreakingSpace;<span class="glyphicon glyphicon-pencil" ng-click="focusUserName()"></span>
+                  &NonBreakingSpace;<span class="glyphicon glyphicon-pencil pull-right" ng-click="focusUserName()"></span>
               </td>
             </tr>
             <tr>
@@ -40,7 +40,7 @@
               <td>
                   <span ng-hide="editPassword" ng-dblclick="focusPassword()">********************</span>
                   <input type="password" ng-show="editPassword" ng-model="cUser.password" size="15" maxlength="250" required></input>
-                  <span class="glyphicon glyphicon-pencil" ng-click="focusPassword()"></span>
+                  <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusPassword()"></span>
             </tr>
          </tbody>
         </table>
@@ -54,7 +54,7 @@
                 <span ng-hide="editPLevel" ng-dblclick="focusPLevel()" ng-bind="cUser.pLevel"></span>
                 <select ng-show="editPLevel" ng-model="cUser.pLevel" ng-options="i for i in items" required>     
                 </select>
-                  <span class="glyphicon glyphicon-pencil" ng-click="focusPLevel()"></span>
+                  <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusPLevel()"></span>
               </td>
             </tr>
             <tr>
@@ -64,7 +64,7 @@
                     <span ng-hide="editStatus" ng-dblclick="focusStatus()" ng-bind="cUser.status"></span>
                     <select ng-show="editStatus" ng-model="cUser.status" ng-options="s for s in statuses" required>
                     </select>
-                    <span class="glyphicon glyphicon-pencil" ng-click="focusStatus()"></span>
+                    <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusStatus()"></span>
                 </td>
             </tr>
             <tr>
