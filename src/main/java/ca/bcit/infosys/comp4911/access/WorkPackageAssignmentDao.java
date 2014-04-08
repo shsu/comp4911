@@ -9,7 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Stateless
 public class WorkPackageAssignmentDao {
@@ -99,6 +102,23 @@ public class WorkPackageAssignmentDao {
         List<WorkPackageAssignment> responsibleEngineerList = query.getResultList();
         if(responsibleEngineerList.size() > 0) { return true; }
         return false;
+    }
+
+    public List<User> getAllUsersByMultipleWorkPackageNumber(final List<String> workPackageNumbers){
+        List<User> users;
+        Set<User> userSet = new HashSet<User>();
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u" +
+                " WHERE u.id IN (SELECT wpa.userId FROM WorkPackageAssignment wpa " +
+                " WHERE wpa.workPackageNumber IN (:workPackageNumber))", User.class);
+        query.setParameter("workPackageNumber", workPackageNumbers);
+        users = query.getResultList();
+        userSet.addAll(users);
+        users.clear();
+        users.addAll(userSet);
+
+        return users;
+
+
     }
 
 }

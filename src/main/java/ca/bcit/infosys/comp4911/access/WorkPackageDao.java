@@ -102,6 +102,8 @@ public class WorkPackageDao {
         return query.getResultList();
     }
 
+
+
     public HashMap<String, Date> getWPNumberDateHash(int projectNumber) {
         TypedQuery<WorkPackage> query = em.createQuery("select wp from WorkPackage wp"
                 + " where wp.projectNumber = :projectNumber",
@@ -131,5 +133,21 @@ public class WorkPackageDao {
         }
 
         return wPNumberDescriptionHash;
+    }
+
+    public boolean isParentLeaf(String wpNumber) {
+        String parentNumber = wpNumber;
+        for(int i = 0; i < 7; i++){
+            //find first occurrence of 0
+            if(wpNumber.charAt(i) == '0') {
+                parentNumber = wpNumber.substring(0, i-1);
+                for(int j = 0; j < 7 - parentNumber.length(); j++){
+                    parentNumber += '0';
+                }
+                break;
+            }
+
+        }
+        return read(parentNumber).getEstimateAtStart() != null;
     }
 }

@@ -61,6 +61,10 @@ public class WorkPackageResource {
         if(timesheetRowDao.isParentLeaf(workPackage.getWorkPackageNumber()))
         {
             return SH.responseWithEntity(409, "The Parent of this Work Package already contains Timesheets.");
+        }else if(workPackageDao.isParentLeaf(workPackage.getWorkPackageNumber())) {
+
+            return SH.responseWithEntity(409, "The Parent of this Work Package already contains an initial estimate");
+
         }
         workPackageDao.create(workPackage,false);
         return SH.response(201);
@@ -138,6 +142,8 @@ public class WorkPackageResource {
             @QueryParam(SH.TOKEN_STRING) final String queryToken,
             @PathParam("workpackage_number") String workPackageNumber) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
+
+
 
         return SH.responseWithEntity(200,
                 workPackageAssignmentDao.getAllUsersByWorkPackageNumber(workPackageNumber));
