@@ -1559,7 +1559,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           $rootScope.user = response;
         });
 
-
         var loadSupervisor = function(){
           Restangular.one('users', $rootScope.user.supervisorUserID).get().then(function(response){
             $scope.supervisor = response;
@@ -1692,9 +1691,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.save = function() {
           user = $scope.cUser;
-          user.put();
-          $location.path('users');
-          toastr.success("User Profile Updated")
+          user.put().then(function() {
+            $location.path('users');
+            toastr.success("User Profile Updated")
+          });
         }
 
       }
