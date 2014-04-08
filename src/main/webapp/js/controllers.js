@@ -1592,7 +1592,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         }
 
         $scope.submit = function() {
-          $scope.timsheet.pending = true;
+          $scope.timesheet.pending = true;
         }
 
         $scope.delete = function($index) {

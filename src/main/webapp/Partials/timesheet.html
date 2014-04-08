@@ -21,11 +21,13 @@
           <li class="cursor-hand" ng-click="next()">Week &gt;</li>
         </ul>
         
-        <table class="table table-hover table-striped table-bordered">
-          <tbody>
+        <table class="table table-hover table-striped borderless">
+
+          <thead>
             <tr>
               <th>Project No</th>
               <th>WP No</th>
+              <th>Total</th>
               <th>Sat</th>
               <th>Sun</th>
               <th>Mon</th>
@@ -33,9 +35,55 @@
               <th>Wed</th>
               <th>Thu</th>
               <th>Fri</th>
-              <th>Total</th>
+              <th>Note</th>
               <th>Delete</th>
             </tr>
+        </thead>
+            <tfoot class="borderless">
+            <tr>
+                <td></td>
+                <td>Total:</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Overtime:</td>
+                <td> {{timesheet.overTime}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Flextime:  </td>
+                <td>{{user.totalFlexTime}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tfoot>
+            <tbody>
             <tr ng-repeat="r in timesheet.timesheetRows">
               <td>
                 <select ng-model="r.projectNumber" ng-hide="timesheet.signed" ng-options="p for p in projectNumbers"></select>
@@ -45,22 +93,25 @@
                 <select ng-model="r.workPackageNumber" ng-hide="timesheet.signed" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select>
                 <span ng-show="timesheet.signed">{{r.workPackageNumber}}</span>
               </td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.saturday"></input></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.sunday"></input></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.monday"></input></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.tuesday"></input></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.wednesday"></input></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday"></input></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday"></input></td>
-              <td>{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10}}</td>
+                <td>{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10}}</td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.saturday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.sunday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.monday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.tuesday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.wednesday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
+                <td><button class="input-sm" ng-readonly="timesheet.signed" ng-model="r.note">Note</button></td>
               <td><span ng-click="delete($index)" class="cursor-hand">Delete</span></td>
             </tr>
+          <tr></tr>
           </tbody>
         </table>
         <footer>
-          <div class="row"><p class="col-xs-4">Overtime:<span ng-bind="(timesheet.overTime / 10)" /> </p></div>
           <div class="row">
-            <p class="col-xs-4">Flextime: {{user.totalFlexTime}} </p>
+              <!-- <p class="col-xs-4">Overtime: {{timesheet.overTime}} </p></div> -->
+          <div class="row">
+           <!-- <p class="col-xs-4">Flextime: {{user.totalFlexTime}} </p> -->
             <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 pull-right"><button class="btn btn-success btn-block" ng-click="add()" ng-disabled="timesheet.signed" ng-hide="timesheet.approved">Add new row</button></div>
           </div>
         </footer>
