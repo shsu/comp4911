@@ -1,11 +1,9 @@
 package ca.bcit.infosys.comp4911.helper;
 
-import ca.bcit.infosys.comp4911.access.PayRateDao;
 import ca.bcit.infosys.comp4911.access.WorkPackageDao;
 import ca.bcit.infosys.comp4911.domain.*;
 import org.joda.time.DateTime;
 
-import javax.ejb.EJB;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -115,7 +113,6 @@ public class ReportHelperRow {
         if(timesheetRowList != null && timesheetRowList.size() > 0 ) {
             Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
             TimesheetRow tsr;
-            WorkPackage workPackage;
             HashMap<String, Date> wpNumberDateHash  =
                     workPackageDao.getWPNumberDateHash(timesheetRowList.get(0).getProjectNumber());
             while(timesheetRowIterator.hasNext())

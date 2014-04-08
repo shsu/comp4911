@@ -245,6 +245,21 @@ public class WorkPackage implements Serializable
         this.startDate = issueDate;
     }
 
+    public WorkPackage(String workPackageNumber, String workPackageName, int projectNumber, List<Effort> effort)
+    {
+        super();
+        this.workPackageNumber = workPackageNumber;
+        this.workPackageName = workPackageName;
+        this.issueDate = DateTime.now().toDate();
+        this.progressStatus = true;
+        this.endDate = null;
+        this.projectNumber = projectNumber;
+        this.estimateAtStart = effort;
+        this.description = "";
+        this.completeDate = issueDate;
+        this.startDate = issueDate;
+    }
+
     public WorkPackage()
     {
     }

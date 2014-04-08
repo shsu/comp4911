@@ -2,6 +2,7 @@ package ca.bcit.infosys.comp4911.application;
 
 import ca.bcit.infosys.comp4911.access.*;
 import ca.bcit.infosys.comp4911.domain.*;
+import org.joda.time.DateTime;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -54,17 +55,17 @@ public class SampleData {
         generateUsers();
         generateUsers(100);  // generates n regular users, n/5 HR, n/4 managers 
         generateProjects();
-       generate100Projects();
+        generate100Projects();
         generatePayRates();
         generateProjectAssignments();
-  //     generateProjectAssignmentForAll();
+//      generateProjectAssignmentForAll();
         generateEffort();
         generateWorkPackages();
         generateWorkPackageAssignments();
-  //      generateWorkPackageAssignmentForAll();
+  //    generateWorkPackageAssignmentForAll();
         generateTimesheets();
         generateWorkPackageStatusReports();
-  //      andJobsSaidLetThereBeAShitTonOfTimeSheets();
+  //    andJobsSaidLetThereBeAShitTonOfTimeSheets();
         projectWPSRGenerator(55522);
     }
 
@@ -335,16 +336,8 @@ public class SampleData {
 
     private void generateWorkPackages() {
 
-        // Please Delete the below rows and replace all effort generated with the effortGenerator method
-        // (See the example in the very first Work Package created). All effort will now be persisted to the
-        // db upon creation of either wps or wpsrs. Please test starting the server
-        // before committing and let me know if you get any errors.
-        List<Effort> test = new ArrayList<Effort>();
-        test.add(new Effort(PLevel.P1, 20));
-
         String workPackageNumber = "";
         String wpName = "Lots'o Packages";
-        String appendNumber = "";
         Date issueDate = setDate(1, 2, 2014);
         Date endDate = setDate(5, 15, 2014);
 
@@ -526,7 +519,6 @@ public class SampleData {
     
     private void generateProjectAssignments()
     {
-        List<Project> projects = projectDao.getAll();
         List<User> users = userDao.getAll();
 
         /*
@@ -727,15 +719,6 @@ public class SampleData {
         tempTimesheet = new Timesheet(1, rowCollection, 11, 2014, 0, false, true, false);
         timesheetDao.create(tempTimesheet,false);
 
-        // Rudy: adding new sample timesheet data
-        // User2, week 13
-//        TimesheetRow wp3Row3 = new TimesheetRow(99777, "Z334222", 25, 25, 75, 0, 40, 60, 20, null,
-//                userDao.read(2).getpLevel());
-//        rowCollection.add(wp3Row3);
-//        tempTimesheet = new Timesheet(2, new ArrayList(rowCollection), 13, 2014, 0, true, true, true);
-//        timesheetDao.create(tempTimesheet,false);
-//        rowCollection.clear();
-        
     }
 
     private void generateWorkPackageStatusReports(){
@@ -747,12 +730,6 @@ public class SampleData {
         WorkPackageStatusReport WPSR = new WorkPackageStatusReport(date, "new wpsr", "Lots of work accomplished",
                 "none", "approve timesheets", remainingEstimate, "none", "B333223");
         workPackageStatusReportDao.create(WPSR,false);
-
-        remainingEstimate = effortDao.listOfEffort(99, 101);
-        date = setDate(3, 31, 2014);
-        WPSR = new WorkPackageStatusReport(date, "WPSR to test", "Pretty much slacked off",
-                "Too many to count", "So many things", effortGenerator(10, 10, 10, 10, 10, 10, 10), "Bugs galore", "B333223");
-        workPackageStatusReportDao.create(WPSR, false);
 
     }
 
@@ -914,4 +891,178 @@ public class SampleData {
             }
         }
     }
+
+    private void testProject() {
+        List<User> allSystemUsers = userDao.getAll();
+        for(User u : allSystemUsers){
+            projectAssignmentDao.create(new ProjectAssignment(88999, u.getId()), false);
+        }
+        User u = new User("cleclair@example.com", "password", "Craig", "LeClair", 1);
+        userDao.create(u, false);
+        List<ProjectAssignment> pas = projectAssignmentDao.getAllByUserId(u.getId());
+        pas.get(0).setProjectManager(true);
+        projectAssignmentDao.update(pas.get(0));
+
+
+        workPackageDao.create(new WorkPackage(
+                    "C100000", "Level 1", 88999), false);
+        workPackageDao.create(new WorkPackage(
+                "C110000", "Level 2", 88999), false);
+        workPackageDao.create(new WorkPackage(
+                "C111000", "Level 3", 88999), false);
+        workPackageDao.create(new WorkPackage(
+                "C111100", "Level 4", 88999), false);
+        workPackageDao.create(new WorkPackage(
+                "C111110", "Level 5", 88999), false);
+        workPackageDao.create(new WorkPackage(
+                "C111111", "Level 6", 88999, effortGenerator(100,100,100,100,100,100,100)), false);
+        timesheetsForLeaf(2, "C111111", 4);
+        timesheetsForLeaf(2, "C111111", 4);
+        timesheetsForLeaf(2, "C111111", 4);
+        timesheetsForLeaf(2, "C111111", 4);
+        timesheetsForLeaf(2, "C111111", 4);
+        timesheetsForLeaf(2, "C111111", 4);
+        workPackageDao.create(new WorkPackage(
+                "C111112", "Level 6", 88999, effortGenerator(200,200,420,420,420,420,420)), false);
+        timesheetsForLeaf(2, "C111112", 4);
+        timesheetsForLeaf(2, "C111112", 4);
+        timesheetsForLeaf(2, "C111112", 4);
+        timesheetsForLeaf(2, "C111112", 4);
+        timesheetsForLeaf(2, "C111112", 4);
+        timesheetsForLeaf(2, "C111112", 5);
+        workPackageDao.create(new WorkPackage(
+                "C111113", "Level 6", 88999, effortGenerator(210,210,210,210,210,210,210)), false);
+        timesheetsForLeaf(3, "C111113", 5);
+        timesheetsForLeaf(3, "C111113", 5);
+        timesheetsForLeaf(3, "C111113", 5);
+        timesheetsForLeaf(2, "C111113", 5);
+        timesheetsForLeaf(2, "C111113", 5);
+        timesheetsForLeaf(2, "C111113", 5);
+        workPackageDao.create(new WorkPackage(
+                "C111114", "Level 6", 88999, effortGenerator(110,110,110,110,110,110,110)), false);
+        timesheetsForLeaf(4, "C111114", 5);
+        timesheetsForLeaf(4, "C111114", 5);
+        timesheetsForLeaf(2, "C111114", 5);
+        workPackageDao.create(new WorkPackage(
+                "C111115", "Level 6", 88999, effortGenerator(110,110,110,110,110,110,110)), false);
+        timesheetsForLeaf(2, "C111115", 2);
+        timesheetsForLeaf(2, "C111115", 2);
+        timesheetsForLeaf(2, "C111115", 2);
+        timesheetsForLeaf(2, "C111115", 2);
+        timesheetsForLeaf(2, "C111115", 2);
+        workPackageDao.create(new WorkPackage(
+                "C111116", "Level 6", 88999, effortGenerator(110,110,110,110,110,110,110)), false);
+        timesheetsForLeaf(2, "C111116", 2);
+        timesheetsForLeaf(2, "C111116", 2);
+        workPackageDao.create(new WorkPackage(
+                "C111200", "Level 4", 88999, effortGenerator(750,870,690,510,310,210,110)), false);
+        timesheetsForLeaf(2, "C111200", 2);
+        workPackageDao.create(new WorkPackage(
+                "C111300", "Level 4", 88999), false);
+        workPackageDao.create(new WorkPackage(
+                "C111310", "Level 5", 88999, effortGenerator(750,870,690,510,310,210,110)), false);
+        timesheetsForLeaf(4, "C111310", 5);
+        timesheetsForLeaf(4, "C111310", 7);
+        timesheetsForLeaf(5, "C111310", 2);
+        workPackageDao.create(new WorkPackage(
+                "C111320", "Level 5", 88999, effortGenerator(750,870,690,510,310,210,110)), false);
+        timesheetsForLeaf(4, "C111320", 3);
+        timesheetsForLeaf(4, "C111320", 7);
+        timesheetsForLeaf(5, "C111320", 5);
+        workPackageDao.create(new WorkPackage(
+                "C111330", "Level 5", 88999, effortGenerator(750,870,690,510,310,210,110)), false);
+        timesheetsForLeaf(4, "C111330", 3);
+        timesheetsForLeaf(4, "C111330", 7);
+        timesheetsForLeaf(5, "C111330", 5);
+        workPackageDao.create(new WorkPackage(
+                "C111400", "Level 4", 88999), false);
+        workPackageDao.create(new WorkPackage(
+                "C111410", "Level 5", 88999), false);
+        workPackageDao.create(new WorkPackage(
+                "C111411", "Level 6", 88999, effortGenerator(2100,2100,2100,2100,2100,2100,2100)), false);
+        timesheetsForLeaf(4, "C111411", 3);
+        timesheetsForLeaf(4, "C111411", 7);
+        timesheetsForLeaf(5, "C111411", 5);
+        workPackageDao.create(new WorkPackage(
+                "C111412", "Level 6", 88999, effortGenerator(1100,1100,1100,2100,2100,2100,2100)), false);
+        timesheetsForLeaf(4, "C111412", 3);
+        timesheetsForLeaf(4, "C111412", 7);
+        timesheetsForLeaf(5, "C111412", 5);
+        workPackageDao.create(new WorkPackage(
+                "C111413", "Level 6", 88999, effortGenerator(1100,1100,1100,1100,1100,1100,1100)), false);
+        timesheetsForLeaf(3, "C111413", 3);
+        timesheetsForLeaf(7, "C111413", 2);
+        timesheetsForLeaf(5, "C111413", 1);
+        workPackageDao.create(new WorkPackage(
+                "C111414", "Level 6", 88999, effortGenerator(1100,1100,2100,1100,4100,3100,2100)), false);
+        timesheetsForLeaf(3, "C111414", 3);
+        timesheetsForLeaf(7, "C111414", 2);
+        timesheetsForLeaf(5, "C111414", 1);
+        workPackageDao.create(new WorkPackage(
+                "C111415", "Level 6", 88999, effortGenerator(1100,2100,2100,1100,2100,1100,1100)), false);
+        timesheetsForLeaf(3, "C111415", 3);
+        timesheetsForLeaf(7, "C111415", 2);
+        timesheetsForLeaf(5, "C111415", 4);
+        workPackageDao.create(new WorkPackage(
+                "C111416", "Level 6", 88999, effortGenerator(1100,1100,3100,5100,4100,3100,2100)), false);
+        timesheetsForLeaf(3, "C111416", 3);
+        timesheetsForLeaf(7, "C111416", 2);
+        timesheetsForLeaf(5, "C111416", 4);
+        timesheetsForLeaf(3, "C111416", 3);
+        timesheetsForLeaf(7, "C111416", 2);
+        workPackageDao.create(new WorkPackage(
+                "C111420", "Level 5", 88999), false);
+        workPackageDao.create(new WorkPackage(
+                "C111421", "Level 6", 88999, effortGenerator(3100,1100,1100,1100,1100,1100,1100)), false);
+        timesheetsForLeaf(3, "C111421", 3);
+        timesheetsForLeaf(7, "C111421", 2);
+        timesheetsForLeaf(5, "C111421", 4);
+        timesheetsForLeaf(3, "C111421", 3);
+        timesheetsForLeaf(7, "C111421", 2);
+        workPackageDao.create(new WorkPackage(
+                "C111422", "Level 6", 88999, effortGenerator(1200,1100,1100,1100,1100,1100,1100)), false);
+        timesheetsForLeaf(4, "C111422", 3);
+        timesheetsForLeaf(6, "C111422", 3);
+        timesheetsForLeaf(5, "C111422", 4);
+        timesheetsForLeaf(3, "C111422", 3);
+        timesheetsForLeaf(3, "C111422", 1);
+        workPackageDao.create(new WorkPackage(
+                "C111423", "Level 6", 88999, effortGenerator(1300,1400,1100,1100,1200,1100,1200)), false);
+        timesheetsForLeaf(3, "C111423", 3);
+        timesheetsForLeaf(2, "C111423", 2);
+        timesheetsForLeaf(5, "C111423", 4);
+        timesheetsForLeaf(5, "C111423", 3);
+        timesheetsForLeaf(6, "C111423", 2);
+        workPackageDao.create(new WorkPackage(
+                "C111424", "Level 6", 88999, effortGenerator(1100,1300,1100,1300,1500,1300,1100)), false);
+        timesheetsForLeaf(3, "C111424", 3);
+        timesheetsForLeaf(2, "C111424", 2);
+        timesheetsForLeaf(5, "C111424", 4);
+        workPackageDao.create(new WorkPackage(
+                "C111425", "Level 6", 88999, effortGenerator(1100,1100,1200,1400,1100,1030,1010)), false);
+        timesheetsForLeaf(3, "C111425", 3);
+        timesheetsForLeaf(2, "C111425", 2);
+        timesheetsForLeaf(5, "C111425", 4);
+        workPackageDao.create(new WorkPackage(
+                "C111426", "Level 6", 88999, effortGenerator(1100,1040,1030,1020,1010,1300,1010)), false);
+        timesheetsForLeaf(3, "C111426", 3);
+        timesheetsForLeaf(2, "C111426", 2);
+        timesheetsForLeaf(5, "C111426", 4);
+        workPackageDao.create(new WorkPackage(
+                "C111427", "Level 6", 88999, effortGenerator(1200,1400,1500,1600,1010,1200,1040)), false);
+        timesheetsForLeaf(3, "C111427", 3);
+        timesheetsForLeaf(2, "C111427", 2);
+        timesheetsForLeaf(5, "C111427", 4);
+        workPackageDao.create(new WorkPackage(
+                "C111500", "Level 5", 88999), false);
+
+    }
+
+    private void timesheetsForLeaf(int userId, String wPNumber, int hoursPerDay){
+        List<TimesheetRow> tsrList = generateListOfRows(55522, wPNumber, hoursPerDay);
+        timesheetDao.create(new Timesheet(userId, tsrList, 23, 2014,
+                0, true, true, false), false);
+    }
+
+
 }
