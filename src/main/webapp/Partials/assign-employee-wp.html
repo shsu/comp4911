@@ -21,7 +21,7 @@
               <th style="width: 33%;">Employee ID</th>
               <th style="width: 33%;">Employee Name</th>
             </tr>
-            <tr ng-click="markForAssignment($index)" class="{{user.selected}} assign-{{user.markedForAssignment}}" ng-repeat="user in users | filter: search | limitTo: quantity">
+            <tr ng-click="markForAssignment(user)" class="{{user.selected}} assign-{{user.markedForAssignment}}" ng-repeat="user in users | filter: search | limitTo: quantity">
               <td>{{user.id}}</td> 
               <td>{{user.firstName}} {{user.lastName}}</td>
             </tr>
@@ -39,7 +39,7 @@
               <th style="width: 33%;">Employee ID</th>
               <th style="width: 33%;">Employee Name</th>
             </tr>
-            <tr ng-click="markForRemoval($index)" class="{{user.selected}} remove-{{user.markedForRemoval}}"  ng-repeat="user in users">
+            <tr ng-click="markForRemoval(user)" class="{{user.selected}} remove-{{user.markedForRemoval}}"  ng-repeat="user in users">
               <td>{{user.id}}</td> 
               <td>{{user.firstName}} {{user.lastName}}</td>
             </tr>

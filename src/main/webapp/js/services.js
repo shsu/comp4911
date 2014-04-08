@@ -19,6 +19,28 @@ cascadiaServices.factory('FilterUser', [
     }
 }]);
 
+cascadiaServices.factory('FindIndexProject', [
+  function(){
+    return function(list, obj) {
+      for(var i = 0; i < list.length; ++i) {
+        if(list[i].projectNumber == obj) {
+          return i;
+        }
+      }
+    }
+  }]);
+
+cascadiaServices.factory('FindIndexUser', [
+  function(){
+    return function(list, obj) {
+      for(var i = 0; i < list.length; ++i) {
+        if(list[i].projectNumber == obj) {
+          return i;
+        }
+      }
+    }
+  }]);
+
 cascadiaServices.factory('userService', ['$q', '$rootScope', '$location', 'Restangular',
  function($q, $rootScope, $location, Restangular) {
   return {

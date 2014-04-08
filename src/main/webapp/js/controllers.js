@@ -195,8 +195,8 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
 /*
     ASSIGN EMPLOYEE TO PROJECT W
     */
-    cascadiaControllers.controller('AEPController', ['$rootScope', '$scope', '$location', '$routeParams', 'Restangular', 'GrowlResponse',
-      function($rootScope, $scope, $location, $params, Restangular, GrowlResponse){
+    cascadiaControllers.controller('AEPController', ['$rootScope', '$scope', '$location', '$routeParams', 'Restangular', 'GrowlResponse', 'FindIndexProject',
+      function($rootScope, $scope, $location, $params, Restangular, GrowlResponse, FindIndexProject){
         var param = $params.id;
         var projectList = [];
         var userProjectList = [];
@@ -247,23 +247,27 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
           });
         } 
 
-        $scope.markForAssignment = function($index){
-          var state = $scope.projects[$index] && $scope.projects[$index].markedForAssignment;
+        $scope.markForAssignment = function(obj){
+          var index = FindIndexProject($scope.projects, obj.projectNumber);
+
+          var state = $scope.projects[index] && $scope.projects[index].markedForAssignment;
 
           if (state == undefined || state == false){
-            $scope.projects[$index].markedForAssignment = true;
+            $scope.projects[index].markedForAssignment = true;
           } else {
-            $scope.projects[$index].markedForAssignment = false;
+            $scope.projects[index].markedForAssignment = false;
           }
         }
 
-        $scope.markForRemoval = function($index){
-          var state = $scope.projects[$index] && $scope.projects[$index].markedForRemoval;
+        $scope.markForRemoval = function(obj){
+          var index = FindIndex($scope.projects, obj.projectNumber);
+
+          var state = $scope.projects[index] && $scope.projects[index].markedForRemoval;
 
           if (state == undefined || state == false){
-            $scope.projects[$index].markedForRemoval = true;
+            $scope.projects[index].markedForRemoval = true;
           } else {
-            $scope.projects[$index].markedForRemoval = false;
+            $scope.projects[index].markedForRemoval = false;
           }
           
         }
@@ -334,8 +338,8 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
 /*
     ASSIGN EMPLOYEE TO WORK PACKAGE CONTROLLER
     */
-    cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse', 'FilterUser',
-      function($scope, $location, Restangular, $params, GrowlResponse, FilterUser){
+    cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse', 'FilterUser', 'FindIndexUser',
+      function($scope, $location, Restangular, $params, GrowlResponse, FilterUser, FindIndexUser){
         var param = $params.id;
         $scope.project = {};
         $scope.package = {};
@@ -390,23 +394,27 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
           return FilterUser(user, $scope.query);
         }
 
-        $scope.markForAssignment = function($index){
-          var state = $scope.users[$index] && $scope.users[$index].markedForAssignment;
+        $scope.markForAssignment = function(obj){
+          var index = FindIndexUser($scope.users, obj.id);
+
+          var state = $scope.users[index] && $scope.users[index].markedForAssignment;
 
           if (state == undefined || state == false){
-            $scope.users[$index].markedForAssignment = true;
+            $scope.users[index].markedForAssignment = true;
           } else {
-            $scope.users[$index].markedForAssignment = false;
+            $scope.users[index].markedForAssignment = false;
           }
         }
 
-        $scope.markForRemoval = function($index){
-          var state = $scope.users[$index] && $scope.users[$index].markedForRemoval;
+        $scope.markForRemoval = function(obj){
+          var index = FindIndexUser($scope.users, obj.id);
+
+          var state = $scope.users[index] && $scope.users[index].markedForRemoval;
 
           if (state == undefined || state == false){
-            $scope.users[$index].markedForRemoval = true;
+            $scope.users[index].markedForRemoval = true;
           } else {
-            $scope.users[$index].markedForRemoval = false;
+            $scope.users[index].markedForRemoval = false;
           }   
         }
 

@@ -16,7 +16,7 @@
               <th style="width: 33%;">Project Number</th>
               <th style="width: 33%;">Project Name</th>
             </tr>
-            <tr ng-click="markForAssignment($index)" class="{{project.selected}} assign-{{project.markedForAssignment}}" ng-repeat="project in projects | filter:query | limitTo: quantity">
+            <tr class="{{project.selected}} assign-{{project.markedForAssignment}}" ng-repeat="project in projects | filter:query | limitTo: quantity" ng-click="markForAssignment(project)" >
               <td>{{project.projectNumber}}</td> 
               <td>{{project.projectName}}</td>
             </tr>
@@ -34,7 +34,7 @@
               <th style="width: 33%;">Project Number</th>
               <th style="width: 33%;">Project Name</th>
             </tr>
-            <tr ng-click="markForRemoval($index)" class="{{project.selected}} remove-{{project.markedForRemoval}}" ng-repeat="project in projects">
+            <tr class="{{project.selected}} remove-{{project.markedForRemoval}}" ng-repeat="project in projects" ng-click="markForRemoval(project)">
               <td>{{project.projectNumber}}</td> 
               <td>{{project.projectName}}</td>
             </tr>
