@@ -1421,6 +1421,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         Restangular.one('user/projects').getList().then(function(response){
           projects = response;
+          initList(projects);
           for(var i = 0; i < projects.length; ++i) {
             $scope.projectNumbers.push(projects[i].projectNumber);
           }
@@ -1428,8 +1429,15 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           GrowlResponse(response);
         });
 
+        var initList = function(projects) {
+          console.log('init list');
+          for (var i = 0; i < projects.length; ++i) {
+            listWP(projects[i].projectNumber);
+          }
+        }
+
         $scope.listWP = function(p) {
-          Restangular.one('work_packages/project', p).getList().then(function(response){
+          Restangular.all('work_packages/project', p).getList().then(function(response){
             workPackages = response;
             $scope.workPackageNumbers[p] = []
 
@@ -1460,15 +1468,39 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.workPackageNumbers = {};
         $scope.projectNumbers = [];
+        $scope.default = false;
 
         base.get({"filter":"current"}).then(function(response){
           $scope.timesheet = response;
+          calcOvertime();
         }, function(response){
           GrowlResponse(response);
         });
 
+        var listWP = function(p) {
+          Restangular.one('work_packages/project', p).getList().then(function(response){
+            workPackages = response;
+            $scope.workPackageNumbers[p] = []
+
+            for(var i = 0; i < workPackages.length; ++i) {
+              $scope.workPackageNumbers[p].push(workPackages[i].workPackageNumber);
+            }
+          }, function(response){
+            GrowlResponse(response);
+          });
+        } 
+
+        var initList = function(projects) {
+          console.log('init list');
+          for (var i = 0; i < projects.length; ++i) {
+            listWP(projects[i].projectNumber);
+          }
+        }
+
+
         Restangular.one('user/projects').getList().then(function(response){
           projects = response;
+          initList(projects);
           for(var i = 0; i < projects.length; ++i) {
             $scope.projectNumbers.push(projects[i].projectNumber);
           }
@@ -1481,19 +1513,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             return $scope.projectNumbers.length > 0;
           }
         }
-
-        $scope.listWP = function(p) {
-          Restangular.one('work_packages/project', p).getList().then(function(response){
-            workPackages = response;
-            $scope.workPackageNumbers[p] = []
-
-            for(var i = 0; i < workPackages.length; ++i) {
-              $scope.workPackageNumbers[p].push(workPackages[i].workPackageNumber);
-            }
-          }, function(response){
-            GrowlResponse(response);
-          });
-        } 
 
         $scope.prior = function() {
           year = $scope.timesheet.year;
@@ -1517,16 +1536,57 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           });
         }
 
+        var checkDefault = function() {
+          if($scope.timesheet) {
+            console.log($rootScope.user.defaultTimesheetID);
+            $scope.default = ($scope.timesheet.id == $rootScope.user.defaultTimesheetID);
+          }
+        }
+
+        $scope.$watch('user', function() {
+          if($scope.timesheet && $rootScope.user) {
+            $scope.default = ($scope.timesheet.id == $rootScope.user.defaultTimesheetID);
+          }
+        }, true);
+
+        $scope.$watch('timesheet', function() {
+          if($scope.timesheet && $rootScope.user) {
+            $scope.default = ($scope.timesheet.id == $rootScope.user.defaultTimesheetID);
+          }
+        }, true);
+
         $scope.save = function() {  
-          if($scope.default && ($rootScope.user.defaultTimesheetID != $scope.timesheet.id)) {
+          if($scope.makeDefault && ($rootScope.user.defaultTimesheetID != $scope.timesheet.id)) {
             Restangular.one('users', $rootScope.user.id).get().then(function(response) {
               var user = response;
               user.defaultTimesheetID = $scope.timesheet.id;
               user.put();
+              localStorage.removeItem('user');
+              localStorage.setItem('user', JSON.stringify(user));
+              $rootScope.user = user;
             })
           }
+          calcOvertime();
           $scope.timesheet.put();
           toastr.success("TimeSheet Saved");
+        }
+
+        var calcOvertime = function() {
+          var total = 0;
+          var rows = $scope.timesheet.timesheetRows;
+
+          for(var i = 0; i < rows.length; ++i) {
+            total += (
+              rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
+              rows[i].wednesday + rows[i].thursday + rows[i].friday
+              )
+          }
+
+          if((total - 400) > 0) {
+            $scope.timesheet.overTime = total - 400;
+          } else {
+            $scope.timesheet.overTime = 0;
+          }
         }
 
         $scope.submit = function() {
@@ -1610,8 +1670,11 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.save = function() {
           user = $rootScope.user;
-          user.put();
-          $location.path('dashboard');
+          localStorage.removeItem('user');
+          localStorage.setItem('user', JSON.stringify(user));
+          user.put().then(function(response){
+            $location.path('dashboard');
+          });
         }
       }
       ]);
@@ -1696,7 +1759,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             toastr.success("User Profile Updated")
           });
         }
-
       }
       ]);
 
