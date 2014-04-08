@@ -28,9 +28,9 @@
             <tr>
               <td>Password</td>
               <td>
-                  <i class="fa fa-pencil-square-o fa-fw"></i>
                   <span ng-hide="editPassword" ng-dblclick="focusPassword()">********************</span>
                   <input type="password" ng-show="editPassword" ng-model="user.password" size="15" maxlength="250" required></input>
+                  <span class="glyphicon glyphicon-pencil" ng-click="focusPassword()"></span>
               </td>
             </tr>
           </tbody>
@@ -70,4 +70,10 @@
       </div>
   </div>
 </div>
+    <script>
+        var alertme = function() {
+            toastr.info("To edit fields, click the <i class='glyphicon glyphicon-pencil'></i> icon.")
+        }
+        window.onload = alertme;
+    </script>
 </content>

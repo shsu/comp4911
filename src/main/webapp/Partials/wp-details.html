@@ -5,8 +5,10 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="row">
-          <p class="col-xs-3">Project No: {{package.projectNumber}}</p>
-          <p class="col-xs-3">Project Name: {{project.projectName}}</p>
+          <p class="col-xs-3">Project No: <span ng-bind="package.projectNumber" /></p>
+          <p class="col-xs-3">Project Name: <span ng-bind="project.projectName"/></p>
+          <p class="col-xs-3">Status:
+             <span class="cursor-hand" ng-click="toggleStatus()" ng-bind="package.progressStatus | alterStatus"/>
         </div>
         <div class="row">
           <p class="col-xs-3">WP Number: {{package.workPackageNumber}}</p>

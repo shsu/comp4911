@@ -35,17 +35,16 @@ public class UserDao {
         return em.find(User.class, id);
     }
 
-    public void update(final User user) {
+    public User update(final User user) {
         if(ValidationHelper.validateEntity(user)){
 
             String oldPassword = read(user.getId()).getPassword();
             if (!user.getPassword().equals(oldPassword)) {
                 user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             }
-
-            em.merge(user);
-            em.flush();
+            return em.merge(user);
         }
+        return null;
     }
 
     public void delete(final User user) {

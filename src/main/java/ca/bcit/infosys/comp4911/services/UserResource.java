@@ -76,8 +76,7 @@ public class UserResource {
             SH.responseBadRequest("Unable to modify the profile of a user other than yourself. Please use the /users endpoint.");
         }
 
-        userDao.update(user);
-        return SH.responseWithEntity(200, userDao.read(userId));
+        return SH.responseWithEntity(200, userDao.update(user));
     }
 
     @Path("/token")

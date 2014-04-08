@@ -27,11 +27,13 @@ public class TimesheetDao {
        return em.find(Timesheet.class, tsID);
     }
 
-    public void update (final Timesheet ts)
+    public Timesheet update (final Timesheet ts)
     {
         if(ValidationHelper.validateEntity(ts)){
-            em.merge(ts);
+           return em.merge(ts);
         }
+
+        return null;
     }
 
     public void delete (final Timesheet ts)
@@ -66,7 +68,7 @@ public class TimesheetDao {
 
     public List<Timesheet> getRejected(final Integer userId) {
         TypedQuery<Timesheet> query = em.createQuery("select t from Timesheet t where t.approved = :approved" +
-                " and t.userId = :userId and t.pending = false",
+                " and t.userId = :userId and t.pending = false and t.signed = true",
                 Timesheet.class);
         query.setParameter("approved", false);
         query.setParameter("userId", userId);

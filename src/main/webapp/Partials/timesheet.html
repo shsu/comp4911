@@ -20,9 +20,7 @@
           <li class="bg-tertiary cursor-hand" ng-click="today()">Today</li>
           <li class="cursor-hand" ng-click="next()">Week &gt;</li>
         </ul>
-        
         <table class="table table-hover table-striped">
-
           <thead>
             <tr>
               <th >Project No</th>
@@ -36,13 +34,29 @@
               <th class="center">Thu</th>
               <th class="center">Fri</th>
               <th></th>
+              <th></th>
             </tr>
         </thead>
             <tfoot>
             <tr>
                 <td></td>
-                <td>Total:</td>
-                <td>{{total / 10}}</td>
+                <td class="text-right">Total:</td>
+                <td class="text-right">{{total / 10}}</td>
+                <td class="text-center">{{sat / 10}}</td>
+                <td class="text-center">{{sun / 10}}</td>
+                <td class="text-center">{{mon / 10}}</td>
+                <td class="text-center">{{tue / 10}}</td>
+                <td class="text-center">{{wed / 10}}</td>
+                <td class="text-center">{{thu / 10}}</td>
+                <td class="text-center">{{fri / 10}}</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-right">Overtime:</td>
+                <td class="text-right"> {{timesheet.overTime / 10}}</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -54,21 +68,9 @@
             </tr>
             <tr>
                 <td></td>
-                <td>Overtime:</td>
-                <td> {{timesheet.overTime / 10}}</td>
+                <td class="text-right">Flextime:  </td>
+                <td class="text-right">{{user.totalFlexTime}}</td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Flextime:  </td>
-                <td>{{user.totalFlexTime}}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -80,7 +82,7 @@
             </tr>
             </tfoot>
             <tbody>
-            <tr ng-repeat="r in timesheet.timesheetRows">
+            <tr ng-repeat="r in timesheet.timesheetRows | orderBy:'id'">
               <td>
                 <select ng-model="r.projectNumber" ng-hide="timesheet.signed" ng-options="p for p in projectNumbers"></select>
                 <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
@@ -89,28 +91,29 @@
                 <select ng-model="r.workPackageNumber" ng-hide="timesheet.signed" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select>
                 <span ng-show="timesheet.signed">{{r.workPackageNumber}}</span>
               </td>
-                <td>{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10}}</td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.saturday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.sunday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.monday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.tuesday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.wednesday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
-              <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
-<!--              <td><button class="input-sm" ng-readonly="timesheet.signed" ng-model="r.note">Note</button></td> -->
-              <td><span ng-click="delete($index)" class="cursor-hand glyphicon glyphicon-remove-circle"></span></td>
+                <td class="text-right">{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10}}</td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.saturday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.sunday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.monday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.tuesday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.wednesday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
+              <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
+<!--                <td><input type="textarea" ng-show="editNote" ng-model="r.note" /><span ng-click="focusNote()" class="glyphicon glyphicon-list-alt"></span></td> -->
+<!--          <td><button class="input-sm" ng-readonly="timesheet.signed" ng-model="r.note">Note</button></td> -->
+              <td><span ng-click="timesheet.signed || delete($index)" class="cursor-hand glyphicon glyphicon-remove-circle"></span></td>
             </tr>
           <tr></tr>
           </tbody>
         </table>
-        <footer>
+        <div>
           <div class="row">
               <!-- <p class="col-xs-4">Overtime: {{timesheet.overTime}} </p></div> -->
           <div class="row">
            <!-- <p class="col-xs-4">Flextime: {{user.totalFlexTime}} </p> -->
             <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 pull-right"><button class="btn btn-success btn-block" ng-click="add()" ng-disabled="timesheet.signed" ng-hide="timesheet.approved">Add new row</button></div>
           </div>
-        </footer>
+        </div>
       </div>
     </div>
     <footer class="row" ng-show="hasProjects()">

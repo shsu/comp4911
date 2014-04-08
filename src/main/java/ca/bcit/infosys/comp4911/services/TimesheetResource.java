@@ -96,7 +96,6 @@ public class TimesheetResource {
         User user = userDao.read(userId);
         user.setTotalFlexTime(user.getTotalFlexTime() + (timesheet.getOverTime() - current.getOverTime()));
         userDao.update(user);
-        timesheetDao.update(timesheet);
-        return SH.response(200);
+        return SH.responseWithEntity(200, timesheetDao.update(timesheet));
     }
 }

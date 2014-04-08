@@ -1487,7 +1487,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             })
           }
           $scope.timesheet.put().then(function(response) {
-            $location.path('dashboard');
+            $scope.timesheet = response;
           });
           toastr.success("TimeSheet Saved");
         }
@@ -1495,6 +1495,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.$watch('timesheet.timesheetRows', function() {
           console.log('check overtime');
           var total = 0;
+            var sat = 0;
+            var sun = 0;
+            var mon = 0;
+            var tue = 0;
+            var wed = 0;
+            var thu = 0;
+            var fri = 0;
           if($scope.timesheet) {
             var rows = $scope.timesheet.timesheetRows;
 
@@ -1502,10 +1509,24 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               total += (
                 rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
                 rows[i].wednesday + rows[i].thursday + rows[i].friday
-                )
+                );
+                sat += rows[i].saturday;
+                sun += rows[i].sunday;
+                mon += rows[i].monday;
+                tue += rows[i].tuesday;
+                wed += rows[i].wednesday;
+                thu += rows[i].thursday;
+                fri += rows[i].friday;
             }
 
             $scope.total = total;
+              $scope.sat = sat;
+              $scope.sun = sun;
+              $scope.mon = mon;
+              $scope.tue = tue;
+              $scope.wed = wed;
+              $scope.thu = thu;
+              $scope.fri = fri;
             
             if((total - 400) > 0) {
               $scope.timesheet.overTime = total - 400;
@@ -1543,6 +1564,11 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.workPackageNumbers = {};
         $scope.projectNumbers = [];
         $scope.default = false;
+        $scope.focusNote = false;
+
+        $scope.focusNote = function() {
+              $scope.editNote = true;
+        }
 
         base.get({"filter":"current"}).then(function(response){
           $scope.timesheet = response;
@@ -1588,6 +1614,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         }
 
         $scope.prior = function() {
+          $scope.makeDefault = false;
           year = $scope.timesheet.year;
           week = ($scope.timesheet.weekNumber - 1);
 
@@ -1599,6 +1626,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         }
 
         $scope.next = function() {
+          $scope.makeDefault = false;
           year = $scope.timesheet.year;
           week = ($scope.timesheet.weekNumber + 1);
 
@@ -1610,6 +1638,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         }
 
         $scope.today = function() {
+          $scope.makeDefault = false;
           year = moment().year();
           week = moment().week();
 
@@ -1650,16 +1679,22 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               $rootScope.user = user;
             })
           }
-          calcOvertime();
           $scope.timesheet.put().then(function(response) {
-            $location.path('dashboard');
-          });
+            $scope.timesheet = response;
+          })
           toastr.success("TimeSheet Saved");
         }
 
         $scope.$watch('timesheet.timesheetRows', function() {
           console.log('check overtime');
           var total = 0;
+            var sat = 0;
+            var sun = 0;
+            var mon = 0;
+            var tue = 0;
+            var wed = 0;
+            var thu = 0;
+            var fri = 0;
           if($scope.timesheet) {
             var rows = $scope.timesheet.timesheetRows;
 
@@ -1667,10 +1702,25 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               total += (
                 rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
                 rows[i].wednesday + rows[i].thursday + rows[i].friday
-                )
+                );
+                sat += rows[i].saturday;
+                sun += rows[i].sunday;
+                mon += rows[i].monday;
+                tue += rows[i].tuesday;
+                wed += rows[i].wednesday;
+                thu += rows[i].thursday;
+                fri += rows[i].friday;
+
             }
 
             $scope.total = total;
+              $scope.sat = sat;
+              $scope.sun = sun;
+              $scope.mon = mon;
+              $scope.tue = tue;
+              $scope.wed = wed;
+              $scope.thu = thu;
+              $scope.fri = fri;
 
             if((total - 400) > 0) {
               $scope.timesheet.overTime = total - 400;
@@ -1766,7 +1816,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           localStorage.removeItem('user');
           localStorage.setItem('user', JSON.stringify(user));
           user.put().then(function(response){
-            $location.path('dashboard');
+            $rootScope.user = response;  
           });
         }
       }
@@ -1846,7 +1896,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.save = function() {
           user = $scope.cUser;
-          user.put().then(function() {
+          user.put().then(function(response) {
+            $scope.cUser = response;
             $location.path('users');
             toastr.success("User Profile Updated")
           });
@@ -1947,6 +1998,22 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.openReport = function(report) {
           $location.path('wp-status-report/' + $scope.package.workPackageNumber + '/' + report.id)
+        }
+
+        $scope.toggleStatus = function() {
+
+          if($scope.package.progressStatus)
+          {
+            $scope.package.progressStatus = false;
+          } else 
+          {
+            $scope.package.progressStatus = true;
+          }
+
+          $scope.package.put().then(function(response) {
+            $scope.package = response;
+          })
+
         }
 
       }
