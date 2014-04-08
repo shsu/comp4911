@@ -1676,9 +1676,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               $rootScope.user = user;
             })
           }
-          $scope.timesheet.put().then(function(response) {
-            $location.path('dashboard');
-          });
+          $scope.timesheet.put();
           toastr.success("TimeSheet Saved");
         }
 

@@ -82,7 +82,7 @@
             </tr>
             </tfoot>
             <tbody>
-            <tr ng-repeat="r in timesheet.timesheetRows">
+            <tr ng-repeat="r in timesheet.timesheetRows | orderBy:'id'">
               <td>
                 <select ng-model="r.projectNumber" ng-hide="timesheet.signed" ng-options="p for p in projectNumbers"></select>
                 <span ng-show="timesheet.signed">{{r.projectNumber}}</span>

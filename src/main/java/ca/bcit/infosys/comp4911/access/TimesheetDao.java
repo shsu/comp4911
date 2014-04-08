@@ -27,11 +27,13 @@ public class TimesheetDao {
        return em.find(Timesheet.class, tsID);
     }
 
-    public void update (final Timesheet ts)
+    public Timesheet update (final Timesheet ts)
     {
         if(ValidationHelper.validateEntity(ts)){
-            em.merge(ts);
+           return em.merge(ts);
         }
+
+        return null;
     }
 
     public void delete (final Timesheet ts)
