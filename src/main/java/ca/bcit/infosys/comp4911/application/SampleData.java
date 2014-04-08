@@ -1093,44 +1093,166 @@ public class SampleData {
         leafsWPNumber.add("C111427");
         
         
-        // Assign the leaf work packages to all users
-        for (String wpNumber : leafsWPNumber) {
-        	assignWPToAllUsers(wpNumber);
-        }
+//        // Assign the leaf work packages to all users
+//        for (String wpNumber : leafsWPNumber) {
+//        	assignWPToAllUsers(wpNumber);
+//        }
+        
+        // Assign leaf work packages to appropriate users
+        assignWPToOneUser("C111111", 2);
+        assignWPToOneUser("C111112", 2);
+        assignWPToOneUser("C111113", 2);
+        assignWPToOneUser("C111113", 3);
+        assignWPToOneUser("C111114", 2);
+        assignWPToOneUser("C111114", 4);
+        assignWPToOneUser("C111115", 2);
+        assignWPToOneUser("C111116", 2);
+        assignWPToOneUser("C111200", 2);
+        assignWPToOneUser("C111310", 4);
+        assignWPToOneUser("C111310", 5);
+        assignWPToOneUser("C111320", 4);
+        assignWPToOneUser("C111320", 5);
+        assignWPToOneUser("C111330", 4);
+        assignWPToOneUser("C111330", 5);
+        assignWPToOneUser("C111411", 4);
+        assignWPToOneUser("C111411", 5);
+        assignWPToOneUser("C111412", 4);
+        assignWPToOneUser("C111412", 5);
+        assignWPToOneUser("C111413", 3);
+        assignWPToOneUser("C111413", 5);
+        assignWPToOneUser("C111413", 7);
+        assignWPToOneUser("C111414", 3);
+        assignWPToOneUser("C111414", 5);
+        assignWPToOneUser("C111414", 7);
+        assignWPToOneUser("C111415", 3);
+        assignWPToOneUser("C111415", 5);
+        assignWPToOneUser("C111415", 7);
+        assignWPToOneUser("C111416", 3);
+        assignWPToOneUser("C111416", 5);
+        assignWPToOneUser("C111416", 7);
+        assignWPToOneUser("C111421", 3);
+        assignWPToOneUser("C111421", 5);
+        assignWPToOneUser("C111421", 7);
+        assignWPToOneUser("C111422", 3);
+        assignWPToOneUser("C111422", 4);
+        assignWPToOneUser("C111422", 5);
+        assignWPToOneUser("C111422", 6);
+        assignWPToOneUser("C111423", 2);
+        assignWPToOneUser("C111423", 3);
+        assignWPToOneUser("C111423", 5);
+        assignWPToOneUser("C111423", 6);
+        assignWPToOneUser("C111424", 2);
+        assignWPToOneUser("C111424", 3);
+        assignWPToOneUser("C111424", 5);
+        assignWPToOneUser("C111425", 2);
+        assignWPToOneUser("C111425", 3);
+        assignWPToOneUser("C111425", 5);
+        assignWPToOneUser("C111426", 2);
+        assignWPToOneUser("C111426", 3);
+        assignWPToOneUser("C111426", 5);
+        assignWPToOneUser("C111427", 2);
+        assignWPToOneUser("C111427", 3);
+        assignWPToOneUser("C111427", 5);
+        
         
         // Creating the status reports for the leafs
         generateStatusReport("C111111", setDate(4, 14, 2014), effortGenerator(100,100,100,100,0,100,100));
-        generateStatusReport("C111111", setDate(5, 14, 2014), effortGenerator(100,100,100,100,0,100,100));
-        generateStatusReport("C111111", setDate(6, 14, 2014), effortGenerator(100,100,100,100,0,100,100));
-        generateStatusReport("C111112", setDate(4, 14, 2014), effortGenerator(200,200,420,420,220,420,420));
-        generateStatusReport("C111113", setDate(4, 14, 2014), effortGenerator(30,210,210,210,30,210,210));
-        generateStatusReport("C111114", setDate(4, 14, 2014), effortGenerator(110,0,110,110,0,110,110));
-        generateStatusReport("C111115", setDate(4, 14, 2014), effortGenerator(110,110,110,110,10,110,110));
-        generateStatusReport("C111116", setDate(4, 14, 2014), effortGenerator(0,0,0,0,10,0,0));
+        generateStatusReport("C111111", setDate(5, 14, 2014), effortGenerator(50,50,50,50,0,50,50));
+        generateStatusReport("C111111", setDate(6, 14, 2014), effortGenerator(20,20,20,20,0,20,20));
         
-//        generateStatusReport("C111200", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111310", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111320", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111330", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111411", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111412", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111413", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111414", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111415", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111416", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111421", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111422", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111423", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111424", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111425", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111426", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
-//        generateStatusReport("C111427", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+        generateStatusReport("C111112", setDate(4, 14, 2014), effortGenerator(200,200,420,420,220,420,420));
+        generateStatusReport("C111112", setDate(5, 14, 2014), effortGenerator(150,150,300,300,150,300,300));
+        generateStatusReport("C111112", setDate(6, 14, 2014), effortGenerator(100,100,200,200,100,200,150));
+        
+        generateStatusReport("C111113", setDate(4, 14, 2014), effortGenerator(30,210,210,210,30,210,210));
+        generateStatusReport("C111113", setDate(5, 14, 2014), effortGenerator(0,200,200,150,0,150,150));
+        generateStatusReport("C111113", setDate(6, 14, 2014), effortGenerator(0,0,0,0,0,0,10));
+        
+        generateStatusReport("C111114", setDate(4, 14, 2014), effortGenerator(110,0,110,110,0,110,110));
+        generateStatusReport("C111114", setDate(5, 14, 2014), effortGenerator(50,0,50,50,0,50,50));
+        generateStatusReport("C111114", setDate(6, 14, 1014), effortGenerator(10,0,10,10,0,10,10));
+        
+        generateStatusReport("C111115", setDate(4, 14, 2014), effortGenerator(110,110,110,110,10,110,110));
+        generateStatusReport("C111115", setDate(5, 14, 2014), effortGenerator(50,50,50,50,0,50,50));
+        generateStatusReport("C111115", setDate(6, 14, 2014), effortGenerator(10,10,10,10,0,10,10));
+        
+        generateStatusReport("C111116", setDate(4, 14, 2014), effortGenerator(200,200,420,420,220,420,420));
+        generateStatusReport("C111116", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111116", setDate(6, 14, 2014), effortGenerator(0,0,0,0,10,0,0));
+        
+        generateStatusReport("C111200", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111200", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111200", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111310", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111310", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111310", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111320", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111320", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111320", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111330", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111330", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111330", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111411", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111411", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111411", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111412", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111412", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111412", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111413", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111413", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111413", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111414", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111414", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111414", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111415", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111415", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111415", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111416", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111416", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111416", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111421", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111421", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111421", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111422", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111422", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111422", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111423", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111423", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111423", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111424", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111424", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111424", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111425", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111425", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111425", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111426", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111426", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111426", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
+        
+        generateStatusReport("C111427", setDate(4, 14, 2014), effortGenerator(200,200,200,200,200,200,200));
+        generateStatusReport("C111427", setDate(5, 14, 2014), effortGenerator(100,100,100,100,100,100,100));
+        generateStatusReport("C111427", setDate(6, 14, 2014), effortGenerator(20,20,20,20,20,20,20));
         
         
     }
 
     private void timesheetsForLeaf(int userId, String wPNumber, int hoursPerDay){
-        List<TimesheetRow> tsrList = generateListOfRows(88999, wPNumber, hoursPerDay);
+        List<TimesheetRow> tsrList = generateListOfRows2(88999, wPNumber, hoursPerDay, userId);
         timesheetDao.create(new Timesheet(userId, tsrList, 23, 2014,
                 0, true, true, false), false);
     }
@@ -1168,6 +1290,24 @@ public class SampleData {
     				false
     		);
     	}
+    }
+    
+    private void assignWPToOneUser(String wpNumber, int userId) {
+    	User user = userDao.read(userId);
+    	Date wpIssueDate = workPackageDao.read(wpNumber).getIssueDate(); 
+    	
+		workPackageAssignmentDao.create(
+				new WorkPackageAssignment(
+						wpNumber,
+						userId,
+						false,
+						true,
+						wpIssueDate,
+						null
+				),
+				false
+		);
+    	
     }
     
     
