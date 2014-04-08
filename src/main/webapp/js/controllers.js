@@ -2005,7 +2005,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.save = function() {
           $scope.package.estimateAtStart = $scope.listOfEffort;
-          $scope.package.put();
+          $scope.package.put().then(function(response){
+            $scope.hasEffort = true;
+          })
         }
 
         $scope.openReport = function(report) {
