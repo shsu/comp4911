@@ -790,7 +790,7 @@ public class SampleData {
         effortList.add(new Effort(PLevel.P4, p4));
         effortList.add(new Effort(PLevel.P5, p5));
         effortList.add(new Effort(PLevel.SS, ss));
-        effortList.add(new Effort(PLevel.SS, ds));
+        effortList.add(new Effort(PLevel.DS, ds));
         return effortList;
 
     }
