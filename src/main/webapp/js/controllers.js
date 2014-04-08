@@ -334,8 +334,8 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
 /*
     ASSIGN EMPLOYEE TO WORK PACKAGE CONTROLLER
     */
-    cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
-      function($scope, $location, Restangular, $params, GrowlResponse){
+    cascadiaControllers.controller('AEWPController', ['$scope', '$location', 'Restangular', '$routeParams', 'GrowlResponse', 'FilterUser',
+      function($scope, $location, Restangular, $params, GrowlResponse, FilterUser){
         var param = $params.id;
         $scope.project = {};
         $scope.package = {};
@@ -384,7 +384,11 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
 
             angular.copy(userList, $scope.users);
           });
-        }   
+        }
+           
+        $scope.search = function(user) {
+          return FilterUser(user, $scope.query);
+        }
 
         $scope.markForAssignment = function($index){
           var state = $scope.users[$index] && $scope.users[$index].markedForAssignment;
