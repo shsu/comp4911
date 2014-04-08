@@ -63,7 +63,7 @@ h1, h2, h3, h4, h5, h6 {
     background: whitesmoke; }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-  padding: 15px; }
+  padding: 10px; }
 
 .borderless tfoot {
     border: none;

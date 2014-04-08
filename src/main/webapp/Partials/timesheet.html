@@ -35,7 +35,7 @@
               <th>Wed</th>
               <th>Thu</th>
               <th>Fri</th>
-              <th>Delete</th>
+              <th></th>
             </tr>
         </thead>
             <tfoot class="borderless">
@@ -98,7 +98,7 @@
               <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
               <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
 <!--              <td><button class="input-sm" ng-readonly="timesheet.signed" ng-model="r.note">Note</button></td> -->
-              <td><span ng-click="delete($index)" class="cursor-hand">Delete</span></td>
+              <td><span ng-click="delete($index)" class="cursor-hand glyphicon glyphicon-remove-circle"></span></td>
             </tr>
           <tr></tr>
           </tbody>
