@@ -2,9 +2,9 @@
     <h1 class="secondary">Project Summary</h1><br /> 
     <div ng-controller="ProjectSummaryController">
     <div class="row">
+      <p class="col-xs-3">Project Number: <select  ng-init="loadProjects()" ng-change="loadWorkPackages()" ng-model="project" data-ng-options="p.projectNumber for p in projects"></select></p>
       <p class="col-xs-3">Project Name: {{project.projectName}}</p>
-      <p class="col-xs-3">Project Number: {{project.projectNumber}}</p>
-      <p class="col-xs-6">Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}</p>
+      <p class="col-xs-6">Project Manager: {{user.firstName}} {{user.lastName}}</p>
     </div>
     <div class="row">
       <div class="table-responsive">
@@ -23,7 +23,7 @@
               <th>TOTAL</th>
               <th>Labour Dollars</th>
             </tr>
-            <tr ng-repeat="row in rows">
+            <tr ng-repeat="row in workPackages">
               <td>{{row.workPackageNumber}}</td>
               <td>{{row.workPackageDescription}}</td>
               <td>{{row.pLevels.P5}}</td>

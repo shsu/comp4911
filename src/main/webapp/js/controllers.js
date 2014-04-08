@@ -287,7 +287,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
                 var data = {
                   userId: $scope.cUser.id,
                   projectNumber: projNum,
-                  active: true,
+                  active: true
                 }
 
                 Restangular.one('projects/' + projNum + '/assignments').customPOST(data).then(function(response){
@@ -449,7 +449,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
                 var data = {
                   userId: user_id,
                   workPackageNumber: param,
-                  active: true,
+                  active: true
                 }
 
                 Restangular.one('work_packages/' + param + '/assignments').customPOST(data).then(function(response){
@@ -1308,8 +1308,34 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         var param = $params.id;
         $scope.project = {};
 
+          $scope.projectNumbers = [];
+
+          Restangular.one('user/projects').getList().then(function(response){
+              projects = response;
+              initList(projects);
+              for(var i = 0; i < projects.length; ++i) {
+                  $scope.projectNumbers.push(projects[i].projectNumber);
+              }
+          }, function(response){
+              GrowlResponse(response);
+          });
+
+          $scope.loadProjects = function() {
+              Restangular.one('user/projects/managed').getList().then(function(response){
+                  $scope.projects = response;
+                  findSelected();
+              });
+          };
+
+          $scope.loadWorkPackages = function(projectNumber) {
+              Restangular.one('work_packages/project').getList($scope.project.projectNumber).then(function(response){
+                  $scope.projectChosen = true;
+                  $scope.workPackages = response;
+              });
+          };
+
         Restangular.all('reports/matrix/' + param).getList().then(function(response) {
-          $scope.project = response[0];
+          $scope.project = response;
           loadManager();
           $scope.payRates = $scope.project.payRates; 
           response.splice(0, 1);
