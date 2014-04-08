@@ -32,12 +32,12 @@
             </tr>
             <tr ng-repeat="r in timesheet.timesheetRows">
               <td>
-                <select ng-model="r.projectNumber" ng-hide="timesheet.signed" ng-change="listWP(r.projectNumber)" ng-options="p for p in projectNumbers"></select>
+                <select ng-model="r.projectNumber" ng-hide="timesheet.signed" ng-options="p for p in projectNumbers"></select>
                 <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
               </td>
               <td>
                 <select ng-model="r.workPackageNumber" ng-hide="timesheet.signed" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select>
-                <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
+                <span ng-show="timesheet.signed">{{r.workPackageNumber}}</span>
               </td>
               <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.saturday"></input></td>
               <td><input type="number" totenth step="0.1" class="form-control" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.sunday"></input></td>
@@ -52,7 +52,7 @@
           </tbody>
         </table>
         <footer>
-          <div class="row"><p class="col-xs-4">Overtime: {{timesheet.overTime}} </p></div>
+          <div class="row"><p class="col-xs-4">Overtime:<span ng-bind="(timesheet.overTime / 10)" /> </p></div>
           <div class="row">
             <p class="col-xs-4">Flextime: {{user.totalFlexTime}} </p>
             <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 pull-right"><button class="btn btn-success btn-block" ng-click="add()">Add new row</button></div>

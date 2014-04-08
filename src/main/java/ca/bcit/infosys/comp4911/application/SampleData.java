@@ -58,11 +58,10 @@ public class SampleData {
         generate100Projects();
         generatePayRates();
         generateProjectAssignments();
-//      generateProjectAssignmentForAll();
         generateEffort();
         generateWorkPackages();
         generateWorkPackageAssignments();
-  //    generateWorkPackageAssignmentForAll();
+        generateWorkPackageAssignmentForAll();
         generateTimesheets();
         generateWorkPackageStatusReports();
   //    andJobsSaidLetThereBeAShitTonOfTimeSheets();

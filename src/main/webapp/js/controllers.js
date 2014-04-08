@@ -1405,19 +1405,41 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
     TIMESHEET CORRECTION CONTROLLER
     */
 
-    cascadiaControllers.controller('TimesheetCorrectionController', ['$scope', '$rootScope', '$routeParams', 'Restangular', 'GrowlResponse',
-      function($scope, $rootScope, $params, Restangular, GrowlResponse) {
+    cascadiaControllers.controller('TimesheetCorrectionController', ['$scope', '$rootScope', '$routeParams', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
+      function($scope, $rootScope, $params, $location, Restangular, $params, GrowlResponse) {
         var param = $params.id;
 
         $scope.workPackageNumbers = {};
         $scope.projectNumbers = [];
-
-        $rootScope.user = JSON.parse(localStorage.getItem('user'));
+        $scope.default = false;
 
         Restangular.one('timesheets', param).get().then(function(response) {
           $scope.timesheet = response;
-          $scope.timesheet.signed = false;
+          calcOvertime();
+        }, function(response) {
+          GrowlResponse(response);
         })
+
+        var listWP = function(p) {
+          Restangular.one('work_packages/project', p).getList().then(function(response){
+            workPackages = response;
+            $scope.workPackageNumbers[p] = []
+
+            for(var i = 0; i < workPackages.length; ++i) {
+              $scope.workPackageNumbers[p].push(workPackages[i].workPackageNumber);
+            }
+          }, function(response){
+            GrowlResponse(response);
+          });
+        } 
+
+        var initList = function(projects) {
+          console.log('init list');
+          for (var i = 0; i < projects.length; ++i) {
+            listWP(projects[i].projectNumber);
+          }
+        }
+
 
         Restangular.one('user/projects').getList().then(function(response){
           projects = response;
@@ -1429,35 +1451,84 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           GrowlResponse(response);
         });
 
-        var initList = function(projects) {
-          console.log('init list');
-          for (var i = 0; i < projects.length; ++i) {
-            listWP(projects[i].projectNumber);
+        $scope.hasProjects = function() {
+          if($scope.projectNumbers) {
+            return $scope.projectNumbers.length > 0;
           }
         }
 
-        $scope.listWP = function(p) {
-          Restangular.all('work_packages/project', p).getList().then(function(response){
-            workPackages = response;
-            $scope.workPackageNumbers[p] = []
+        var checkDefault = function() {
+          if($scope.timesheet) {
+            console.log($rootScope.user.defaultTimesheetID);
+            $scope.default = ($scope.timesheet.id == $rootScope.user.defaultTimesheetID);
+          }
+        }
 
-            for(var i = 0; i < workPackages.length; ++i) {
-              $scope.workPackageNumbers[p].push(workPackages[i].workPackageNumber);
-            }
-          }, function(response){
-            GrowlResponse(response);
+        $scope.$watch('user', function() {
+          if($scope.timesheet && $rootScope.user) {
+            $scope.default = ($scope.timesheet.id == $rootScope.user.defaultTimesheetID);
+          }
+        }, true);
+
+        $scope.$watch('timesheet', function() {
+          if($scope.timesheet && $rootScope.user) {
+            $scope.default = ($scope.timesheet.id == $rootScope.user.defaultTimesheetID);
+          }
+        }, true);
+
+        $scope.save = function() {  
+          if($scope.makeDefault && ($rootScope.user.defaultTimesheetID != $scope.timesheet.id)) {
+            Restangular.one('users', $rootScope.user.id).get().then(function(response) {
+              var user = response;
+              user.defaultTimesheetID = $scope.timesheet.id;
+              user.put();
+              localStorage.removeItem('user');
+              localStorage.setItem('user', JSON.stringify(user));
+              $rootScope.user = user;
+            })
+          }
+          calcOvertime();
+          $scope.timesheet.put().then(function(response) {
+            $location.path('dashboard');
           });
+          toastr.success("TimeSheet Saved");
+        }
 
-          $scope.save = function() {
-            $scope.timesheet.put();
+        var calcOvertime = function() {
+          var total = 0;
+          var rows = $scope.timesheet.timesheetRows;
+
+          for(var i = 0; i < rows.length; ++i) {
+            total += (
+              rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
+              rows[i].wednesday + rows[i].thursday + rows[i].friday
+              )
           }
 
-          $scope.submit = function() {
-
+          if((total - 400) > 0) {
+            $scope.timesheet.overTime = total - 400;
+          } else {
+            $scope.timesheet.overTime = 0;
           }
-        } 
+        }
+
+        $scope.submit = function() {
+          $scope.timesheet.pending = true;
+          $scope.save();
+        }
+
+        $scope.delete = function($index) {
+          $scope.timesheet.timesheetRows.splice($index, 1);
+        }
+
+        $scope.add = function() {
+          $scope.timesheet.timesheetRows.push(
+           { workPackageNumber: "", projectNumber: "", saturday: 0, sunday: 0, monday: 0, tuesday: 0, wednesday: 0,
+           thursday: 0, friday: 0, note: ""});
+        }
       }
-      ])
+      ]);
+
 
 /*
     TIMESHEET CONTROLLER
@@ -1567,7 +1638,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             })
           }
           calcOvertime();
-          $scope.timesheet.put();
+          $scope.timesheet.put().then(function(response) {
+            $location.path('dashboard');
+          });
           toastr.success("TimeSheet Saved");
         }
 
@@ -1593,6 +1666,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.submit = function() {
           $scope.timesheet.pending = true;
+          $scope.save();
         }
 
         $scope.delete = function($index) {
