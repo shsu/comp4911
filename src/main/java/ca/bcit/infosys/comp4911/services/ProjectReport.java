@@ -40,9 +40,6 @@ public class ProjectReport {
     private UserDao userDao;
 
     @EJB
-    private UserPayRateHistoryDao userPayRateHistoryDao;
-
-    @EJB
     private PayRateDao payRateDao;
 
     @EJB
