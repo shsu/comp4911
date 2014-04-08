@@ -96,8 +96,7 @@ public class UserTimesheetsResource {
             return SH.response(404);
         }
 
-        timesheetDao.update(timesheet);
-        return SH.response(200);
+        return SH.responseWithEntity(200, timesheetDao.update(timesheet));
     }
 
     @Path("/to_approve")

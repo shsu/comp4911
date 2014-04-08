@@ -101,7 +101,7 @@
               <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
 <!--                <td><input type="textarea" ng-show="editNote" ng-model="r.note" /><span ng-click="focusNote()" class="glyphicon glyphicon-list-alt"></span></td> -->
 <!--          <td><button class="input-sm" ng-readonly="timesheet.signed" ng-model="r.note">Note</button></td> -->
-              <td><span ng-click="delete($index)" class="cursor-hand glyphicon glyphicon-remove-circle"></span></td>
+              <td><span ng-click="timesheet.signed || delete($index)" class="cursor-hand glyphicon glyphicon-remove-circle"></span></td>
             </tr>
           <tr></tr>
           </tbody>

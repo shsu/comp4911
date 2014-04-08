@@ -95,7 +95,7 @@
               <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.wednesday" /></td>
               <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
               <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
-                <td><span ng-click="delete($index)" class="cursor-hand glyphicon glyphicon-remove-circle"></span></td>
+                <td><span ng-click="timesheet.signed || delete($index)" class="cursor-hand glyphicon glyphicon-remove-circle"></span></td>
 <!--                <td><span ng-click="" class="glyphicon glyphicon-list-alt"></span></td> -->
             </tr>
           </tbody>
@@ -106,7 +106,7 @@
           </div>
           <div class="row">
             <!--<p class="col-xs-4">Flextime: {{user.totalFlexTime}} </p>-->
-            <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 pull-right"><button class="btn btn-success btn-block" ng-click="add()">Add new row</button></div>
+            <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 pull-right"><button class="btn btn-success btn-block" ng-disabled="timesheet.signed" ng-click="add()">Add new row</button></div>
           </div>
         </footer>
       </div>
@@ -118,7 +118,7 @@
       </div>
       <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 pull-right">
         <button class="btn btn-primary btn-block" ng-click="save()">Save</button>
-        <button class="btn btn-primary btn-block" ng-click="submit()">Submit</button>
+        <button class="btn btn-primary btn-block" ng-disabled="!timesheet.signed" ng-click="submit()">Submit</button>
       </div>    
     </footer>
   </div>
