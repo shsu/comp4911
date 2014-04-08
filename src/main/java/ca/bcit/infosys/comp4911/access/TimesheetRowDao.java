@@ -105,7 +105,7 @@ public class TimesheetRowDao {
             //find first occurrence of 0
             if(wpNumber.charAt(i) == '0') {
                 parentNumber = wpNumber.substring(0, i-1);
-                for(int j = 0; j < 7 - parentNumber.length(); j++){
+                for(int j = 0; j <= 7 - parentNumber.length(); j++){
                     parentNumber += '0';
                 }
                 break;

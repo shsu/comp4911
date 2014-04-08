@@ -59,6 +59,10 @@ public class WorkPackageResource {
             final WorkPackage workPackage) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
+        if(!workPackageDao.doesParentExist(workPackage.getWorkPackageNumber())){
+            return SH.responseWithEntity(409, "You must first create the appropriate parent work package.");
+        }
+
         if(timesheetRowDao.isParentLeaf(workPackage.getWorkPackageNumber()))
         {
             return SH.responseWithEntity(409, "The Parent of this Work Package already contains Timesheets.");
