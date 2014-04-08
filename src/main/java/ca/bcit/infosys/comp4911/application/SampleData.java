@@ -1057,14 +1057,130 @@ public class SampleData {
         timesheetsForLeaf(5, "C111427", 4);
         workPackageDao.create(new WorkPackage(
                 "C111500", "Level 5", 88999), false);
-
+        
+     // Adding the leaf WPs to a list
+        List<String> leafsWPNumber = new ArrayList<String>();
+        leafsWPNumber.add("C111111");
+        leafsWPNumber.add("C111112");
+        leafsWPNumber.add("C111113");
+        leafsWPNumber.add("C111114");
+        leafsWPNumber.add("C111115");
+        leafsWPNumber.add("C111116");
+        leafsWPNumber.add("C111200");
+        leafsWPNumber.add("C111310");
+        leafsWPNumber.add("C111320");
+        leafsWPNumber.add("C111330");
+        leafsWPNumber.add("C111411");
+        leafsWPNumber.add("C111412");
+        leafsWPNumber.add("C111413");
+        leafsWPNumber.add("C111414");
+        leafsWPNumber.add("C111415");
+        leafsWPNumber.add("C111416");
+        leafsWPNumber.add("C111421");
+        leafsWPNumber.add("C111422");
+        leafsWPNumber.add("C111423");
+        leafsWPNumber.add("C111424");
+        leafsWPNumber.add("C111425");
+        leafsWPNumber.add("C111426");
+        leafsWPNumber.add("C111427");
+        
+        
+        // Assign the leaf work packages to all users
+        for (String wpNumber : leafsWPNumber) {
+        	assignWPToAllUsers(wpNumber);
+        }
+        
+        // Creating the status reports for the leafs
+        generateStatusReport("C111111", setDate(4, 14, 2014), effortGenerator(100,100,100,100,0,100,100));
+        generateStatusReport("C111112", setDate(4, 14, 2014), effortGenerator(200,200,420,420,220,420,420));
+        generateStatusReport("C111113", setDate(4, 14, 2014), effortGenerator(30,210,210,210,30,210,210));
+        generateStatusReport("C111114", setDate(4, 14, 2014), effortGenerator(110,0,110,110,0,110,110));
+        generateStatusReport("C111115", setDate(4, 14, 2014), effortGenerator(110,110,110,110,10,110,110));
+        generateStatusReport("C111116", setDate(4, 14, 2014), effortGenerator(0,0,0,0,10,0,0));
+        
+//        generateStatusReport("C111200", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111310", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111320", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111330", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111411", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111412", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111413", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111414", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111415", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111416", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111421", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111422", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111423", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111424", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111425", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111426", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+//        generateStatusReport("C111427", setDate(4, 14, 2014), effortGenerator(0,0,0,0,0,0,0));
+        
+        
     }
 
     private void timesheetsForLeaf(int userId, String wPNumber, int hoursPerDay){
-        List<TimesheetRow> tsrList = generateListOfRows(55522, wPNumber, hoursPerDay);
+        List<TimesheetRow> tsrList = generateListOfRows(88999, wPNumber, hoursPerDay);
         timesheetDao.create(new Timesheet(userId, tsrList, 23, 2014,
                 0, true, true, false), false);
     }
 
-
+    private void generateStatusReport(String wpNumber, Date reportDate, List<Effort> remainingEstimate) {
+    	workPackageStatusReportDao.create(
+    			new WorkPackageStatusReport(
+    					reportDate, 
+    					"Report", 
+    					"Implemented cute features",
+    					"No problems", 
+    					"Implement cuter features", 
+    					remainingEstimate, 
+    					"None anticipated", 
+    					wpNumber
+    			), 
+    			false
+    	);
+    }
+    
+    private void assignWPToAllUsers(String wpNumber) {
+    	List<User> allSystemUsers = userDao.getAll();
+    	Date wpIssueDate = workPackageDao.read(wpNumber).getIssueDate(); 
+    	
+    	for (User user : allSystemUsers) {
+    		workPackageAssignmentDao.create(
+    				new WorkPackageAssignment(
+    						wpNumber, 
+    						user.getId(),
+    						false,
+    						true,
+    						wpIssueDate,
+    						null
+    				), 
+    				false
+    		);
+    	}
+    }
+    
+    
+    /*
+     *  Modification of generateListOfRows
+     */
+    private List<TimesheetRow> generateListOfRows2(int projectNumber, String wpNumber, int numOfRows, int userId){
+    	List<TimesheetRow> tsr = new ArrayList<TimesheetRow>();
+        Random random = new Random();
+        for(int i = 0; i < numOfRows; i++){
+            tsr.add(new TimesheetRow(projectNumber, wpNumber, 
+            		10,
+                    10,
+                    10,
+                    10,
+                    10,
+                    0,
+                    0, 
+                    "Note", 
+                    userDao.read(userId).getpLevel()
+            ));
+        }
+        return tsr;
+    }
+    
 }
