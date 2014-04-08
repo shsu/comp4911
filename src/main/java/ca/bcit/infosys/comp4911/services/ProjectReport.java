@@ -67,6 +67,7 @@ public class ProjectReport {
         JSONObject                                      objectToBeMapped;
         HashMap<Integer, HashMap<PLevel, BigDecimal>>   yearPayRateInfo;
         HashMap<String, List<TimesheetRow>>             wPNumberTSRListHash;
+        HashMap<String, String>                         wPNumberDescriptionHash;
 
         project = projectDao.read(projectId);
         DateTime dateTime = new DateTime(project.getIssueDate().toString());
@@ -81,7 +82,7 @@ public class ProjectReport {
 
         latestTwentyReports = wpsrDao.getLatestTwentyByProject(projectId);
         wPNumberTSRListHash = tsrDao.getWPNumberTimesheetRowListHash(latestTwentyReports);
-
+        wPNumberDescriptionHash = workPackageDao.getWPNumberNameHash(latestTwentyReports);
 
         if(latestTwentyReports.size() <= 0){
             return SH.responseWithEntity(200, reportArray.toString());
@@ -98,7 +99,7 @@ public class ProjectReport {
             reportHelperRows[i].calculatePersonHours(wpTimesheetRows);
             objectToBeMapped.put("workPackageNumber", wpsr);
             objectToBeMapped.put("workPackageDescription",
-                    workPackageDao.read(wpsr).getWorkPackageName());
+                    wPNumberDescriptionHash.get(wpsr));
             objectToBeMapped.put("pLevels", reportHelperRows[i].getpLevels());
             objectToBeMapped.put("labourDollars", reportHelperRows[i].getLabourDollars());
             reportArray.put(objectToBeMapped);

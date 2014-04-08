@@ -119,4 +119,17 @@ public class WorkPackageDao {
 
         return wPNumbersAndDates;
     }
+
+    public HashMap<String, String> getWPNumberNameHash(List<String> wPNumbers) {
+        HashMap<String, String> wPNumberDescriptionHash = new HashMap<String, String>();
+        List<WorkPackage> workPackages = getWPsByWorkPackageNumbers(wPNumbers);
+        Iterator<WorkPackage> workPackageIterator = workPackages.listIterator();
+        WorkPackage workPackage;
+        while(workPackageIterator.hasNext()){
+            workPackage = workPackageIterator.next();
+            wPNumberDescriptionHash.put(workPackage.getWorkPackageNumber(), workPackage.getWorkPackageName());
+        }
+
+        return wPNumberDescriptionHash;
+    }
 }
