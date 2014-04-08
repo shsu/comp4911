@@ -52,19 +52,19 @@ public class SampleData {
     @PostConstruct
     public void populateData() {
         generateUsers();
-//        generate250Users();  // generates 2000 users now
+        generateUsers(100);  // generates n regular users, n/5 HR, n/4 managers 
         generateProjects();
-//        generate100Projects();
+       generate100Projects();
         generatePayRates();
         generateProjectAssignments();
-//        generateProjectAssignmentForAll();
+  //     generateProjectAssignmentForAll();
         generateEffort();
         generateWorkPackages();
         generateWorkPackageAssignments();
-//        generateWorkPackageAssignmentForAll();
+  //      generateWorkPackageAssignmentForAll();
         generateTimesheets();
         generateWorkPackageStatusReports();
-        andJobsSaidLetThereBeAShitTonOfTimeSheets();
+  //      andJobsSaidLetThereBeAShitTonOfTimeSheets();
         projectWPSRGenerator(55522);
     }
 
@@ -112,7 +112,11 @@ public class SampleData {
                 2, 0, 0, PLevel.P5),false);
     }
 
-    private void generate250Users() {
+    /*
+    * @Param
+    * n is number of engineer users to be generated.
+    * */
+    private void generateUsers(int n) {
         // Loops to create up to 2000 users for testing
         // Separate loops for HR, Engineers, and Managers
         //
@@ -120,19 +124,19 @@ public class SampleData {
         String e;     // engineer
         String s;     // supervisor
 
-        for(int i = 1; i <= 100; i++){
+        for(int i = 1; i <= n/5; i++){
             hr = "hr" + Integer.toString(i);
             userDao.create(new User(
                     hr, hr, hr, hr, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
         }
 
-        for(int i = 1; i <= 1500; i++) {
+        for(int i = 1; i <= n; i++) {
             e = "e" + Integer.toString(i);
             userDao.create(new User(
                     e, e, e, e, 1), false);
         }
 
-        for(int i = 1; i <= 400; i++){
+        for(int i = 1; i <= n/4; i++){
             s = "s" + Integer.toString(i);
             userDao.create(new User(
                     s, s, s, s, new Date(), true, "Active", 40, 50, 0, 0, 0, 0, PLevel.P5),false);
