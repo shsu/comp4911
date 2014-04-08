@@ -1487,7 +1487,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             })
           }
           $scope.timesheet.put().then(function(response) {
-            $location.path('dashboard');
+            $scope.timesheet = response;
           });
           toastr.success("TimeSheet Saved");
         }
@@ -1614,6 +1614,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         }
 
         $scope.prior = function() {
+          $scope.makeDefault = false;
           year = $scope.timesheet.year;
           week = ($scope.timesheet.weekNumber - 1);
 
@@ -1625,6 +1626,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         }
 
         $scope.next = function() {
+          $scope.makeDefault = false;
           year = $scope.timesheet.year;
           week = ($scope.timesheet.weekNumber + 1);
 
@@ -1636,6 +1638,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         }
 
         $scope.today = function() {
+          $scope.makeDefault = false;
           year = moment().year();
           week = moment().week();
 
@@ -1676,7 +1679,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               $rootScope.user = user;
             })
           }
-          $scope.timesheet.put();
+          $scope.timesheet.put().then(function(response) {
+            $scope.timesheet = response;
+          })
           toastr.success("TimeSheet Saved");
         }
 
