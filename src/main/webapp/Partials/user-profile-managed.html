@@ -18,11 +18,11 @@
             <tr>
               <td>Full Name</td>
               <td>
-                <i class="fa fa-pencil-square-o fa-fw"></i>
                 <span ng-hide="editFirstName" ng-dblclick="focusFirst()" ng-bind="cUser.firstName"></span>
                 <input type="text" ng-show="editFirstName" ng-model="cUser.firstName" size="15" maxlength="250"></input> 
                 <span ng-hide="editLastName" ng-dblclick="focusLast()" ng-bind="cUser.lastName"></span>
                 <input type="text" ng-show="editLastName" ng-model="cUser.lastName" size="15" maxlength="250"></input>
+                  <span class="glyphicon glyphicon-pencil"></span>
               </td>
             </tr>
             <tr>
@@ -30,17 +30,17 @@
                   User Name
               </td>
               <td>
-                  <i class="fa fa-pencil-square-o fa-fw"></i>
                 <span ng-hide="editUserName" ng-dblclick="focusUserName()" ng-bind="cUser.username"></span>
                 <input type="text" ng-show="editUserName" ng-model="cUser.username"></input>
+                  &NonBreakingSpace;<span class="glyphicon glyphicon-pencil"></span>
               </td>
             </tr>
             <tr>
               <td>Password</td>
               <td>
-                  <i class="fa fa-pencil-square-o fa-fw"></i>
                   <span ng-hide="editPassword" ng-dblclick="focusPassword()">********************</span>
                   <input type="password" ng-show="editPassword" ng-model="cUser.password" size="15" maxlength="250" required></input>
+                  <span class="glyphicon glyphicon-pencil"></span>
             </tr>
          </tbody>
         </table>
@@ -50,20 +50,21 @@
           <tbody>
             <tr>
               <td>P Level</td>
-              <td data-toggle="tooltip" data-placement="right" title="Double-click to Change">
-                <i class="fa fa-pencil-square-o fa-fw"></i>
+              <td>
                 <span ng-hide="editPLevel" ng-dblclick="focusPLevel()" ng-bind="cUser.pLevel"></span>
                 <select ng-show="editPLevel" ng-model="cUser.pLevel" ng-options="i for i in items" required>     
-                </select> 
+                </select>
+                  <span class="glyphicon glyphicon-pencil"></span>
               </td>
             </tr>
             <tr>
                 <td>Status</td>
-                <td data-toggle="tooltip" data-placement="right" title="Double-click to Change">
-                    <i class="fa fa-pencil-square-o fa-fw"></i>
+                <td>
+
                     <span ng-hide="editStatus" ng-dblclick="focusStatus()" ng-bind="cUser.status"></span>
                     <select ng-show="editStatus" ng-model="cUser.status" ng-options="s for s in statuses" required>
                     </select>
+                    <span class="glyphicon glyphicon-pencil"></span>
                 </td>
             </tr>
             <tr>
@@ -101,4 +102,10 @@
       </div>
     </div>
   </div>
+    <script>
+        var alertme = function() {
+            toastr.info("Double click to edit fields with the <i class='glyphicon glyphicon-pencil'></i> icon.")
+        }
+        window.onload = alertme;
+    </script>
 </content>
