@@ -2,20 +2,23 @@
 <div ng-controller="WPManagementPMController">
   <h1 class="secondary">Manage Work Package</h1><br />
   <div class="row">
-    <p class="col-lg-3">Project No. 
-      <select  ng-init="loadProjects()" ng-change="loadWorkPackages()" ng-model="project" data-ng-options="p.projectNumber for p in projects">
+    <p class="col-lg-2">Project No. </p>    
+    <div class="col-lg-3">
+      <select  class="form-control" ng-init="loadProjects()" ng-change="loadWorkPackages()" ng-model="project" data-ng-options="p.projectNumber for p in projects">
+      <option value="">-- select project No. --</option>
       </select>
-    </p>
+    </div>
     <p class="col-lg-4">Project Name: {{project.projectName}}</p>
-    <p class="col-lg-4">Budget: {{project.allocatedBudget | currency: amount: symbol}}</p>
+    <p class="col-lg-3">Budget: {{project.allocatedBudget | currency: amount: symbol}}</p>
   </div>
   <div class="row">
-    <div class="col-lg-6">
-      <form action="" class="form-inline">
-        <p>Search WP Number:  <input type="text" ng-model="query.workPackageNumber" placeholder="search" class="form-control" /></p>
-      </form>
-    </div>
-    <div class="col-lg-6">
+    <form action="" class="form-inline">
+      <p class="col-lg-2">Search WP Number:</p> 
+      <div class="col-lg-3">
+        <input type="text" ng-model="query.workPackageNumber" placeholder="search" class="form-control" />
+      </div>
+    </form>
+    <div class="col-lg-7 pull-rigt">
       <button ng-click="create()" ng-disabled="!projectChosen" class="btn btn-success pull-right" has-permission="ProjectManager">Create Work Package</button>
     </div>
   </div>

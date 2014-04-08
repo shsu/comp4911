@@ -14,19 +14,19 @@
           <tbody>
             <tr>
               <td>First Name</td>
-              <td><input type="text" ng-model="cUser.firstName" maxlength="250" required /></td>
+              <td><input class="form-control" type="text" ng-model="cUser.firstName" maxlength="250" required /></td>
             </tr>
             <tr>
               <td>Last Name</td>
-              <td><input type="text" ng-model="cUser.lastName" maxlength="250" required /></td>
+              <td><input class="form-control" type="text" ng-model="cUser.lastName" maxlength="250" required /></td>
             </tr>
             <tr>
               <td>User Name</td>
-              <td><input type="text" ng-model="cUser.username" maxlength="250" required /></td>
+              <td><input class="form-control" type="text" ng-model="cUser.username" maxlength="250" required /></td>
             </tr>
             <tr>
               <td>Password</td>
-              <td><input type="password" ng-model="cUser.password" maxlength="250" required/></td>
+              <td><input class="form-control" type="password" ng-model="cUser.password" maxlength="250" required /></td>
             </tr>
          </tbody>
         </table>
@@ -37,20 +37,28 @@
             <tr>
               <td>PLevel</td>
             <td>
-              <select ng-model="cUser.pLevel" ng-options="i for i in items" required>     
+              <select class="form-control" ng-model="cUser.pLevel" ng-options="i for i in items" required>
+              <option value="">-- Select P Level --</option>
               </select>
             </td>
             </tr>
             <tr> 
               <td>Status</td>
               <td>
-                <select ng-model="cUser.status" ng-options="s for s in statuses" required>
+                <select class="form-control"  ng-model="cUser.status" ng-options="s for s in statuses" required>
+                <option value="">-- Choose Status --</option>
                 </select>
               </td>
             </tr>
             <tr>
-              <td>HR</td>
-              <td><input type="checkbox" ng-model="cUser.hr" /></td>
+              <td>Position</td>
+              <td>
+                <div class="checkbox">
+                  <label>
+                  <input class="checkbox"  type="checkbox" ng-model="cUser.hr" />HR Manager
+                  </label>                  
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
