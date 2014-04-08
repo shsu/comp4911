@@ -124,15 +124,14 @@ public class ProjectReport {
             @PathParam("id") final Integer projectId) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-
-        JSONArray                       projectBudgetJSON = new JSONArray();
         JSONObject                      pBObject = new JSONObject();
         ProjectBudgetReport             pbr = new ProjectBudgetReport(workPackageDao, payRateDao.getPayRateHashByYear());
         List<WorkPackageStatusReport>   mostRecentReports = wpsrDao.getAllByProject(projectId);
 
         mostRecentReports = ReportHelperRow.getSingleWPSRPerWP(mostRecentReports);
 
-        pbr.getExpectedBudget().calculateExpectedPLevelTotalsFromWPSRs(mostRecentReports);
+        pbr.getExpectedBudget().calculateExpectedPLevelTotalsFromWPSRs(mostRecentReports,
+                workPackageDao.getAllProjectWPLeafs(projectId));
         pbr.getCurrentSpending().calculatePersonHours(tsrDao.getAllByProject(projectId));
         pbr.getInitialBudget().calculateInitialBudget(workPackageDao.getAllProjectWPLeafs(projectId));
 
@@ -170,13 +169,15 @@ public class ProjectReport {
             List<TimesheetRow> childrensRows = tsrDao.getTimesheetRowsByMultipleWPNumber(wPChildrenString);
             List<WorkPackageStatusReport> childrenWPSRs = wpsrDao.getAllByMultipleWPNumber(wPChildrenString);
             List<WorkPackage> childrenWP = workPackageDao.getWPsByWorkPackageNumbers(wPChildrenString);
+
             wpBudget.getCurrentSpending().calculatePersonHours(childrensRows);
             workPackageObject.put("CurrentSpending",
                     wpBudget.getCurrentSpending().getpLevels());
             workPackageObject.put("CurrentSpendingInDollars",
                     wpBudget.getCurrentSpending().getLabourDollars());
             wpBudget.getExpectedBudget().
-                    calculateExpectedPLevelTotalsFromWPSRs(ReportHelperRow.getSingleWPSRPerWP(childrenWPSRs));
+                    calculateExpectedPLevelTotalsFromWPSRs(ReportHelperRow.getSingleWPSRPerWP(childrenWPSRs),
+                            childrenWP);
             workPackageObject.put("RemainingEstimate",
                     wpBudget.getExpectedBudget().getpLevels());
             workPackageObject.put("RemainingEstimateInDollars",
@@ -187,9 +188,7 @@ public class ProjectReport {
             workPackageObject.put("InitialEstimateInDollars",
                     wpBudget.getInitialBudget().getLabourDollars());
 
-
-
-        return SH.responseWithEntity(200, workPackageObject.toString());
+            return SH.responseWithEntity(200, workPackageObject.toString());
     }
 
 }

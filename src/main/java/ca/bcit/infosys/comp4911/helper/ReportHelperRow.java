@@ -94,12 +94,25 @@ public class ReportHelperRow {
 
     public void setpLevels(HashMap<PLevel, Integer> pLevels) { this.pLevels = pLevels; }
 
-    public void calculateExpectedPLevelTotalsFromWPSRs(List<WorkPackageStatusReport> oneStatusReportPerWP){
-        Iterator<WorkPackageStatusReport> wpsrIterator = oneStatusReportPerWP.listIterator();
+    public void calculateExpectedPLevelTotalsFromWPSRs(List<WorkPackageStatusReport> oneStatusReportPerWP,
+                                                       List<WorkPackage> childWorkPackages) {
+        Iterator<WorkPackage> workPackageIterator = childWorkPackages.listIterator();
+        WorkPackage workPackage;
         WorkPackageStatusReport wpsr;
-        while(wpsrIterator.hasNext()){
-            wpsr = wpsrIterator.next();
-            increasePLevelsFromEffortList(wpsr.getEstimatedWorkRemainingInPD(), wpsr.getReportDate());
+        HashMap<String, WorkPackageStatusReport> stringWPSRHashMap = getStringWPSRHashMap(oneStatusReportPerWP);
+
+        while(workPackageIterator.hasNext()) {
+            workPackage = workPackageIterator.next();
+            if(stringWPSRHashMap.get(workPackage.getWorkPackageNumber()) != null){
+                wpsr = stringWPSRHashMap.get(workPackage.getWorkPackageNumber());
+                increasePLevelsFromEffortList(wpsr.getEstimatedWorkRemainingInPD(), wpsr.getReportDate());
+            }
+            else {
+                if(workPackage.getEstimateAtStart() != null){
+                    increasePLevelsFromEffortList(workPackage.getEstimateAtStart(), workPackage.getIssueDate());
+                }
+            }
+
         }
     }
 
@@ -109,7 +122,7 @@ public class ReportHelperRow {
      * @param timesheetRowList, wpNumber
      * @return - the finished reportHelperRow
      */
-    public void calculatePersonHours(List<TimesheetRow> timesheetRowList){
+    public void calculatePersonHours(List<TimesheetRow> timesheetRowList) {
         if(timesheetRowList != null && timesheetRowList.size() > 0 ) {
             Iterator<TimesheetRow> timesheetRowIterator = timesheetRowList.iterator();
             TimesheetRow tsr;
@@ -209,5 +222,14 @@ public class ReportHelperRow {
 
         }
         return mostRecentWPSR;
+    }
+
+    private HashMap<String, WorkPackageStatusReport> getStringWPSRHashMap(List<WorkPackageStatusReport> wpsrList){
+        HashMap<String, WorkPackageStatusReport> stringWorkPackageStatusReportHashMap
+                = new HashMap<String, WorkPackageStatusReport>();
+        for(WorkPackageStatusReport wpsr : wpsrList) {
+            stringWorkPackageStatusReportHashMap.put(wpsr.getWorkPackageNumber(), wpsr);
+        }
+        return stringWorkPackageStatusReportHashMap;
     }
 }
