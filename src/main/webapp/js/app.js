@@ -127,7 +127,7 @@ cascadia.config(function(RestangularProvider) {
     } else if(checkServerStatus("http://localhost:8080/Cascadia/api")){
         RestangularProvider.setBaseUrl("http://localhost:8080/Cascadia/api");
     }  else if(checkServerStatus("http://www.comp4911.com/api")){
-        RestangularProvider.setBaseUrl('https://comp4911-stevenhsu.rhcloud.com/api');
+        RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
     } else {
         RestangularProvider.setBaseUrl('https://comp4911.apiary.io');
         toastr.warning("Unable to make connection to an real API.");
