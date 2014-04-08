@@ -44,6 +44,7 @@ public class UserDao {
             }
 
             em.merge(user);
+            em.flush();
         }
     }
 
