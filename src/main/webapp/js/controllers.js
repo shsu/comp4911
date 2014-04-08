@@ -1623,7 +1623,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
     cascadiaControllers.controller('ManagedUserProfileController', ['$scope', '$location', '$rootScope', '$routeParams', 'Restangular',
       function($scope, $location, $rootScope, $params, Restangular) {
         var param = $params.id;
-          toastr.info("Double click to edit fields with the <i class='fa fa-pencil-square-o'></i> icon.")
+        toastr.info("Double click to edit fields with the <i class='fa fa-pencil-square-o'></i> icon.")
         $scope.supervisor = {};
         $scope.timesheetApprover = {};
         $scope.editFirstName = $scope.editLastName = $scope.editUserName = $scope.editPLevel = $scope.editStatus = $scope.password = false;
@@ -1700,58 +1700,48 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
       }
       ]);
 
-
-/*
-    WEEKLY PROJECT CONTROLLER
-    */
-    cascadiaControllers.controller('WeeklyProjectController', ['$scope', 'Restangular',
-      function($scope, Restangular){
-
-      }
-      ]);
-
-
-
-/*
-    WORK PACKAGE DETAILS CONTROLLER
+    /*
+        WORK PACKAGE DETAILS CONTROLLER
     */
     cascadiaControllers.controller('WPDetailsController', ['$scope', 'Restangular', '$routeParams', 'GrowlResponse', 'calculateBudget', 'FilterUser',
       function($scope, Restangular, $params, GrowlResponse, calculateBudget, FilterUser){
         $scope.param = $params.id;
         $scope.quantity = 20;
         $scope.package = {};
+        $scope.listOfEffort = [];
         
-
-        $scope.listOfEffort = [
-        {
-          pLevel: "P1",
-          personDays: 0
-        },
-        {
-          pLevel: "P2",
-          personDays: 0
-        },
-        {
-          pLevel: "P3",
-          personDays: 0
-        },
-        {
-          pLevel: "P4",
-          personDays: 0
-        },
-        {
-          pLevel: "P5",
-          personDays: 0
-        },
-        {
-          pLevel: "DS",
-          personDays: 0
-        },
-        {
-          pLevel: "SS",
-          personDays: 0
+        var initEffort = function() {
+          $scope.listOfEffort = [
+          {
+            pLevel: "P1",
+            personDays: 0
+          },
+          {
+            pLevel: "P2",
+            personDays: 0
+          },
+          {
+            pLevel: "P3",
+            personDays: 0
+          },
+          {
+            pLevel: "P4",
+            personDays: 0
+          },
+          {
+            pLevel: "P5",
+            personDays: 0
+          },
+          {
+            pLevel: "DS",
+            personDays: 0
+          },
+          {
+            pLevel: "SS",
+            personDays: 0
+          }
+          ]
         }
-        ]
 
         var base = Restangular.one('work_packages/' + $scope.param);
 
@@ -1759,6 +1749,13 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           $scope.package = response;
           loadProject();
           loadBudget();
+          if($scope.package.estimateAtStart && $scope.package.estimateAtStart.length > 0) {
+            $scope.listOfEffort = $scope.package.estimateAtStart;
+            $scope.hasEffort = true;
+          } else {
+            initEffort();
+            $scope.hasEffort = false;
+          }
         });
 
         base.getList('assignments').then(function(response){

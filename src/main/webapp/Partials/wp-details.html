@@ -37,13 +37,16 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td ng-repeat="effort in listOfEffort"><input type="number" class="form-input min-width" min="0" ng-model="effort.pLevel"></td>
+                    <td ng-repeat="effort in listOfEffort">
+                      <span ng-show="hasEffort" ng-bind="effort.personDays">
+                      <input ng-hide="hasEffort" type="number" class="form-input min-width" min="0" ng-model="effort.personDays">
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <br />
-            <button class="btn btn-primary pull-right" ng-click="save()">Save</button>
+            <button class="btn btn-primary pull-right" ng-hide="hasEffort" ng-click="save()">Save</button>
           </div>
         </div>        
       </div>
