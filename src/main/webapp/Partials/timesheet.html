@@ -3,8 +3,9 @@
     <h1 class="secondary">TimeSheet</h1>
     <div class="row">
       <ul class="list-inline center">
-        <li>Emp ID: {{user.id}}</li>
-        <li>Emp Name: {{user.firstName}} {{user.lastName}}</li>
+          <li>Week Number: {{timesheet.weekNumber}}</li>
+        <li>Employee ID: {{user.id}}</li>
+        <li>Employee Name: {{user.firstName}} {{user.lastName}}</li>
       </ul>
     </div>
     <div class="row" ng-hide="hasProjects()">
