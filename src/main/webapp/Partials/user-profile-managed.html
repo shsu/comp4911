@@ -92,15 +92,12 @@
     </div>
     <div has-permission="Hr">
       <div class="row">
-          <div class="col-sm-2">
-              <a href="#/assign-employee-project/{{cUser.id}}" ng-hide=""class="btn btn-success btn-block">Add to Project</a>
-          </div>
-          <div class="col-sm-2 col-sm-offset-8">
+          <div class="col-sm-2 pull-right">
               <button ng-click="save()" class="btn btn-primary btn-block">Save</button>
           </div>
-      </div>
-      <div class="row">
-        <h1>Assigned Projects and WPs</h1>
+          <div class="col-sm-2 pull-right">
+              <a href="#/assign-employee-project/{{cUser.id}}" ng-hide="" class="btn btn-success btn-block">Add to Project</a>
+          </div>
       </div>
     </div>
   </div>

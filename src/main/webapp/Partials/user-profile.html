@@ -13,21 +13,25 @@
               <td>Full Name</td>
               <td>
                 <span ng-hide="editFirstName" ng-dblclick="focusFirst()" ng-bind="user.firstName"></span>
-                <input type="text" ng-show="editFirstName" ng-model="user.firstName" size="15" maxlength="250"></input> 
+                <input type="text" ng-show="editFirstName" ng-model="user.firstName" size="15" maxlength="250" required></input> 
                 <span ng-hide="editLastName" ng-dblclick="focusLast()" ng-bind="user.lastName"></span>
-                <input type="text" ng-show="editLastName" ng-model="user.lastName" size="15" maxlength="250"></input>
+                <input type="text" ng-show="editLastName" ng-model="user.lastName" size="15" maxlength="250" required></input>
               </td>
             </tr>
             <tr>
               <td>User Name</td>
               <td>
-                <span ng-hide="editUserName" ng-dblclick="focusUserName()" ng-bind="user.username"></span>
-                <input type="text" ng-show="editUserName" ng-model="user.username" requ></input>
+                <span ng-hide="editUserName" ng-dlbclick="focusUserName()" ng-bind="user.username"></span>
+                <input type="text" ng-show="editUserName" ng-model="user.username" required></input>
               </td>
             </tr>
             <tr>
               <td>Password</td>
-              <td><a ng-click="open()" href="" class="cursor-hand">Change Password</a></td>
+              <td>
+                  <i class="fa fa-pencil-square-o fa-fw"></i>
+                  <span ng-hide="editPassword" ng-dblclick="focusPassword()">********************</span>
+                  <input type="password" ng-show="editPassword" ng-model="user.password" size="15" maxlength="250" required></input>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -60,27 +64,10 @@
       </div>
     </div>
     <div class="row">
-          <div class="col-sm-2 col-sm-offset-8">
+          <div class="col-sm-2 pull-right">
               <button ng-click="save()" class="btn btn-primary btn-block">Save</button>
           </div>
       </div>
-    <script type="text/ng-template" id="myModalContent2.html">
-      <div class="modal-header">
-        <h3>Change Password</h3>
-      </div>
-      <div class="modal-body" style="text-align: center">
-        <form name="loginForm">
-            <input type="password" class="form-control" data-ng-model="newPassword" id="password" placeholder="New Password" maxlength="250" required>
-        </form>
-      </div>
-      <br />
-      <div class="modal-footer">
-        <button class="btn btn-lg btn-success" ng-click="ok(newPassword)">OK
-        </button>
-        <button class="btn btn-lg btn-danger" ng-click="cancel()">Cancel
-        </button>
-      </div>
-    </script>
   </div>
 </div>
 </content>

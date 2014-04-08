@@ -385,7 +385,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
             angular.copy(userList, $scope.users);
           });
         }
-           
+
         $scope.search = function(user) {
           return FilterUser(user, $scope.query);
         }
@@ -1553,7 +1553,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
     cascadiaControllers.controller('UserProfileController', ['$scope', '$modal', '$location', 'GrowlResponse', '$rootScope', '$routeParams', 'Restangular',
       function($scope, $modal, $location, GrowlResponse, $rootScope, $params, Restangular) {
         var user = JSON.parse(localStorage.getItem('user'));
-        $scope.editFirstName = $scope.editLastName = $scope.editUserName = false;
+        $scope.editFirstName = $scope.editLastName = $scope.editUserName = $scope.editPassword = false;
 
         Restangular.one('users', user.id).get().then(function(response) {
           $rootScope.user = response;
@@ -1589,6 +1589,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           $scope.editUserName = true;
         }
 
+        $scope.focusPassword = function() {
+          $scope.editPassword = true;
+        }
+
         $scope.hasSupervisor = function() {
           var user = $rootScope.user;
           if(user && user.supervisorUserID) {
@@ -1610,42 +1614,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           user.put();
           $location.path('dashboard');
         }
-
-        $scope.open = function () {
-
-          var modalInstance = $modal.open({
-            templateUrl: 'myModalContent2.html',
-            controller: ModalInstanceCtrl2
-          });
-
-          modalInstance.result.then(function (np) {
-            Restangular.one('users', $rootScope.user.id).get().then(function(response) {
-              var user = response;
-              
-              user.password = np;
-              console.log(np);
-
-              user.put().then(function(response) {
-                toastr.success("Password Changed");
-              }, function(response) {
-                GrowlResponse(response);
-              });
-            });
-          });
-        }
       }
       ]);
-
-    var ModalInstanceCtrl2 = function ($scope, $modalInstance) {
-
-      $scope.ok = function (np) {
-        $modalInstance.close(np);
-      };
-
-      $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-      };
-    };
 
 /*
     MANAGED USER PROFILE CONTROLLER
@@ -1656,7 +1626,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           toastr.info("Double click to edit fields with the <i class='fa fa-pencil-square-o'></i> icon.")
         $scope.supervisor = {};
         $scope.timesheetApprover = {};
-        $scope.editFirstName = $scope.editLastName = $scope.editUserName = $scope.editPLevel = $scope.editStatus = false;
+        $scope.editFirstName = $scope.editLastName = $scope.editUserName = $scope.editPLevel = $scope.editStatus = $scope.password = false;
         $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5' ];
         $scope.statuses = [ 'Active', 'Inactive' ];
 
@@ -1692,9 +1662,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           $scope.editUserName = true;
         }
 
-      $scope.focusPassword = function() {
-          $scope.editPassword = true;
-      }
+        $scope.focusPassword = function() {
+            $scope.editPassword = true;
+        }
 
         $scope.focusStatus = function() {
           $scope.editStatus = true;
