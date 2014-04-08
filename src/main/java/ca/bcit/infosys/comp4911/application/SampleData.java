@@ -62,11 +62,7 @@ public class SampleData {
         generateEffort();
         generateWorkPackages();
         generateWorkPackageAssignments();
-<<<<<<< Updated upstream
   //    generateWorkPackageAssignmentForAll();
-=======
-        generateWorkPackageAssignmentForAll();
->>>>>>> Stashed changes
         generateTimesheets();
         generateWorkPackageStatusReports();
   //    andJobsSaidLetThereBeAShitTonOfTimeSheets();
