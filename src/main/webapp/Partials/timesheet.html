@@ -58,7 +58,7 @@
           </tbody>
         </table>
         <footer>
-          <div class="row"><p class="col-xs-4">Overtime:<span totenth ng-model="timesheet.overTime" /> </p></div>
+          <div class="row"><p class="col-xs-4">Overtime:<span ng-bind="(timesheet.overTime / 10)" /> </p></div>
           <div class="row">
             <p class="col-xs-4">Flextime: {{user.totalFlexTime}} </p>
             <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 pull-right"><button class="btn btn-success btn-block" ng-click="add()" ng-disabled="timesheet.signed" ng-hide="timesheet.approved">Add new row</button></div>

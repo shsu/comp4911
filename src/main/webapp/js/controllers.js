@@ -1572,6 +1572,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         }
 
         var calcOvertime = function() {
+          console.log('check overtime');
           var total = 0;
           var rows = $scope.timesheet.timesheetRows;
 
@@ -1585,6 +1586,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           if((total - 400) > 0) {
             $scope.timesheet.overTime = total - 400;
           } else {
+            console.log('set to 0');
             $scope.timesheet.overTime = 0;
           }
         }
