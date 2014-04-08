@@ -21,6 +21,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/work_packages")
 public class WorkPackageResource {
@@ -61,11 +62,12 @@ public class WorkPackageResource {
         if(timesheetRowDao.isParentLeaf(workPackage.getWorkPackageNumber()))
         {
             return SH.responseWithEntity(409, "The Parent of this Work Package already contains Timesheets.");
-        }else if(workPackageDao.isParentLeaf(workPackage.getWorkPackageNumber())) {
-
-            return SH.responseWithEntity(409, "The Parent of this Work Package already contains an initial estimate");
-
         }
+        else if(workPackageDao.isParentLeaf(workPackage.getWorkPackageNumber()))
+        {
+            return SH.responseWithEntity(409, "The Parent of this Work Package already contains an initial estimate");
+        }
+
         workPackageDao.create(workPackage,false);
         return SH.response(201);
     }
@@ -143,9 +145,9 @@ public class WorkPackageResource {
             @PathParam("workpackage_number") String workPackageNumber) {
         int userId = userTokens.verifyTokenAndReturnUserID(headerToken, queryToken);
 
-
+        List<String> workPackageChildren = workPackageDao.getWPChildren(workPackageNumber);
 
         return SH.responseWithEntity(200,
-                workPackageAssignmentDao.getAllUsersByWorkPackageNumber(workPackageNumber));
+                workPackageAssignmentDao.getAllUsersByMultipleWorkPackageNumber(workPackageChildren));
     }
 }

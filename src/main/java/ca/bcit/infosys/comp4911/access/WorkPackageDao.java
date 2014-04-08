@@ -90,12 +90,16 @@ public class WorkPackageDao {
 
     public List<String> getWPChildren(String wPNumber) {
         String findChildren = wPNumber;
-        for(int i = 0; i < wPNumber.length(); i++){
-            if(wPNumber.charAt(i) == '0'){
-                findChildren = wPNumber.substring(0, i) + "%";
-                break;
+
+        if(wPNumber.charAt(6) == '0'){
+            for(int i = 0; i < wPNumber.length(); i++){
+                if(wPNumber.charAt(i) == '0'){
+                    findChildren = wPNumber.substring(0, i) + "%";
+                    break;
+                }
             }
         }
+
         TypedQuery<String> query = em.createQuery("select wp.workPackageNumber from WorkPackage wp" +
                 " where wp.workPackageNumber like :findChildren", String.class);
         query.setParameter("findChildren", findChildren);
