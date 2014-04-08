@@ -1415,7 +1415,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         Restangular.one('timesheets', param).get().then(function(response) {
           $scope.timesheet = response;
-          calcOvertime();
         }, function(response) {
           GrowlResponse(response);
         })
@@ -1487,30 +1486,34 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               $rootScope.user = user;
             })
           }
-          calcOvertime();
           $scope.timesheet.put().then(function(response) {
             $location.path('dashboard');
           });
           toastr.success("TimeSheet Saved");
         }
 
-        var calcOvertime = function() {
+        $scope.$watch('timesheet.timesheetRows', function() {
+          console.log('check overtime');
           var total = 0;
-          var rows = $scope.timesheet.timesheetRows;
+          if($scope.timesheet) {
+            var rows = $scope.timesheet.timesheetRows;
 
-          for(var i = 0; i < rows.length; ++i) {
-            total += (
-              rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
-              rows[i].wednesday + rows[i].thursday + rows[i].friday
-              )
-          }
+            for(var i = 0; i < rows.length; ++i) {
+              total += (
+                rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
+                rows[i].wednesday + rows[i].thursday + rows[i].friday
+                )
+            }
 
-          if((total - 400) > 0) {
-            $scope.timesheet.overTime = total - 400;
-          } else {
-            $scope.timesheet.overTime = 0;
+            $scope.total = total;
+            
+            if((total - 400) > 0) {
+              $scope.timesheet.overTime = total - 400;
+            } else {
+              $scope.timesheet.overTime = 0;
+            }
           }
-        }
+        }, true);
 
         $scope.submit = function() {
           $scope.timesheet.pending = true;
@@ -1543,7 +1546,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         base.get({"filter":"current"}).then(function(response){
           $scope.timesheet = response;
-          calcOvertime();
         }, function(response){
           GrowlResponse(response);
         });
@@ -1607,6 +1609,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           });
         }
 
+        $scope.today = function() {
+          $route.reload(); 
+        }
+
         var checkDefault = function() {
           if($scope.timesheet) {
             console.log($rootScope.user.defaultTimesheetID);
@@ -1644,25 +1650,29 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           toastr.success("TimeSheet Saved");
         }
 
-        var calcOvertime = function() {
+        $scope.$watch('timesheet.timesheetRows', function() {
           console.log('check overtime');
           var total = 0;
-          var rows = $scope.timesheet.timesheetRows;
+          if($scope.timesheet) {
+            var rows = $scope.timesheet.timesheetRows;
 
-          for(var i = 0; i < rows.length; ++i) {
-            total += (
-              rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
-              rows[i].wednesday + rows[i].thursday + rows[i].friday
-              )
-          }
+            for(var i = 0; i < rows.length; ++i) {
+              total += (
+                rows[i].saturday + rows[i].sunday + rows[i].monday + rows[i].tuesday +
+                rows[i].wednesday + rows[i].thursday + rows[i].friday
+                )
+            }
 
-          if((total - 400) > 0) {
-            $scope.timesheet.overTime = total - 400;
-          } else {
-            console.log('set to 0');
-            $scope.timesheet.overTime = 0;
+            $scope.total = total;
+
+            if((total - 400) > 0) {
+              $scope.timesheet.overTime = total - 400;
+            } else {
+              $scope.timesheet.overTime = 0;
+            }
           }
-        }
+        }, true);
+
 
         $scope.submit = function() {
           $scope.timesheet.pending = true;
