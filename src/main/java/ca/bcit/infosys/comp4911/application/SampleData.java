@@ -69,6 +69,8 @@ public class SampleData {
 
         generateWorkPackageStatusReports();
         projectWPSRGenerator(55522);
+
+        //testProject();
     }
 
     private void generateUsers() {
@@ -906,6 +908,7 @@ public class SampleData {
         }
         User u = new User("cleclair@example.com", "password", "Craig", "LeClair", 1);
         userDao.create(u, false);
+        projectAssignmentDao.create(new ProjectAssignment(88999, u.getId()), false);
         List<ProjectAssignment> pas = projectAssignmentDao.getAllByUserId(u.getId());
         pas.get(0).setProjectManager(true);
         projectAssignmentDao.update(pas.get(0));
@@ -1097,6 +1100,8 @@ public class SampleData {
         
         // Creating the status reports for the leafs
         generateStatusReport("C111111", setDate(4, 14, 2014), effortGenerator(100,100,100,100,0,100,100));
+        generateStatusReport("C111111", setDate(5, 14, 2014), effortGenerator(100,100,100,100,0,100,100));
+        generateStatusReport("C111111", setDate(6, 14, 2014), effortGenerator(100,100,100,100,0,100,100));
         generateStatusReport("C111112", setDate(4, 14, 2014), effortGenerator(200,200,420,420,220,420,420));
         generateStatusReport("C111113", setDate(4, 14, 2014), effortGenerator(30,210,210,210,30,210,210));
         generateStatusReport("C111114", setDate(4, 14, 2014), effortGenerator(110,0,110,110,0,110,110));

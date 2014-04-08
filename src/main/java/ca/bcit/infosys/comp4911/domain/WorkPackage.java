@@ -55,7 +55,7 @@ public class WorkPackage implements Serializable
     private Date endDate;
 
     @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    @Size(min=5, max=7)
+    @Size(max=7)
     @JoinTable(name="WORKPACKAGE_EFFORT",
            joinColumns = { @JoinColumn(name="WORKPACKAGE_NUMBER")},
            inverseJoinColumns = { @JoinColumn(name="EFFORT_ID")})
