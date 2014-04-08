@@ -39,10 +39,16 @@
                <a href="#/wp-details/{{wp.workPackageNumber}}">{{wp.workPackageNumber}}</a>
             </td>
             <td>{{wp.workPackageName}}</td>
-            <td><a href="#/add-engineer/{{wp.workPackageNumber}}">Assign Responsible Engineer</a></td>
-            <td><a href="#/assign-employee-wp/{{wp.workPackageNumber}}">Assign Employees</a></td>
+            <td>
+              <a href="#/add-engineer/{{wp.workPackageNumber}}" ng-show="isLeaf(wp)">Assign Responsible Engineer</a>
+              <span ng-hide="isLeaf(wp)">N/A</span>
+            </td>
+            <td>
+              <a href="#/assign-employee-wp/{{wp.workPackageNumber}}" ng-show="isLeaf(wp)">Assign Employees</a>
+              <span ng-hide="isLeaf(wp)">N/A</span>
+            </td>
             <td>{{wp.issueDate}}</td>
-            <td>{{wp.progressStatus}}</td>
+            <td>{{wp.progressStatus | alterStatus}}</td>
           </tr>
         </tbody>
       </table>

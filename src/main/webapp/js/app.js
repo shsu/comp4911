@@ -43,10 +43,10 @@ cascadia.config(['$routeProvider',
             resolve: requiresAuthentication, permission: 'ResponsibleEngineer'}).
         when('/monthly-wp', {controller: 'MonthlyWPController', templateUrl:'Partials/monthly-wp.html',
             resolve: requiresAuthentication}).
-        when('/pcbac', {controller: 'PCBACController', templateUrl:'Partials/pcbac.html',
-            resolve: requiresAuthentication}).
-        when('/pcpr', {controller: 'PCPRController', templateUrl:'Partials/pcpr.html',
-            resolve: requiresAuthentication}).
+        // when('/pcbac', {controller: 'PCBACController', templateUrl:'Partials/pcbac.html',
+        //     resolve: requiresAuthentication}).
+        // when('/pcpr', {controller: 'PCPRController', templateUrl:'Partials/pcpr.html',
+        //     resolve: requiresAuthentication}).
         when('/projects', {controller: 'ProjectManagementController', templateUrl:'Partials/manage-project.html',
             resolve: requiresAuthentication, permission: 'ProjectManager, Hr'}).
         when('/projects/new', {controller: 'CreateProjectsController', templateUrl:'Partials/create-project.html',

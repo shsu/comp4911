@@ -848,7 +848,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               GrowlResponse(response);
             });
           }
-
         }
       }
       ]);
@@ -871,9 +870,16 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.save = function () {
           if (!($scope.createWPForm.$valid)) {
             toastr.warning("Invalid Input");
-          } else if (!validateWPNumber($scope.workPackage.workPackageNumber)) {
+          }
+          else if (!validateWPNumber($scope.workPackage.workPackageNumber)) {
             toastr.warning("Invalid Input - Work Package Number: if a character is 0, then the characters following it must all be 0 too.");
-          }else {
+          }
+          else {
+            persist();
+          }
+        }
+
+        var persist = function() {
             workPackage = $scope.workPackage;
             workPackage.progressStatus = true;
             workPackage.issueDate = new Date();
@@ -883,10 +889,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               $location.path('manage-wp-pm');
               toastr.success("Work Package Created");
             }, function (response) {
-              GrowlResponse(response);
+                GrowlResponse(response);
             })
-          }
         }
+
       }
       ]);
 
@@ -1109,8 +1115,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
       ]);
 
 
-
-/*
+  /*
    MANAGE WP CONTROLLER FOR PM
    */
    cascadiaControllers.controller('WPManagementPMController', ['$scope', '$location', 'Restangular', 'GrowlResponse',
@@ -1127,6 +1132,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
             localStorage.removeItem('project-wp-creation');
           })
         }
+      }
+
+      $scope.isLeaf = function(wp) {
+        return (wp.estimateAtStart.length > 0);
       }
 
       $scope.loadWorkPackages = function(projectNumber) {
@@ -1165,28 +1174,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
       
     }
     ]);
-
-
-/*
-    MONTHLY WP CONTROLLER
-    */
-    cascadiaControllers.controller('MonthlyWPController', ['$scope', 'Restangular',
-      function($scope, Restangular){
-
-      }
-      ]);
-
-
-
-/*
-    PCBAC CONTROLLER
-    */
-    cascadiaControllers.controller('PCBACController', ['$scope', 'Restangular',
-      function($scope, Restangular){
-
-      }
-      ]);
-
 
 
 /*

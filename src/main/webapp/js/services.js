@@ -118,7 +118,11 @@ cascadiaServices.factory('GrowlResponse', [
       }
       else if(response.status == 404){
           toastr.error("Not Found");
-      } else {
+      }
+      else if(response.status == 409){
+        toastr.error("Parent is already a leaf, cannot be created.");
+      } 
+      else {
           toastr.error("Status Code "+ response.status);
       }
     }

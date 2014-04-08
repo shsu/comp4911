@@ -36,3 +36,13 @@ cascadiaFilters.filter('uniqueUsers', function(){
 		}
 	}
 });
+
+cascadiaFilters.filter('alterStatus', function() {
+	return function(status) {
+		if(status) {
+			return "Open"
+		} else {
+			return "Closed"
+		}
+	}
+})
