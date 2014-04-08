@@ -260,7 +260,7 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
         }
 
         $scope.markForRemoval = function(obj){
-          var index = FindIndex($scope.projects, obj.projectNumber);
+          var index = FindIndexProject($scope.projects, obj.projectNumber);
 
           var state = $scope.projects[index] && $scope.projects[index].markedForRemoval;
 
