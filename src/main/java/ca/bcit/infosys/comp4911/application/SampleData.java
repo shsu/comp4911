@@ -53,18 +53,21 @@ public class SampleData {
     @PostConstruct
     public void populateData() {
         generateUsers();
-        generateUsers(100);  // generates n regular users, n/5 HR, n/4 managers 
+        generateUsers(100);  // generates n regular users, n/5 HR, n/4 managers
+        generatePayRates();
+        generateEffort();
         generateProjects();
         generate100Projects();
-        generatePayRates();
         generateProjectAssignments();
-        generateEffort();
+
         generateWorkPackages();
         generateWorkPackageAssignments();
         generateWorkPackageAssignmentForAll();
+
         generateTimesheets();
+        //andJobsSaidLetThereBeAShitTonOfTimeSheets();
+
         generateWorkPackageStatusReports();
-  //    andJobsSaidLetThereBeAShitTonOfTimeSheets();
         projectWPSRGenerator(55522);
     }
 
