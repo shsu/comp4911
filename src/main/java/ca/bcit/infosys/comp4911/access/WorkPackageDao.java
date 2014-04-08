@@ -154,21 +154,28 @@ public class WorkPackageDao {
 
         }
 
-        return read(parentNumber) != null && read(parentNumber).getEstimateAtStart() != null;
+        return read(parentNumber) != null && read(parentNumber).getEstimateAtStart().size() != 0;
     }
 
     public boolean doesParentExist(String wpNumber) {
         String parentNumber = wpNumber;
-        for(int i = 0; i < 7; i++){
-            //find first occurrence of 0
-            if(wpNumber.charAt(i) == '0') {
-                parentNumber = wpNumber.substring(0, i-1);
-                for(int j = 0; j <= 7 - parentNumber.length(); j++){
-                    parentNumber += '0';
-                }
-                break;
-            }
 
+        if(wpNumber.charAt(1) != '0' && wpNumber.charAt(2) == '0'){
+            return true;
+        }
+        else if(wpNumber.charAt(1) != '0') {
+            for(int i = 0; i < 7; i++){
+                //find first occurrence of 0
+                if(wpNumber.charAt(i) == '0') {
+                    parentNumber = wpNumber.substring(0, i-1);
+                    int length = parentNumber.length();
+                    for(int j = 0; j < 7 - length; j++){
+                        parentNumber += '0';
+                    }
+                    break;
+                }
+
+            }
         }
 
         return read(parentNumber) != null;
