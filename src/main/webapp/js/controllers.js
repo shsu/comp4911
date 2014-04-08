@@ -1676,7 +1676,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
               $rootScope.user = user;
             })
           }
-          calcOvertime();
           $scope.timesheet.put().then(function(response) {
             $location.path('dashboard');
           });
@@ -1814,7 +1813,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           localStorage.removeItem('user');
           localStorage.setItem('user', JSON.stringify(user));
           user.put().then(function(response){
-            $location.path('dashboard');
+            $rootScope.user = response;  
           });
         }
       }
@@ -1894,7 +1893,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.save = function() {
           user = $scope.cUser;
-          user.put().then(function() {
+          user.put().then(function(response) {
+            $scope.cUser = response;
             $location.path('users');
             toastr.success("User Profile Updated")
           });

@@ -99,9 +99,7 @@ public class UsersResource {
             return SH.response(404);
         }
 
-        userDao.update(user);
-
-        return SH.responseWithEntity(200, userDao.read(user.getId()));
+        return SH.responseWithEntity(200, userDao.update(user));
     }
 
     @GET
