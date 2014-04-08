@@ -34,7 +34,7 @@ cascadiaServices.factory('FindIndexUser', [
   function(){
     return function(list, obj) {
       for(var i = 0; i < list.length; ++i) {
-        if(list[i].projectNumber == obj) {
+        if(list[i].id == obj) {
           return i;
         }
       }
