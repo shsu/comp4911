@@ -1564,6 +1564,11 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         $scope.workPackageNumbers = {};
         $scope.projectNumbers = [];
         $scope.default = false;
+        $scope.focusNote = false;
+
+        $scope.focusNote = function() {
+              $scope.editNote = true;
+        }
 
         base.get({"filter":"current"}).then(function(response){
           $scope.timesheet = response;

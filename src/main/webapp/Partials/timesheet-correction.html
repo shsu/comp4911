@@ -30,6 +30,7 @@
               <th class="text-center">Thu</th>
               <th class="text-center">Fri</th>
               <th></th>
+              <th></th>
             </tr>
             </thead>
             <tfoot>
@@ -45,6 +46,7 @@
                 <td class="text-center">{{thu / 10}}</td>
                 <td class="text-center">{{fri / 10}}</td>
                 <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td></td>
@@ -58,11 +60,13 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td></td>
                 <td>Flextime:  </td>
                 <td class="text-right">{{user.totalFlexTime}}</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -92,6 +96,7 @@
               <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.thursday" /></td>
               <td><input type="number" totenth step="0.1" class="form-control text-right" min="0" max="240" ng-readonly="timesheet.signed" ng-model="r.friday" /></td>
                 <td><span ng-click="delete($index)" class="cursor-hand glyphicon glyphicon-remove-circle"></span></td>
+<!--                <td><span ng-click="" class="glyphicon glyphicon-list-alt"></span></td> -->
             </tr>
           </tbody>
         </table>
