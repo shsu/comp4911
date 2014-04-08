@@ -1562,8 +1562,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 /*
     TIMESHEET CONTROLLER
     */
-    cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
-      function($scope, $rootScope, $location, Restangular, $params, GrowlResponse) {
+    cascadiaControllers.controller('TimesheetController', ['$scope', '$rootScope', '$route', '$location', 'Restangular', '$routeParams', 'GrowlResponse',
+      function($scope, $rootScope, $route, $location, Restangular, $params, GrowlResponse) {
         var base = Restangular.one('user/timesheets');
 
         $scope.workPackageNumbers = {};
@@ -1636,7 +1636,14 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
         }
 
         $scope.today = function() {
-          $route.reload(); 
+          year = moment().year();
+          week = moment().week();
+
+          base.get({"year": year, "week": week}).then(function(response){
+            $scope.timesheet = response;
+          }, function(response) {
+            GrowlResponse(response);
+          });
         }
 
         var checkDefault = function() {
