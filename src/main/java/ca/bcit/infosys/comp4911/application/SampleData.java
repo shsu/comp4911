@@ -53,7 +53,7 @@ public class SampleData {
     @PostConstruct
     public void populateData() {
         generateUsers();
-        generateUsers(100);  // generates n regular users, n/5 HR, n/4 managers
+        generateUsers(10);  // generates n regular users, n/5 HR, n/4 managers
         generatePayRates();
         generateEffort();
         generateProjects();
