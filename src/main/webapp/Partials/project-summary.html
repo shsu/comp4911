@@ -26,14 +26,14 @@
             <tr ng-repeat="row in rows">
               <td>{{row.workPackageNumber}}</td>
               <td>{{row.workPackageDescription}}</td>
-              <td>{{row.pLevels.P5}}</td>
-              <td>{{row.pLevels.P4}}</td>
-              <td>{{row.pLevels.P3}}</td>
-              <td>{{row.pLevels.P2}}</td>
-              <td>{{row.pLevels.P1}}</td>
-              <td>{{row.pLevels.DS}}</td>
-              <td>{{row.pLevels.SS}}</td>
-              <td>{{(row.pLevels.P5 + row.pLevels.P4 + row.pLevels.P3 + row.pLevels.P2+ row.pLevels.P1 +row.pLevels.DS + row.pLevels.SS)}}</td>
+              <td>{{row.pLevels.P5 / 10}}</td>
+              <td>{{row.pLevels.P4 / 10}}</td>
+              <td>{{row.pLevels.P3 / 10}}</td>
+              <td>{{row.pLevels.P2 / 10}}</td>
+              <td>{{row.pLevels.P1 / 10}}</td>
+              <td>{{row.pLevels.DS / 10}}</td>
+              <td>{{row.pLevels.SS / 10}}</td>
+              <td>{{(row.pLevels.P5 + row.pLevels.P4 + row.pLevels.P3 + row.pLevels.P2 + row.pLevels.P1 +row.pLevels.DS + row.pLevels.SS) / 10}}</td>
               <td>{{row.labourDollars | currency}}</td>
             </tr>
           </tbody>
