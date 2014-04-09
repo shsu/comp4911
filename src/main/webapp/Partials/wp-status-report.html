@@ -25,10 +25,10 @@
       <tbody>
         <tr>
           <th>Pay Grade</th>
-          <th>Person Days</th>
+          <th>Estimate to Complete in Person Days</th>
         </tr>
         <tr ng-repeat="effort in listOfEffort">
-          <td>{{effort.pLevel}}</td><td><input type="number" ng-model="effort.personDays" /></td>
+          <td>{{effort.pLevel}}</td><td><input type="number" ng-model="effort.personDays" class="text-right" /></td>
         </tr>
       </tbody>
     </table>
