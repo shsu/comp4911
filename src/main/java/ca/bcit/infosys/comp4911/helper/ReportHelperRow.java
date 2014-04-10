@@ -204,22 +204,14 @@ public class ReportHelperRow {
          * HashMap is used to check for double WPSRs. Check for double in order to only take the most
          * recent WPSR.
          */
-        HashMap<String, Boolean> singleWPSRPerWP = new HashMap<String,
-                Boolean>();
+        HashMap<String, WorkPackageStatusReport> singleWPSRPerWP = new HashMap<String,
+                WorkPackageStatusReport>();
         ArrayList<WorkPackageStatusReport> mostRecentWPSR = new ArrayList<WorkPackageStatusReport>();
-        WorkPackageStatusReport currentWPSR;
-        Iterator<WorkPackageStatusReport> wpsrIterator = allWPSR.listIterator();
-        while(wpsrIterator.hasNext()){
-            currentWPSR = wpsrIterator.next();
-            if(singleWPSRPerWP.containsKey(currentWPSR.getWorkPackageNumber())){
-                continue;
-            }
-            else {
-                singleWPSRPerWP.put(currentWPSR.getWorkPackageNumber(), true);
-                mostRecentWPSR.add(currentWPSR);
 
+        for(WorkPackageStatusReport wpsr: allWPSR) {
+            if(singleWPSRPerWP.get(wpsr.getWorkPackageNumber()) != null){
+                singleWPSRPerWP.put(wpsr.getWorkPackageNumber(), wpsr);
             }
-
         }
         return mostRecentWPSR;
     }
