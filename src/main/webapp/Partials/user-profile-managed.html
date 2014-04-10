@@ -97,7 +97,7 @@
               <button ng-click="save()" class="btn btn-primary btn-block">Save</button>
           </div>
           <div class="col-sm-2 pull-right">
-              <a href="#/assign-employee-project/{{cUser.id}}" ng-hide="" class="btn btn-success btn-block">Add to Project</a>
+              <a href="#/assign-employee-project/{{cUser.id}}" has-permission="Supervisor" class="btn btn-success btn-block">Add to Project</a>
           </div>
       </div>
     </div>

@@ -22,12 +22,15 @@ var cascadiaControllers = angular.module('cascadiaControllers', ['base64']);
         var loadProject = function() {
           Restangular.one('projects', $scope.package.projectNumber).get().then(function(response){
             $scope.project = response;
+            loadUsers();
           })
         }
 
-        Restangular.all('users').getList().then(function(response){
-          $scope.engineers = response;
-        });
+        var loadUsers = function() {
+          Restangular.all('projects/' + $scope.project.projectNumber + '/users').getList().then(function(response){
+            $scope.engineers = response;
+          });
+        }
 
         $scope.search = function(user) {
           return FilterUser(user, $scope.query);
@@ -928,8 +931,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
     */
     cascadiaControllers.controller('DashboardController', ['$scope', '$rootScope', 'Restangular', 'GrowlResponse',
       function($scope, $rootScope, Restangular, GrowlResponse) {
-
         $scope.quantity = 20;
+        $scope.timesheets = true;
 
         Restangular.all('user/timesheets/rejected').getList().then(function(response) {
           $scope.timesheets = response;
@@ -1811,6 +1814,10 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           return false;
         }
 
+        var turnToFalse = function() {
+          $scope.editFirstName = $scope.editLastName = $scope.editUserName = $scope.editPassword = false;
+        }
+
         $scope.hasTimesheetApprover = function() {
           user = $rootScope.user;
           if(user && user.timesheetApproverUserID) {
@@ -1825,6 +1832,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           localStorage.setItem('user', JSON.stringify(user));
           user.put().then(function(response){
             $rootScope.user = response;  
+            turnToFalse();
           });
         }
       }
