@@ -27,6 +27,7 @@ cascadiaFilters.filter('alterStatus', function() {
 	}
 });
 
+// From Tenth filter
 cascadiaFilters.filter('fromTenth', function() {
 	return function(amount) {
 		return amount / 10;
