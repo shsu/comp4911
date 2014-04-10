@@ -28,7 +28,7 @@
           <th>Estimate to Complete in Person Days</th>
         </tr>
         <tr ng-repeat="effort in listOfEffort">
-          <td><span ng-bind="effort.pLevel"></span></td><td><input type="number" ng-model="effort.personDays | totenth" class="text-right" /></td>
+          <td><span ng-bind="effort.pLevel"></span></td><td><input type="number" totenth ng-model="effort.personDays" class="text-right" /></td>
         </tr>
       </tbody>
     </table>
