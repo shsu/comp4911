@@ -23,7 +23,7 @@
             <td>{{wp.workPackageNumber}}</td>
             <td>{{wp.workPackageName}}</td>
             <td>{{wp.issueDate}}</td>
-            <td>{{wp.progressStatus}}</td>
+            <td>{{wp.progressStatus | alterStatus}}</td>
             <td><a href="#/wp-status-report/{{wp.workPackageNumber}}">Create Status Report</a></td>
           </tr>
         </tbody>

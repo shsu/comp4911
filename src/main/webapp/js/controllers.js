@@ -2033,6 +2033,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           }
 
           $scope.package.put().then(function(response) {
+            toastr.success("Status Changed Created");
             $scope.package = response;
           })
 

@@ -5,14 +5,15 @@
       <li><a href="#/manage-wp-pm">Manage Work Package</a></li>
       <li class="active">Work Package Details</li>
     </ol>     
-  <!-- <p>{{package}}</p> -->
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="row">
           <p class="col-xs-3">Project No: <span ng-bind="package.projectNumber" /></p>
           <p class="col-xs-3">Project Name: <span ng-bind="project.projectName"/></p>
           <p class="col-xs-3">Status:
-             <span class="cursor-hand" ng-click="toggleStatus()" ng-bind="package.progressStatus | alterStatus"/>
+             <span class="cursor-hand" ng-bind="package.progressStatus | alterStatus"/>
+             <span class="glyphicon glyphicon-pencil pull-right" ng-click="toggleStatus()" has-permission="Hr"></span>
+          </p>
         </div>
         <div class="row">
           <p class="col-xs-3">WP Number: {{package.workPackageNumber}}</p>
