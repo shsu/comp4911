@@ -2182,25 +2182,36 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
       cascadiaControllers.controller('UsersManagementController', ['$scope', '$location', '$rootScope', 'Restangular',
        'FilterUser', 'GrowlResponse',
        function($scope, $location, $rootScope, Restangular, FilterUser, GrowlResponse) {
-        var base = Restangular.all('users');
 
         $scope.items = [ 'P1', 'P2', 'P3', 'P4', 'P5', 'DS', 'SS' ];
         $scope.statuses = [ 'Active', 'Inactive' ];
         $scope.quantity = 20;
         $scope.cUser = {};
 
-        var loadUser = function() {
-          Restangular.one('user').get().then(function(response) {
-              $scope.cUser = response;
-          })
-        }
-
-        base.getList().then(function(response) {
-          loadUser();
-          $scope.users = response;
+        Restangular.one('user').get().then(function(response) {
+          $scope.cUser = response;
         }, function(response){
           GrowlResponse(response);
-        });
+        })
+        
+        var loadManaged = function() {
+          Restangular.all('user/peons').getList().then(function(response){
+            $scope.users = response;
+          }, function(response){
+            GrowlResponse(response);
+          });
+        }
+
+        var loadAll = function() {
+          Restangular.all('users').getList().then(function(response){
+            $scope.users = response;
+          }, function(response){
+            GrowlResponse(response)
+          });
+        }
+
+        var str = localStorage.getItem('permissions');
+        (str.indexOf('Supervisor') != -1) ? loadManaged() : loadAll();
 
         $scope.hasSupervisor = function(u) {
           if(u && u.supervisorUserID) {
@@ -2215,18 +2226,6 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
 
         $scope.search = function(user) {
           return FilterUser(user, $scope.query);
-        }
-
-        $scope.delete = function(user, $index) {
-          user.remove().then(function() {
-            $scope.users.splice($index, 1);
-          })
-
-          console.log("user deleted");
-        }
-
-        $scope.add = function() {
-          $scope.add_user = true;
         }
       }
       ]);

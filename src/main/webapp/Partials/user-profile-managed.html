@@ -18,11 +18,11 @@
             <tr>
               <td>Full Name</td>
               <td>
-                <span ng-hide="editFirstName" ng-dblclick="focusFirst()" ng-bind="cUser.firstName"></span>
+                <span ng-hide="editFirstName" ng-bind="cUser.firstName"></span>
                 <input type="text" ng-show="editFirstName" ng-model="cUser.firstName" size="15" maxlength="250"></input> 
-                <span ng-hide="editLastName" ng-dblclick="focusLast()" ng-bind="cUser.lastName"></span>
+                <span ng-hide="editLastName" ng-bind="cUser.lastName"></span>
                 <input type="text" ng-show="editLastName" ng-model="cUser.lastName" size="15" maxlength="250"></input>
-                  <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusFirst();focusLast();"></span>
+                <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusFirst();focusLast();" has-permission="Hr"></span>
               </td>
             </tr>
             <tr>
@@ -30,17 +30,17 @@
                   User Name
               </td>
               <td>
-                <span ng-hide="editUserName" ng-dblclick="focusUserName()" ng-bind="cUser.username"></span>
+                <span ng-hide="editUserName" ng-bind="cUser.username"></span>
                 <input type="text" ng-show="editUserName" ng-model="cUser.username"></input>
-                  &NonBreakingSpace;<span class="glyphicon glyphicon-pencil pull-right" ng-click="focusUserName()"></span>
+                  &NonBreakingSpace;<span class="glyphicon glyphicon-pencil pull-right" ng-click="focusUserName()" has-permission="Hr"></span>
               </td>
             </tr>
             <tr>
               <td>Password</td>
               <td>
-                  <span ng-hide="editPassword" ng-dblclick="focusPassword()">********************</span>
+                  <span ng-hide="editPassword">********************</span>
                   <input type="password" ng-show="editPassword" ng-model="cUser.password" size="15" maxlength="250" required></input>
-                  <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusPassword()"></span>
+                  <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusPassword()" has-permission="Hr"></span>
             </tr>
          </tbody>
         </table>
@@ -51,53 +51,64 @@
             <tr>
               <td>P Level</td>
               <td>
-                <span ng-hide="editPLevel" ng-dblclick="focusPLevel()" ng-bind="cUser.pLevel"></span>
+                <span ng-hide="editPLevel" ng-bind="cUser.pLevel"></span>
                 <select ng-show="editPLevel" ng-model="cUser.pLevel" ng-options="i for i in items" required>     
                 </select>
-                  <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusPLevel()"></span>
+                  <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusPLevel()" has-permission="Hr"></span>
               </td>
             </tr>
             <tr>
                 <td>Status</td>
                 <td>
-
-                    <span ng-hide="editStatus" ng-dblclick="focusStatus()" ng-bind="cUser.status"></span>
+                    <span ng-hide="editStatus" ng-bind="cUser.status"></span>
                     <select ng-show="editStatus" ng-model="cUser.status" ng-options="s for s in statuses" required>
                     </select>
-                    <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusStatus()"></span>
+                    <span class="glyphicon glyphicon-pencil pull-right" ng-click="focusStatus()" has-permission="Hr"></span>
                 </td>
             </tr>
             <tr>
               <td>Assigned Manager</td>
-              <td>
+              <td has-permission="Hr">
                 <a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor()">Assign</a>
                 <span ng-show="hasSupervisor()">
                     {{supervisor.firstName}} {{supervisor.lastName}}
                     (<a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand">Change</a>)
                 </span>
               </td>
+              <td has-permission="Supervisor">
+                <span>
+                  {{supervisor.firstName}} {{supervisor.lastName}}
+                </span>
             </tr>
             <tr>
               <td>Timesheet Approver</td>
-              <td>
+              <td has-permission="Supervisor">
                   <a href="#/users/{{cUser.id}}/assign-ta" class="cursor-hand" ng-hide="hasTimesheetApprover()">Assign</a>
                   <span ng-show="hasTimesheetApprover()">
                       {{timesheetApprover.firstName}} {{timesheetApprover.lastName}}
                       (<a href="#/users/{{cUser.id}}/assign-ta" class="cursor-hand">Change</a>)
                   </span>
               </td>
+              <td has-permission="Hr">
+                <span ng-show="hasTimesheetApprover()">
+                  {{timesheetApprover.firstName}} {{timesheetApprover.lastName}}
+                </span>
+                <span ng-hide="hasTimesheetApprover()">
+                  None Assigned
+                </span>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>    
     </div>
-    <div has-permission="Hr">
+    <div>
       <div class="row">
-          <div class="col-sm-2 pull-right">
+          <div class="col-sm-2 pull-right" has-permission="Hr">
               <button ng-click="save()" class="btn btn-primary btn-block">Save</button>
           </div>
-          <div class="col-sm-2 pull-right">
-              <a href="#/assign-employee-project/{{cUser.id}}" has-permission="Supervisor" class="btn btn-success btn-block">Add to Project</a>
+          <div class="col-sm-2 pull-right" has-permission="Supervisor">
+              <a href="#/assign-employee-project/{{cUser.id}}" class="btn btn-success btn-block">Add to Project</a>
           </div>
       </div>
     </div>
