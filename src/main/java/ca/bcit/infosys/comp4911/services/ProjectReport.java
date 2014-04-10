@@ -58,8 +58,9 @@ public class ProjectReport {
         List<TimesheetRow>                              wpTimesheetRows;
         Project                                         project;
         ReportHelperRow[]                               reportHelperRows = new ReportHelperRow[20];
-        String                                          wpsr;
-        List<String>                                    latestTwentyReports;
+        WorkPackageStatusReport                         wpsr;
+        List<String>                                    latestTwentyReportsWPNames;
+        List<WorkPackageStatusReport>                   latestTwentyReports;
         JSONArray                                       reportArray = new JSONArray();
         JSONObject                                      objectToBeMapped;
         HashMap<Integer, HashMap<PLevel, BigDecimal>>   yearPayRateInfo;
@@ -77,26 +78,28 @@ public class ProjectReport {
         objectToBeMapped.put("payRates", yearPayRateInfo.get(dateTime.getYear()));
         reportArray.put(objectToBeMapped);
 
-        latestTwentyReports = wpsrDao.getLatestTwentyByProject(projectId);
-        wPNumberTSRListHash = tsrDao.getWPNumberTimesheetRowListHash(latestTwentyReports);
-        wPNumberDescriptionHash = workPackageDao.getWPNumberNameHash(latestTwentyReports);
+        latestTwentyReportsWPNames = wpsrDao.getLatestTwentyByProject(projectId);
+        latestTwentyReports = wpsrDao.getAllByMultipleWPNumber(latestTwentyReportsWPNames);
+        latestTwentyReports = ReportHelperRow.getSingleWPSRPerWP(latestTwentyReports);
+        wPNumberTSRListHash = tsrDao.getWPNumberTimesheetRowListHash(latestTwentyReportsWPNames);
+        wPNumberDescriptionHash = workPackageDao.getWPNumberNameHash(latestTwentyReportsWPNames);
 
-        if(latestTwentyReports.size() <= 0){
+        if(latestTwentyReportsWPNames.size() <= 0){
             return SH.responseWithEntity(200, reportArray.toString());
         }
 
-        Iterator<String> wpsrIterator = latestTwentyReports.iterator();
+        Iterator<WorkPackageStatusReport> wpsrIterator = latestTwentyReports.iterator();
         int i = 0;
         while(wpsrIterator.hasNext()) {
             objectToBeMapped = new JSONObject();
             wpsr = wpsrIterator.next();
-            if(wPNumberTSRListHash.get(wpsr) == null) { continue; }
-            wpTimesheetRows = wPNumberTSRListHash.get(wpsr);
+            if(wPNumberTSRListHash.get(wpsr.getWorkPackageNumber()) == null) { continue; }
+            wpTimesheetRows = wPNumberTSRListHash.get(wpsr.getWorkPackageNumber());
             reportHelperRows[i] = new ReportHelperRow(workPackageDao, yearPayRateInfo);
             reportHelperRows[i].calculatePersonHours(wpTimesheetRows);
-            objectToBeMapped.put("workPackageNumber", wpsr);
+            objectToBeMapped.put("workPackageNumber", wpsr.getWorkPackageNumber());
             objectToBeMapped.put("workPackageDescription",
-                    wPNumberDescriptionHash.get(wpsr));
+                    wPNumberDescriptionHash.get(wpsr.getWorkPackageNumber()));
             objectToBeMapped.put("pLevels", reportHelperRows[i].getpLevels());
             objectToBeMapped.put("labourDollars", reportHelperRows[i].getLabourDollars());
             reportArray.put(objectToBeMapped);

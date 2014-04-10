@@ -209,8 +209,9 @@ public class ReportHelperRow {
         ArrayList<WorkPackageStatusReport> mostRecentWPSR = new ArrayList<WorkPackageStatusReport>();
 
         for(WorkPackageStatusReport wpsr: allWPSR) {
-            if(singleWPSRPerWP.get(wpsr.getWorkPackageNumber()) != null){
+            if(singleWPSRPerWP.get(wpsr.getWorkPackageNumber()) == null){
                 singleWPSRPerWP.put(wpsr.getWorkPackageNumber(), wpsr);
+                mostRecentWPSR.add(wpsr);
             }
         }
         return mostRecentWPSR;
