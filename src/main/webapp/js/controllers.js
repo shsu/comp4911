@@ -2127,8 +2127,8 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, item) {
           }
 
           Restangular.one('work_packages/' + $scope.package.workPackageNumber + '/status_reports').customPOST(data).then(function(response){
-            $location.path('wp-manage-re/');
-            GrowlResponse(response)
+           // $location.path('/wp-manage-re');
+              toastr.success("Status Report Created");
           }, function(response){
             GrowlResponse(response)
           })
