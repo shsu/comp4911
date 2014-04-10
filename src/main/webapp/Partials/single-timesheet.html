@@ -39,13 +39,13 @@
                 <select ng-model="r.workPackageNumber" ng-hide="timesheet.signed" ng-options="w for w in workPackageNumbers[r.projectNumber]"></select>
                 <span ng-show="timesheet.signed">{{r.projectNumber}}</span>
               </td>
-              <td><span ng-bind="r.saturday" totenth /></td>
-              <td><span ng-bind="r.sunday" totenth /></td>
-              <td><span ng-bind="r.monday" totenth /></td>
-              <td><span ng-bind="r.tuesday" totenth /></td>
-              <td><span ng-bind="r.wednesday" totenth /></td>
-              <td><span ng-bind="r.thursday" totenth /></td>
-              <td><span ng-bind="r.friday" totenth /></td>
+              <td>{{r.saturday / 10}}</td>
+              <td>{{r.sunday / 10}}</td>
+              <td>{{r.monday / 10}}</td>
+              <td>{{r.tuesday / 10}}</td>
+              <td>{{r.wednesday / 10}}</td>
+              <td>{{r.thursday / 10}}</td>
+              <td>{{r.friday / 10}}</td>
               <td>{{(r.saturday + r.sunday + r.monday + r.tuesday + r.wednesday + r.thursday + r.friday) / 10 }}</td>
             </tr>
           </tbody>
