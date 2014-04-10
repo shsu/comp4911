@@ -3,8 +3,8 @@
     <div ng-controller="ProjectSummaryController">
     <div class="row">
       <p class="col-xs-3">Project Number: <select ng-change="loadMatrix()" ng-model="pro" data-ng-options="p.projectNumber for p in projects"></select></p>
-      <p class="col-xs-3">Project Name: {{project.projectName}}</p>
-      <p class="col-xs-6">Project Manager: {{projectManager.firstName}} {{projectManager.lastName}}</p>
+      <p class="col-xs-3">Project Name: <span ng-bind="project.projectName"></p>
+      <p class="col-xs-6">Project Manager: <span ng-bind="projectManager.firstName" /><span ng-bind="projectManager.lastName" /></p>
     </div>
     <div class="row">
       <div class="table-responsive">
@@ -13,28 +13,28 @@
             <tr>
               <th>WP#</th>
               <th>Description</th>
-              <th>P5<br>{{payRates.P5}}</th>
-              <th>P4<br>{{payRates.P4}}</th>
-              <th>P3<br>{{payRates.P3}}</th>
-              <th>P2<br>{{payRates.P2}}</th>
-              <th>P1<br>{{payRates.P1}}</th>
-              <th>DS<br>{{payRates.DS}}</th>
-              <th>SS<br>{{payRates.SS}}</th>
+              <th>P5<br><span ng-bind="payRates.P5"></th>
+              <th>P4<br><span ng-bind="payRates.P4"></th>
+              <th>P3<br><span ng-bind="payRates.P3"></th>
+              <th>P2<br><span ng-bind="payRates.P2"></th>
+              <th>P1<br><span ng-bind="payRates.P1"></th>
+              <th>DS<br><span ng-bind="payRates.DS"></th>
+              <th>SS<br><span ng-bind="payRates.SS"></th>
               <th>TOTAL</th>
               <th>Labour Dollars</th>
             </tr>
             <tr ng-repeat="row in rows">
               <td>{{row.workPackageNumber}}</td>
-              <td>{{row.workPackageDescription}}</td>
-              <td>{{row.pLevels.P5 / 10}}</td>
-              <td>{{row.pLevels.P4 / 10}}</td>
-              <td>{{row.pLevels.P3 / 10}}</td>
-              <td>{{row.pLevels.P2 / 10}}</td>
-              <td>{{row.pLevels.P1 / 10}}</td>
-              <td>{{row.pLevels.DS / 10}}</td>
-              <td>{{row.pLevels.SS / 10}}</td>
-              <td>{{(row.pLevels.P5 + row.pLevels.P4 + row.pLevels.P3 + row.pLevels.P2 + row.pLevels.P1 +row.pLevels.DS + row.pLevels.SS) / 10}}</td>
-              <td>{{row.labourDollars | currency}}</td>
+              <td><span ng-bind="row.workPackageDescription"></td>
+              <td><span ng-bind="row.pLevels.P5 | fromTenth"></td>
+              <td><span ng-bind="row.pLevels.P4 | fromTenth"></td>
+              <td><span ng-bind="row.pLevels.P3 | fromTenth"></td>
+              <td><span ng-bind="row.pLevels.P2 | fromTenth"></td>
+              <td><span ng-bind="row.pLevels.P1 | fromTenth"></td>
+              <td><span ng-bind="row.pLevels.DS | fromTenth"></td>
+              <td><span ng-bind="row.pLevels.SS | fromTenth"></td>
+              <td><span ng-bind="(row.pLevels.P5 + row.pLevels.P4 + row.pLevels.P3 + row.pLevels.P2 + row.pLevels.P1 +row.pLevels.DS + row.pLevels.SS) | fromTenth"></td>
+              <td><span ng-bind="row.labourDollars | currency"></td>
             </tr>
           </tbody>
         </table>

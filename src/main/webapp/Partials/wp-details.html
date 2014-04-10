@@ -84,9 +84,9 @@
                 <tbody>
                   <tr ng-repeat="data in dataArray | orderBy: data.level">
                     <td ng-bind="data.level | uppercase"></td>
-                    <td ng-bind="data.ie"></td>
-                    <td ng-bind="data.cs"></td>
-                    <td ng-bind="data.re"></td>
+                    <td ng-bind="data.ie | fromTenth"></td>
+                    <td ng-bind="data.cs | fromTenth"></td>
+                    <td ng-bind="data.re | fromTenth"></td>
                   </tr>
                 </tbody>
               </table>

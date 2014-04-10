@@ -17,26 +17,6 @@ cascadiaFilters.filter('uniqueUser', function(){
 	}
 });
 
-
-cascadiaFilters.filter('uniqueUsers', function(){
-	return function(users, omittedUsers) {
-		if(angular.isDefined(users) && angular.isDefined(omittedUsers)) {
-			var returnList = users;
-
-			angular.forEach(omittedUsers, function(oUser) {
-				angular.forEach(users, function(user) {
-					if(angular.equals(oUser.id, user.id)) {
-						var index = returnList.indexOf(user);
-						returnList.splice(index, 1);
-					}
-				});
-			})
-
-			return returnList;
-		}
-	}
-});
-
 cascadiaFilters.filter('alterStatus', function() {
 	return function(status) {
 		if(status) {
@@ -45,4 +25,10 @@ cascadiaFilters.filter('alterStatus', function() {
 			return "Closed"
 		}
 	}
-})
+});
+
+cascadiaFilters.filter('fromTenth', function() {
+	return function(amount) {
+		return amount / 10;
+	}
+});
