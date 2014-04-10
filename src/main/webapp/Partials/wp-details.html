@@ -45,7 +45,7 @@
                 <tbody>
                   <tr>
                     <td ng-repeat="effort in listOfEffort">
-                      <span ng-show="hasEffort" ng-bind="effort.personDays" />
+                      <span ng-show="hasEffort" ng-bind="effort.personDays | fromTenth" />
                       <input ng-hide="hasEffort" type="number" class="form-input min-width" min="0" totenth ng-model="effort.personDays">
                     </td>
                   </tr>
