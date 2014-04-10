@@ -28,7 +28,7 @@
           <th>Person Days</th>
         </tr>
         <tr ng-repeat="effort in report.estimatedWorkRemainingInPD">
-          <td><span ng-bind="effort.pLevel"></span></td><td><span ng-bind="effort.personDays"></span></td>
+          <td><span ng-bind="effort.pLevel"></span></td><td><span ng-bind="effort.personDays | fromTenth"></span></td>
         </tr>
       </tbody>
     </table>
