@@ -68,32 +68,23 @@
             </tr>
             <tr>
               <td>Assigned Manager</td>
-              <td has-permission="Hr">
-                <a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor()">Assign</a>
-                <span ng-show="hasSupervisor()">
-                    {{supervisor.firstName}} {{supervisor.lastName}}
-                    (<a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand">Change</a>)
+              <td>
+                <span>{{supervisor.firstName}} {{supervisor.lastName}}</span>
+                <a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand" ng-hide="hasSupervisor()" has-permission="Hr">Assign</a>
+                <span ng-show="hasSupervisor()" has-permission="Hr">
+                  (<a href="#/users/{{cUser.id}}/assign-supervisor" class="cursor-hand">Change</a>)
                 </span>
               </td>
-              <td has-permission="Supervisor">
-                <span>
-                  {{supervisor.firstName}} {{supervisor.lastName}}
-                </span>
             </tr>
             <tr>
               <td>Timesheet Approver</td>
-              <td has-permission="Supervisor">
-                  <a href="#/users/{{cUser.id}}/assign-ta" class="cursor-hand" ng-hide="hasTimesheetApprover()">Assign</a>
-                  <span ng-show="hasTimesheetApprover()">
-                      {{timesheetApprover.firstName}} {{timesheetApprover.lastName}}
-                      (<a href="#/users/{{cUser.id}}/assign-ta" class="cursor-hand">Change</a>)
-                  </span>
-              </td>
-              <td has-permission="Hr">
-                <span ng-show="hasTimesheetApprover()">
-                  {{timesheetApprover.firstName}} {{timesheetApprover.lastName}}
+              <td>
+                <span>{{timesheetApprover.firstName}} {{timesheetApprover.lastName}}</span>
+                <a href="#/users/{{cUser.id}}/assign-ta" class="cursor-hand" ng-hide="hasTimesheetApprover()" has-permission="Supervisor">Assign</a>
+                <span ng-show="hasTimesheetApprover()" has-permission="Supervisor">
+                  (<a href="#/users/{{cUser.id}}/assign-ta" class="cursor-hand">Change</a>)
                 </span>
-                <span ng-hide="hasTimesheetApprover()">
+                <span ng-hide="hasTimesheetApprover()" has-permission="Hr">
                   None Assigned
                 </span>
               </td>
