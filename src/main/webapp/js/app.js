@@ -29,7 +29,7 @@ cascadia.config(['$routeProvider',
         //      resolve: requiresAuthentication}).
         when('/create-wp/:id', {controller: 'CreateWPController', templateUrl:'Partials/create-wp.html',
              resolve: requiresAuthentication}).
-        when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html', 
+        when('/dashboard', {controller: 'DashboardController', templateUrl:'Partials/dashboard.html',
             resolve: requiresAuthentication}).
         when('/engineer-budget', {controller: 'EngineerBudgetController', templateUrl:'Partials/engineer-budget.html',
             resolve: requiresAuthentication}).
@@ -108,7 +108,7 @@ cascadia.config(['$routeProvider',
                 for(var i = 0; i < array.length; ++i){
                     if(_.isString(array[i]) && permissions.hasPermission(array[i].trim())){
                         accessible = true;
-                    } 
+                    }
                 }
                 if(!accessible) {
                     $location.path('/logout');
@@ -130,6 +130,8 @@ cascadia.config(function(RestangularProvider) {
         RestangularProvider.setBaseUrl("http://localhost:8080/Cascadia/api");
     }  else if(checkServerStatus("http://www.comp4911.com/api")){
         RestangularProvider.setBaseUrl('http://www.comp4911.com/api');
+    }  else if(checkServerStatus("https://comp4911b-stevenhsu.rhcloud.com/api")){
+        RestangularProvider.setBaseUrl('https://comp4911b-stevenhsu.rhcloud.com/api');
     } else {
         RestangularProvider.setBaseUrl('https://comp4911.apiary.io');
         toastr.warning("Unable to make connection to an real API.");
